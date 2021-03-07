@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "916831218906",
+    "project_id": "bambooflower-3b508",
+    "storage_bucket": "bambooflower-3b508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916831218906:android:e7d9ebd4c9a72df00449e3",
+        "android_client_info": {
+          "package_name": "com.sg.android.bambooflower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916831218906-i4b314r9uc61t7sqqpeb7foed792t6lu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sg.android.bambooflower",
+            "certificate_hash": "f6022899c48de705afaa77fe4bf65391de451fea"
+          }
+        },
+        {
+          "client_id": "916831218906-8l8g7uqqu4ibushimpof1bmrgt1q429f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWVnKCTS3yKnH3D30LSvO45yl2pPEZ9_4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916831218906-8l8g7uqqu4ibushimpof1bmrgt1q429f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

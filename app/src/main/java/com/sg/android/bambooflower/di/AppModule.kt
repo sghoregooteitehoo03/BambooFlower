@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower
+package com.sg.android.bambooflower.di
 
 import dagger.Module
 import dagger.hilt.InstallIn

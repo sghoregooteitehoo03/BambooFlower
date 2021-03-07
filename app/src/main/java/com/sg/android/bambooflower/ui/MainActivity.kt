@@ -1,7 +1,8 @@
-package com.sg.android.bambooflower
+package com.sg.android.bambooflower.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.sg.android.bambooflower.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
