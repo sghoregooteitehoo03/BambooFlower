@@ -1,13 +1,12 @@
 package com.sg.android.bambooflower.viewmodel.emailLoginFragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuthException
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +26,16 @@ class EmailLoginViewModel @Inject constructor(
             repository.login(credential)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        _errorMsg.value = ErrorMessage.SUCCESS
+                        viewModelScope.launch {
+                            val user = repository.getUserData()
+                                .toObject(User::class.java)
+
+                            if(user == null) {
+                                repository.setUserData()
+                            }
+
+                            _errorMsg.value = ErrorMessage.SUCCESS
+                        }
                     } else {
                         when ((task.exception as FirebaseAuthException).errorCode) {
                             "ERROR_USER_NOT_FOUND" -> { // 계정이 존재하지 않을 때

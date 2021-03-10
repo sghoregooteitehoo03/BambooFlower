@@ -1,12 +1,11 @@
 package com.sg.android.bambooflower.viewmodel.loginFragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.google.firebase.auth.AuthCredential
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,14 +30,17 @@ class LoginViewModel @Inject constructor(
         _loginWay.value = Contents.LOGIN_WITH_FACEBOOK
     }
 
-    fun login(credential: AuthCredential) {
+    fun login(credential: AuthCredential) = viewModelScope.launch {
         repository.login(credential)
-            .addOnSuccessListener {
-                _isSuccessLogin.value = true
-            }
-            .addOnFailureListener {
-                it.printStackTrace()
-            }
+
+        val user = repository.getUserData()
+            .toObject(User::class.java)
+
+        if (user == null) {
+            repository.setUserData()
+        }
+
+        _isSuccessLogin.value = true
     }
 
     fun clear() {

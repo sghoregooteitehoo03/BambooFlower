@@ -3,10 +3,13 @@ package com.sg.android.bambooflower.viewmodel.createAccountFragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.other.ErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,13 +20,25 @@ class CreateAccountViewModel @Inject constructor(
 
     val email = MutableLiveData("")
     val password = MutableLiveData("")
+    val name = MutableLiveData("")
     val errorMsg: LiveData<String> = _errorMsg
 
     fun createAccount() {
-        if (email.value!!.isNotEmpty() && password.value!!.isNotEmpty()) {
+        if (email.value!!.isNotEmpty() && password.value!!.isNotEmpty()
+            && name.value!!.isNotEmpty()
+        ) {
             repository.createAccount(email.value!!, password.value!!)
                 .addOnSuccessListener {
-                    _errorMsg.value = ErrorMessage.SUCCESS
+                    viewModelScope.launch {
+                        val user = repository.getUserData()
+                            .toObject(User::class.java)
+
+                        if (user == null) {
+                            repository.setUserData(name.value!!)
+                        }
+
+                        _errorMsg.value = ErrorMessage.SUCCESS
+                    }
                 }
                 .addOnFailureListener {
                     when ((it as FirebaseAuthException).errorCode) {
@@ -40,7 +55,7 @@ class CreateAccountViewModel @Inject constructor(
                     }
                 }
         } else { // 이메일이나 비밀번호가 입력되있지 않을 때
-            _errorMsg.value = ErrorMessage.EMAIL_PASS_EMPTY
+            _errorMsg.value = ErrorMessage.IS_ALL_EMPTY
         }
     }
 }

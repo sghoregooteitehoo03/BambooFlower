@@ -14,6 +14,7 @@ import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: 디자인 및 자잘한 기능 추가
 @AndroidEntryPoint
 class EmailLoginFragment : Fragment() {
     private val mViewModel by viewModels<EmailLoginViewModel>()

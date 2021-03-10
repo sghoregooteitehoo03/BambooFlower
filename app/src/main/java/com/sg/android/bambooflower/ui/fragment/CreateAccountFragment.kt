@@ -14,6 +14,7 @@ import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.viewmodel.createAccountFragment.CreateAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: 디자인 및 자잘한 기능 추가
 @AndroidEntryPoint
 class CreateAccountFragment : Fragment() {
     private val mViewModel by viewModels<CreateAccountViewModel>()

@@ -1,6 +1,7 @@
 package com.sg.android.bambooflower.other
 
 object ErrorMessage {
+    const val IS_ALL_EMPTY = "정보들을 모두 입력해주세요."
     const val EMAIL_PASS_EMPTY = "이메일 및 비밀번호를 입력해주세요."
     const val NOT_EMAIL_TYPE = "이메일 형식이 잘못되었습니다."
 
