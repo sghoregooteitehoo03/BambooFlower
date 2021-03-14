@@ -25,7 +25,8 @@ class EmailLoginRepository @Inject constructor(
             token = token,
             achievedCount = 0,
             myLevel = 1,
-            myMission = null
+            myMission = null,
+            latestStart = 0
         )
 
         store.collection(Contents.COLLECTION_USER)

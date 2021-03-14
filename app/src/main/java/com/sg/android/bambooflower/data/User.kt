@@ -5,6 +5,7 @@ data class User(
     val token: String? = null,
     val achievedCount: Int? = null,
     val myLevel: Int? = null,
-    val myMission: String? = null
+    val myMission: String? = null,
+    val latestStart: Long? = null
 ) {
 }
