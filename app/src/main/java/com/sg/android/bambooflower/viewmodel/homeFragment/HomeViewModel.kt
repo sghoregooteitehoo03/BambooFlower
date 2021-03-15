@@ -12,15 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
-    private val _mission = MutableLiveData("")
-
-    val mission: LiveData<String> = _mission
-
-    fun getHomeData() {
+    fun getHomeData() =
         repository.getHomeData()
-            .addOnSuccessListener {
-                val jsonObject = JSONObject(it.data as MutableMap<Any?, Any?>).toString()
-                val mission = Gson().fromJson(jsonObject, User::class.java)
-            }
-    }
 }
