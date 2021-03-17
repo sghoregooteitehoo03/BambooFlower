@@ -14,4 +14,17 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
     fun getHomeData() =
         repository.getHomeData()
+
+    fun successMission(user: User) {
+        repository.successMission()
+            .addOnSuccessListener {
+                val updateData = it.data as Map<*, *>
+                with(user) {
+                    user.achievedCount = updateData["achievedCount"] as Int?
+                    user.isAchieved = updateData["isAchieved"] as Boolean?
+                }
+
+                Log.i("Check", "성공: $user")
+            }
+    }
 }

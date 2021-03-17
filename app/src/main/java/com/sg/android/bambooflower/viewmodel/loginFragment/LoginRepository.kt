@@ -29,7 +29,9 @@ class LoginRepository @Inject constructor(
             achievedCount = 0,
             myLevel = 1,
             myMission = null,
-            latestStart = 0
+            latestStart = 0,
+            isAchieved = false,
+            missionDoc = null
         )
 
         store.collection(Contents.COLLECTION_USER)

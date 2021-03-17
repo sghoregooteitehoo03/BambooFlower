@@ -9,4 +9,5 @@ object Contents {
     const val COLLECTION_USER = "User"
 
     const val FUNC_GET_HOME_DATA = "getHomeData"
+    const val FUNC_SUCCESS_MISSION = "successMission"
 }
