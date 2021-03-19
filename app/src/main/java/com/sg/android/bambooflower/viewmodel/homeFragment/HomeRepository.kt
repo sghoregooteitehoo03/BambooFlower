@@ -18,4 +18,8 @@ class HomeRepository @Inject constructor(
     fun successMission() =
         functions.getHttpsCallable(Contents.FUNC_SUCCESS_MISSION)
             .call(auth.currentUser?.uid)
+
+    fun changeMission() =
+        functions.getHttpsCallable(Contents.FUNC_CHANGE_MISSION)
+            .call(auth.currentUser?.uid)
 }

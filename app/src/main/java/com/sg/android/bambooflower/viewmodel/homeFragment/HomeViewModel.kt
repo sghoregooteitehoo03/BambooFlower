@@ -12,6 +12,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
+    private val _mission = MutableLiveData("")
+
+    val mission: LiveData<String> = _mission
+
+    fun setMission(missionData: String) {
+        _mission.value = missionData
+    }
+
     fun getHomeData() =
         repository.getHomeData()
 
@@ -20,11 +28,25 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
             .addOnSuccessListener {
                 val updateData = it.data as Map<*, *>
                 with(user) {
-                    user.achievedCount = updateData["achievedCount"] as Int?
-                    user.isAchieved = updateData["isAchieved"] as Boolean?
+                    achievedCount = updateData["achievedCount"] as Int?
+                    isAchieved = updateData["isAchieved"] as Boolean?
                 }
 
-                Log.i("Check", "성공: $user")
+                Log.i("SuccessMission", "성공: $user")
+            }
+    }
+
+    fun changeMission(user: User) {
+        repository.changeMission()
+            .addOnSuccessListener {
+                val updateData = it.data as Map<*, *>
+                with(user) {
+                    myMission = updateData["myMission"] as String?
+                    missionDoc = updateData["missionDoc"] as String?
+                }
+
+                _mission.value = user.myMission?:""
+                Log.i("ChangeMission", "성공: $user")
             }
     }
 }

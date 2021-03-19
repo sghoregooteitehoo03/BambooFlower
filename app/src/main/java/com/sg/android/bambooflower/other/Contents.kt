@@ -10,4 +10,5 @@ object Contents {
 
     const val FUNC_GET_HOME_DATA = "getHomeData"
     const val FUNC_SUCCESS_MISSION = "successMission"
+    const val FUNC_CHANGE_MISSION = "changeMission"
 }

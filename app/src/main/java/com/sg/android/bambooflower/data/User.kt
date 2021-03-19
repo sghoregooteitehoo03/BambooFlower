@@ -6,8 +6,8 @@ data class User(
     var achievedCount: Int? = null,
     var isAchieved: Boolean? = null,
     val myLevel: Int? = null,
-    val myMission: String? = null,
-    val missionDoc: String? = null,
+    var myMission: String? = null,
+    var missionDoc: String? = null,
     val latestStart: Long? = null
 ) {
 }

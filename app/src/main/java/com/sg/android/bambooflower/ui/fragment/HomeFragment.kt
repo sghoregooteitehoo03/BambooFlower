@@ -26,7 +26,7 @@ import org.json.JSONObject
 //  5. Firestore에서 읽어와 뷰에 바인딩 O
 //  6. 하루하루 미션 바뀌는거 구현 O
 //  7. 수행완료 구현 O
-//  8. 미션 바꾸기 구현
+//  8. 미션 바꾸기 구현 O
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -56,9 +56,10 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener {
                 val jsonObject = JSONObject(it.data as MutableMap<Any?, Any?>).toString()
                 val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
-                Log.i("Check", "json: ${it.data}, data: $homeData")
+                Log.i("Check", "data: $homeData")
 
                 gViewModel.setUser(homeData.user)
+                mViewModel.setMission(homeData.user.myMission!!)
             }
     }
 }
