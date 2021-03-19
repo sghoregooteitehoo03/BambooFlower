@@ -18,15 +18,13 @@ import com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
-// TODO:
-//  1. 미션 보여주는 뷰 구현 O
-//  2. Firestore db 구조 설정 O
-//  3. Firestore에 미션 저장 O
-//  4. 간단한 테스트 O
-//  5. Firestore에서 읽어와 뷰에 바인딩 O
-//  6. 하루하루 미션 바뀌는거 구현 O
-//  7. 수행완료 구현 O
-//  8. 미션 바꾸기 구현 O
+// TODO: 게시판 기능 구현 ( 전체 게시글 보기, 게시글 올리기, 좋아요 버튼, 조회수 )
+//  1. 게시글 데이터 모델링 O
+//  2. 게시글 리사이클러뷰 아이템 구현 O
+//  3. 전체 게시글 보는 기능 구현
+//  4. 게시글 작성 기능 구현
+//  5. 홈에서 게시글 3개만 보여주게 구현
+//  6. 좋아요 및 조회수 기능 구현
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
