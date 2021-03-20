@@ -21,6 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
             android:padding="10dp">
 
             <TextView
@@ -29,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:maxLines="1"
+                android:text="@{postData.title}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toStartOf="@id/guideline_image"
@@ -43,6 +45,7 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_text"
+                app:setInfo="@{postData}"
                 tools:text="닉네임 | 2021.03.19." />
 
             <ImageView

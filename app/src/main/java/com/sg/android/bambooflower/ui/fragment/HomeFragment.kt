@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.HomeData
@@ -21,11 +22,10 @@ import org.json.JSONObject
 // TODO: 게시판 기능 구현 ( 전체 게시글 보기, 게시글 올리기, 좋아요 버튼, 조회수 )
 //  1. 게시글 데이터 모델링 O
 //  2. 게시글 리사이클러뷰 아이템 구현 O
-//  3. 전체 게시글 보는 기능 구현
-//  4. 게시글 작성 기능 구현
+//  3. 전체 게시글 보는 기능 구현 O
+//  4. 게시글 작성 기능 구현 O
 //  5. 홈에서 게시글 3개만 보여주게 구현
 //  6. 좋아요 및 조회수 기능 구현
-
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -40,6 +40,7 @@ class HomeFragment : Fragment() {
         with(binding) {
             viewmodel = mViewModel
             gviewmodel = gViewModel
+            navController = findNavController()
 
             lifecycleOwner = viewLifecycleOwner
         }

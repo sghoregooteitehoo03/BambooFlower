@@ -24,7 +24,11 @@
         android:id="@+id/homeFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_postFragment"
+            app:destination="@id/postFragment" />
+    </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.EmailLoginFragment"
@@ -50,4 +54,26 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.PostFragment"
+        android:label="PostFragment"
+        tools:layout="@layout/fragment_post">
+        <action
+            android:id="@+id/action_postFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
+        <action
+            android:id="@+id/action_postFragment_to_postDialog"
+            app:destination="@id/postDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/addPostFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.AddPostFragment"
+        android:label="AddPostFragment"
+        tools:layout="@layout/fragment_add_post" />
+    <dialog
+        android:id="@+id/postDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.PostDialog"
+        android:label="PostDialog"
+        tools:layout="@layout/dialog_post" />
 </navigation>

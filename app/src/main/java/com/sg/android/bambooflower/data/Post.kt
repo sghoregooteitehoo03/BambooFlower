@@ -8,5 +8,6 @@ data class Post(
     val favoriteCount: Int? = null,
     val favorites: MutableMap<String, Boolean> = mutableMapOf(),
     val timeStamp: Long? = null,
-    val writer: String? = null
+    val writer: String? = null,
+    val uid: String? = null
 )
