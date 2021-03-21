@@ -10,10 +10,6 @@
         <variable
             name="navController"
             type="androidx.navigation.NavController" />
-
-        <variable
-            name="adapter"
-            type="com.sg.android.bambooflower.adapter.PostAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +20,7 @@
             android:id="@+id/post_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:adapter="@{adapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.adapter.PostAdapter
+import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentPostBinding
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
@@ -19,11 +19,11 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PostFragment : Fragment(), PostAdapter.PostItemListener {
+class PostFragment : Fragment(), PostPagingAdapter.PostItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<PostViewModel>()
 
-    private lateinit var postAdapter: PostAdapter
+    private lateinit var postAdapter: PostPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,14 +31,14 @@ class PostFragment : Fragment(), PostAdapter.PostItemListener {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        postAdapter = PostAdapter().apply {
-            setPostItemListener(this@PostFragment)
+        postAdapter = PostPagingAdapter().apply {
+            setOnPostItemListener(this@PostFragment)
         }
         val binding = FragmentPostBinding.inflate(inflater)
 
         with(binding) {
-            adapter = postAdapter
             navController = findNavController()
+            postList.adapter = postAdapter
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -50,6 +50,7 @@ class PostFragment : Fragment(), PostAdapter.PostItemListener {
         setObserver()
     }
 
+    // 아이템 클릭
     override fun onItemClickListener(pos: Int) {
         gViewModel.setPost(postAdapter.getPost(pos)!!)
 

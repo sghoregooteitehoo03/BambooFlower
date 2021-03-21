@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_homeFragment_to_postFragment"
             app:destination="@id/postFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_postDialog"
+            app:destination="@id/postDialog" />
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"

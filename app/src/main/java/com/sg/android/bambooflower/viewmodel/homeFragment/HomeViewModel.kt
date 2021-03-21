@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.gson.Gson
+import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.json.JSONObject
@@ -12,12 +13,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
-    private val _mission = MutableLiveData("")
+    private val _mission = MutableLiveData<String>()
+    private val _posts = MutableLiveData<List<Post>>()
 
     val mission: LiveData<String> = _mission
+    val posts: LiveData<List<Post>> = _posts
 
     fun setMission(missionData: String) {
         _mission.value = missionData
+    }
+
+    fun setPosts(postsData: List<Post>) {
+        _posts.value = postsData
     }
 
     fun getHomeData() =
@@ -45,7 +52,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                     missionDoc = updateData["missionDoc"] as String?
                 }
 
-                _mission.value = user.myMission?:""
+                _mission.value = user.myMission ?: ""
                 Log.i("ChangeMission", "성공: $user")
             }
     }
