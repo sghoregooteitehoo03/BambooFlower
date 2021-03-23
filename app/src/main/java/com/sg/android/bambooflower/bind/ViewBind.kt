@@ -6,6 +6,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
+import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.Post
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,4 +18,11 @@ fun setInfo(view: TextView, postData: Post) {
     val date = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(postData.timeStamp)
 
     view.text = "$name | $date"
+}
+
+@BindingAdapter("app:setCalendar")
+fun setCalendar(view: TextView, diaryData: Diary) {
+    val date = SimpleDateFormat("yyyy.MM.dd (EE)", Locale.KOREA).format(diaryData.timeStamp)
+
+    view.text = date
 }

@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.sg.android.bambooflower.R
+import com.sg.android.bambooflower.adapter.DiaryPagingAdapter
 import com.sg.android.bambooflower.adapter.PostAdapter
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.HomeData
@@ -20,18 +22,21 @@ import com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
-// TODO: 게시판 기능 구현 ( 전체 게시글 보기, 게시글 올리기, 좋아요 버튼, 조회수 )
-//  1. 게시글 데이터 모델링 O
-//  2. 게시글 리사이클러뷰 아이템 구현 O
-//  3. 전체 게시글 보는 기능 구현 O
-//  4. 게시글 작성 기능 구현 O
-//  5. 홈에서 게시글 3개만 보여주게 구현 O
+// TODO: 감사 일기 기능 구현
+//  1. 데이터 모델링 O
+//  2. 룸 세팅 O
+//  3. 리스트 아이템 구현 O
+//  4. 작성 기능 구현
+//  5. 표시하는 리스트 구현
+//  6. 클릭 시 작성한 글을 볼 수 있는 화면 구현
 @AndroidEntryPoint
-class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener {
+class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
+    DiaryPagingAdapter.DiaryItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<HomeViewModel>()
 
     private lateinit var postAdapter: PostAdapter
+    private lateinit var diaryAdapter: DiaryPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +47,9 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener {
         postAdapter = PostAdapter().apply {
             setOnPostListener(this@HomeFragment)
         }
+        diaryAdapter = DiaryPagingAdapter().apply {
+            setOnDiaryItemListener(this@HomeFragment)
+        }
         val binding = FragmentHomeBinding.inflate(inflater)
 
         with(binding) {
@@ -50,6 +58,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener {
             navController = findNavController()
 
             postList.adapter = postAdapter
+            diaryList.adapter = diaryAdapter
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -66,6 +75,14 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener {
     override fun onItemClickListener(pos: Int) {
         gViewModel.setPost(postAdapter.getItem(pos))
         findNavController().navigate(R.id.postDialog)
+    }
+
+    override fun addItemClickListener() {
+        Log.i("Check", "동작")
+    }
+
+    override fun onItemClickListener() {
+        TODO("Not yet implemented")
     }
 
     private fun setObserver() {

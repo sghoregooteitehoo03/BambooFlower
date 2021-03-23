@@ -4,6 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.google.gson.Gson
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
@@ -18,6 +20,9 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
     val mission: LiveData<String> = _mission
     val posts: LiveData<List<Post>> = _posts
+    val diaries = repository.getAllDiaries()
+        .flow
+        .cachedIn(viewModelScope)
 
     fun setMission(missionData: String) {
         _mission.value = missionData
