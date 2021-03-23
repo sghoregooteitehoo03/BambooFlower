@@ -26,7 +26,7 @@ import org.json.JSONObject
 //  1. 데이터 모델링 O
 //  2. 룸 세팅 O
 //  3. 리스트 아이템 구현 O
-//  4. 작성 기능 구현
+//  4. 작성 기능 구현 O
 //  5. 표시하는 리스트 구현
 //  6. 클릭 시 작성한 글을 볼 수 있는 화면 구현
 @AndroidEntryPoint
@@ -78,7 +78,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     }
 
     override fun addItemClickListener() {
-        Log.i("Check", "동작")
+        findNavController().navigate(R.id.diaryWriteFragment)
     }
 
     override fun onItemClickListener() {

@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_homeFragment_to_postDialog"
             app:destination="@id/postDialog" />
+        <action
+            android:id="@+id/action_homeFragment_to_diaryWriteFragment"
+            app:destination="@id/diaryWriteFragment" />
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"
@@ -79,4 +82,9 @@
         android:name="com.sg.android.bambooflower.ui.dialog.PostDialog"
         android:label="PostDialog"
         tools:layout="@layout/dialog_post" />
+    <fragment
+        android:id="@+id/diaryWriteFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.DiaryWriteFragment"
+        android:label="DiaryWriteFragment"
+        tools:layout="@layout/fragment_diary_write" />
 </navigation>
