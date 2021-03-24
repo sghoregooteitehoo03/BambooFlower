@@ -19,7 +19,7 @@ class DiaryPagingAdapter : PagingDataAdapter<Diary, RecyclerView.ViewHolder>(dif
 
     interface DiaryItemListener {
         fun addItemClickListener()
-        fun onItemClickListener()
+        fun onDiaryItemClickListener(pos: Int)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -35,7 +35,7 @@ class DiaryPagingAdapter : PagingDataAdapter<Diary, RecyclerView.ViewHolder>(dif
             DiaryHeaderViewHolder(view, mListener)
         } else {
             val view = ItemDiaryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            DiaryViewHolder(view)
+            DiaryViewHolder(view, mListener)
         }
 
         return holder
@@ -55,6 +55,9 @@ class DiaryPagingAdapter : PagingDataAdapter<Diary, RecyclerView.ViewHolder>(dif
     fun setOnDiaryItemListener(_listener: DiaryItemListener) {
         mListener = _listener
     }
+
+    fun getDiaryItem(pos: Int) =
+        getItem(pos)
 
     private companion object diffUtil : DiffUtil.ItemCallback<Diary>() {
         override fun areItemsTheSame(oldItem: Diary, newItem: Diary): Boolean {

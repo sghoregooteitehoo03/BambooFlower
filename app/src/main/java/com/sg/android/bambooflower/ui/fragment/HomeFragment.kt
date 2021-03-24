@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
@@ -20,6 +21,8 @@ import com.sg.android.bambooflower.databinding.FragmentHomeBinding
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO: 감사 일기 기능 구현
@@ -27,8 +30,9 @@ import org.json.JSONObject
 //  2. 룸 세팅 O
 //  3. 리스트 아이템 구현 O
 //  4. 작성 기능 구현 O
-//  5. 표시하는 리스트 구현
-//  6. 클릭 시 작성한 글을 볼 수 있는 화면 구현
+//  5. 표시하는 리스트 구현 O
+//  6. 클릭 시 작성한 글을 볼 수 있는 화면 구현 O
+
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener {
@@ -81,8 +85,11 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         findNavController().navigate(R.id.diaryWriteFragment)
     }
 
-    override fun onItemClickListener() {
-        TODO("Not yet implemented")
+    override fun onDiaryItemClickListener(pos: Int) {
+        val diaryData = diaryAdapter.getDiaryItem(pos)
+        gViewModel.diary.value = diaryData
+
+        findNavController().navigate(R.id.diaryViewerFragment)
     }
 
     private fun setObserver() {
@@ -101,8 +108,15 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                     }
             }
         }
+
         mViewModel.posts.observe(viewLifecycleOwner) { // 최근 게시글을 가져옴
             postAdapter.syncData(it)
+        }
+
+        lifecycleScope.launch {
+            mViewModel.diaries.collect { pagingData ->
+                diaryAdapter.submitData(pagingData)
+            }
         }
     }
 }
