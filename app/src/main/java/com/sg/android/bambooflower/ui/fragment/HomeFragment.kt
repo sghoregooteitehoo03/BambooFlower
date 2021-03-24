@@ -25,14 +25,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-// TODO: 감사 일기 기능 구현
-//  1. 데이터 모델링 O
-//  2. 룸 세팅 O
-//  3. 리스트 아이템 구현 O
-//  4. 작성 기능 구현 O
-//  5. 표시하는 리스트 구현 O
-//  6. 클릭 시 작성한 글을 볼 수 있는 화면 구현 O
-
+// TODO: 디자인 및 기능추가
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener {

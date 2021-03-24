@@ -95,4 +95,14 @@
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryViewerFragment"
         android:label="DiaryViewerFragment"
         tools:layout="@layout/fragment_diary_viewer" />
+    <fragment
+        android:id="@+id/rankingFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.RankingFragment"
+        android:label="RankingFragment"
+        tools:layout="@layout/fragment_ranking" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
