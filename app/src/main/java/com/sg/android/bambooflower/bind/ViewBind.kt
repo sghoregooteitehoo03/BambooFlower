@@ -26,3 +26,9 @@ fun setCalendar(view: TextView, diaryData: Diary) {
 
     view.text = date
 }
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setRanking")
+fun setRanking(view: TextView, position: Int) {
+    view.text = "#$position"
+}

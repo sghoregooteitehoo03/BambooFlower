@@ -21,6 +21,7 @@ class EmailLoginRepository @Inject constructor(
             ?.token
 
         val userData = User(
+            uid = auth.currentUser?.uid,
             name = auth.currentUser?.displayName,
             token = token,
             achievedCount = 0,
