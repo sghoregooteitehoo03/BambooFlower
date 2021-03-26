@@ -17,11 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO:
-//  1. 레이아웃 구현 O
-//  2. 리스트 아이템 구현 O
-//  3. 페이징 구현 O
-//  4. 아답터 구현 O
+// TODO: 디자인 및 기능추가
 
 @AndroidEntryPoint
 class RankingFragment : Fragment() {
