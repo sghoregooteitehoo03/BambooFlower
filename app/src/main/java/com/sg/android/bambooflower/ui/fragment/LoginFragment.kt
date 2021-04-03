@@ -18,12 +18,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sg.android.bambooflower.R
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentLoginBinding
 import com.sg.android.bambooflower.other.Contents
+import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 디자인 및 자잘한 기능 추가
+// TODO:
+//  1. 디자인 O
+//  2. 로딩 화면 O
+//  3. 유저 정보가 없을 때 회원가입 화면으로 O
+//  4. 이용약관 (나중에)
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private val mViewModel by viewModels<LoginViewModel>()
@@ -53,6 +59,15 @@ class LoginFragment : Fragment() {
         setObserver()
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        // 툴바 설정
+        with((activity as MainActivity).supportActionBar) {
+            this?.hide()
+        }
+    }
+
     override fun onDestroyView() {
         mViewModel.clear()
         super.onDestroyView()
@@ -64,6 +79,8 @@ class LoginFragment : Fragment() {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             Contents.LOGIN_WITH_GOOGLE -> {
+                loading()
+
                 val result = GoogleSignIn.getSignedInAccountFromIntent(data)
                 if (result.isSuccessful) {
 
@@ -123,6 +140,8 @@ class LoginFragment : Fragment() {
 
         loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {
+                loading()
+
                 val credential = FacebookAuthProvider.getCredential(result?.accessToken!!.token)
                 mViewModel.login(credential)
             }
@@ -137,7 +156,26 @@ class LoginFragment : Fragment() {
         })
     }
 
+    // 로그인 성공
     private fun successLogin() {
-        findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+        mViewModel.getUserData()
+            .addOnSuccessListener {
+                val user = it.toObject(User::class.java)
+                ready()
+
+                if (user != null) { // 기존 유저인지 확인
+                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                } else {
+                    findNavController().navigate(R.id.createAccountFragment)
+                }
+            }
+    }
+
+    private fun loading() {
+        (requireActivity() as MainActivity).loading()
+    }
+
+    private fun ready() {
+        (requireActivity() as MainActivity).ready()
     }
 }

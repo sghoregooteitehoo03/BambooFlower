@@ -18,32 +18,8 @@ class LoginRepository @Inject constructor(
             .await()
     }
 
-    suspend fun setUserData() {
-        val token = auth.currentUser?.getIdToken(true)
-            ?.await()
-            ?.token
-
-        val userData = User(
-            uid = auth.currentUser?.uid,
-            name = auth.currentUser?.displayName,
-            token = token,
-            achievedCount = 0,
-            myLevel = 1,
-            myMission = null,
-            latestStart = 0,
-            isAchieved = false,
-            missionDoc = null
-        )
-
-        store.collection(Contents.COLLECTION_USER)
-            .document(auth.currentUser!!.uid)
-            .set(userData)
-            .await()
-    }
-
-    suspend fun getUserData() =
+    fun getUserData() =
         store.collection(Contents.COLLECTION_USER)
             .document(auth.currentUser!!.uid)
             .get()
-            .await()!!
 }

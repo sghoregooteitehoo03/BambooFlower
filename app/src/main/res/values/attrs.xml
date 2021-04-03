@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomLoginButton">
+        <attr name="buttonIcon" format="reference|integer" />
+        <attr name="buttonText" format="reference|string" />
+        <attr name="buttonTextColor" format="reference|color|integer" />
+    </declare-styleable>
+
+    <declare-styleable name="LoadingView">
+        <attr name="visible" format="reference|boolean" />
+    </declare-styleable>
+</resources>

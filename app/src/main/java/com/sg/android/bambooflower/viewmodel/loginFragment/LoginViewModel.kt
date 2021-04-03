@@ -32,16 +32,11 @@ class LoginViewModel @Inject constructor(
 
     fun login(credential: AuthCredential) = viewModelScope.launch {
         repository.login(credential)
-
-        val user = repository.getUserData()
-            .toObject(User::class.java)
-
-        if (user == null) {
-            repository.setUserData()
-        }
-
         _isSuccessLogin.value = true
     }
+
+    fun getUserData() =
+        repository.getUserData()
 
     fun clear() {
         _loginWay.value = 0

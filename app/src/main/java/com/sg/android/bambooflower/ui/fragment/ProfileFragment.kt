@@ -16,9 +16,7 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.profileFragment.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  1. 레이아웃 구현 O
-//  2. 데이터 바인딩 O
+// TODO: 디자인 및 기능추가
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), PostPagingAdapter.PostItemListener {
