@@ -25,7 +25,7 @@ import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
+// TODO: 수정된 회원가입 화면으로 바꾸기
 //  1. 이용약관 (나중에)
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -163,7 +163,7 @@ class LoginFragment : Fragment() {
                 if (user != null) { // 기존 유저인지 확인
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
-                    findNavController().navigate(R.id.createAccountFragment)
+                    findNavController().navigate(R.id.createUserFragment)
                 }
             }
     }

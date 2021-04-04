@@ -17,11 +17,7 @@ import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  1. 디자인 O
-//  2. 기존 유저가 아니면 회원가입 화면으로 이동 O
-//  3. 비밀번호 찾기 기능 X
-//  4. 로딩화면 추가 O
+// TODO: 수정된 회원가입 화면으로 바꾸기
 @AndroidEntryPoint
 class EmailLoginFragment : Fragment() {
     private val mViewModel by viewModels<EmailLoginViewModel>()
@@ -89,7 +85,7 @@ class EmailLoginFragment : Fragment() {
                                 if (user != null) { // 기존 유저일 때
                                     findNavController().navigate(R.id.action_emailLoginFragment_to_homeFragment)
                                 } else {
-                                    findNavController().navigate(R.id.createAccountFragment)
+                                    findNavController().navigate(R.id.createUserFragment)
                                 }
                             }
                     }

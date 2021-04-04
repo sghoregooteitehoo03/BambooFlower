@@ -19,8 +19,8 @@
             android:id="@+id/action_loginFragment_to_emailLoginFragment"
             app:destination="@id/emailLoginFragment" />
         <action
-            android:id="@+id/action_loginFragment_to_createAccountFragment"
-            app:destination="@id/createAccountFragment" />
+            android:id="@+id/action_loginFragment_to_createUserFragment"
+            app:destination="@id/createUserFragment" />
     </fragment>
 
     <fragment
@@ -54,6 +54,9 @@
         <action
             android:id="@+id/action_emailLoginFragment_to_createAccountFragment"
             app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_emailLoginFragment_to_createUserFragment"
+            app:destination="@id/createUserFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
@@ -108,4 +111,15 @@
         android:name="com.sg.android.bambooflower.ui.fragment.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/createUserFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.CreateUserFragment"
+        android:label="CreateUserFragment"
+        tools:layout="@layout/fragment_create_account">
+        <action
+            android:id="@+id/action_createUserFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

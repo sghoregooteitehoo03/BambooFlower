@@ -17,27 +17,28 @@ class CreateAccountViewModel @Inject constructor(
     private val repository: CreateAccountRepository
 ) : ViewModel() {
     private val _errorMsg = MutableLiveData("")
+    private val _isLoading = MutableLiveData(false)
 
     val email = MutableLiveData("")
     val password = MutableLiveData("")
     val name = MutableLiveData("")
+
     val errorMsg: LiveData<String> = _errorMsg
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun createAccount() {
         if (email.value!!.isNotEmpty() && password.value!!.isNotEmpty()
             && name.value!!.isNotEmpty()
         ) {
+            _isLoading.value = true // 로딩 시작
+
             repository.createAccount(email.value!!, password.value!!)
                 .addOnSuccessListener {
                     viewModelScope.launch {
-                        val user = repository.getUserData()
-                            .toObject(User::class.java)
-
-                        if (user == null) {
-                            repository.setUserData(name.value!!)
-                        }
+                        repository.setUserData(email.value!!, name.value!!)
 
                         _errorMsg.value = ErrorMessage.SUCCESS
+                        _isLoading.value = false // 로딩 끝
                     }
                 }
                 .addOnFailureListener {
@@ -53,9 +54,9 @@ class CreateAccountViewModel @Inject constructor(
                             ErrorMessage.ALREADY_EXIST_ACCOUNT
                         else -> _errorMsg.value = ErrorMessage.ERROR_SIGN_UP
                     }
+
+                    _isLoading.value = false // 로딩 끝
                 }
-        } else { // 이메일이나 비밀번호가 입력되있지 않을 때
-            _errorMsg.value = ErrorMessage.IS_ALL_EMPTY
         }
     }
 }

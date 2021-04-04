@@ -15,7 +15,7 @@ class CreateAccountRepository @Inject constructor(
     fun createAccount(id: String, password: String) =
         auth.createUserWithEmailAndPassword(id, password)
 
-    suspend fun setUserData(name: String) {
+    suspend fun setUserData(email: String, name: String) {
         val token = auth.currentUser?.getIdToken(true)
             ?.await()
             ?.token
@@ -23,6 +23,7 @@ class CreateAccountRepository @Inject constructor(
         val userData = User(
             uid = auth.currentUser?.uid,
             name = name,
+            email = email,
             token = token,
             achievedCount = 0,
             myLevel = 1,
@@ -37,10 +38,4 @@ class CreateAccountRepository @Inject constructor(
             .set(userData)
             .await()
     }
-
-    suspend fun getUserData() =
-        store.collection(Contents.COLLECTION_USER)
-            .document(auth.currentUser!!.uid)
-            .get()
-            .await()!!
 }
