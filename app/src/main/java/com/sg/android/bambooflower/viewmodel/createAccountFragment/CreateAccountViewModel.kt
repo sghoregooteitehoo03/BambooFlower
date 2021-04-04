@@ -51,7 +51,7 @@ class CreateAccountViewModel @Inject constructor(
                         // 이미 계정이 존재 할 때
                         "ERROR_EMAIL_ALREADY_IN_USE" -> _errorMsg.value =
                             ErrorMessage.ALREADY_EXIST_ACCOUNT
-                        else -> _errorMsg.value = ErrorMessage.ERROR_LOGIN
+                        else -> _errorMsg.value = ErrorMessage.ERROR_SIGN_UP
                     }
                 }
         } else { // 이메일이나 비밀번호가 입력되있지 않을 때

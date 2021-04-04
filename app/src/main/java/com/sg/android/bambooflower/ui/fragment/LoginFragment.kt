@@ -26,10 +26,7 @@ import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
-//  1. 디자인 O
-//  2. 로딩 화면 O
-//  3. 유저 정보가 없을 때 회원가입 화면으로 O
-//  4. 이용약관 (나중에)
+//  1. 이용약관 (나중에)
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private val mViewModel by viewModels<LoginViewModel>()

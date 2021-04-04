@@ -11,7 +11,7 @@ object ErrorMessage {
     const val WRONG_PASSWORD = "비밀번호가 잘못되었습니다."
     const val NOT_POWERFUL_PASSWORD = "비밀번호가 약합니다."
 
-    const val ERROR_LOGIN = "로그인에 실패하였습니다."
+    const val ERROR_LOGIN = "아이디 및 비밀번호가 잘못됐습니다."
     const val ERROR_SIGN_UP = "회원가입에 실패하였습니다."
 
     const val SUCCESS = "SUCCESS"

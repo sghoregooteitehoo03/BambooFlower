@@ -2,6 +2,7 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -9,12 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sg.android.bambooflower.R
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentEmailLoginBinding
 import com.sg.android.bambooflower.other.ErrorMessage
+import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 디자인 및 자잘한 기능 추가
+// TODO:
+//  1. 디자인 O
+//  2. 기존 유저가 아니면 회원가입 화면으로 이동 O
+//  3. 비밀번호 찾기 기능 X
+//  4. 로딩화면 추가 O
 @AndroidEntryPoint
 class EmailLoginFragment : Fragment() {
     private val mViewModel by viewModels<EmailLoginViewModel>()
@@ -28,6 +35,8 @@ class EmailLoginFragment : Fragment() {
         with(binding) {
             viewmodel = mViewModel
             navController = findNavController()
+            blank = ""
+
             lifecycleOwner = viewLifecycleOwner
         }
 
@@ -36,8 +45,35 @@ class EmailLoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         setObserver()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // 툴바 설정
+        with((activity as MainActivity).supportActionBar) {
+            this?.show()
+            this?.title = "로그인"
+            this?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    override fun onDestroyView() {
+        mViewModel.clear()
+        super.onDestroyView()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+                true
+            }
+            else -> false
+        }
     }
 
     private fun setObserver() {
@@ -45,13 +81,28 @@ class EmailLoginFragment : Fragment() {
             if (msg.isNotEmpty()) {
                 when (msg) {
                     ErrorMessage.SUCCESS -> {
-                        findNavController().navigate(R.id.action_emailLoginFragment_to_homeFragment)
+                        mViewModel.getUserData()
+                            .addOnSuccessListener {
+                                val user = it.toObject(User::class.java)
+                                mViewModel.setLoading(false)
+
+                                if (user != null) { // 기존 유저일 때
+                                    findNavController().navigate(R.id.action_emailLoginFragment_to_homeFragment)
+                                } else {
+                                    findNavController().navigate(R.id.createAccountFragment)
+                                }
+                            }
                     }
                     else -> {
-                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
-                            .show()
                     }
                 }
+            }
+        }
+        mViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                (requireActivity() as MainActivity).loading()
+            } else {
+                (requireActivity() as MainActivity).ready()
             }
         }
     }
