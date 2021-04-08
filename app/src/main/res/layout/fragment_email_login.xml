@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:onClick="@{() -> viewmodel.login()}"
-            app:buttonEnabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.password.equals(blank)}"
+            app:customButtonEnabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.password.equals(blank)}"
             app:customButtonIcon="@drawable/ic_lock_open"
             app:customButtonText="로그인"
             app:layout_constraintBottom_toTopOf="@id/create_account_text"

@@ -55,7 +55,7 @@ class ProfileFragment : Fragment(), PostPagingAdapter.PostItemListener {
 
     // 게시글 클릭
     override fun onItemClickListener(pos: Int) {
-        gViewModel.setPost(postAdapter.getItem(pos))
+        gViewModel.post.value = postAdapter.getItem(pos)
         findNavController().navigate(R.id.postDialog)
     }
 

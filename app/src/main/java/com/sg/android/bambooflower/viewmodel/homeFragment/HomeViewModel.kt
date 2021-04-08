@@ -15,26 +15,31 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val repository: HomeRepository) : ViewModel() {
-    private val _mission = MutableLiveData<String>()
-    private val _posts = MutableLiveData<List<Post>>()
+    private val _buttonAction = MutableLiveData("") // 버튼 액션
+    private val _isChanging = MutableLiveData(false) // 미션 로딩 뷰
 
-    val mission: LiveData<String> = _mission
-    val posts: LiveData<List<Post>> = _posts
-    val diaries = repository.getAllDiaries()
+    val mission = MutableLiveData<String>() // 미션
+    val posts = MutableLiveData<List<Post>>() // 게시글
+    val isAchieved = MutableLiveData<Boolean>() // 미션 수행 확인
+    val isLoading = MutableLiveData(true) // 로딩 창
+    val buttonEnabled = MutableLiveData(true) // 버튼 활성화
+    val currentTime = MutableLiveData<Long>() // 현재 시간
+
+    val buttonAction: LiveData<String> = _buttonAction
+    val isChanging: LiveData<Boolean> = _isChanging
+    val diaries = repository.getAllDiaries() // 일기 리스트
         .flow
         .cachedIn(viewModelScope)
 
-    fun setMission(missionData: String) {
-        _mission.value = missionData
+    fun setButtonAction(action: String) {
+        _buttonAction.value = action
     }
 
-    fun setPosts(postsData: List<Post>) {
-        _posts.value = postsData
-    }
-
+    // 홈 화면에 표시할 데이터를 가져옴
     fun getHomeData() =
         repository.getHomeData()
 
+    // 미션 완수
     fun successMission(user: User) {
         repository.successMission()
             .addOnSuccessListener {
@@ -45,10 +50,15 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                 }
 
                 Log.i("SuccessMission", "성공: $user")
+                isAchieved.value = true
             }
     }
 
+    // 미션 변경
     fun changeMission(user: User) {
+        _isChanging.value = true
+        buttonEnabled.value = false
+
         repository.changeMission()
             .addOnSuccessListener {
                 val updateData = it.data as Map<*, *>
@@ -57,8 +67,11 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                     missionDoc = updateData["missionDoc"] as String?
                 }
 
-                _mission.value = user.myMission ?: ""
+                mission.value = user.myMission ?: ""
                 Log.i("ChangeMission", "성공: $user")
+
+                _isChanging.value = false
+                buttonEnabled.value = true
             }
     }
 }

@@ -7,6 +7,10 @@
         <variable
             name="viewmodel"
             type="com.sg.android.bambooflower.viewmodel.diaryWriteFragment.DiaryWriteViewModel" />
+
+        <variable
+            name="user"
+            type="com.sg.android.bambooflower.data.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +28,7 @@
             android:id="@+id/check_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.saveDiary()}"
+            android:onClick="@{() -> viewmodel.saveDiary(user.uid)}"
             android:text="저장"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

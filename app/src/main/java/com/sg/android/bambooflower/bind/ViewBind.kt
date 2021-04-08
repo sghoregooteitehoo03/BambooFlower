@@ -2,12 +2,19 @@ package com.sg.android.bambooflower.bind
 
 import android.annotation.SuppressLint
 import android.os.Build
+import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.CalendarView
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
@@ -18,6 +25,7 @@ import com.sg.android.bambooflower.ui.view.CustomButton
 import java.text.SimpleDateFormat
 import java.util.*
 
+//Set
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setInfo")
 fun setInfo(view: TextView, postData: Post) {
@@ -29,7 +37,7 @@ fun setInfo(view: TextView, postData: Post) {
 
 @BindingAdapter("app:setCalendar")
 fun setCalendar(view: TextView, diaryData: Diary) {
-    val date = SimpleDateFormat("yyyy.MM.dd (EE)", Locale.KOREA).format(diaryData.timeStamp)
+    val date = SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diaryData.timeStamp)
 
     view.text = date
 }
@@ -49,7 +57,70 @@ fun errorMessage(view: TextView, errorMsg: String) {
 }
 
 @RequiresApi(Build.VERSION_CODES.M)
-@BindingAdapter("app:buttonEnabled")
-fun buttonEnabled(view: CustomButton, isEnabled: Boolean) {
+@BindingAdapter("app:customButtonEnabled")
+fun customButtonEnabled(view: CustomButton, isEnabled: Boolean) {
     view.setCustomEnabled(isEnabled)
+}
+
+@BindingAdapter("app:buttonEnabled")
+fun buttonEnabled(view: View, isEnabled: Boolean) {
+    view.isEnabled = isEnabled
+}
+
+@BindingAdapter("app:setRefresh")
+fun setRefresh(view: SwipeRefreshLayout, isLoading: Boolean) {
+    view.isRefreshing = isLoading
+}
+
+@BindingAdapter("app:selectDate")
+fun selectDate(view: CalendarView, dateTime: Long) {
+    view.date = dateTime
+}
+
+@BindingAdapter("app:searchPosition")
+fun searchPosition(view: RecyclerView, position: Int) {
+    if (position != -1) {
+        view.scrollToPosition(position + 1)
+    }
+}
+
+@BindingAdapter("app:leftHour")
+fun leftHour(view: TextView, currentTime: Long) {
+    val currentHour = SimpleDateFormat("HH", Locale.KOREA)
+        .format(currentTime)
+        .toInt()
+    val leftHour = 24 - currentHour
+
+    view.text = "${leftHour}h 남음"
+}
+
+// Listener
+@BindingAdapter("app:setRefreshListener")
+fun setRefreshListener(view: SwipeRefreshLayout, listener: InverseBindingListener) {
+    view.setOnRefreshListener {
+        listener.onChange()
+    }
+}
+
+@BindingAdapter("app:selectDateListener")
+fun selectDateListener(view: CalendarView, listener: InverseBindingListener) {
+    view.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        val date = Calendar.getInstance().apply {
+            set(year, month, dayOfMonth)
+        }.timeInMillis
+        view.date = date
+
+        listener.onChange()
+    }
+}
+
+// Get
+@InverseBindingAdapter(attribute = "app:setRefresh", event = "app:setRefreshListener")
+fun getRefresh(view: SwipeRefreshLayout): Boolean {
+    return view.isRefreshing
+}
+
+@InverseBindingAdapter(attribute = "app:selectDate", event = "app:selectDateListener")
+fun getSelectDate(view: CalendarView): Long {
+    return view.date
 }

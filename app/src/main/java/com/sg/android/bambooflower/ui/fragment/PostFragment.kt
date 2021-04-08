@@ -52,7 +52,7 @@ class PostFragment : Fragment(), PostPagingAdapter.PostItemListener {
 
     // 아이템 클릭
     override fun onItemClickListener(pos: Int) {
-        gViewModel.setPost(postAdapter.getPost(pos)!!)
+        gViewModel.post.value = postAdapter.getPost(pos)!!
 
         findNavController().navigate(R.id.postDialog)
     }

@@ -3,9 +3,7 @@ package com.sg.android.bambooflower.viewmodel.homeFragment
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.data.database.DiaryDao
 import com.sg.android.bambooflower.other.Contents
 import javax.inject.Inject
@@ -29,6 +27,6 @@ class HomeRepository @Inject constructor(
 
     fun getAllDiaries() =
         Pager(PagingConfig(pageSize = 20)) {
-            dao.getAllDiaries()
+            dao.getAllPagingDiaries(auth.currentUser?.uid)
         }
 }

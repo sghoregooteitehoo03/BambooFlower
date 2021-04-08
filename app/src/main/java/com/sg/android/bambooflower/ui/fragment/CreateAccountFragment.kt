@@ -17,11 +17,6 @@ import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.createAccountFragment.CreateAccountViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  1. 디자인 O
-//  2. 로딩화면 추가 O
-//  3. 회원가입 기능 O
-
 @AndroidEntryPoint
 class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
     private val mViewModel by viewModels<CreateAccountViewModel>()

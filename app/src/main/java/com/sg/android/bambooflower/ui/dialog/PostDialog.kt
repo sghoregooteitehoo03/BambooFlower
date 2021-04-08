@@ -28,7 +28,7 @@ class PostDialog : DialogFragment() {
     }
 
     override fun onDestroyView() {
-        gViewModel.setPost(null)
+        gViewModel.post.value = null
         super.onDestroyView()
     }
 

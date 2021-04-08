@@ -17,12 +17,13 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
     val contents = MutableLiveData("")
     val isSaved: LiveData<Boolean> = _isSaved
 
-    fun saveDiary() = viewModelScope.launch {
+    fun saveDiary(uid: String) = viewModelScope.launch {
         if (contents.value!!.isNotEmpty()) {
             val diaryData = Diary(
                 id = null,
                 contents = contents.value!!,
-                timeStamp = System.currentTimeMillis()
+                timeStamp = System.currentTimeMillis(),
+                uid = uid
             )
 
             repository.saveDiary(diaryData)
