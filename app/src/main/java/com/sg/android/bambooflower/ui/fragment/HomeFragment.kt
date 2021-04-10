@@ -29,13 +29,9 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  1. 디자인 O
-//  2. 데이터 읽어오는 화면 디자인 O
-//  3. 데이터 갱신 O
-//  4. 수락 시 디자인 O
-//  5. 변경 시 디지인 O
-//  6. 감사일기 각 계정마다 존재하게 구현 O
-//  7. 달력 누를 시 일 별로 작성한 일기장 보여주는 기능 구현 O
+//  1. 인증게시판으로 넘어가서 게시글을 작성하면 미션이 완수되게 구현
+//  2. 이미 수행한 미션은 다시 표시되지 않게하기
+
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener {

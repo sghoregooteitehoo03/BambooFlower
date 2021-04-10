@@ -3,11 +3,10 @@ package com.sg.android.bambooflower.adapter.viewholder
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.Post
-import com.sg.android.bambooflower.databinding.ItemPostBinding
 import com.sg.android.bambooflower.databinding.ItemPostPreviewBinding
 
-class PostViewHolder(
-    private val binding: ItemPostBinding,
+class PostPreviewViewHolder(
+    private val binding: ItemPostPreviewBinding,
     private val listener: PostPagingAdapter.PostItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
 

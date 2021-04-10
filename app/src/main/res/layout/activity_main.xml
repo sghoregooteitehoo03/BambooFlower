@@ -20,7 +20,30 @@
             android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_search_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:visibility="gone"
+                app:endIconMode="clear_text"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="게시글 제목 및 내용을 입력해주세요."
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:textSize="12sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.appcompat.widget.Toolbar>
 
         <fragment
             android:id="@+id/nav_host_fragment"
@@ -46,6 +69,6 @@
         <com.sg.android.bambooflower.ui.view.LoadingView
             android:id="@+id/loading_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

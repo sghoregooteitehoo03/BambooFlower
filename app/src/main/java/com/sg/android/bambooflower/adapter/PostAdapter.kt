@@ -3,21 +3,21 @@ package com.sg.android.bambooflower.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.sg.android.bambooflower.adapter.viewholder.PostViewHolder
+import com.sg.android.bambooflower.adapter.viewholder.PostPreviewViewHolder
 import com.sg.android.bambooflower.data.Post
-import com.sg.android.bambooflower.databinding.ItemPostBinding
+import com.sg.android.bambooflower.databinding.ItemPostPreviewBinding
 
-class PostAdapter : RecyclerView.Adapter<PostViewHolder>() {
+class PostAdapter : RecyclerView.Adapter<PostPreviewViewHolder>() {
     private var posts = listOf<Post>()
     private lateinit var mListener: PostPagingAdapter.PostItemListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val view = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(view, mListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostPreviewViewHolder {
+        val view = ItemPostPreviewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PostPreviewViewHolder(view, mListener)
     }
 
-    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(posts[position])
+    override fun onBindViewHolder(holderPreview: PostPreviewViewHolder, position: Int) {
+        holderPreview.bind(posts[position])
     }
 
     override fun getItemCount(): Int {

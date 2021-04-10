@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.sg.android.bambooflower.adapter.viewholder.PostPreviewViewHolder
 import com.sg.android.bambooflower.adapter.viewholder.PostViewHolder
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.databinding.ItemPostBinding
@@ -16,8 +17,8 @@ class PostPagingAdapter : PagingDataAdapter<Post, PostViewHolder>(diffUtil) {
 
     private lateinit var mListener: PostItemListener
 
-    override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(getItem(position))
+    override fun onBindViewHolder(holderPreview: PostViewHolder, position: Int) {
+        holderPreview.bind(getItem(position))
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {

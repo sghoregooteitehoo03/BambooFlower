@@ -9,7 +9,8 @@ import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 
-class PostPagingSource(private val store: FirebaseFirestore) : PagingSource<QuerySnapshot, Post>() {
+class PostFilterPagingSource(private val store: FirebaseFirestore) :
+    PagingSource<QuerySnapshot, Post>() {
 
     override fun getRefreshKey(state: PagingState<QuerySnapshot, Post>): QuerySnapshot? {
         return state.closestPageToPosition(0)

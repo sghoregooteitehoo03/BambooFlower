@@ -165,7 +165,7 @@
                     android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
-                    tools:listitem="@layout/item_post" />
+                    tools:listitem="@layout/item_post_preview" />
             </LinearLayout>
 
             <TextView

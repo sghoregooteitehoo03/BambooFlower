@@ -30,7 +30,7 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_postFragment"
-            app:destination="@id/postFragment" />
+            app:destination="@id/postListFragment" />
         <action
             android:id="@+id/action_homeFragment_to_postDialog"
             app:destination="@id/postDialog" />
@@ -73,16 +73,19 @@
             app:popUpToInclusive="true" />
     </fragment>
     <fragment
-        android:id="@+id/postFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.PostFragment"
-        android:label="PostFragment"
-        tools:layout="@layout/fragment_post">
+        android:id="@+id/postListFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.PostListFragment"
+        android:label="PostListFragment"
+        tools:layout="@layout/fragment_post_list">
         <action
-            android:id="@+id/action_postFragment_to_addPostFragment"
+            android:id="@+id/action_postListFragment_to_addPostFragment"
             app:destination="@id/addPostFragment" />
         <action
-            android:id="@+id/action_postFragment_to_postDialog"
+            android:id="@+id/action_postListFragment_to_postDialog"
             app:destination="@id/postDialog" />
+        <action
+            android:id="@+id/action_postListFragment_to_postSearchFragment"
+            app:destination="@id/postSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -130,4 +133,9 @@
         android:name="com.sg.android.bambooflower.ui.dialog.CalendarDialog"
         android:label="CalendarDialog"
         tools:layout="@layout/dialog_calendar" />
+    <fragment
+        android:id="@+id/postSearchFragment"
+        tools:layout="@layout/fragment_post_search"
+        android:name="com.sg.android.bambooflower.ui.fragment.PostSearchFragment"
+        android:label="PostSearchFragment" />
 </navigation>
