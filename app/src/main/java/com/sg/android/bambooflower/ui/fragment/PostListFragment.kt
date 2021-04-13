@@ -19,10 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO:
-//  1. 디자인 O
-//  2. 데이터 갱신 O
-//  3. 서치 기능 X
+// TODO: 서치 기능
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

@@ -1,13 +1,11 @@
 package com.sg.android.bambooflower.bind
 
 import android.annotation.SuppressLint
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import android.view.View
-import android.widget.Button
-import android.widget.CalendarView
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -15,6 +13,7 @@ import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
@@ -40,6 +39,12 @@ fun setCalendar(view: TextView, diaryData: Diary) {
     val date = SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diaryData.timeStamp)
 
     view.text = date
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setTitle")
+fun setTitle(view: TextView, title: String) {
+    view.setText("[$title]")
 }
 
 @SuppressLint("SetTextI18n")
@@ -92,6 +97,18 @@ fun leftHour(view: TextView, currentTime: Long) {
     val leftHour = 24 - currentHour
 
     view.text = "${leftHour}h 남음"
+}
+
+@BindingAdapter("app:setUriImage")
+fun setUriImage(view: ImageView, imageUri: Uri) {
+    Glide.with(view.context).load(imageUri).into(view)
+    view.clipToOutline = true
+}
+
+@BindingAdapter("app:setStringImage")
+fun setStringImage(view: ImageView, imageStr: String) {
+    Glide.with(view.context).load(imageStr).into(view)
+    view.clipToOutline = true
 }
 
 // Listener

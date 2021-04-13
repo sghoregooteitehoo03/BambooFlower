@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.storage.FirebaseStorage
 import com.sg.android.bambooflower.data.database.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -31,6 +32,11 @@ object AppModule {
     @Provides
     fun provideFunctions() =
         FirebaseFunctions.getInstance()
+
+    @Singleton
+    @Provides
+    fun provideFireStorage() =
+        FirebaseStorage.getInstance()
 
     @Singleton
     @Provides
