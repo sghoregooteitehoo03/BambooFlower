@@ -99,7 +99,7 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     override fun onItemClickListener(pos: Int) {
         gViewModel.post.value = postAdapter.getPost(pos)!!
 
-        findNavController().navigate(R.id.postDialog)
+        findNavController().navigate(R.id.postFragment)
     }
 
     private fun setObserver() {

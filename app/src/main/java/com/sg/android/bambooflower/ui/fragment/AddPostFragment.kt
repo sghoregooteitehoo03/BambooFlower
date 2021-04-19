@@ -28,13 +28,7 @@ import com.sg.android.bambooflower.viewmodel.addPostFragment.AddPostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-// TODO:
-//  1. 디자인 O
-//  2. 사진 가져오는거 구현 O
-//  3. 사진 삭제 및 이동 구현 O
-//  4. 서버에 이미지 저장 O
-//  5. 레이아웃 유연하게 만들기 O
-//  6. 사진 리스트 액티비티를 만들어서 그곳에서 가져오게 구현 O
+// TODO: 사진 압축해서 보내게 구현
 
 @AndroidEntryPoint
 class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {

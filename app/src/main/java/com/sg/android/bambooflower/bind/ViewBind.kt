@@ -7,12 +7,14 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
@@ -105,10 +107,28 @@ fun setUriImage(view: ImageView, imageUri: Uri) {
     view.clipToOutline = true
 }
 
-@BindingAdapter("app:setStringImage")
-fun setStringImage(view: ImageView, imageStr: String) {
-    Glide.with(view.context).load(imageStr).into(view)
-    view.clipToOutline = true
+@BindingAdapter("app:isCheerUp")
+fun isCheerUp(view: CustomButton, cheerUp: Boolean) {
+    if (cheerUp) {
+        view.setCustomButtonIcon(R.drawable.ic_thumb_up)
+    } else {
+        view.setCustomButtonIcon(R.drawable.ic_thumb_up_off)
+    }
+}
+
+//@BindingAdapter("app:setScaleType")
+//fun setScaleType(view: ImageView, imageOptions: Boolean) {
+//    view.scaleType = if (imageOptions) {
+//        ImageView.ScaleType.CENTER_CROP
+//    } else {
+//        ImageView.ScaleType.FIT_CENTER
+//    }
+//}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setPosition", "app:setSize", requireAll = true)
+fun setPosition(view: TextView, pos: Int, size: Int) {
+    view.text = "${pos}/${size}"
 }
 
 // Listener

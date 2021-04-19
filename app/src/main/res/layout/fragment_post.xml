@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.sg.android.bambooflower.other.Contents" />
+
+        <variable
+            name="viewmodel"
+            type="com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel" />
+
+        <variable
+            name="user"
+            type="com.sg.android.bambooflower.data.User" />
+
+        <variable
+            name="post"
+            type="com.sg.android.bambooflower.data.Post" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="18dp"
+                android:paddingTop="12dp"
+                android:paddingEnd="18dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{post.title}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="[제목]" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginTop="8dp"
+                    android:src="@drawable/ic_person"
+                    app:civ_circle_background_color="@color/gray"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_text" />
+
+                <TextView
+                    android:id="@+id/info_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/divide_view"
+                    app:layout_constraintStart_toEndOf="@id/profile_image"
+                    app:layout_constraintTop_toBottomOf="@id/title_text"
+                    app:setInfo="@{post}"
+                    tools:text="닉네임 | 2021.03.19" />
+
+                <View
+                    android:id="@+id/divide_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/gray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_image" />
+
+                <TextView
+                    android:id="@+id/content_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:minHeight="80dp"
+                    android:text="@{post.contents}"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/divide_view"
+                    tools:text="미워할 수가 없는 pretty rap game 술독에 빠트리기도 해 사람 구실도 하게 해 1년 전 반지하 속 술병 든 폐인 1년 후 취직 돈 벌어, 들어 총 모양의" />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/image_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/content_text"
+                    tools:background="@color/black" />
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:onClick="@{() -> viewmodel.setButtonAction(Contents.ACTION_SHOW_IMAGE)}"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_fullscreen"
+                    app:layout_constraintEnd_toEndOf="@id/image_pager"
+                    app:layout_constraintTop_toTopOf="@id/image_pager" />
+
+                <LinearLayout
+                    android:id="@+id/slider_dots"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="@id/image_pager"
+                    app:layout_constraintEnd_toEndOf="@id/image_pager"
+                    app:layout_constraintStart_toStartOf="@id/image_pager" />
+
+                <com.sg.android.bambooflower.ui.view.CustomButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:onClick="@{() -> viewmodel.cheerUp(user.uid, post)}"
+                    app:customButtonIcon="@drawable/ic_thumb_up_off"
+                    app:customButtonText="화이팅"
+                    app:isCheerUp="@{viewmodel.isCheerUp()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/image_pager" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

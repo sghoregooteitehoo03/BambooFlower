@@ -5,9 +5,10 @@ data class Post(
     val contents: String? = null,
     val image: List<String>? = null,
     val viewCount: Int? = null,
-    val favoriteCount: Int? = null,
-    val favorites: MutableMap<String, Boolean> = mutableMapOf(),
+    var favoriteCount: Int = 0,
+    var favorites: MutableMap<String, Boolean> = mutableMapOf(),
     val timeStamp: Long? = null,
+    val uid: String? = null,
     val writer: String? = null,
-    val uid: String? = null
+    val postPath: String? = null
 )

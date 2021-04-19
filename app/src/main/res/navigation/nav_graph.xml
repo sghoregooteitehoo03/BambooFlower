@@ -29,11 +29,11 @@
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_postFragment"
+            android:id="@+id/action_homeFragment_to_postListFragment"
             app:destination="@id/postListFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_postDialog"
-            app:destination="@id/postDialog" />
+            android:id="@+id/action_homeFragment_to_postFragment"
+            app:destination="@id/postFragment" />
         <action
             android:id="@+id/action_homeFragment_to_diaryWriteFragment"
             app:destination="@id/diaryWriteFragment" />
@@ -82,7 +82,7 @@
             app:destination="@id/addPostFragment" />
         <action
             android:id="@+id/action_postListFragment_to_postDialog"
-            app:destination="@id/postDialog" />
+            app:destination="@id/postFragment" />
         <action
             android:id="@+id/action_postListFragment_to_postSearchFragment"
             app:destination="@id/postSearchFragment" />
@@ -92,11 +92,15 @@
         android:name="com.sg.android.bambooflower.ui.fragment.AddPostFragment"
         android:label="AddPostFragment"
         tools:layout="@layout/fragment_add_post" />
-    <dialog
-        android:id="@+id/postDialog"
-        android:name="com.sg.android.bambooflower.ui.dialog.PostDialog"
-        android:label="PostDialog"
-        tools:layout="@layout/dialog_post" />
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.PostFragment"
+        android:label="PostFragment"
+        tools:layout="@layout/fragment_post">
+        <action
+            android:id="@+id/action_postFragment_to_reportDialog"
+            app:destination="@id/reportDialog" />
+    </fragment>
     <fragment
         android:id="@+id/diaryWriteFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryWriteFragment"
@@ -135,7 +139,12 @@
         tools:layout="@layout/dialog_calendar" />
     <fragment
         android:id="@+id/postSearchFragment"
-        tools:layout="@layout/fragment_post_search"
         android:name="com.sg.android.bambooflower.ui.fragment.PostSearchFragment"
-        android:label="PostSearchFragment" />
+        android:label="PostSearchFragment"
+        tools:layout="@layout/fragment_post_search" />
+    <dialog
+        android:id="@+id/reportDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.ReportDialog"
+        android:label="ReportDialog"
+        tools:layout="@layout/dialog_report" />
 </navigation>

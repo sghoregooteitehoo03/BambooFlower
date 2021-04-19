@@ -52,8 +52,9 @@ class AddPostRepository @Inject constructor(
             viewCount = 0,
             favoriteCount = 0,
             timeStamp = currentTime,
+            uid = uid,
             writer = user.name,
-            uid = uid
+            postPath = docPath
         )
 
         return store.collection(Contents.COLLECTION_POST) // 게시글 작성

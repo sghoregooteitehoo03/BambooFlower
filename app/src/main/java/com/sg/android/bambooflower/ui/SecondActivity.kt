@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.ActivitySecondBinding
+import com.sg.android.bambooflower.other.Contents
 
 class SecondActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySecondBinding
@@ -28,6 +29,12 @@ class SecondActivity : AppCompatActivity() {
 
     private fun checkAction() {
         when (intent.action) {
+            Contents.SHOW_IMAGE_FRAG -> {
+                navController.navigate(R.id.action_emptyFragment_to_imageDetailFragment)
+            }
+            Contents.SHOW_ALBUM_FRAG -> {
+                navController.navigate(R.id.action_emptyFragment_to_albumFragment)
+            }
             else -> {
             }
         }

@@ -3,10 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/second_nav_graph"
-    app:startDestination="@id/albumFragment">
+    app:startDestination="@id/emptyFragment">
+
     <fragment
         android:id="@+id/albumFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.AlbumFragment"
         android:label="AlbumFragment"
         tools:layout="@layout/fragment_album" />
+    <fragment
+        android:id="@+id/imageDetailFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.ImageDetailFragment"
+        android:label="ImageDetailFragment"
+        tools:layout="@layout/fragment_image_detail" />
+    <fragment
+        android:id="@+id/emptyFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.EmptyFragment"
+        android:label="EmptyFragment">
+        <action
+            android:id="@+id/action_emptyFragment_to_albumFragment"
+            app:destination="@id/albumFragment"
+            app:popUpTo="@id/emptyFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_emptyFragment_to_imageDetailFragment"
+            app:destination="@id/imageDetailFragment"
+            app:popUpTo="@id/emptyFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

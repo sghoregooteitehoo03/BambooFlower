@@ -69,4 +69,8 @@ class CustomButton : LinearLayout {
         buttonLayout.isEnabled = isEnabled
         setEnabled(isEnabled)
     }
+
+    fun setCustomButtonIcon(res: Int) {
+        buttonImageView.setImageResource(res)
+    }
 }

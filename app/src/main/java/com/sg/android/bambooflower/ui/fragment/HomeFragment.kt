@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.ui.fragment
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -87,7 +86,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     // 리사이클러뷰 아이템 클릭
     override fun onItemClickListener(pos: Int) {
         gViewModel.post.value = postAdapter.getItem(pos)
-        findNavController().navigate(R.id.postDialog)
+        findNavController().navigate(R.id.postFragment)
     }
 
     // 일기 작성 아이템 클릭
