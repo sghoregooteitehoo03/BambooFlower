@@ -34,13 +34,14 @@ class ImageDetailFragment : Fragment() {
     ): View {
         // 인스턴스 설정
         val binding = FragmentImageDetailBinding.inflate(inflater)
-        val imageList = requireActivity().intent.getStringArrayExtra(Contents.EXTRA_SET_IMAGE)
-            ?.toList()!!
-        val imagePos = requireActivity().intent.getIntExtra(Contents.EXTRA_SET_POS, 0)
+        val imageList =
+            requireActivity().intent.getStringArrayExtra(Contents.EXTRA_SET_IMAGE) // 이미지 리스트
+                ?.toList()!!
+        val imagePos = requireActivity().intent.getIntExtra(Contents.EXTRA_SET_POS, 0)// 이미지 위치
         mViewModel.imagePos.value = imagePos + 1
         imageAdapter = ImagePagerAdapter(imageList, true)
 
-
+        // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
             this.imageSize = imageList.size

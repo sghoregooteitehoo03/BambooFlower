@@ -14,4 +14,9 @@
         <attr name="customButtonIcon" format="reference|integer" />
         <attr name="customButtonText" format="reference|string" />
     </declare-styleable>
+
+    <declare-styleable name="CustomSatisfactionButton">
+        <attr name="satisfactionButtonIcon" format="reference|integer" />
+        <attr name="satisfactionButtonText" format="reference|string" />
+    </declare-styleable>
 </resources>

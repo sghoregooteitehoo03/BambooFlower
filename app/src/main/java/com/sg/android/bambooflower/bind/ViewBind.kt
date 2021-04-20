@@ -1,6 +1,7 @@
 package com.sg.android.bambooflower.bind
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -16,11 +17,13 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.Post
+import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
 import java.text.SimpleDateFormat
@@ -101,9 +104,15 @@ fun leftHour(view: TextView, currentTime: Long) {
     view.text = "${leftHour}h 남음"
 }
 
-@BindingAdapter("app:setUriImage")
-fun setUriImage(view: ImageView, imageUri: Uri) {
-    Glide.with(view.context).load(imageUri).into(view)
+@BindingAdapter("app:setUriImage", "app:setResourceImage", "app:setBitmapImage", requireAll = false)
+fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitmap: Bitmap?) {
+    if (imageUri != null) {
+        Glide.with(view.context).load(imageUri).into(view)
+    } else if (imageResource != null) {
+        Glide.with(view.context).load(imageResource).into(view)
+    } else {
+        Glide.with(view.context).load(imageBitmap).into(view)
+    }
     view.clipToOutline = true
 }
 
@@ -115,15 +124,6 @@ fun isCheerUp(view: CustomButton, cheerUp: Boolean) {
         view.setCustomButtonIcon(R.drawable.ic_thumb_up_off)
     }
 }
-
-//@BindingAdapter("app:setScaleType")
-//fun setScaleType(view: ImageView, imageOptions: Boolean) {
-//    view.scaleType = if (imageOptions) {
-//        ImageView.ScaleType.CENTER_CROP
-//    } else {
-//        ImageView.ScaleType.FIT_CENTER
-//    }
-//}
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setPosition", "app:setSize", requireAll = true)

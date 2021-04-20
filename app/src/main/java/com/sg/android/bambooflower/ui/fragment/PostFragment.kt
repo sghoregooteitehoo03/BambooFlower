@@ -26,14 +26,7 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  1. 디자인 O
-//  2. 이미지 페이저 구현 O
-//  3. 좋아요 기능 O
-//  4. 내 게시글일 경우 삭제 구현 O
-//  5. 신고기능 구현 O
-//  6. 이미지 확대 기능 O
-//  7. 유저 데이터 가져오게 구현 X
+// TODO: 프로필 이미지 기능 구현 후 이미지 표시
 
 @AndroidEntryPoint
 class PostFragment : Fragment() {
@@ -116,11 +109,11 @@ class PostFragment : Fragment() {
                 findNavController().navigateUp()
                 true
             }
-            R.id.menu_delete_post -> {
+            R.id.menu_delete_post -> { // 삭제하기
                 deletePost()
                 true
             }
-            R.id.menu_report_post -> {
+            R.id.menu_report_post -> { // 신고하기
                 reportPost()
                 true
             }
@@ -150,6 +143,7 @@ class PostFragment : Fragment() {
                 mViewModel.setButtonAction("")
             }
         }
+        // 이미지 위치
         mViewModel.imagePos.observe(viewLifecycleOwner) { pos ->
             for (i in postData.image!!.indices) {
                 dots[i].setImageDrawable(

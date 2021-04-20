@@ -1,9 +1,11 @@
 package com.sg.android.bambooflower.viewmodel.diaryWriteFragment
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Diary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,14 +16,16 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
     ViewModel() {
     private val _isSaved = MutableLiveData(false)
 
-    val contents = MutableLiveData("")
-    val isSaved: LiveData<Boolean> = _isSaved
+    val contents = MutableLiveData("") // 일기 내용
+    val isSaved: LiveData<Boolean> = _isSaved // 저장 여부
 
-    fun saveDiary(uid: String) = viewModelScope.launch {
+    // 일기 작성
+    fun saveDiary(uid: String, satisfaction: Bitmap) = viewModelScope.launch {
         if (contents.value!!.isNotEmpty()) {
             val diaryData = Diary(
                 id = null,
                 contents = contents.value!!,
+                satisfaction = satisfaction,
                 timeStamp = System.currentTimeMillis(),
                 uid = uid
             )

@@ -59,11 +59,11 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/input_content"
                         android:layout_width="match_parent"
-                        android:minHeight="100dp"
                         android:layout_height="wrap_content"
                         android:background="@color/white"
                         android:gravity="top"
                         android:hint="내용을 입력해주세요."
+                        android:minHeight="100dp"
                         android:text="@={viewmodel.content}"
                         app:layout_constraintTop_toTopOf="parent" />
 

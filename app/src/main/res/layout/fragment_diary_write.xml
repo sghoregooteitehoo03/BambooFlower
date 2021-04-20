@@ -1,37 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="com.sg.android.bambooflower.R" />
 
         <variable
             name="viewmodel"
             type="com.sg.android.bambooflower.viewmodel.diaryWriteFragment.DiaryWriteViewModel" />
 
         <variable
-            name="user"
-            type="com.sg.android.bambooflower.data.User" />
+            name="gviewmodel"
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel" />
+
+        <variable
+            name="navController"
+            type="androidx.navigation.NavController" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/write_diary_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="top"
+            android:hint="자유롭게 작성해보세요."
+            android:minHeight="280dp"
             android:text="@={viewmodel.contents}"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/check_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> viewmodel.saveDiary(user.uid)}"
-            android:text="저장"
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/shape_round"
+            android:backgroundTint="@color/gray_bright"
+            android:onClick="@{() -> navController.navigate(R.id.satisfactionFragment)}"
+            android:padding="8dp"
+            android:scaleType="centerCrop"
+            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:setResourceImage="@{gviewmodel.satisfaction}"
+            tools:src="@drawable/high_image" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
