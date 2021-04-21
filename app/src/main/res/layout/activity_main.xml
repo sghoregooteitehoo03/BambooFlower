@@ -22,6 +22,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/satisfaction_image"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="4dp"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                tools:src="@drawable/high_image" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_search_layout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

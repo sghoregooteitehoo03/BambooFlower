@@ -23,7 +23,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="12dp">
+        android:padding="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/write_diary_input"
@@ -37,6 +37,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/satisfaction_image"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_margin="8dp"
@@ -45,10 +46,10 @@
             android:onClick="@{() -> navController.navigate(R.id.satisfactionFragment)}"
             android:padding="8dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/low_image"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:setResourceImage="@{gviewmodel.satisfaction}"
-            tools:src="@drawable/high_image" />
+            app:setBitmapImage="@{gviewmodel.satisfaction}" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

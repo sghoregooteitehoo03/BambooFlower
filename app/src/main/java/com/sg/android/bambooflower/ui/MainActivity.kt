@@ -1,6 +1,7 @@
 package com.sg.android.bambooflower.ui
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.ActivityMainBinding
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
@@ -78,6 +80,18 @@ class MainActivity : AppCompatActivity() {
     fun ready() {
         backAvailable = true
         binding.loadingView.setVisible(false, window)
+    }
+
+    fun showSatisfaction(image: Bitmap) {
+        with(binding.satisfactionImage) {
+            visibility = View.VISIBLE
+            Glide.with(context).load(image)
+                .into(this)
+        }
+    }
+
+    fun hideSatisfaction() {
+        binding.satisfactionImage.visibility = View.GONE
     }
 
     // 검색화면 설정

@@ -1,28 +1,31 @@
 package com.sg.android.bambooflower.ui.fragment
 
+import android.content.Context
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
+import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.databinding.FragmentDiaryWriteBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.diaryWriteFragment.DiaryWriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 디자인 수정
 @AndroidEntryPoint
-class DiaryWriteFragment : Fragment() {
+class DiaryEditFragment : Fragment() {
     private val mViewModel by viewModels<DiaryWriteViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
-
     private var completeMenu: MenuItem? = null
+
+    private lateinit var diary: Diary // 일기 데이터
+    private lateinit var imm: InputMethodManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,14 +34,21 @@ class DiaryWriteFragment : Fragment() {
     ): View {
         // 인스턴스 설정
         val binding = FragmentDiaryWriteBinding.inflate(inflater)
-        gViewModel.satisfaction.value =
-            BitmapFactory.decodeResource(requireContext().resources, R.drawable.low_image) // 기본값 설정
+        imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        // 이미 작성된 내용을 넣음
+        diary = gViewModel.diary.value!!
+        gViewModel.satisfaction.value = diary.satisfaction
+        mViewModel.contents.value = diary.contents
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
             this.navController = findNavController()
+
+            writeDiaryInput.requestFocus()
+            imm.toggleSoftInput(0, 0)
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -50,7 +60,6 @@ class DiaryWriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        findNavController().navigate(R.id.satisfactionFragment) // 만족도 화면으로 넘어감
         setObserver()
     }
 
@@ -59,7 +68,7 @@ class DiaryWriteFragment : Fragment() {
         // 툴바설정
         with((activity as MainActivity).supportActionBar) {
             this?.show()
-            this?.title = "일기 작성"
+            this?.title = "일기 수정"
             this?.setDisplayHomeAsUpEnabled(true)
         }
     }
@@ -75,6 +84,7 @@ class DiaryWriteFragment : Fragment() {
         inflater.inflate(R.menu.menu_writediary_fragment, menu)
 
         completeMenu = menu.getItem(0)
+        completeMenu?.isEnabled = true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -83,8 +93,8 @@ class DiaryWriteFragment : Fragment() {
                 findNavController().navigateUp()
                 true
             }
-            R.id.menu_write -> { // 작성 완료
-                diaryWrite()
+            R.id.menu_write -> { // 수정 완료
+                diaryEdit()
                 true
             }
             else -> false
@@ -93,25 +103,25 @@ class DiaryWriteFragment : Fragment() {
 
     // 옵저버 설정
     private fun setObserver() {
-        // 저장 여부
-        mViewModel.isSaved.observe(viewLifecycleOwner) {
-            if (it) {
-                Toast.makeText(requireContext(), "저장되었습니다.", Toast.LENGTH_SHORT)
-                    .show()
-                findNavController().navigateUp()
-            }
-        }
         // 일기 내용
         mViewModel.contents.observe(viewLifecycleOwner) {
             completeMenu?.isEnabled = it.isNotEmpty()
         }
+        // 수정된 일기
+        mViewModel.editData.observe(viewLifecycleOwner) { editDiary ->
+            if (editDiary != null) {
+                gViewModel.diary.value = editDiary
+                findNavController().navigateUp()
+
+                Toast.makeText(requireContext(), "수정되었습니다.", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
-    // 일기 작성
-    private fun diaryWrite() {
-        val uid = gViewModel.user.value?.uid!! // 작성자 id
+    // 일기 수정
+    private fun diaryEdit() {
         val satisfactionBitmap = gViewModel.satisfaction.value!!
-
-        mViewModel.saveDiary(uid, satisfactionBitmap)
+        mViewModel.editDiary(diary, satisfactionBitmap)
     }
 }

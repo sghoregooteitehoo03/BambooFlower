@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sg.android.bambooflower.databinding.FragmentSatisfactionBinding
@@ -20,8 +19,16 @@ class SatisfactionFragment : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // 인스턴스 설정
         val binding = FragmentSatisfactionBinding.inflate(inflater)
-        binding.gviewmodel = gViewModel
+
+        // 바인딩 설정
+        with(binding) {
+            this.gviewmodel = gViewModel
+            this.resources = requireContext().resources
+
+            lifecycleOwner = viewLifecycleOwner
+        }
 
         return binding.root
     }

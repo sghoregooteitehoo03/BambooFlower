@@ -8,4 +8,8 @@ class DiaryWriteRepository @Inject constructor(private val dao: DiaryDao) {
     suspend fun saveDiary(diaryData: Diary) {
         dao.insertDiary(diaryData)
     }
+
+    suspend fun editDiary(diaryData: Diary) {
+        dao.editDiary(diaryData)
+    }
 }

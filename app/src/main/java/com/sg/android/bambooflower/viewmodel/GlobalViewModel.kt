@@ -1,5 +1,8 @@
 package com.sg.android.bambooflower.viewmodel
 
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,9 +20,9 @@ class GlobalViewModel : ViewModel() {
     val searchPosition = MutableLiveData<Int?>(null) // 일기 위치
 
     val searchValue = MutableLiveData("") // 찾을 데이터
-    val satisfaction = MutableLiveData(R.drawable.low_image) // 만족도
+    val satisfaction = MutableLiveData<Bitmap?>(null) // 만족도
 
-    fun setSatisfaction(_satisfaction: Int) {
-        satisfaction.value = _satisfaction
+    fun setSatisfaction(satisfactionRes: Int, resources: Resources) {
+        satisfaction.value = BitmapFactory.decodeResource(resources, satisfactionRes)
     }
 }

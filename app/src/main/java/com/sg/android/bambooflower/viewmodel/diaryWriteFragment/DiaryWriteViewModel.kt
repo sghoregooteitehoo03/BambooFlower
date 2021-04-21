@@ -15,9 +15,11 @@ import javax.inject.Inject
 class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWriteRepository) :
     ViewModel() {
     private val _isSaved = MutableLiveData(false)
+    private val _editData = MutableLiveData<Diary?>(null)
 
     val contents = MutableLiveData("") // 일기 내용
     val isSaved: LiveData<Boolean> = _isSaved // 저장 여부
+    val editData: LiveData<Diary?> = _editData
 
     // 일기 작성
     fun saveDiary(uid: String, satisfaction: Bitmap) = viewModelScope.launch {
@@ -33,5 +35,19 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
             repository.saveDiary(diaryData)
             _isSaved.value = true
         }
+    }
+
+    // 일기 수정
+    fun editDiary(ordinaryData: Diary, satisfaction: Bitmap) = viewModelScope.launch {
+        val editDiary = Diary(
+            id = ordinaryData.id,
+            contents = contents.value!!,
+            satisfaction = satisfaction,
+            timeStamp = ordinaryData.timeStamp,
+            uid = ordinaryData.uid
+        )
+
+        repository.editDiary(editDiary)
+        _editData.value = editDiary
     }
 }

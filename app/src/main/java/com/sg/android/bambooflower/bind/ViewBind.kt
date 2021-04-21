@@ -110,7 +110,7 @@ fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitma
         Glide.with(view.context).load(imageUri).into(view)
     } else if (imageResource != null) {
         Glide.with(view.context).load(imageResource).into(view)
-    } else {
+    } else if (imageBitmap != null) {
         Glide.with(view.context).load(imageBitmap).into(view)
     }
     view.clipToOutline = true

@@ -9,6 +9,10 @@
         <variable
             name="gviewmodel"
             type="com.sg.android.bambooflower.viewmodel.GlobalViewModel" />
+
+        <variable
+            name="resources"
+            type="android.content.res.Resources" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,7 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:onClick="@{() -> gviewmodel.setSatisfaction(R.drawable.low_image)}"
+            android:onClick="@{() -> gviewmodel.setSatisfaction(R.drawable.low_image, resources)}"
             app:layout_constraintEnd_toStartOf="@+id/medium_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:onClick="@{()->gviewmodel.setSatisfaction(R.drawable.medium_image)}"
+            android:onClick="@{() -> gviewmodel.setSatisfaction(R.drawable.medium_image, resources)}"
             app:layout_constraintEnd_toStartOf="@+id/high_button"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/low_button"
@@ -58,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:onClick="@{()->gviewmodel.setSatisfaction(R.drawable.high_image)}"
+            android:onClick="@{() -> gviewmodel.setSatisfaction(R.drawable.high_image, resources)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/medium_button"
