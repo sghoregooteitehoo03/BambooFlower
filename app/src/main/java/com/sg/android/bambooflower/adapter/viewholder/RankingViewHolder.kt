@@ -11,7 +11,7 @@ class RankingViewHolder(private val binding: ItemRankingBinding) :
     fun bind(userData: User?, currentUserId: String?) {
         with(binding) {
             this.userData = userData
-            this.currnetUserId = currentUserId
+            this.currentUserId = currentUserId
             this.position = bindingAdapterPosition + 1
         }
     }

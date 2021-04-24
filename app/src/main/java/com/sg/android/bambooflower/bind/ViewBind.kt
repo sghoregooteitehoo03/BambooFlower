@@ -4,26 +4,19 @@ import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.Post
-import com.sg.android.bambooflower.other.Contents
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
 import java.text.SimpleDateFormat
@@ -54,8 +47,35 @@ fun setTitle(view: TextView, title: String) {
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setRanking")
-fun setRanking(view: TextView, position: Int) {
-    view.text = "#$position"
+fun setRanking(view: TextView, rank: Int) {
+    view.text = "#$rank"
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setRankingInfo")
+fun setRankingInfo(view: TextView, user: User) {
+    view.text = "Lv: ${user.myLevel} | 수행한 미션: ${user.achievedCount}"
+}
+
+@BindingAdapter("app:setRankingImage")
+fun setRankingImage(view: ImageView, rank: Int) {
+    when (rank) {
+        1 -> {
+            view.visibility = View.VISIBLE
+            Glide.with(view).load(R.drawable.rank1).into(view)
+        }
+        2 -> {
+            view.visibility = View.VISIBLE
+            Glide.with(view).load(R.drawable.rank2).into(view)
+        }
+        3 -> {
+            view.visibility = View.VISIBLE
+            Glide.with(view).load(R.drawable.rank3).into(view)
+        }
+        else -> {
+            view.visibility = View.GONE
+        }
+    }
 }
 
 @BindingAdapter("app:errorMessage")

@@ -18,11 +18,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO:
-//  1. 디자인 O
-//  2. 삭제 기능 O
-//  3. 수정 기능 O
-
 @AndroidEntryPoint
 class DiaryViewerFragment : Fragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()

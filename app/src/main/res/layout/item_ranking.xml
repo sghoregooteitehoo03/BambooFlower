@@ -12,7 +12,7 @@
             type="com.sg.android.bambooflower.data.User" />
 
         <variable
-            name="currnetUserId"
+            name="currentUserId"
             type="String" />
 
         <variable
@@ -33,8 +33,8 @@
                 android:id="@+id/my_color_view"
                 android:layout_width="8dp"
                 android:layout_height="68dp"
-                android:background="@color/brown"
-                android:visibility="@{userData.uid.equals(currnetUserId) ? View.VISIBLE : View.INVISIBLE}" />
+                android:background="@color/green_300"
+                android:visibility="@{userData.uid.equals(currentUserId) ? View.VISIBLE : View.INVISIBLE}" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -51,20 +51,45 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/name_text"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@{userData.name}"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/guideline_ranking"
                     app:layout_constraintStart_toEndOf="@id/profile_image"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="닉네임" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/name_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{userData.name}"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="닉네임" />
+
+                    <ImageView
+                        android:id="@+id/rank_image"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        app:layout_constraintStart_toEndOf="@id/name_text"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:setRankingImage="@{position}"
+                        tools:src="@drawable/rank1" />
+
+                    <TextView
+                        android:id="@+id/info_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/name_text"
+                        app:setRankingInfo="@{userData}"
+                        tools:text="Lv: 3 | 수행한 미션: 10" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_ranking"
@@ -78,8 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/guideline_ranking"
