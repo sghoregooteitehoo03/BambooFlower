@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
@@ -22,6 +23,7 @@ import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentLoginBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
+import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,6 +32,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private val mViewModel by viewModels<LoginViewModel>()
+    private val gViewModel by activityViewModels<GlobalViewModel>()
 
     private lateinit var callbackManager: CallbackManager
 
@@ -38,7 +41,12 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        // 인스턴스 설정
         val binding = FragmentLoginBinding.inflate(inflater)
+        callbackManager = CallbackManager.Factory.create()
+        gViewModel.user.value = null
+
+        // 바인딩 설정
         with(binding) {
             viewmodel = mViewModel
             lifecycleOwner = viewLifecycleOwner
@@ -49,10 +57,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // 인스턴스 설정
-        callbackManager = CallbackManager.Factory.create()
-
         setObserver()
     }
 

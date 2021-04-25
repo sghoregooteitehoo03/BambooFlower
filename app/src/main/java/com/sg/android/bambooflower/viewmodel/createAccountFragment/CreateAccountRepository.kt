@@ -1,7 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.createAccountFragment
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
@@ -29,7 +28,7 @@ class CreateAccountRepository @Inject constructor(
             myLevel = 1,
             myMission = null,
             latestStart = 0,
-            isAchieved = false,
+            achieved = false,
             missionDoc = null
         )
 

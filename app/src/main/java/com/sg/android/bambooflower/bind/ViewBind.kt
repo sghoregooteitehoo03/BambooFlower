@@ -19,6 +19,7 @@ import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
+import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -42,7 +43,7 @@ fun setCalendar(view: TextView, diaryData: Diary) {
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setTitle")
 fun setTitle(view: TextView, title: String) {
-    view.setText("[$title]")
+    view.text = "[$title]"
 }
 
 @SuppressLint("SetTextI18n")
@@ -149,6 +150,31 @@ fun isCheerUp(view: CustomButton, cheerUp: Boolean) {
 @BindingAdapter("app:setPosition", "app:setSize", requireAll = true)
 fun setPosition(view: TextView, pos: Int, size: Int) {
     view.text = "${pos}/${size}"
+}
+
+@BindingAdapter("app:setProfileImage")
+fun setProfileImage(view: CircleImageView, imageUri: String?) {
+    if (imageUri != null) {
+        Glide.with(view)
+            .load(imageUri)
+            .into(view)
+    } else {
+        Glide.with(view)
+            .load(R.drawable.ic_person)
+            .into(view)
+    }
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setLevel")
+fun setLevel(view: TextView, level: Int) {
+    view.text = "Lv $level"
+}
+
+@BindingAdapter("app:setCompleteDate")
+fun setCompleteDate(view: TextView, time: Long) {
+    val format = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(time)
+    view.text = "수행완료: $format"
 }
 
 // Listener

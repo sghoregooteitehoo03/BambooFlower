@@ -19,4 +19,9 @@
         <attr name="satisfactionButtonIcon" format="reference|integer" />
         <attr name="satisfactionButtonText" format="reference|string" />
     </declare-styleable>
+
+    <declare-styleable name="CustomProfileButton">
+        <attr name="profileButtonIcon" format="reference|integer" />
+        <attr name="profileButtonText" format="reference|string" />
+    </declare-styleable>
 </resources>

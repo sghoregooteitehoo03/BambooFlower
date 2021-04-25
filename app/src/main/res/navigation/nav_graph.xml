@@ -128,7 +128,22 @@
         android:id="@+id/profileFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.ProfileFragment"
         android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_profileFragment_to_myPostListFragment"
+            app:destination="@id/myPostListFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_myMissionFragment"
+            app:destination="@id/myMissionFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/createUserFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.CreateUserFragment"
@@ -165,4 +180,19 @@
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryEditFragment"
         android:label="DiaryEditFragment"
         tools:layout="@layout/fragment_diary_write" />
+    <fragment
+        android:id="@+id/myPostListFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.MyPostListFragment"
+        android:label="MyPostListFragment"
+        tools:layout="@layout/fragment_post_list" />
+    <fragment
+        android:id="@+id/myMissionFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.MyMissionFragment"
+        android:label="MyMissionFragment"
+        tools:layout="@layout/fragment_my_mission" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.SettingFragment"
+        android:label="SettingFragment"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

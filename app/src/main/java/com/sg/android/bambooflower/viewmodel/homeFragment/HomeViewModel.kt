@@ -6,11 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
-import com.google.gson.Gson
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.json.JSONObject
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,7 +44,7 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                 val updateData = it.data as Map<*, *>
                 with(user) {
                     achievedCount = updateData["achievedCount"] as Int?
-                    isAchieved = updateData["isAchieved"] as Boolean?
+                    achieved = updateData["isAchieved"] as Boolean?
                 }
 
                 Log.i("SuccessMission", "성공: $user")

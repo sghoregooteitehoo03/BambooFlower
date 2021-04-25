@@ -21,9 +21,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// TODO:
-//  1. 디자인 O
-//  2. 같은 레벨들끼리 순위 X
+// TODO: 프로필 사진 구현 후 적용하기
 
 @AndroidEntryPoint
 class RankingFragment : Fragment() {

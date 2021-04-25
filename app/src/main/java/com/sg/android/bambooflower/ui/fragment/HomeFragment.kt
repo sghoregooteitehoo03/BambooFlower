@@ -144,7 +144,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             .addOnSuccessListener {
                 val jsonObject = JSONObject(it.data as MutableMap<Any?, Any?>).toString()
                 val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
-                Log.i("Check", "data: ${homeData.user.isAchieved}")
+                Log.i("Check", "data: ${homeData.user}")
 
                 gViewModel.user.value = homeData.user // 유저를 공유할 수 있게 GlobalViewModel에 저장함
 
@@ -153,7 +153,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
 
                 mViewModel.isLoading.value = false
                 mViewModel.currentTime.value = System.currentTimeMillis()
-                mViewModel.isAchieved.value = homeData.user.isAchieved!!
+                mViewModel.isAchieved.value = homeData.user.achieved!!
             }
     }
 

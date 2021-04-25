@@ -17,10 +17,17 @@ class PostListViewModel @Inject constructor(private val postListRepository: Post
     val isLoading = MutableLiveData(true) // 로딩 여부
     val postList = MutableLiveData<Flow<PagingData<Post>>?>(null) // 게시글 리스트
 
-    fun syncPost() { // 데이터 갱신
-        postList.value = postListRepository.getPostList()
-            .flow
-            .cachedIn(viewModelScope)
+    fun syncPost(uid: String = "") { // 데이터 갱신
+        postList.value = if (uid.isEmpty()) {
+            postListRepository.getPostList()
+                .flow
+                .cachedIn(viewModelScope)
+        } else {
+            postListRepository.getMyPostList(uid)
+                .flow
+                .cachedIn(viewModelScope)
+        }
+
         isLoading.value = false
     }
 }
