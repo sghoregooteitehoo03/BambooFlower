@@ -20,4 +20,7 @@ interface DiaryDao {
 
     @Update
     suspend fun editDiary(data: Diary)
+
+    @Query("DELETE FROM Diary WHERE uid == :uid")
+    suspend fun clearDiary(uid: String?)
 }

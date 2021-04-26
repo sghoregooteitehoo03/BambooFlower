@@ -46,11 +46,14 @@ class PostRepository @Inject constructor(
 
     // 게시글 삭제
     suspend fun deletePost(postData: Post) {
+        val postPath = postData.postPath!!
+
         for (i in postData.image!!.indices) { // storage에 저장된 이미지를 차례대로 삭제함
-            val imageName = "${postData.postPath}-$i"
+            val imageName = "$i.png"
             val reference = storage.reference
-                .child(Contents.CHILD_POST_IMAGE)
                 .child(postData.uid!!)
+                .child(Contents.CHILD_POST_IMAGE)
+                .child(postPath)
                 .child(imageName)
 
             reference.delete()
@@ -58,7 +61,7 @@ class PostRepository @Inject constructor(
         }
 
         store.collection(Contents.COLLECTION_POST) // firestore에 저장된 데이터를 삭제함
-            .document(postData.postPath!!)
+            .document(postPath)
             .delete()
             .await()
     }

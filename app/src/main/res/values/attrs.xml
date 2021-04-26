@@ -24,4 +24,9 @@
         <attr name="profileButtonIcon" format="reference|integer" />
         <attr name="profileButtonText" format="reference|string" />
     </declare-styleable>
+
+    <declare-styleable name="CustomSettingView">
+        <attr name="settingText" format="reference|string" />
+        <attr name="settingIconVisible" format="reference|boolean" />
+    </declare-styleable>
 </resources>

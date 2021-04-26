@@ -28,7 +28,6 @@ object Contents {
     const val COLLECTION_REPORT = "Report"
 
     const val CHILD_POST_IMAGE = "PostImage"
-    const val CHILD_PROFILE_IMAGE = "ProfileImage"
 
     const val FUNC_GET_HOME_DATA = "getHomeData"
     const val FUNC_SUCCESS_MISSION = "successMission"

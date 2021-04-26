@@ -15,14 +15,15 @@ class ProfileRepository @Inject constructor(
     private val storage: FirebaseStorage
 ) {
 
+    // 프로필 이미지 변경
     suspend fun changeProfileImage(user: User, imageUri: Uri) {
         val uid = user.uid!!
 
-        val imageName = "$uid.png"
+        val imageName = "profile.png"
         val storeRef = store.collection(Contents.COLLECTION_USER)
             .document(uid)
         val storageRef = storage.reference
-            .child(Contents.CHILD_PROFILE_IMAGE)
+            .child(uid)
             .child(imageName)
 
         storageRef.putFile(imageUri) // storage에 이미지 추가
@@ -37,6 +38,7 @@ class ProfileRepository @Inject constructor(
         }.await()
     }
 
+    // 로그아웃
     fun signOut() {
         auth.signOut()
     }

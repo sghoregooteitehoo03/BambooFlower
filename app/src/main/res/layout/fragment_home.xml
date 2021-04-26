@@ -33,7 +33,7 @@
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gray"
+            android:background="@color/gray_bright"
             android:visibility="@{viewmodel.isLoading ? View.GONE : View.VISIBLE}">
 
             <LinearLayout
@@ -113,8 +113,8 @@
                         android:id="@+id/left_time_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
                         android:layout_marginStart="2dp"
+                        android:layout_marginTop="8dp"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toEndOf="@id/left_time_image"

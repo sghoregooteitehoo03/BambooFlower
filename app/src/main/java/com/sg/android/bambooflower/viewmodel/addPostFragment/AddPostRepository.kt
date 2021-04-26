@@ -29,20 +29,20 @@ class AddPostRepository @Inject constructor(
         val docPath = "$currentTime-$uid" // 게시글 문서 위치
 
         val imagePath = mutableListOf<String>() // 이미지 위치
-        var count = 0
 
-        for (image in images) {
-            val imageName = "$docPath-$count" // 이미지 이름
+        for (i in images.indices) {
+            val image = images[i]
+            val imageName = "$i.png" // 이미지 이름
+
             val reference = storage.reference // 저장될 경로
-                .child(Contents.CHILD_POST_IMAGE)
                 .child(uid)
+                .child(Contents.CHILD_POST_IMAGE)
+                .child(docPath)
                 .child(imageName)
 
             reference.putFile(image)
                 .await()
             imagePath.add(reference.downloadUrl.await().toString()) // 이미지 위치 저장
-
-            count++
         }
 
         val postData = Post(

@@ -26,13 +26,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// TODO:
-//  1. 디자인 O (나중에 다시 수정)
-//  2. 프로필 사진 변경 기능 O
-//  3. 로그아웃 기능 O
-//  4. 내 게시글 화면 O
-//  5. 수행한 미션 화면 O
-//  6. 설정 화면 이동 O
+// TODO: 디자인 나중에 수정
 
 @AndroidEntryPoint
 class ProfileFragment : Fragment() {

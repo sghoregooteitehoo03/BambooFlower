@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+// TODO: 디자인
 @AndroidEntryPoint
 class MyMissionFragment : Fragment() {
     private val mViewModel by viewModels<MyMissionViewModel>()
