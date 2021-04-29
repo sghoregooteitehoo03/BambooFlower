@@ -42,4 +42,7 @@ class LoginViewModel @Inject constructor(
         _loginWay.value = 0
         _isSuccessLogin.value = false
     }
+
+    fun isLogin() =
+        repository.isLogin()
 }

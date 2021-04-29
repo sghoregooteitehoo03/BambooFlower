@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.ActivityMainBinding
+import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,6 +53,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
+            // 로그인 되어있으면 홈 화면으로 넘어감
+            navController.navigate(R.id.action_loginFragment_to_homeFragment)
+        }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.homeFragment, R.id.rankingFragment, R.id.profileFragment -> {

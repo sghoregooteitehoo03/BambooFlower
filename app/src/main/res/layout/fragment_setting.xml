@@ -79,10 +79,10 @@
                 app:settingText="회원 탈퇴하기" />
 
             <com.sg.android.bambooflower.ui.view.CustomSettingView
+                android:id="@+id/version_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:settingIconVisible="false"
-                app:settingText="Version 1.0.0" />
+                app:settingIconVisible="false" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.sg.android.bambooflower.BuildConfig
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentSettingBinding
@@ -25,7 +26,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-// TODO: 디자인 O, 문의 기능 O, 일기 모두 삭제 O, storage 구조 변경 O, 회원탈퇴 기능 O
 @AndroidEntryPoint
 class SettingFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SettingViewModel>()
@@ -45,6 +45,9 @@ class SettingFragment : Fragment(), View.OnClickListener {
         // 바인딩 설정
         with(binding) {
             this.clickListener = this@SettingFragment
+            versionText.setSettingText("Version ${BuildConfig.VERSION_NAME}")
+
+            lifecycleOwner = viewLifecycleOwner
         }
 
         return binding.root

@@ -72,4 +72,8 @@ class CustomSettingView : ConstraintLayout {
         }
         typedArray.recycle()
     }
+
+    fun setSettingText(text: String) {
+        customTextView.text = text
+    }
 }

@@ -19,6 +19,7 @@ import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
+import com.sg.android.bambooflower.ui.view.CustomSettingView
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*

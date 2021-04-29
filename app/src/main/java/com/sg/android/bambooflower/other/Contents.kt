@@ -10,6 +10,7 @@ object Contents {
     const val EXTRA_SET_IMAGE = "EXTRA_SET_IMAGE"
     const val EXTRA_GET_IMAGE = "EXTRA_GET_IMAGE"
     const val EXTRA_SET_POS = "EXTRA_SET_POS"
+    const val EXTRA_IS_LOGIN = "EXTRA_IS_LOGIN"
 
     const val PERMISSION_CODE = 250
 

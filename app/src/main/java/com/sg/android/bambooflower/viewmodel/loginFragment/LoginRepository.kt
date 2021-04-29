@@ -22,4 +22,7 @@ class LoginRepository @Inject constructor(
         store.collection(Contents.COLLECTION_USER)
             .document(auth.currentUser!!.uid)
             .get()
+
+    fun isLogin() =
+        auth.currentUser != null
 }
