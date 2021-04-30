@@ -26,7 +26,6 @@ class AddPostViewModel @Inject constructor(private val repository: AddPostReposi
 
     // 게시글 작성
     fun addPost(user: User, images: List<Uri>) = viewModelScope.launch {
-        // TODO: 제목 수정
         _isLoading.value = true
 
         if (content.value!!.isNotEmpty() && images.isNotEmpty()) {

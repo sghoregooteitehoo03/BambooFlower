@@ -27,8 +27,7 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 수정된 회원가입 화면으로 바꾸기
-//  1. 이용약관 (나중에)
+// TODO: 이용약관 (나중에), 디자인 변경 O
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private val mViewModel by viewModels<LoginViewModel>()
@@ -80,10 +79,9 @@ class LoginFragment : Fragment() {
         callbackManager.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             Contents.LOGIN_WITH_GOOGLE -> {
-                loading()
-
                 val result = GoogleSignIn.getSignedInAccountFromIntent(data)
                 if (result.isSuccessful) {
+                    loading()
 
                     val credential =
                         GoogleAuthProvider.getCredential(result.result?.idToken!!, null)
