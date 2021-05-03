@@ -19,8 +19,9 @@ import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-//  버그
-//  1.bottom nav을 이용한 화면 전환시 상태 저장기능 구현
+//  TODO:
+//   . bottom nav을 이용한 화면 전환시 상태 저장기능 구현
+//   . 게시글 작성 후 갱신되게 구현
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()

@@ -9,8 +9,6 @@
 
         <import type="android.view.View" />
 
-        <import type="com.sg.android.bambooflower.other.Contents" />
-
         <variable
             name="viewmodel"
             type="com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel" />
@@ -18,6 +16,10 @@
         <variable
             name="gviewmodel"
             type="com.sg.android.bambooflower.viewmodel.GlobalViewModel" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
 
         <variable
             name="navController"
@@ -76,7 +78,7 @@
                             android:id="@+id/mission_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{viewmodel.mission}"
+                            android:text="@{gviewmodel.user.myMission}"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold"
@@ -134,11 +136,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_300"
-                        android:onClick="@{() -> viewmodel.setButtonAction(Contents.ACTION_COMPLETE_MISSION)}"
+                        android:onClick="@{clickListener}"
                         android:padding="12dp"
                         android:src="@drawable/ic_check"
-                        android:visibility="@{viewmodel.isAchieved() ? View.INVISIBLE : View.VISIBLE}"
-                        app:buttonEnabled="@{viewmodel.buttonEnabled}"
+                        android:visibility="@{gviewmodel.user.achieved ? View.INVISIBLE : View.VISIBLE}"
+                        app:buttonEnabled="@{!viewmodel.isChanging()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/guideline_between_btn"
                         app:layout_constraintStart_toStartOf="parent"
@@ -149,11 +151,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/green_300"
-                        android:onClick="@{() -> viewmodel.setButtonAction(Contents.ACTION_CHANGE_MISSION)}"
+                        android:onClick="@{clickListener}"
                         android:padding="12dp"
                         android:src="@drawable/ic_refresh"
-                        android:visibility="@{viewmodel.isAchieved() ? View.INVISIBLE : View.VISIBLE}"
-                        app:buttonEnabled="@{viewmodel.buttonEnabled}"
+                        android:visibility="@{gviewmodel.user.achieved ? View.INVISIBLE : View.VISIBLE}"
+                        app:buttonEnabled="@{!viewmodel.isChanging()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/guideline_between_btn"
@@ -167,7 +169,7 @@
                         android:layout_marginBottom="4dp"
                         android:background="@drawable/shape_rectangle"
                         android:backgroundTint="@color/green_300"
-                        android:visibility="@{viewmodel.isAchieved() ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{gviewmodel.user.achieved ? View.VISIBLE : View.GONE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -268,7 +270,7 @@
                         android:id="@+id/diary_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="감사 일기"
+                        android:text="하루 일기"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold"

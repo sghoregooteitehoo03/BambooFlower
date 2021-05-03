@@ -28,7 +28,9 @@ import com.sg.android.bambooflower.viewmodel.addPostFragment.AddPostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-// TODO: 사진 압축해서 보내게 구현
+// TODO:
+//  . 게시글을 작성하면 미션이 완수되게 구현
+//  . 사진 압축해서 보내게 구현
 
 @AndroidEntryPoint
 class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {

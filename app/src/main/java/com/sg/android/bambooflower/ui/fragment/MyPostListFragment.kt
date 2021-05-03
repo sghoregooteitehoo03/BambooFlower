@@ -87,7 +87,6 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                 true
             }
             R.id.menu_search -> {
-                findNavController().navigate(R.id.postSearchFragment)
                 true
             }
             else -> false

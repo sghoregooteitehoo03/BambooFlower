@@ -110,8 +110,8 @@ fun selectDate(view: CalendarView, dateTime: Long) {
 }
 
 @BindingAdapter("app:searchPosition")
-fun searchPosition(view: RecyclerView, position: Int) {
-    if (position != -1) {
+fun searchPosition(view: RecyclerView, position: Int?) {
+    if (position != null && position != -1) {
         view.scrollToPosition(position + 1)
     }
 }

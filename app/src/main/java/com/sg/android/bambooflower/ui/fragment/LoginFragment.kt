@@ -27,7 +27,7 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 이용약관 (나중에), 디자인 변경 O
+// TODO: 이용약관 (나중에)
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private val mViewModel by viewModels<LoginViewModel>()

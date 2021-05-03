@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.viewholder.DiaryHeaderViewHolder
 import com.sg.android.bambooflower.adapter.viewholder.DiaryViewHolder
+import com.sg.android.bambooflower.data.DataType
 import com.sg.android.bambooflower.data.Diary
+import com.sg.android.bambooflower.data.DiaryDataModel
 import com.sg.android.bambooflower.databinding.ItemDiaryBinding
 import com.sg.android.bambooflower.databinding.ItemDiaryHeaderBinding
 
-class DiaryPagingAdapter : PagingDataAdapter<Diary, RecyclerView.ViewHolder>(diffUtil) {
-    private val TYPE_HEADER = 0
-    private val TYPE_ITEM = 1
+class DiaryPagingAdapter : PagingDataAdapter<DiaryDataModel, RecyclerView.ViewHolder>(diffUtil) {
 
     private lateinit var mListener: DiaryItemListener
 
@@ -24,32 +24,29 @@ class DiaryPagingAdapter : PagingDataAdapter<Diary, RecyclerView.ViewHolder>(dif
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is DiaryViewHolder) {
-            holder.bind(getItem(position - 1))
+            holder.bind((getItem(position) as DiaryDataModel.Item).diary)
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val holder = if (viewType == TYPE_HEADER) {
-            val view =
-                ItemDiaryHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            DiaryHeaderViewHolder(view, mListener)
-        } else {
-            val view = ItemDiaryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            DiaryViewHolder(view, mListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        when (viewType) {
+            DataType.HEADER.ordinal -> {
+                val view = ItemDiaryHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+                DiaryHeaderViewHolder(view, mListener)
+            }
+            else -> {
+                val view =
+                    ItemDiaryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                DiaryViewHolder(view, mListener)
+            }
         }
-
-        return holder
-    }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            0 -> TYPE_HEADER
-            else -> TYPE_ITEM
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return super.getItemCount() + 1
+        return getItem(position)?.type?.ordinal ?: DataType.ITEM.ordinal
     }
 
     fun setOnDiaryItemListener(_listener: DiaryItemListener) {
@@ -57,14 +54,18 @@ class DiaryPagingAdapter : PagingDataAdapter<Diary, RecyclerView.ViewHolder>(dif
     }
 
     fun getDiaryItem(pos: Int) =
-        getItem(pos)
+        (getItem(pos + 1) as DiaryDataModel.Item).diary
 
-    private companion object diffUtil : DiffUtil.ItemCallback<Diary>() {
-        override fun areItemsTheSame(oldItem: Diary, newItem: Diary): Boolean {
-            return oldItem.id == newItem.id
+    private companion object diffUtil : DiffUtil.ItemCallback<DiaryDataModel>() {
+        override fun areItemsTheSame(oldItem: DiaryDataModel, newItem: DiaryDataModel): Boolean {
+            return if (oldItem is DiaryDataModel.Item && newItem is DiaryDataModel.Item) {
+                oldItem.diary.id == newItem.diary.id
+            } else {
+                oldItem.type.name == newItem.type.name
+            }
         }
 
-        override fun areContentsTheSame(oldItem: Diary, newItem: Diary): Boolean {
+        override fun areContentsTheSame(oldItem: DiaryDataModel, newItem: DiaryDataModel): Boolean {
             return oldItem == newItem
         }
     }

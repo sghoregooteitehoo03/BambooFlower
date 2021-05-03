@@ -9,7 +9,6 @@ import com.sg.android.bambooflower.adapter.paging.PostPagingSource
 import javax.inject.Inject
 
 class PostListRepository @Inject constructor(
-    private val auth: FirebaseAuth,
     private val store: FirebaseFirestore
 ) {
     fun getPostList() =

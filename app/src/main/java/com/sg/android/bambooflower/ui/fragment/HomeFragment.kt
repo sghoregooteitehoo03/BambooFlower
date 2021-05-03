@@ -5,38 +5,50 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.DiaryPagingAdapter
 import com.sg.android.bambooflower.adapter.PostAdapter
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.HomeData
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentHomeBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  1. 인증게시판으로 넘어가서 게시글을 작성하면 미션이 완수되게 구현
-//  2. 이미 수행한 미션은 다시 표시되지 않게하기
+//  . viewmodel 수정 O
+//  . 작성화면으로 넘어가게 구현 O
+//  . 이미 수행한 미션은 다시 표시되지 않게하기 O
+//  . dialog 수정 O
+//  . 인증게시판 스크롤 안되게 수정 O
+//  . 일기 본 후 포지션 바뀌는거 수정 X
+//  . 일기 삭제 및 추가 시 애니메이션 버그 수정 O
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
-    DiaryPagingAdapter.DiaryItemListener {
+    DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<HomeViewModel>()
 
+    private lateinit var user: User
     private lateinit var postAdapter: PostAdapter
     private lateinit var diaryAdapter: DiaryPagingAdapter
 
@@ -46,20 +58,26 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
+        val binding = FragmentHomeBinding.inflate(inflater)
         postAdapter = PostAdapter().apply {
             setOnPostListener(this@HomeFragment)
         }
         diaryAdapter = DiaryPagingAdapter().apply {
             setOnDiaryItemListener(this@HomeFragment)
         }
-        val binding = FragmentHomeBinding.inflate(inflater)
 
         with(binding) {
-            viewmodel = mViewModel
-            gviewmodel = gViewModel
-            navController = findNavController()
+            this.viewmodel = mViewModel
+            this.gviewmodel = gViewModel
+            this.clickListener = this@HomeFragment
+            this.navController = findNavController()
 
-            postList.adapter = postAdapter
+            with(postList) {
+                postAdapter.stateRestorationPolicy =
+                    RecyclerView.Adapter.StateRestorationPolicy.PREVENT
+                adapter = postAdapter
+                isNestedScrollingEnabled = false
+            }
             diaryList.adapter = diaryAdapter
 
             lifecycleOwner = viewLifecycleOwner
@@ -89,9 +107,9 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         findNavController().navigate(R.id.postFragment)
     }
 
-    // 일기 작성 아이템 클릭
+    // 일기 작성 클릭
     override fun addItemClickListener() {
-        findNavController().navigate(R.id.diaryWriteFragment)
+        findNavController().navigate(R.id.action_homeFragment_to_diaryWriteFragment)
     }
 
     // 일기 아이템 클릭
@@ -100,6 +118,20 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         gViewModel.diary.value = diaryData
 
         findNavController().navigate(R.id.diaryViewerFragment)
+    }
+
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.success_button -> { // 수행완료
+                successMission()
+            }
+            R.id.change_button -> { // 미션 바꾸기
+                changeMission()
+            }
+            else -> {
+            }
+        }
     }
 
     private fun setObserver() {
@@ -111,26 +143,6 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                 getHomeData()
             }
         }
-        mViewModel.buttonAction.observe(viewLifecycleOwner) { action -> // 버튼 액션
-            if (action.isNotEmpty()) {
-                when (action) {
-                    Contents.ACTION_COMPLETE_MISSION -> {
-                        successMission()
-                    }
-                    Contents.ACTION_CHANGE_MISSION -> {
-                        changeMission()
-                    }
-                    else -> {
-                    }
-                }
-
-                mViewModel.setButtonAction("")
-            }
-        }
-        mViewModel.isAchieved.observe(viewLifecycleOwner) { // 미션 수행 여부
-            mViewModel.buttonEnabled.value = !it
-        }
-
         lifecycleScope.launch {
             mViewModel.diaries.collect { pagingData ->
                 diaryAdapter.submitData(pagingData)
@@ -147,22 +159,21 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                 Log.i("Check", "data: ${homeData.user}")
 
                 gViewModel.user.value = homeData.user // 유저를 공유할 수 있게 GlobalViewModel에 저장함
+                user = homeData.user
 
-                mViewModel.mission.value = homeData.user.myMission!!
                 mViewModel.posts.value = homeData.posts
+                mViewModel.currentTime.value = System.currentTimeMillis()
 
                 mViewModel.isLoading.value = false
-                mViewModel.currentTime.value = System.currentTimeMillis()
-                mViewModel.isAchieved.value = homeData.user.achieved!!
             }
     }
 
     // 미션 수행 버튼 눌렀을 때
     private fun successMission() {
-        with(AlertDialog.Builder(requireContext())) {
+        with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("인증게시판으로 이동합니다.")
             setPositiveButton("확인") { dialog, which ->
-                mViewModel.successMission(gViewModel.user.value!!)
+                findNavController().navigate(R.id.addPostFragment)
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()
@@ -174,10 +185,13 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
 
     // 미션 바꾸기 버튼 눌렀을 때
     private fun changeMission() {
-        with(AlertDialog.Builder(requireContext())) {
+        with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("광고를 보고 미션을 바꾸겠습니까?")
             setPositiveButton("확인") { dialog, which ->
-                mViewModel.changeMission(gViewModel.user.value!!)
+                CoroutineScope(Dispatchers.IO).launch {
+                    mViewModel.changeMission(user)
+                    gViewModel.user.postValue(user)
+                }
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()

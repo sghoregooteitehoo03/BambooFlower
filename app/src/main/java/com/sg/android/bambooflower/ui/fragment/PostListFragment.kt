@@ -33,10 +33,10 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
+        val binding = FragmentPostListBinding.inflate(inflater)
         postAdapter = PostPagingAdapter().apply {
             setOnPostItemListener(this@PostListFragment)
         }
-        val binding = FragmentPostListBinding.inflate(inflater)
 
         // 바인딩 설정
         with(binding) {
@@ -88,7 +88,6 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                 true
             }
             R.id.menu_search -> {
-                findNavController().navigate(R.id.postSearchFragment)
                 true
             }
             else -> false

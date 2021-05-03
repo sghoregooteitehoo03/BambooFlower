@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_homeFragment_to_calendarDialog"
             app:destination="@id/calendarDialog" />
+        <action
+            android:id="@+id/action_homeFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment" />
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"
@@ -83,9 +86,6 @@
         <action
             android:id="@+id/action_postListFragment_to_postDialog"
             app:destination="@id/postFragment" />
-        <action
-            android:id="@+id/action_postListFragment_to_postSearchFragment"
-            app:destination="@id/postSearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
@@ -160,11 +160,6 @@
         android:name="com.sg.android.bambooflower.ui.dialog.CalendarDialog"
         android:label="CalendarDialog"
         tools:layout="@layout/dialog_calendar" />
-    <fragment
-        android:id="@+id/postSearchFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.PostSearchFragment"
-        android:label="PostSearchFragment"
-        tools:layout="@layout/fragment_post_search" />
     <dialog
         android:id="@+id/reportDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.ReportDialog"

@@ -1,11 +1,11 @@
 package com.sg.android.bambooflower.viewmodel.homeFragment
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
+import androidx.paging.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
 import com.sg.android.bambooflower.data.database.DiaryDao
 import com.sg.android.bambooflower.other.Contents
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
@@ -21,9 +21,10 @@ class HomeRepository @Inject constructor(
         functions.getHttpsCallable(Contents.FUNC_SUCCESS_MISSION)
             .call(auth.currentUser?.uid)
 
-    fun changeMission() =
+    suspend fun changeMission() =
         functions.getHttpsCallable(Contents.FUNC_CHANGE_MISSION)
             .call(auth.currentUser?.uid)
+            .await()!!
 
     fun getAllDiaries() =
         Pager(PagingConfig(pageSize = 20)) {
