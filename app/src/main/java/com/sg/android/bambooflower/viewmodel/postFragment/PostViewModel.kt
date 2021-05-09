@@ -13,17 +13,10 @@ import javax.inject.Inject
 @HiltViewModel
 class PostViewModel @Inject constructor(private val repository: PostRepository) : ViewModel() {
     private val _isDeleted = MutableLiveData(false) // 삭제 여부
-    private val _buttonAction = MutableLiveData("") // 버튼 액션
-
     val isDeleted: LiveData<Boolean> = _isDeleted
-    val buttonAction: LiveData<String> = _buttonAction
 
     val isCheerUp = MutableLiveData(false) // 응원 여부
-    val imagePos = MutableLiveData(1)
-
-    fun setButtonAction(action: String) {
-        _buttonAction.value = action
-    }
+    val imagePos = MutableLiveData(0) // 이미지 위치
 
     // 응원하기
     fun cheerUp(uid: String, postData: Post) = viewModelScope.launch {

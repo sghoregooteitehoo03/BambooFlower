@@ -141,12 +141,14 @@ fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitma
     view.clipToOutline = true
 }
 
-@BindingAdapter("app:isCheerUp")
-fun isCheerUp(view: CustomButton, cheerUp: Boolean) {
+@BindingAdapter("app:isCheerUp", "app:cheerUpCount")
+fun isCheerUp(view: CustomButton, cheerUp: Boolean, count: Int) {
     if (cheerUp) {
         view.setCustomButtonIcon(R.drawable.ic_thumb_up)
+        view.setCustomButtonText(count.toString())
     } else {
         view.setCustomButtonIcon(R.drawable.ic_thumb_up_off)
+        view.setCustomButtonText("화이팅")
     }
 }
 
@@ -157,8 +159,8 @@ fun setPosition(view: TextView, pos: Int, size: Int) {
 }
 
 @BindingAdapter("app:setProfileImage")
-fun setProfileImage(view: CircleImageView, imageUri: String?) {
-    if (imageUri != null) {
+fun setProfileImage(view: CircleImageView, imageUri: String) {
+    if (imageUri.isNotEmpty()) {
         Glide.with(view)
             .load(imageUri)
             .into(view)

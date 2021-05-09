@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 //  TODO:
 //   . bottom nav을 이용한 화면 전환시 상태 저장기능 구현
-//   . 게시글 작성 후 갱신되게 구현
+//   . 게시글 작성 후 갱신되게 구현 O
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
             // 로그인 되어있으면 홈 화면으로 넘어감
             navController.navigate(R.id.action_loginFragment_to_homeFragment)
+            intent.putExtra(Contents.EXTRA_IS_LOGIN, false)
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {

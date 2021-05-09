@@ -21,8 +21,6 @@ import kotlinx.coroutines.launch
 
 // TODO:
 //  . 서치 기능 X
-//  . 작성버튼 없애기 O
-//  . 리스트 아이템 수정 O
 
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
@@ -119,6 +117,11 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         mViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 mViewModel.syncPost()
+            }
+        }
+        gViewModel.syncData.observe(viewLifecycleOwner) {
+            if (it) {
+                mViewModel.isLoading.value = true
             }
         }
     }

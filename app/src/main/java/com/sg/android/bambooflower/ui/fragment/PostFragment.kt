@@ -6,14 +6,13 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.ImagePagerAdapter
 import com.sg.android.bambooflower.data.Post
@@ -27,12 +26,15 @@ import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
-//  . 이미지 한 개 일때 튕기는 버그 수정
-//  .프로필 이미지 기능 구현 후 이미지 표시
-//  .삭제 시 미션 다시 수행하게 구현
+//  . 이미지 한 개 일때 튕기는 버그 수정 O
+//  . 프로필 이미지 기능 구현 후 이미지 표시 O
+//  . 삭제 시 미션 다시 수행하게 구현 X
+//  . ViewModel 수정 O
+//  . 다이얼로그 수정 O
+//  . 좋아요 갯수 표시 O
 
 @AndroidEntryPoint
-class PostFragment : Fragment() {
+class PostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<PostViewModel>()
     private val dots = mutableListOf<ImageView>()
@@ -57,9 +59,10 @@ class PostFragment : Fragment() {
 
         // 바인딩 설정
         with(binding) {
+            this.viewmodel = mViewModel
             this.post = postData
             this.user = userData
-            this.viewmodel = mViewModel
+            this.clickListener = this@PostFragment
             imagePager.adapter = imageAdapter
 
             setDots(imagePager, sliderDots)
@@ -124,26 +127,25 @@ class PostFragment : Fragment() {
         }
     }
 
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.fullscreen_btn -> {
+                showImage()
+            }
+            else -> {
+            }
+        }
+    }
+
     private fun setObserver() {
         // 삭제 완료 확인
         mViewModel.isDeleted.observe(viewLifecycleOwner) {
             if (it) {
                 (requireActivity() as MainActivity).ready()
-                findNavController().navigateUp()
-            }
-        }
-        // 버튼 액션
-        mViewModel.buttonAction.observe(viewLifecycleOwner) { action ->
-            if (action.isNotEmpty()) {
-                when (action) {
-                    Contents.ACTION_SHOW_IMAGE -> {
-                        showImage()
-                    }
-                    else -> {
-                    }
-                }
+                gViewModel.syncData.value = true
 
-                mViewModel.setButtonAction("")
+                findNavController().navigateUp()
             }
         }
         // 이미지 위치
@@ -207,7 +209,7 @@ class PostFragment : Fragment() {
 
     // 게시글 삭제
     private fun deletePost() {
-        with(AlertDialog.Builder(requireContext())) {
+        with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("정말로 삭제하시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
                 (requireActivity() as MainActivity).loading() // 로딩화면 표시

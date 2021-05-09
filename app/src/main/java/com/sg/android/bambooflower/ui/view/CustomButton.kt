@@ -73,4 +73,8 @@ class CustomButton : LinearLayout {
     fun setCustomButtonIcon(res: Int) {
         buttonImageView.setImageResource(res)
     }
+
+    fun setCustomButtonText(text: String) {
+        buttonTextView.text = text
+    }
 }

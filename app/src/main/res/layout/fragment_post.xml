@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="com.sg.android.bambooflower.other.Contents" />
-
         <variable
             name="viewmodel"
             type="com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel" />
@@ -18,6 +16,10 @@
         <variable
             name="post"
             type="com.sg.android.bambooflower.data.Post" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +44,8 @@
                     android:layout_height="wrap_content"
                     android:text="@{post.title}"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="[제목]" />
@@ -53,18 +56,20 @@
                     android:layout_height="32dp"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_person"
-                    app:civ_circle_background_color="@color/gray"
+                    app:civ_border_color="@color/gray"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_background_color="@color/gray_bright"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/title_text" />
+                    app:layout_constraintTop_toBottomOf="@id/title_text"
+                    app:setProfileImage="@{post.profileImage}" />
 
                 <TextView
                     android:id="@+id/info_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="6dp"
                     android:layout_marginBottom="4dp"
                     android:textSize="16sp"
-                    android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/divide_view"
                     app:layout_constraintStart_toEndOf="@id/profile_image"
                     app:layout_constraintTop_toBottomOf="@id/title_text"
@@ -105,11 +110,12 @@
                     tools:background="@color/black" />
 
                 <ImageButton
+                    android:id="@+id/fullscreen_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:background="?attr/selectableItemBackground"
-                    android:onClick="@{() -> viewmodel.setButtonAction(Contents.ACTION_SHOW_IMAGE)}"
+                    android:onClick="@{clickListener}"
                     android:padding="2dp"
                     android:src="@drawable/ic_fullscreen"
                     app:layout_constraintEnd_toEndOf="@id/image_pager"
@@ -131,8 +137,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="40dp"
                     android:onClick="@{() -> viewmodel.cheerUp(user.uid, post)}"
+                    app:cheerUpCount="@{post.favoriteCount}"
                     app:customButtonIcon="@drawable/ic_thumb_up_off"
-                    app:customButtonText="화이팅"
                     app:isCheerUp="@{viewmodel.isCheerUp()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
             android:background="@drawable/shape_round_button"
-            android:backgroundTint="@color/gray_darker"
+            android:backgroundTint="@color/gray"
             android:gravity="center"
             android:minWidth="58dp"
             android:minHeight="28dp"

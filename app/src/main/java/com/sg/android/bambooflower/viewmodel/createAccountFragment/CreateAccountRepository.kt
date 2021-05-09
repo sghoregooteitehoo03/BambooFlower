@@ -22,6 +22,7 @@ class CreateAccountRepository @Inject constructor(
         val userData = User(
             uid = auth.currentUser?.uid,
             name = name,
+            profileImage = "",
             email = email,
             token = token,
             achievedCount = 0,

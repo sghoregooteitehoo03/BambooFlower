@@ -15,7 +15,6 @@ object Contents {
     const val PERMISSION_CODE = 250
 
     const val ACTION_GET_IMAGE = "ACTION_GET_IMAGE"
-    const val ACTION_SHOW_IMAGE = "ACTION_SHOW_IMAGE"
     const val ACTION_LOG_OUT = "ACTION_LOG_OUT"
 
     const val SHOW_ALBUM_FRAG = "SHOW_ALBUM_FARG"

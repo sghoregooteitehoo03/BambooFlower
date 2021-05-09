@@ -1,9 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.postFragment
 
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Transaction
 import com.google.firebase.storage.FirebaseStorage
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.other.Contents
