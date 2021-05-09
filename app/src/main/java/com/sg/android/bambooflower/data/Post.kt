@@ -10,5 +10,6 @@ data class Post(
     val timeStamp: Long? = null,
     val uid: String? = null,
     val writer: String? = null,
+    val profileImage: String? = null,
     val postPath: String? = null
 )

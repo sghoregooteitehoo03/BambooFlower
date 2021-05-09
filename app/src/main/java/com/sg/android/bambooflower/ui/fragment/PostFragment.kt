@@ -26,7 +26,10 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 프로필 이미지 기능 구현 후 이미지 표시, 삭제 시 미션 다시 수행하게 구현
+// TODO:
+//  . 이미지 한 개 일때 튕기는 버그 수정
+//  .프로필 이미지 기능 구현 후 이미지 표시
+//  .삭제 시 미션 다시 수행하게 구현
 
 @AndroidEntryPoint
 class PostFragment : Fragment() {

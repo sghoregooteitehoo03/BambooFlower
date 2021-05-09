@@ -19,7 +19,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO: 서치 기능
+// TODO:
+//  . 서치 기능 X
+//  . 작성버튼 없애기 O
+//  . 리스트 아이템 수정 O
+
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -40,8 +44,7 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
 
         // 바인딩 설정
         with(binding) {
-            viewmodel = mViewModel
-            navController = findNavController()
+            this.viewmodel = mViewModel
 
             with(postList) {
                 adapter = postAdapter

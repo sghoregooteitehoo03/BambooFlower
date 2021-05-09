@@ -81,9 +81,6 @@
         android:label="PostListFragment"
         tools:layout="@layout/fragment_post_list">
         <action
-            android:id="@+id/action_postListFragment_to_addPostFragment"
-            app:destination="@id/addPostFragment" />
-        <action
             android:id="@+id/action_postListFragment_to_postDialog"
             app:destination="@id/postFragment" />
     </fragment>

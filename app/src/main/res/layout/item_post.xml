@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.net.Uri" />
+
         <variable
             name="postData"
             type="com.sg.android.bambooflower.data.Post" />
@@ -22,17 +24,40 @@
 
             <TextView
                 android:id="@+id/title_text"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="10dp"
                 android:maxLines="1"
                 android:text="@{postData.title}"
                 android:textColor="@color/black"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/post_image"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="게시글 제목" />
+                tools:text="[게시글 제목]" />
+
+            <ImageView
+                android:id="@+id/favorite_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_thumb_up_black"
+                app:layout_constraintStart_toEndOf="@id/title_text"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/favorite_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="11dp"
+                android:text="@{String.valueOf(postData.favoriteCount)}"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                app:layout_constraintStart_toEndOf="@id/favorite_image"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="13" />
 
             <TextView
                 android:id="@+id/info_text"
@@ -46,13 +71,15 @@
 
             <ImageView
                 android:id="@+id/post_image"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/shape_rectangle"
                 android:scaleType="centerCrop"
                 android:src="@mipmap/ic_launcher"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:setUriImage="@{Uri.parse(postData.image[0])}" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 </layout>

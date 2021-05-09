@@ -36,12 +36,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-// TODO:
-//  . viewmodel 수정 O
-//  . 게시글을 작성하면 미션이 완수되게 구현 O
-//  . 처음 들어올 때 팅기는 버그 수정 O
-//  . 사진 압축해서 보내게 구현 O
-
 @AndroidEntryPoint
 class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

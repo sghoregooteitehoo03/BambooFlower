@@ -40,7 +40,6 @@ class AddPostRepository @Inject constructor(
         user: User,
         contentResolver: ContentResolver
     ): HttpsCallableResult? {
-        // TODO: 서버리스 에서 동작되게 구현 O
         val currentTime = System.currentTimeMillis() // 현재 시간
         val uid = user.uid!!
         val docPath = "$currentTime-$uid" // 게시글 문서 위치

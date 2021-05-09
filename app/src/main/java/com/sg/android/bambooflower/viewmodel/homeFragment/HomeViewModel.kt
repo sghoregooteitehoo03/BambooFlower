@@ -38,21 +38,6 @@ class HomeViewModel @Inject constructor(
     fun getHomeData() =
         repository.getHomeData()
 
-    // 미션 완수
-//    fun successMission(user: User) {
-//        repository.successMission()
-//            .addOnSuccessListener {
-//                val updateData = it.data as Map<*, *>
-//                with(user) {
-//                    achievedCount = updateData["achievedCount"] as Int?
-//                    achieved = updateData["isAchieved"] as Boolean?
-//                }
-//
-//                Log.i("SuccessMission", "성공: $user")
-//                isAchieved.value = true
-//            }
-//    }
-
     // 미션 변경
     suspend fun changeMission(user: User) {
         _isChanging.postValue(true)

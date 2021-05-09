@@ -44,7 +44,6 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            this.navController = findNavController()
 
             with(postList) {
                 adapter = postAdapter
