@@ -1,9 +1,11 @@
 package com.sg.android.bambooflower.data
 
+import javax.annotation.Nullable
+
 data class User(
     val uid: String? = null,
     val name: String? = null,
-    var profileImage: String? = null,
+    var profileImage: String = "",
     val email: String? = null,
     val token: String? = null,
     var achievedCount: Int? = null,

@@ -33,15 +33,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
-// TODO:
-//  . viewmodel 수정 O
-//  . 작성화면으로 넘어가게 구현 O
-//  . 이미 수행한 미션은 다시 표시되지 않게하기 O
-//  . dialog 수정 O
-//  . 인증게시판 스크롤 안되게 수정 O
-//  . 일기 본 후 포지션 바뀌는거 수정 X
-//  . 일기 삭제 및 추가 시 애니메이션 버그 수정 O
-
+// TODO: 게시글 클릭 시 팅기는 버그 수정
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
@@ -141,6 +133,12 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         mViewModel.isLoading.observe(viewLifecycleOwner) { // 데이터 갱신
             if (it) {
                 getHomeData()
+            }
+        }
+        gViewModel.syncData.observe(viewLifecycleOwner) {
+            if (it) {
+                mViewModel.isLoading.value = true
+                gViewModel.syncData.value = false
             }
         }
         lifecycleScope.launch {

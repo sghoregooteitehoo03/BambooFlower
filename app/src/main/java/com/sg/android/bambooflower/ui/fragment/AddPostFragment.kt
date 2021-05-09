@@ -2,12 +2,16 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.IBinder
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
@@ -19,6 +23,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.ImageAdapter
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentAddPostBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
@@ -26,19 +31,26 @@ import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.addPostFragment.AddPostViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 // TODO:
-//  . 게시글을 작성하면 미션이 완수되게 구현
-//  . 사진 압축해서 보내게 구현
+//  . viewmodel 수정 O
+//  . 게시글을 작성하면 미션이 완수되게 구현 O
+//  . 처음 들어올 때 팅기는 버그 수정 O
+//  . 사진 압축해서 보내게 구현 O
 
 @AndroidEntryPoint
-class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {
+class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<AddPostViewModel>()
-
     private var imageList: MutableList<Uri> = mutableListOf() // 선택한 이미지를 담을 리스트
+
     private lateinit var imageAdapter: ImageAdapter
+    private lateinit var imm: InputMethodManager
+    private lateinit var user: User
     private val simpleCallback = object : ItemTouchHelper.SimpleCallback(
         ItemTouchHelper.UP
                 or ItemTouchHelper.DOWN
@@ -74,18 +86,23 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {
         // 인스턴스 설정
         val itemTouchHelper = ItemTouchHelper(simpleCallback)
         val binding = FragmentAddPostBinding.inflate(inflater)
+        imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imageAdapter = ImageAdapter().apply {
             setOnImageItemListener(this@AddPostFragment)
         }
+        user = gViewModel.user.value!!
         mViewModel.title.value = "[${gViewModel.user.value?.myMission}]"
 
         // 바인딩 설정
         with(binding) {
-            viewmodel = mViewModel
-            user = gViewModel.user.value
+            this.viewmodel = mViewModel
+            this.user = user
+            this.clickListener = this@AddPostFragment
 
-            imageList.adapter = imageAdapter
-            itemTouchHelper.attachToRecyclerView(imageList)
+            with(imageList) {
+                adapter = imageAdapter
+                itemTouchHelper.attachToRecyclerView(this)
+            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -124,7 +141,9 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {
                 true
             }
             R.id.menu_add_post -> { // 게시 버튼
-                mViewModel.addPost(gViewModel.user.value!!, imageList)
+                CoroutineScope(Dispatchers.IO).launch {
+                    mViewModel.addPost(user, imageList, requireContext().contentResolver)
+                }
                 true
             }
             else -> false
@@ -159,15 +178,22 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {
     ) {
         when (requestCode) {
             Contents.PERMISSION_CODE -> {
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
-                        .show()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        getImage()
+                    }
                 } else {
-                    getImage()
+                    if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    ) {
+                        Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        getImage()
+                    }
                 }
             }
             else -> {
@@ -176,29 +202,26 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {
         }
     }
 
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.get_image_btn -> {
+                getImage()
+            }
+            else -> {
+            }
+        }
+    }
+
     // 옵저버 설정
     private fun setObserver() {
         // 게시글 작성 성공 여부
         mViewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
-            if (isSuccess != null) {
-                if (isSuccess) {
-                    findNavController().navigateUp()
-                } else {
-                    Toast.makeText(requireContext(), "인증사진과 내용을 입력해주세요.", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
-        // 버튼 액션
-        mViewModel.buttonAction.observe(viewLifecycleOwner) { action ->
-            if (action.isNotEmpty()) {
-                when (action) {
-                    Contents.ACTION_GET_IMAGE -> getImage()
-                    else -> {
-                    }
-                }
+            if (isSuccess) {
+                gViewModel.user.value = user
+                gViewModel.syncData.value = true
 
-                mViewModel.setButtonAction("")
+                findNavController().navigateUp()
             }
         }
         // 로딩 화면
@@ -209,27 +232,57 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener {
                 (requireActivity() as MainActivity).ready()
             }
         }
+        // 오류메세지
+        mViewModel.errorMsg.observe(viewLifecycleOwner) { msg ->
+            if (msg.isNotEmpty()) {
+                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
+                    .show()
+                mViewModel.errorMsg.value = ""
+            }
+        }
     }
 
     private fun getImage() { // 이미지를 가져오는 화면으로 이동함
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) { // 권한 설정
-            requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                Contents.PERMISSION_CODE
-            )
-        } else {
-            val intent = Intent(requireContext(), SecondActivity::class.java).apply {
-                putExtra(
-                    Contents.EXTRA_SET_IMAGE,
-                    imageList.map { it.toString() }.toTypedArray()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) { // 권한 설정
+                requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    Contents.PERMISSION_CODE
                 )
-                action = Contents.SHOW_ALBUM_FRAG
+            } else {
+                getImageIntent()
             }
-            startActivityForResult(intent, Contents.GET_IMAGE)
+        } else {
+            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            ) {
+                requestPermissions(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ),
+                    Contents.PERMISSION_CODE
+                )
+            } else {
+                getImageIntent()
+            }
         }
     }
+
+    private fun getImageIntent() {
+        val intent = Intent(requireContext(), SecondActivity::class.java).apply {
+            putExtra(
+                Contents.EXTRA_SET_IMAGE,
+                imageList.map { it.toString() }.toTypedArray()
+            )
+            action = Contents.SHOW_ALBUM_FRAG
+        }
+        startActivityForResult(intent, Contents.GET_IMAGE)
+    }
+
+    private fun checkPermission(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            permission
+        ) != PackageManager.PERMISSION_GRANTED
 }

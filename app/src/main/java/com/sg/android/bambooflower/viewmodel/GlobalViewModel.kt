@@ -18,6 +18,7 @@ class GlobalViewModel : ViewModel() {
     val post = MutableLiveData<Post?>() // 선택한 게시글
     val diary = MutableLiveData<Diary?>() // 선택한 일기
     val searchPosition = MutableLiveData<Int?>(null) // 일기 위치
+    val syncData = MutableLiveData(false) // 갱신 여부
 
     val searchValue = MutableLiveData("") // 찾을 데이터
     val satisfaction = MutableLiveData<Bitmap?>(null) // 만족도

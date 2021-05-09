@@ -1,10 +1,12 @@
 package com.sg.android.bambooflower.bind
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
@@ -13,6 +15,7 @@ import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.Post
@@ -176,6 +179,14 @@ fun setLevel(view: TextView, level: Int) {
 fun setCompleteDate(view: TextView, time: Long) {
     val format = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(time)
     view.text = "수행완료: $format"
+}
+
+@BindingAdapter("app:hideKeyboard")
+fun hideKeyboard(view: TextInputEditText, isHide: Boolean) {
+    if (isHide) {
+        val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }
 
 // Listener

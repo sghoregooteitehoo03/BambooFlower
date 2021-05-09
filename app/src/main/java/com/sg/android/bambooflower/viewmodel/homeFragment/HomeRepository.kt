@@ -17,10 +17,6 @@ class HomeRepository @Inject constructor(
         functions.getHttpsCallable(Contents.FUNC_GET_HOME_DATA)
             .call(auth.currentUser?.uid)
 
-    fun successMission() =
-        functions.getHttpsCallable(Contents.FUNC_SUCCESS_MISSION)
-            .call(auth.currentUser?.uid)
-
     suspend fun changeMission() =
         functions.getHttpsCallable(Contents.FUNC_CHANGE_MISSION)
             .call(auth.currentUser?.uid)
