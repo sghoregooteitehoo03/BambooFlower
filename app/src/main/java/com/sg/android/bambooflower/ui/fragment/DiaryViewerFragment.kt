@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.ui.fragment
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -8,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.databinding.FragmentDiaryViewerBinding
@@ -95,7 +95,7 @@ class DiaryViewerFragment : Fragment() {
 
     // 일기 삭제
     private fun deleteDiary() {
-        with(AlertDialog.Builder(requireContext())) {
+        with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("정말로 삭제하시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
                 mViewModel.deleteDiary(diary)

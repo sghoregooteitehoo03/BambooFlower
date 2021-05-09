@@ -17,7 +17,6 @@ import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 수정된 회원가입 화면으로 바꾸기
 @AndroidEntryPoint
 class EmailLoginFragment : Fragment() {
     private val mViewModel by viewModels<EmailLoginViewModel>()

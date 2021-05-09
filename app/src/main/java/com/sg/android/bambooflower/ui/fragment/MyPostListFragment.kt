@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sg.android.bambooflower.R
@@ -22,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO: 디자인
+// TODO: 디자인 O
 @AndroidEntryPoint
 class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -108,6 +109,13 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                         postAdapter.submitData(pagingData)
                     }
                 }
+                lifecycleScope.launch {
+                    postAdapter.loadStateFlow.collect {
+                        if (it.refresh !is LoadState.Loading) {
+                            mViewModel.isLoading.value = false
+                        }
+                    }
+                }
             }
         }
         // 로딩 여부
@@ -115,6 +123,13 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
             if (it) {
                 val user = gViewModel.user.value!!
                 mViewModel.syncPost(user.uid!!)
+            } else {
+                mViewModel.size.value = postAdapter.itemCount
+            }
+        }
+        gViewModel.syncData.observe(viewLifecycleOwner) {
+            if (it) {
+                mViewModel.isLoading.value = true
             }
         }
     }

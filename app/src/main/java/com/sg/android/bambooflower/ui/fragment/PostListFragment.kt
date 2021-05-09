@@ -1,12 +1,14 @@
 package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sg.android.bambooflower.R
@@ -17,6 +19,7 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postListFragment.PostListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 // TODO:
@@ -111,12 +114,21 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                         postAdapter.submitData(pagingData)
                     }
                 }
+                lifecycleScope.launch {
+                    postAdapter.loadStateFlow.collect {
+                        if (it.refresh !is LoadState.Loading) {
+                            mViewModel.isLoading.value = false
+                        }
+                    }
+                }
             }
         }
         // 로딩 여부
         mViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
                 mViewModel.syncPost()
+            } else {
+                mViewModel.size.value = postAdapter.itemCount
             }
         }
         gViewModel.syncData.observe(viewLifecycleOwner) {

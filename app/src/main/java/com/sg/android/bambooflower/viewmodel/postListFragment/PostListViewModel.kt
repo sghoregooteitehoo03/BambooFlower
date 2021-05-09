@@ -13,9 +13,9 @@ import javax.inject.Inject
 @HiltViewModel
 class PostListViewModel @Inject constructor(private val postListRepository: PostListRepository) :
     ViewModel() {
-
     val isLoading = MutableLiveData(true) // 로딩 여부
     val postList = MutableLiveData<Flow<PagingData<Post>>?>(null) // 게시글 리스트
+    val size = MutableLiveData(-1)
 
     fun syncPost(uid: String = "") { // 데이터 갱신
         postList.value = if (uid.isEmpty()) {
@@ -27,7 +27,5 @@ class PostListViewModel @Inject constructor(private val postListRepository: Post
                 .flow
                 .cachedIn(viewModelScope)
         }
-
-        isLoading.value = false
     }
 }

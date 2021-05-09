@@ -11,6 +11,7 @@ import javax.inject.Inject
 class MyMissionViewModel @Inject constructor(private val repository: MyMissionRepository) :
     ViewModel() {
     val isLoading = MutableLiveData(true) // 로딩여부
+    val size = MutableLiveData(-1)
 
     // 수행한 미션 가져옴
     fun getMyMission(uid: String) =

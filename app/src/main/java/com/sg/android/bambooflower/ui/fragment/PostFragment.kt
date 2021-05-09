@@ -25,14 +25,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  . 이미지 한 개 일때 튕기는 버그 수정 O
-//  . 프로필 이미지 기능 구현 후 이미지 표시 O
-//  . 삭제 시 미션 다시 수행하게 구현 X
-//  . ViewModel 수정 O
-//  . 다이얼로그 수정 O
-//  . 좋아요 갯수 표시 O
-
 @AndroidEntryPoint
 class PostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

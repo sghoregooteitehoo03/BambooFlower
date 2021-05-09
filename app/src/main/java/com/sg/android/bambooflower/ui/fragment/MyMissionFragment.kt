@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// TODO: 디자인
+// TODO: 디자인 O
 @AndroidEntryPoint
 class MyMissionFragment : Fragment() {
     private val mViewModel by viewModels<MyMissionViewModel>()
@@ -92,6 +92,11 @@ class MyMissionFragment : Fragment() {
     }
 
     private fun setObserver() {
+        mViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (!it) {
+                mViewModel.size.value = missionAdapter.itemCount
+            }
+        }
         lifecycleScope.launch {
             // 내가 수행한 미션을 가져옴
             mViewModel.getMyMission(user.uid!!).collect { pagingData ->

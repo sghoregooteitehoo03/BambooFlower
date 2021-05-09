@@ -16,7 +16,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.diaryWriteFragment.DiaryWriteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 디자인 수정
 @AndroidEntryPoint
 class DiaryWriteFragment : Fragment() {
     private val mViewModel by viewModels<DiaryWriteViewModel>()
