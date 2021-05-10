@@ -129,15 +129,15 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         mViewModel.posts.observe(viewLifecycleOwner) { // 최근 게시글을 가져옴
             postAdapter.syncData(it)
         }
-        mViewModel.isLoading.observe(viewLifecycleOwner) { // 데이터 갱신
-            if (it) {
-                getHomeData()
-            }
-        }
         gViewModel.syncData.observe(viewLifecycleOwner) {
             if (it) {
                 mViewModel.isLoading.value = true
                 gViewModel.syncData.value = false
+            }
+        }
+        mViewModel.isLoading.observe(viewLifecycleOwner) { // 데이터 갱신
+            if (it) {
+                getHomeData()
             }
         }
         lifecycleScope.launch {

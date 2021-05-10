@@ -7,8 +7,6 @@
 
         <import type="android.net.Uri" />
 
-        <import type="com.sg.android.bambooflower.other.Contents" />
-
         <import type="com.sg.android.bambooflower.R" />
 
         <variable
@@ -22,6 +20,10 @@
         <variable
             name="navController"
             type="androidx.navigation.NavController" />
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <ScrollView
@@ -48,7 +50,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginTop="8dp"
-                    android:onClick="@{() -> viewmodel.setButtonAction(Contents.ACTION_GET_IMAGE)}"
+                    android:onClick="@{clickListener}"
                     android:src="@drawable/ic_person"
                     app:civ_border_color="@color/gray"
                     app:civ_border_width="2dp"
@@ -205,9 +207,10 @@
                     app:profileButtonText="설정" />
 
                 <com.sg.android.bambooflower.ui.view.CustomProfileButton
+                    android:id="@+id/sign_out_btn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewmodel.setButtonAction(Contents.ACTION_LOG_OUT)}"
+                    android:onClick="@{clickListener}"
                     app:profileButtonIcon="@drawable/ic_exit"
                     app:profileButtonText="로그아웃" />
             </LinearLayout>

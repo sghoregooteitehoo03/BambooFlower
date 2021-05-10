@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,10 +27,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// TODO: 디자인 나중에 수정
+// TODO:
+//  . 권한 수정 O
+//  . viewModel 수정 O
+//  . 프로필 바꿀 때 storage 및 각 store 수정 O
+//  . 프로필 바꿀 때 바로 적용 O
 
 @AndroidEntryPoint
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<ProfileViewModel>()
 
@@ -48,6 +53,7 @@ class ProfileFragment : Fragment() {
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
             this.navController = findNavController()
+            this.clickListener = this@ProfileFragment
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -78,7 +84,9 @@ class ProfileFragment : Fragment() {
             if (requestCode == Contents.GET_IMAGE) {
                 CoroutineScope(Dispatchers.IO).launch {
                     mViewModel.changeProfileImage(user, data?.data!!)
+
                     gViewModel.user.postValue(user)
+                    gViewModel.syncData.postValue(true)
                 }
             }
         }
@@ -92,15 +100,22 @@ class ProfileFragment : Fragment() {
     ) {
         when (requestCode) {
             Contents.PERMISSION_CODE -> {
-                if (ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE
-                    ) != PackageManager.PERMISSION_GRANTED
-                ) {
-                    Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
-                        .show()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        getImage()
+                    }
                 } else {
-                    getImage()
+                    if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    ) {
+                        Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
+                            .show()
+                    } else {
+                        getImage()
+                    }
                 }
             }
             else -> {
@@ -109,23 +124,21 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun setObserver() {
-        mViewModel.buttonAction.observe(viewLifecycleOwner) { action ->
-            if (action.isNotEmpty()) {
-                when (action) {
-                    Contents.ACTION_GET_IMAGE -> { // 프로필 변경 액션
-                        getImage()
-                    }
-                    Contents.ACTION_LOG_OUT -> { // 로그아웃 액션
-                        signOut()
-                    }
-                    else -> {
-                    }
-                }
-
-                mViewModel.setButtonAction("")
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.profile_image -> {
+                getImage()
+            }
+            R.id.sign_out_btn -> {
+                signOut()
+            }
+            else -> {
             }
         }
+    }
+
+    private fun setObserver() {
         mViewModel.isLoading.observe(viewLifecycleOwner) { // 로딩 여부
             if (it) {
                 (requireActivity() as MainActivity).loading()
@@ -136,26 +149,48 @@ class ProfileFragment : Fragment() {
     }
 
     private fun getImage() { // 갤러리에서 이미지를 선택함
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) { // 권한 설정
-            requestPermissions(
-                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                Contents.PERMISSION_CODE
-            )
-        } else {
-            val intent = Intent().apply {
-                type = "image/*"
-                action = Intent.ACTION_PICK
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) { // 권한 설정
+                requestPermissions(
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    Contents.PERMISSION_CODE
+                )
+            } else {
+                getImageIntent()
             }
-            startActivityForResult(intent, Contents.GET_IMAGE)
+        } else {
+            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            ) {
+                requestPermissions(
+                    arrayOf(
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    ), Contents.PERMISSION_CODE
+                )
+            } else {
+                getImageIntent()
+            }
         }
+    }
+
+    private fun getImageIntent() {
+        val intent = Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_PICK
+        }
+        startActivityForResult(intent, Contents.GET_IMAGE)
     }
 
     private fun signOut() { // 로그아웃
         findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
         mViewModel.signOut()
     }
+
+    // 권한 체크
+    private fun checkPermission(permission: String): Boolean =
+        ContextCompat.checkSelfPermission(
+            requireContext(),
+            permission
+        ) != PackageManager.PERMISSION_GRANTED
 }

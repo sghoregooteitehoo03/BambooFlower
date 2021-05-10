@@ -46,10 +46,13 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/ic_person"
-                    app:civ_circle_background_color="@color/gray"
+                    app:civ_border_color="@color/gray"
+                    app:civ_border_width="1dp"
+                    app:civ_circle_background_color="@color/gray_bright"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setProfileImage="@{userData.profileImage}" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"

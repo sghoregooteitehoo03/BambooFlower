@@ -14,9 +14,6 @@ object Contents {
 
     const val PERMISSION_CODE = 250
 
-    const val ACTION_GET_IMAGE = "ACTION_GET_IMAGE"
-    const val ACTION_LOG_OUT = "ACTION_LOG_OUT"
-
     const val SHOW_ALBUM_FRAG = "SHOW_ALBUM_FARG"
     const val SHOW_IMAGE_FRAG = "SHOW_IMAGE_FRAG"
 
@@ -30,4 +27,5 @@ object Contents {
     const val FUNC_GET_HOME_DATA = "getHomeData"
     const val FUNC_SUCCESS_MISSION = "successMission"
     const val FUNC_CHANGE_MISSION = "changeMission"
+    const val FUNC_CHANGE_PROFILE = "changeProfile"
 }
