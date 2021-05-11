@@ -21,8 +21,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-// TODO: 프로필 사진 구현 후 적용하기 O
-
 @AndroidEntryPoint
 class RankingFragment : Fragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()

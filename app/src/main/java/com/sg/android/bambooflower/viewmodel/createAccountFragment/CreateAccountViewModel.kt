@@ -35,7 +35,7 @@ class CreateAccountViewModel @Inject constructor(
             repository.createAccount(email.value!!, password.value!!)
                 .addOnSuccessListener {
                     viewModelScope.launch {
-                        repository.setUserData(email.value!!, name.value!!)
+                        repository.setUserData(email.value!!, password.value!!, name.value!!)
 
                         _errorMsg.value = ErrorMessage.SUCCESS
                         _isLoading.value = false // 로딩 끝

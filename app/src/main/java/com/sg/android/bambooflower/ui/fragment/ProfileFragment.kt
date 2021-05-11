@@ -27,12 +27,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// TODO:
-//  . 권한 수정 O
-//  . viewModel 수정 O
-//  . 프로필 바꿀 때 storage 및 각 store 수정 O
-//  . 프로필 바꿀 때 바로 적용 O
-
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

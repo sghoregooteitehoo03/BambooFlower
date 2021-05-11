@@ -21,6 +21,7 @@ object Contents {
     const val COLLECTION_USER = "User"
     const val COLLECTION_POST = "Post"
     const val COLLECTION_REPORT = "Report"
+    const val COLLECTION_ACCOUNT = "Account"
 
     const val CHILD_POST_IMAGE = "PostImage"
 

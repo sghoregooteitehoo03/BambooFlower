@@ -34,6 +34,8 @@ class LoginFragment : Fragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
     private lateinit var callbackManager: CallbackManager
+    private lateinit var loginWay: String
+    private lateinit var token: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -83,8 +85,11 @@ class LoginFragment : Fragment() {
                 if (result.isSuccessful) {
                     loading()
 
+                    token = result.result?.idToken!!
+                    loginWay = "Google"
+
                     val credential =
-                        GoogleAuthProvider.getCredential(result.result?.idToken!!, null)
+                        GoogleAuthProvider.getCredential(token, null)
                     mViewModel.login(credential)
                 }
             }
@@ -141,7 +146,10 @@ class LoginFragment : Fragment() {
             override fun onSuccess(result: LoginResult?) {
                 loading()
 
-                val credential = FacebookAuthProvider.getCredential(result?.accessToken!!.token)
+                token = result?.accessToken!!.token
+                loginWay = "Facebook"
+
+                val credential = FacebookAuthProvider.getCredential(token)
                 mViewModel.login(credential)
             }
 
@@ -165,7 +173,9 @@ class LoginFragment : Fragment() {
                 if (user != null) { // 기존 유저인지 확인
                     findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
                 } else {
-                    findNavController().navigate(R.id.createUserFragment)
+                    val directions = LoginFragmentDirections
+                        .actionLoginFragmentToCreateUserFragment(token, loginWay)
+                    findNavController().navigate(directions)
                 }
             }
     }

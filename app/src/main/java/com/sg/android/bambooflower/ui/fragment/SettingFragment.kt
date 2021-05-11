@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.BuildConfig
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
@@ -26,6 +27,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+// TODO:
+//  . 탈퇴 functions에서 처리 X
 @AndroidEntryPoint
 class SettingFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SettingViewModel>()
@@ -118,7 +121,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
 
     // 일기 삭제
     private fun clearDiary() {
-        with(AlertDialog.Builder(requireContext())) {
+        with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("지금까지 작성하신 일기를 모두 삭제하시겠습니까?")
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()
@@ -145,7 +148,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
     }
 
     private fun deleteAccount() { // 계정 삭제
-        with(AlertDialog.Builder(requireContext())) {
+        with(MaterialAlertDialogBuilder(requireContext())) {
             setTitle("회원탈퇴")
             setMessage("회원탈퇴 후에는 데이터가 모두 지워지게 됩니다 정말로 탈퇴하시겠습니까?")
             setNegativeButton("취소") { dialog, which ->

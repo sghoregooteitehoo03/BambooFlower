@@ -7,7 +7,6 @@ data class User(
     val name: String? = null,
     var profileImage: String = "",
     val email: String? = null,
-    val token: String? = null,
     var achievedCount: Int? = null,
     var achieved: Boolean? = null,
     val myLevel: Int? = null,

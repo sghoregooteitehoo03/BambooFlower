@@ -1,9 +1,10 @@
 package com.sg.android.bambooflower.viewmodel.settingFragment
 
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.sg.android.bambooflower.data.Account
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.data.database.DiaryDao
@@ -25,6 +26,14 @@ class SettingRepository @Inject constructor(
     // 계정 탈퇴
     suspend fun deleteAccount(user: User) {
         val uid = user.uid!!
+        val account = store.collection(Contents.COLLECTION_ACCOUNT)
+            .document(uid)
+            .get()
+            .await()
+            .toObject(Account::class.java)!!
+
+        // 일기 삭제
+        clearDiary(uid)
 
         // 유저 데이터 삭제
         store.collection(Contents.COLLECTION_USER)
@@ -32,8 +41,14 @@ class SettingRepository @Inject constructor(
             .delete()
             .await()
 
+        // 계정 삭제
+        store.collection(Contents.COLLECTION_ACCOUNT)
+            .document(uid)
+            .delete()
+            .await()
+
         // 유저 프로필 사진 삭제
-        if (user.profileImage != null) {
+        if (user.profileImage.isNotEmpty()) {
             storage.reference.child(uid)
                 .child("profile.png")
                 .delete()
@@ -68,9 +83,25 @@ class SettingRepository @Inject constructor(
         }
 
         // 계정을 탈퇴 함
-        with(auth) {
-            signInWithCustomToken(user.token!!)
-            currentUser?.delete()
+        val credential: AuthCredential? = when (account.loginWay!!) {
+            "Email" -> {
+                EmailAuthProvider.getCredential(account.email!!, account.password!!)
+            }
+            "Google" -> {
+                GoogleAuthProvider.getCredential(account.token!!, null)
+            }
+            "Facebook" -> {
+                FacebookAuthProvider.getCredential(account.token!!)
+            }
+            else -> {
+                null
+            }
+        }
+        credential?.let {
+            auth.currentUser // 재인증
+                ?.reauthenticate(it)
+            auth.currentUser // 계정 삭제
+                ?.delete()
                 ?.await()
         }
     }

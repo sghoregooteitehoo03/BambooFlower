@@ -33,6 +33,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
+// TODO:
+//  . 갱신 안되는 버그 수정
+//  . 제공할 미션 없을 때 처리
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {

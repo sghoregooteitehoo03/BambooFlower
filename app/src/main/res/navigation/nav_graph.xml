@@ -151,6 +151,12 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="token"
+            app:argType="string" />
+        <argument
+            android:name="loginWay"
+            app:argType="string" />
     </fragment>
     <dialog
         android:id="@+id/calendarDialog"

@@ -24,13 +24,13 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateAcco
     val errorMsg: LiveData<String> = _errorMsg
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun setUserData() {
+    fun setUserData(token: String, loginWay: String) {
         if (email.value!!.isNotEmpty() && name.value!!.isNotEmpty()) {
             _isLoading.value = true // 로딩 시작
 
             if (checkEmail()) { // 이메일 형식 체크
                 viewModelScope.launch {
-                    repository.setUserData(email.value!!, name.value!!)
+                    repository.setUserData(email.value!!, name.value!!, token, loginWay)
 
                     _errorMsg.value = ErrorMessage.SUCCESS
                     _isLoading.value = false // 로딩 끝

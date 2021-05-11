@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.viewmodel.loginFragment
 
 import androidx.lifecycle.*
 import com.google.firebase.auth.AuthCredential
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

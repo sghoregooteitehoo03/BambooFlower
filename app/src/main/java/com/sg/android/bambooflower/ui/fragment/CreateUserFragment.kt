@@ -7,6 +7,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.FragmentCreateAccountBinding
 import com.sg.android.bambooflower.other.ErrorMessage
@@ -17,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
     private val mViewModel by viewModels<CreateUserViewModel>()
+    private val args by navArgs<CreateUserFragmentArgs>()
     private var fragmentBinding: FragmentCreateAccountBinding? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,7 +67,7 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
         }
 
         binding.startBtn.setOnClickListener {
-            mViewModel.setUserData()
+            mViewModel.setUserData(args.token, args.loginWay)
         }
     }
 
