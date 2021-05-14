@@ -34,8 +34,8 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  . 갱신 안되는 버그 수정
-//  . 제공할 미션 없을 때 처리
+//  . 갱신 안되는 버그 수정 O
+//  . 제공할 미션 없을 때 처리 O
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
@@ -65,6 +65,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             this.gviewmodel = gViewModel
             this.clickListener = this@HomeFragment
             this.navController = findNavController()
+            this.blank = ""
 
             with(postList) {
                 postAdapter.stateRestorationPolicy =

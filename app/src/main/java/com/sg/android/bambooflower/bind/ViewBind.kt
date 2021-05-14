@@ -191,6 +191,15 @@ fun hideKeyboard(view: TextInputEditText, isHide: Boolean) {
     }
 }
 
+@BindingAdapter("app:noProvideMission")
+fun noProvideMission(view: View, isEmpty: Boolean) {
+    view.visibility = if (isEmpty) {
+        View.GONE
+    } else {
+        View.VISIBLE
+    }
+}
+
 // Listener
 @BindingAdapter("app:setRefreshListener")
 fun setRefreshListener(view: SwipeRefreshLayout, listener: InverseBindingListener) {

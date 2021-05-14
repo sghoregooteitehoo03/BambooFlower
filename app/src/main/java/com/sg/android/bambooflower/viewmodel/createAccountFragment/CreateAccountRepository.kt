@@ -29,7 +29,7 @@ class CreateAccountRepository @Inject constructor(
             email = email,
             achievedCount = 0,
             myLevel = 1,
-            myMission = null,
+            myMission = "",
             latestStart = 0,
             achieved = false,
             missionDoc = null
@@ -60,7 +60,7 @@ class CreateAccountRepository @Inject constructor(
             email = email,
             achievedCount = 0,
             myLevel = 1,
-            myMission = null,
+            myMission = "",
             latestStart = 0,
             achieved = false,
             missionDoc = null
