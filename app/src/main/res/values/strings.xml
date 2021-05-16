@@ -3,4 +3,7 @@
     <string name="developer_email">sghoregoodeveloper@gmail.com</string>
     <string name="facebook_app_id">1171522799971458</string>
     <string name="fb_login_protocol_scheme">fb1171522799971458</string>
+
+    <string name="ad_banner_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="ad_full_unit_id_test">ca-app-pub-3940256099942544/1033173712</string>
 </resources>

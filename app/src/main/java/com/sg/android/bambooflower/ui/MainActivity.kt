@@ -4,18 +4,28 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
-import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.MobileAds
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.ActivityMainBinding
 import com.sg.android.bambooflower.other.Contents
+import com.sg.android.bambooflower.ui.fragment.HomeFragment
+import com.sg.android.bambooflower.ui.fragment.ProfileFragment
+import com.sg.android.bambooflower.ui.fragment.RankingFragment
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         // 인스턴스 설정
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         imm =
-            applicationContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
         // 툴바 설정
         setSupportActionBar(binding.mainToolbar)
@@ -53,6 +63,9 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        // Ad Init
+        MobileAds.initialize(this)
 
         if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
             // 로그인 되어있으면 홈 화면으로 넘어감

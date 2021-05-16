@@ -21,6 +21,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+// TODO: 네이티브 광고 X
 @AndroidEntryPoint
 class RankingFragment : Fragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()

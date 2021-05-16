@@ -10,8 +10,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.sg.android.bambooflower.R
@@ -21,7 +24,6 @@ import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.HomeData
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentHomeBinding
-import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel
@@ -29,13 +31,12 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  . 갱신 안되는 버그 수정 O
 //  . 제공할 미션 없을 때 처리 O
+//  . 광고 O
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
@@ -144,6 +145,14 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                 getHomeData()
             }
         }
+        mViewModel.interstitialAd.observe(viewLifecycleOwner) { // 광고 로드 확인
+            if (it != null) { // 로드 되었을 때
+                it.show(requireActivity())
+                it.fullScreenContentCallback = fullscreenCallback
+
+                mViewModel.interstitialAd.value = null // 초기화
+            }
+        }
         lifecycleScope.launch {
             mViewModel.diaries.collect { pagingData ->
                 diaryAdapter.submitData(pagingData)
@@ -189,16 +198,46 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("광고를 보고 미션을 바꾸겠습니까?")
             setPositiveButton("확인") { dialog, which ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    mViewModel.changeMission(user)
-                    gViewModel.user.postValue(user)
-                }
+                loadAdAndChange() // 광고 로드
+                (requireActivity() as MainActivity).loading()
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()
             }
 
             show()
+        }
+    }
+
+    // 광고 로드함
+    private fun loadAdAndChange() {
+        InterstitialAd.load(
+            requireContext(),
+            resources.getString(R.string.ad_full_unit_id_test),
+            AdRequest.Builder().build(),
+            adCallBack
+        )
+    }
+
+    private val adCallBack = object : InterstitialAdLoadCallback() {
+        override fun onAdLoaded(interstitialAd: InterstitialAd) {
+            super.onAdLoaded(interstitialAd)
+
+            // 로드 됐을 때
+            mViewModel.interstitialAd.value = interstitialAd
+            (requireActivity() as MainActivity).ready()
+        }
+    }
+
+    private val fullscreenCallback = object : FullScreenContentCallback() {
+        override fun onAdDismissedFullScreenContent() {
+            super.onAdDismissedFullScreenContent()
+
+            // 광고를 본 후
+            CoroutineScope(Dispatchers.IO).launch {
+                mViewModel.changeMission(user)
+                gViewModel.user.postValue(user)
+            }
         }
     }
 }

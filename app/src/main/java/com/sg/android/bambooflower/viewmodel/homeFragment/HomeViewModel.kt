@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertHeaderItem
 import androidx.paging.map
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.DiaryDataModel
 import com.sg.android.bambooflower.data.Post
@@ -24,6 +25,7 @@ class HomeViewModel @Inject constructor(
     val posts = MutableLiveData<List<Post>>() // 게시글
     val isLoading = MutableLiveData(true) // 로딩 창
     val currentTime = MutableLiveData<Long>() // 현재 시간
+    val interstitialAd = MutableLiveData<InterstitialAd?>(null) // 광고
 
     val isChanging: LiveData<Boolean> = _isChanging
     val diaries = repository.getAllDiaries() // 일기 리스트

@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 
 // TODO:
 //  . 서치 기능 X
+//  . 네이티브 광고 X
 
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {

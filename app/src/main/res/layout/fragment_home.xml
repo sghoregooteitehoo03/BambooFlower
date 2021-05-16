@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.sg.android.bambooflower.R" />
+        <import type="com.sg.android.bambooflower.R"/>
 
-        <import type="android.view.View" />
+        <import type="android.view.View"/>
+
+        <import type="com.sg.android.bambooflower.other.Contents"/>
 
         <variable
             name="viewmodel"
-            type="com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel" />
+            type="com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel"/>
 
         <variable
             name="gviewmodel"
-            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel" />
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
 
         <variable
             name="clickListener"
-            type="android.view.View.OnClickListener" />
+            type="android.view.View.OnClickListener"/>
 
         <variable
             name="navController"
-            type="androidx.navigation.NavController" />
+            type="androidx.navigation.NavController"/>
 
         <variable
             name="blank"
-            type="String" />
+            type="String"/>
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -63,7 +65,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/mission_layout"
@@ -91,7 +93,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            tools:text="대충 미션내용" />
+                            tools:text="대충 미션내용"/>
 
                         <ProgressBar
                             android:layout_width="wrap_content"
@@ -102,7 +104,7 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            tools:visibility="gone" />
+                            tools:visibility="gone"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <ImageView
@@ -113,7 +115,7 @@
                         android:layout_marginTop="8dp"
                         android:src="@drawable/ic_access_time"
                         app:layout_constraintStart_toStartOf="@id/mission_layout"
-                        app:layout_constraintTop_toTopOf="@id/mission_layout" />
+                        app:layout_constraintTop_toTopOf="@id/mission_layout"/>
 
                     <TextView
                         android:id="@+id/left_time_text"
@@ -126,14 +128,14 @@
                         app:layout_constraintStart_toEndOf="@id/left_time_image"
                         app:layout_constraintTop_toTopOf="@id/mission_layout"
                         app:leftHour="@{viewmodel.currentTime}"
-                        tools:text="12h 남음" />
+                        tools:text="12h 남음"/>
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_mission"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.71" />
+                        app:layout_constraintGuide_percent="0.71"/>
 
                     <ImageButton
                         android:id="@+id/success_button"
@@ -148,7 +150,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/guideline_between_btn"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/guideline_mission" />
+                        app:layout_constraintTop_toBottomOf="@id/guideline_mission"/>
 
                     <ImageButton
                         android:id="@+id/change_button"
@@ -163,7 +165,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/guideline_between_btn"
-                        app:layout_constraintTop_toBottomOf="@id/guideline_mission" />
+                        app:layout_constraintTop_toBottomOf="@id/guideline_mission"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/complete_mission_layout"
@@ -190,7 +192,7 @@
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -199,7 +201,7 @@
                             android:src="@drawable/ic_check_circle"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.Guideline
@@ -207,7 +209,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_percent="0.5" />
+                        app:layout_constraintGuide_percent="0.5"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/white">
+
+                    <com.google.android.gms.ads.AdView
+                        android:id="@+id/ad_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:adSize="LARGE_BANNER"
+                        app:adUnitId="@string/ad_banner_unit_id_test"
+                        app:loadBannerAd="@{true}"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -226,7 +243,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/post_list"
@@ -240,14 +257,14 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/post_text"
                         tools:itemCount="3"
-                        tools:listitem="@layout/item_post_preview" />
+                        tools:listitem="@layout/item_post_preview"/>
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_post"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_percent="0.913" />
+                        app:layout_constraintGuide_percent="0.913"/>
 
                     <TextView
                         android:id="@+id/more_text"
@@ -260,7 +277,7 @@
                         android:text="더보기"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/post_list" />
+                        app:layout_constraintTop_toBottomOf="@id/post_list"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -279,7 +296,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <ImageButton
                         android:layout_width="wrap_content"
@@ -289,7 +306,7 @@
                         android:padding="4dp"
                         android:src="@drawable/ic_calendar_today"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/diary_list"
@@ -302,7 +319,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/diary_text"
                         app:searchPosition="@{gviewmodel.searchPosition}"
-                        tools:listitem="@layout/item_diary" />
+                        tools:listitem="@layout/item_diary"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </ScrollView>

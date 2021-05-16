@@ -15,6 +15,9 @@ import androidx.databinding.InverseBindingListener
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdSize
+import com.google.android.gms.ads.AdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Diary
@@ -191,13 +194,10 @@ fun hideKeyboard(view: TextInputEditText, isHide: Boolean) {
     }
 }
 
-@BindingAdapter("app:noProvideMission")
-fun noProvideMission(view: View, isEmpty: Boolean) {
-    view.visibility = if (isEmpty) {
-        View.GONE
-    } else {
-        View.VISIBLE
-    }
+@BindingAdapter("app:loadBannerAd")
+fun loadAd(view: AdView, isLoad: Boolean) {
+    val request = AdRequest.Builder().build()
+    view.loadAd(request)
 }
 
 // Listener
