@@ -1,31 +1,23 @@
 package com.sg.android.bambooflower.ui
 
-import android.content.Context
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.MobileAds
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.ActivityMainBinding
 import com.sg.android.bambooflower.other.Contents
-import com.sg.android.bambooflower.ui.fragment.HomeFragment
-import com.sg.android.bambooflower.ui.fragment.ProfileFragment
-import com.sg.android.bambooflower.ui.fragment.RankingFragment
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,10 +67,10 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.homeFragment, R.id.rankingFragment, R.id.profileFragment -> {
-                    binding.bottomNavView.visibility = View.VISIBLE
+                    showBottomView()
                 }
                 else -> {
-                    binding.bottomNavView.visibility = View.GONE
+                    hideBottomView()
                 }
             }
         }
@@ -112,6 +104,49 @@ class MainActivity : AppCompatActivity() {
 
     fun hideSatisfaction() {
         binding.satisfactionImage.visibility = View.GONE
+    }
+
+    fun showBottomView() {
+        if (binding.bottomNavView.visibility == View.GONE) {
+            with(binding.bottomNavView) {
+                visibility = View.VISIBLE
+                binding.bottomNavView.menu.forEach {
+                    it.isEnabled = true
+                }
+
+                animate().setDuration(resources.getInteger(R.integer.transaction_duration).toLong())
+                    .alpha(1f)
+                    .translationY(0f)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            visibility = View.VISIBLE
+                        }
+                    })
+                    .withLayer()
+            }
+        }
+    }
+
+    fun hideBottomView() {
+        if (binding.bottomNavView.visibility == View.VISIBLE) {
+            with(binding.bottomNavView) {
+                binding.bottomNavView.menu.forEach {
+                    it.isEnabled = false
+                }
+
+                animate().setDuration(resources.getInteger(R.integer.transaction_duration).toLong())
+                    .alpha(0f)
+                    .translationY(100f)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationEnd(animation: Animator?) {
+                            super.onAnimationEnd(animation)
+                            visibility = View.GONE
+                        }
+                    })
+                    .withLayer()
+            }
+        }
     }
 
     // 검색화면 설정

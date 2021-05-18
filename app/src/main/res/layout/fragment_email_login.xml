@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="com.sg.android.bambooflower.R" />
-
         <variable
             name="viewmodel"
-            type="com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel" />
+            type="com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel"/>
 
         <variable
-            name="navController"
-            type="androidx.navigation.NavController" />
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
 
         <variable
             name="blank"
-            type="String" />
+            type="String"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.05" />
+            app:layout_constraintGuide_percent="0.05"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_id_layout"
@@ -48,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:hint="이메일"
                 android:inputType="textEmailAddress"
-                android:text="@={viewmodel.email}" />
+                android:text="@={viewmodel.email}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -67,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:hint="비밀번호"
                 android:inputType="textPassword"
-                android:text="@={viewmodel.password}" />
+                android:text="@={viewmodel.password}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -81,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_password_layout"
-            tools:text="아이디 및 비밀번호가 잘못됐습니다." />
+            tools:text="아이디 및 비밀번호가 잘못됐습니다."/>
 
         <com.sg.android.bambooflower.ui.view.CustomButton
             android:id="@+id/email_login_btn"
@@ -94,26 +93,26 @@
             app:customButtonText="로그인"
             app:layout_constraintBottom_toTopOf="@id/create_account_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/create_account_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
-            android:onClick="@{() -> navController.navigate(R.id.action_emailLoginFragment_to_createAccountFragment)}"
+            android:onClick="@{clickListener}"
             android:text="회원가입"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.92" />
+            app:layout_constraintGuide_percent="0.92"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

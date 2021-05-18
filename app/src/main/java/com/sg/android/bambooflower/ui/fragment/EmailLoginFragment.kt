@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialSharedAxis
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentEmailLoginBinding
@@ -18,7 +18,7 @@ import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewMo
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EmailLoginFragment : Fragment() {
+class EmailLoginFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<EmailLoginViewModel>()
 
     override fun onCreateView(
@@ -29,7 +29,7 @@ class EmailLoginFragment : Fragment() {
         val binding = FragmentEmailLoginBinding.inflate(inflater)
         with(binding) {
             viewmodel = mViewModel
-            navController = findNavController()
+            clickListener = this@EmailLoginFragment
             blank = ""
 
             lifecycleOwner = viewLifecycleOwner
@@ -68,6 +68,17 @@ class EmailLoginFragment : Fragment() {
                 true
             }
             else -> false
+        }
+    }
+
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.create_account_text -> { // 회원가입 버튼 눌렀을 때
+                findNavController().navigate(R.id.action_emailLoginFragment_to_createAccountFragment)
+            }
+            else -> {
+            }
         }
     }
 

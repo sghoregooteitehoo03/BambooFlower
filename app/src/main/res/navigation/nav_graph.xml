@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -14,13 +15,21 @@
             android:id="@+id/action_loginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_loginFragment_to_emailLoginFragment"
-            app:destination="@id/emailLoginFragment" />
+            app:destination="@id/emailLoginFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_loginFragment_to_createUserFragment"
-            app:destination="@id/createUserFragment" />
+            app:destination="@id/createUserFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -30,22 +39,36 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_postListFragment"
-            app:destination="@id/postListFragment" />
+            app:destination="@id/postListFragment"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_homeFragment_to_postFragment"
-            app:destination="@id/postFragment" />
+            app:destination="@id/postFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_homeFragment_to_diaryWriteFragment"
-            app:destination="@id/diaryWriteFragment" />
+            app:destination="@id/diaryWriteFragment"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_homeFragment_to_diaryViewerFragment"
-            app:destination="@id/diaryViewerFragment" />
+            app:destination="@id/diaryViewerFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_homeFragment_to_calendarDialog"
-            app:destination="@id/calendarDialog" />
+            app:destination="@id/calendarDialog"/>
         <action
             android:id="@+id/action_homeFragment_to_addPostFragment"
-            app:destination="@id/addPostFragment" />
+            app:destination="@id/addPostFragment"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"
@@ -56,13 +79,21 @@
             android:id="@+id/action_emailLoginFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_emailLoginFragment_to_createAccountFragment"
-            app:destination="@id/createAccountFragment" />
+            app:destination="@id/createAccountFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_emailLoginFragment_to_createUserFragment"
-            app:destination="@id/createUserFragment" />
+            app:destination="@id/createUserFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
@@ -73,7 +104,7 @@
             android:id="@+id/action_createAccountFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
     </fragment>
     <fragment
         android:id="@+id/postListFragment"
@@ -81,14 +112,18 @@
         android:label="PostListFragment"
         tools:layout="@layout/fragment_post_list">
         <action
-            android:id="@+id/action_postListFragment_to_postDialog"
-            app:destination="@id/postFragment" />
+            android:id="@+id/action_postListFragment_to_postFragment"
+            app:destination="@id/postFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.AddPostFragment"
         android:label="AddPostFragment"
-        tools:layout="@layout/fragment_add_post" />
+        tools:layout="@layout/fragment_add_post"/>
     <fragment
         android:id="@+id/postFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.PostFragment"
@@ -96,7 +131,7 @@
         tools:layout="@layout/fragment_post">
         <action
             android:id="@+id/action_postFragment_to_reportDialog"
-            app:destination="@id/reportDialog" />
+            app:destination="@id/reportDialog"/>
     </fragment>
     <fragment
         android:id="@+id/diaryWriteFragment"
@@ -105,7 +140,7 @@
         tools:layout="@layout/fragment_diary_write">
         <action
             android:id="@+id/action_diaryWriteFragment_to_satisfactionFragment"
-            app:destination="@id/satisfactionFragment" />
+            app:destination="@id/satisfactionFragment"/>
     </fragment>
     <fragment
         android:id="@+id/diaryViewerFragment"
@@ -114,13 +149,13 @@
         tools:layout="@layout/fragment_diary_viewer">
         <action
             android:id="@+id/action_diaryViewerFragment_to_diaryEditFragment"
-            app:destination="@id/diaryEditFragment" />
+            app:destination="@id/diaryEditFragment"/>
     </fragment>
     <fragment
         android:id="@+id/rankingFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.RankingFragment"
         android:label="RankingFragment"
-        tools:layout="@layout/fragment_ranking" />
+        tools:layout="@layout/fragment_ranking"/>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.ProfileFragment"
@@ -129,17 +164,31 @@
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
             app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_profileFragment_to_myPostListFragment"
-            app:destination="@id/myPostListFragment" />
+            app:destination="@id/myPostListFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_profileFragment_to_myMissionFragment"
-            app:destination="@id/myMissionFragment" />
+            app:destination="@id/myMissionFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_profileFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
@@ -150,44 +199,52 @@
             android:id="@+id/action_createUserFragment_to_homeFragment"
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
         <argument
             android:name="token"
-            app:argType="string" />
+            app:argType="string"/>
         <argument
             android:name="loginWay"
-            app:argType="string" />
+            app:argType="string"/>
     </fragment>
     <dialog
         android:id="@+id/calendarDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.CalendarDialog"
         android:label="CalendarDialog"
-        tools:layout="@layout/dialog_calendar" />
+        tools:layout="@layout/dialog_calendar"/>
     <dialog
         android:id="@+id/reportDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.ReportDialog"
         android:label="ReportDialog"
-        tools:layout="@layout/dialog_report" />
+        tools:layout="@layout/dialog_report"/>
     <dialog
         android:id="@+id/satisfactionFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.SatisfactionFragment"
         android:label="SatisfactionFragment"
-        tools:layout="@layout/fragment_satisfaction" />
+        tools:layout="@layout/fragment_satisfaction"/>
     <fragment
         android:id="@+id/diaryEditFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryEditFragment"
         android:label="DiaryEditFragment"
-        tools:layout="@layout/fragment_diary_write" />
+        tools:layout="@layout/fragment_diary_write"/>
     <fragment
         android:id="@+id/myPostListFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.MyPostListFragment"
         android:label="MyPostListFragment"
-        tools:layout="@layout/fragment_post_list" />
+        tools:layout="@layout/fragment_post_list">
+        <action
+            android:id="@+id/action_myPostListFragment_to_postFragment"
+            app:destination="@id/postFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </fragment>
     <fragment
         android:id="@+id/myMissionFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.MyMissionFragment"
         android:label="MyMissionFragment"
-        tools:layout="@layout/fragment_my_mission" />
+        tools:layout="@layout/fragment_my_mission"/>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.SettingFragment"
@@ -196,7 +253,9 @@
         <action
             android:id="@+id/action_settingFragment_to_loginFragment"
             app:destination="@id/loginFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

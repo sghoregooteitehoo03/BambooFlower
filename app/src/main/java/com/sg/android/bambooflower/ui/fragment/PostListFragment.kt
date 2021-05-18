@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.transition.MaterialSharedAxis
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentPostListBinding
@@ -23,8 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 // TODO:
-//  . 서치 기능 X
-//  . 네이티브 광고 X
+//  . 광고 릴리스 키로 변경
 
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
@@ -103,7 +103,7 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     override fun onItemClickListener(pos: Int) {
         gViewModel.post.value = postAdapter.getPost(pos)!!
 
-        findNavController().navigate(R.id.postFragment)
+        findNavController().navigate(R.id.action_postListFragment_to_postFragment)
     }
 
     private fun setObserver() {

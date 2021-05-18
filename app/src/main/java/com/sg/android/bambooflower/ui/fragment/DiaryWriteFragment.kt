@@ -61,6 +61,7 @@ class DiaryWriteFragment : Fragment() {
             this?.title = "일기 작성"
             this?.setDisplayHomeAsUpEnabled(true)
         }
+        (activity as MainActivity).hideSatisfaction()
     }
 
     override fun onDestroyView() {

@@ -36,7 +36,7 @@ import org.json.JSONObject
 
 // TODO:
 //  . 제공할 미션 없을 때 처리 O
-//  . 광고 O
+//  . 광고 릴리스 키로 바꾸기
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
@@ -65,7 +65,6 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
             this.clickListener = this@HomeFragment
-            this.navController = findNavController()
             this.blank = ""
 
             with(postList) {
@@ -95,12 +94,13 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             this?.setDisplayHomeAsUpEnabled(false)
             this?.show()
         }
+        (activity as MainActivity).hideSatisfaction()
     }
 
     // 리사이클러뷰 아이템 클릭
     override fun onItemClickListener(pos: Int) {
         gViewModel.post.value = postAdapter.getItem(pos)
-        findNavController().navigate(R.id.postFragment)
+        findNavController().navigate(R.id.action_homeFragment_to_postFragment)
     }
 
     // 일기 작성 클릭
@@ -113,7 +113,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         val diaryData = diaryAdapter.getDiaryItem(pos)
         gViewModel.diary.value = diaryData
 
-        findNavController().navigate(R.id.diaryViewerFragment)
+        findNavController().navigate(R.id.action_homeFragment_to_diaryViewerFragment)
     }
 
     // 버튼 액션
@@ -124,6 +124,12 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             }
             R.id.change_button -> { // 미션 바꾸기
                 changeMission()
+            }
+            R.id.more_text -> { // 더보기
+                findNavController().navigate(R.id.action_homeFragment_to_postListFragment)
+            }
+            R.id.search_diary_btn -> { // 일기 찾기
+                findNavController().navigate(R.id.action_homeFragment_to_calendarDialog)
             }
             else -> {
             }
@@ -142,7 +148,10 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         }
         mViewModel.isLoading.observe(viewLifecycleOwner) { // 데이터 갱신
             if (it) {
+                (activity as MainActivity).hideBottomView()
                 getHomeData()
+            } else {
+                (activity as MainActivity).showBottomView()
             }
         }
         mViewModel.interstitialAd.observe(viewLifecycleOwner) { // 광고 로드 확인
@@ -183,7 +192,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("인증게시판으로 이동합니다.")
             setPositiveButton("확인") { dialog, which ->
-                findNavController().navigate(R.id.addPostFragment)
+                findNavController().navigate(R.id.action_homeFragment_to_addPostFragment)
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()
@@ -219,6 +228,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         )
     }
 
+    // 광고 로드 콜백
     private val adCallBack = object : InterstitialAdLoadCallback() {
         override fun onAdLoaded(interstitialAd: InterstitialAd) {
             super.onAdLoaded(interstitialAd)
@@ -229,6 +239,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         }
     }
 
+    // 광고 사용자 동작 콜백
     private val fullscreenCallback = object : FullScreenContentCallback() {
         override fun onAdDismissedFullScreenContent() {
             super.onAdDismissedFullScreenContent()

@@ -27,7 +27,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-// TODO: 광고 O
+// TODO: 광고 릴리스 키로 변경
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -43,11 +43,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         // 인스턴스 설정
         val binding = FragmentProfileBinding.inflate(inflater)
         user = gViewModel.user.value!!
+        exitTransition = null
 
         with(binding) {
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
-            this.navController = findNavController()
             this.clickListener = this@ProfileFragment
 
             lifecycleOwner = viewLifecycleOwner
@@ -122,10 +122,19 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.profile_image -> {
+            R.id.profile_image -> { // 프로필 이미지
                 getImage()
             }
-            R.id.sign_out_btn -> {
+            R.id.my_post_btn -> { // 내 게시글
+                findNavController().navigate(R.id.action_profileFragment_to_myPostListFragment)
+            }
+            R.id.complete_mission_btn -> { // 수행한 미션
+                findNavController().navigate(R.id.action_profileFragment_to_myMissionFragment)
+            }
+            R.id.setting_btn -> { // 설정
+                findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
+            }
+            R.id.sign_out_btn -> { // 로그아웃
                 signOut()
             }
             else -> {

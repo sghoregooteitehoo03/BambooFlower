@@ -66,7 +66,8 @@ class LoginFragment : Fragment() {
 
         // 툴바 설정
         with((activity as MainActivity).supportActionBar) {
-            this?.hide()
+            this?.title = ""
+            this?.setDisplayHomeAsUpEnabled(false)
         }
     }
 

@@ -64,11 +64,6 @@ class DiaryViewerFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        (activity as MainActivity).hideSatisfaction()
-        super.onDestroyView()
-    }
-
     // 메뉴설정
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
