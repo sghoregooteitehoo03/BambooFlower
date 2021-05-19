@@ -2,6 +2,7 @@ package com.sg.android.bambooflower.ui.view
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
@@ -74,8 +75,16 @@ class LoadingView : LinearLayout {
             View.VISIBLE
         } else {
             with(window) {
-                decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                statusBarColor = Color.WHITE
+                when (resources.configuration.uiMode.and(Configuration.UI_MODE_NIGHT_MASK)) {
+                    Configuration.UI_MODE_NIGHT_YES -> {
+                        decorView.systemUiVisibility = 0
+                        statusBarColor = Color.BLACK
+                    }
+                    Configuration.UI_MODE_NIGHT_NO -> {
+                        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                        statusBarColor = Color.WHITE
+                    }
+                }
             }
 
             View.GONE

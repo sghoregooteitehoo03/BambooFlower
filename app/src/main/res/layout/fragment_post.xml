@@ -26,6 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.google.android.gms.ads.AdView
+            android:id="@+id/ad_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:adSize="BANNER"
+            app:adUnitId="@string/ad_banner_unit_id_test"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:loadBannerAd="@{true}"/>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -34,19 +43,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-
-                <com.google.android.gms.ads.AdView
-                    android:id="@+id/ad_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    app:adSize="LARGE_BANNER"
-                    app:adUnitId="@string/ad_banner_unit_id_test"
-                    app:loadBannerAd="@{true}"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="4dp"
-                    android:background="@color/gray_bright"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -61,7 +57,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{post.title}"
-                        android:textColor="@color/black"
+                        android:textColor="@color/default_item_color"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +107,7 @@
                         android:layout_marginTop="12dp"
                         android:minHeight="80dp"
                         android:text="@{post.contents}"
-                        android:textColor="@color/black"
+                        android:textColor="@color/default_item_color"
                         android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/divide_view"

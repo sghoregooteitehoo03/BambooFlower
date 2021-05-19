@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="76dp"
     android:layout_height="76dp"
     android:background="@drawable/shape_round"
+    android:backgroundTint="@color/divide_color"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="12dp">
@@ -12,13 +14,13 @@
         android:id="@+id/button_icon"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        tools:src="@drawable/high_image" />
+        tools:src="@drawable/high_image"/>
 
     <TextView
         android:id="@+id/button_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:textColor="@color/black"
-        tools:text="매우만족" />
+        android:textColor="@color/default_item_color"
+        tools:text="매우만족"/>
 </LinearLayout>

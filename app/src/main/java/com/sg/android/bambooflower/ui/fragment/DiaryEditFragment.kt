@@ -1,7 +1,6 @@
 package com.sg.android.bambooflower.ui.fragment
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.*
 import android.view.inputmethod.InputMethodManager
@@ -71,6 +70,7 @@ class DiaryEditFragment : Fragment() {
             this?.title = "일기 수정"
             this?.setDisplayHomeAsUpEnabled(true)
         }
+        (activity as MainActivity).hideSatisfaction()
     }
 
     override fun onDestroyView() {
