@@ -19,7 +19,9 @@ import com.sg.android.bambooflower.BuildConfig
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentSettingBinding
+import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
+import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.settingFragment.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,12 +88,12 @@ class SettingFragment : Fragment(), View.OnClickListener {
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            // TODO: 이용약관 및 개인정보 처리방침 만든 후 구현하기
+            // TODO: 이용약관 및 개인정보 처리방침 만든 후 구현하기 O
             R.id.service_btn -> { // 이용약관
-                Log.i("Check", "이용약관")
+                goViewer(Contents.CHILD_TERMS_OF_SERVICE)
             }
             R.id.personal_btn -> { // 개인정보
-                Log.i("Check", "개인정보")
+                goViewer(Contents.CHILD_PRIVACY_POLICY)
             }
             R.id.diary_clear_btn -> { // 일기 모두삭제
                 clearDiary()
@@ -165,5 +167,14 @@ class SettingFragment : Fragment(), View.OnClickListener {
 
             show()
         }
+    }
+
+    // html 읽어오는 화면으로 이동
+    private fun goViewer(title: String) {
+        val intent = Intent(requireContext(), SecondActivity::class.java).apply {
+            putExtra(Contents.EXTRA_TITLE, title)
+            action = Contents.SHOW_WEB_VIEWER
+        }
+        startActivity(intent)
     }
 }

@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuthException
-import com.sg.android.bambooflower.data.User
-import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.other.ErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -22,9 +20,16 @@ class CreateAccountViewModel @Inject constructor(
     val email = MutableLiveData("")
     val password = MutableLiveData("")
     val name = MutableLiveData("")
+    val firstCheck = MutableLiveData(false)
+    val secondCheck = MutableLiveData(false)
 
     val errorMsg: LiveData<String> = _errorMsg
     val isLoading: LiveData<Boolean> = _isLoading
+
+    fun checkAbleData() = email.value!!.isNotEmpty() && password.value!!.isNotEmpty()
+            && name.value!!.isNotEmpty()
+            && firstCheck.value!!
+            && secondCheck.value!!
 
     fun createAccount() {
         if (email.value!!.isNotEmpty() && password.value!!.isNotEmpty()

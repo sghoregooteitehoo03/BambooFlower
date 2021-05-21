@@ -9,7 +9,6 @@ import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.viewmodel.createAccountFragment.CreateAccountRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,9 +19,15 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateAcco
 
     val email = MutableLiveData("")
     val name = MutableLiveData("")
+    val firstCheck = MutableLiveData(false)
+    val secondCheck = MutableLiveData(false)
 
     val errorMsg: LiveData<String> = _errorMsg
     val isLoading: LiveData<Boolean> = _isLoading
+
+    fun checkAbleData() = email.value!!.isNotEmpty() && name.value!!.isNotEmpty()
+            && firstCheck.value!!
+            && secondCheck.value!!
 
     fun setUserData(token: String, loginWay: String) {
         if (email.value!!.isNotEmpty() && name.value!!.isNotEmpty()) {

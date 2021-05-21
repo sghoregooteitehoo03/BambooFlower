@@ -7,7 +7,11 @@ import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.*
+import android.webkit.WebView
+import android.widget.CalendarView
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -16,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
@@ -25,7 +28,6 @@ import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
-import com.sg.android.bambooflower.ui.view.CustomSettingView
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -198,6 +200,13 @@ fun hideKeyboard(view: TextInputEditText, isHide: Boolean) {
 fun loadAd(view: AdView, isLoad: Boolean) {
     val request = AdRequest.Builder().build()
     view.loadAd(request)
+}
+
+@BindingAdapter("app:loadUrl")
+fun loadUrl(view: WebView, url: String) {
+    if (url.isNotEmpty()) {
+        view.loadUrl(url)
+    }
 }
 
 // Listener

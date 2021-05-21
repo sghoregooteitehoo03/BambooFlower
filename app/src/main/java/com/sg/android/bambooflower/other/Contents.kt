@@ -11,11 +11,13 @@ object Contents {
     const val EXTRA_GET_IMAGE = "EXTRA_GET_IMAGE"
     const val EXTRA_SET_POS = "EXTRA_SET_POS"
     const val EXTRA_IS_LOGIN = "EXTRA_IS_LOGIN"
+    const val EXTRA_TITLE = "EXTRA_TITLE"
 
     const val PERMISSION_CODE = 250
 
     const val SHOW_ALBUM_FRAG = "SHOW_ALBUM_FARG"
     const val SHOW_IMAGE_FRAG = "SHOW_IMAGE_FRAG"
+    const val SHOW_WEB_VIEWER = "SHOW_WEB_VIEWER"
 
     const val COLLECTION_MISSION = "Mission"
     const val COLLECTION_USER = "User"
@@ -24,6 +26,9 @@ object Contents {
     const val COLLECTION_ACCOUNT = "Account"
 
     const val CHILD_POST_IMAGE = "PostImage"
+    const val CHILD_TERMS_OF_SERVICE = "TermsOfService.html"
+    const val CHILD_PERSONAL_INFORMATION = "PersonalInformation.html"
+    const val CHILD_PRIVACY_POLICY = "PrivacyPolicy.html"
 
     const val FUNC_GET_HOME_DATA = "getHomeData"
     const val FUNC_SUCCESS_MISSION = "successMission"
