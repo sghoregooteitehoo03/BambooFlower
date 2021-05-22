@@ -18,6 +18,10 @@ class HtmlViewerViewModel @Inject constructor(private val repository: HtmlViewer
 
     fun readHtml(title: String) = viewModelScope.launch {
         Log.i("Check", "title: $title")
-        _url.value = repository.readHtml(title).toString()
+        _url.value = try {
+            repository.readHtml(title).toString()
+        } catch (e: Exception) {
+            ""
+        }
     }
 }

@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.transition.MaterialSharedAxis
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentEmailLoginBinding
@@ -28,9 +28,9 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
     ): View {
         val binding = FragmentEmailLoginBinding.inflate(inflater)
         with(binding) {
-            viewmodel = mViewModel
-            clickListener = this@EmailLoginFragment
-            blank = ""
+            this.viewmodel = mViewModel
+            this.clickListener = this@EmailLoginFragment
+            this.blank = ""
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -97,6 +97,10 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                                 } else {
                                     findNavController().navigate(R.id.createUserFragment)
                                 }
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                     }
                     else -> {

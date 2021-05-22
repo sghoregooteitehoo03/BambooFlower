@@ -3,18 +3,16 @@ package com.sg.android.bambooflower.ui.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.transition.MaterialSharedAxis
 import com.sg.android.bambooflower.BuildConfig
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
@@ -88,7 +86,6 @@ class SettingFragment : Fragment(), View.OnClickListener {
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            // TODO: 이용약관 및 개인정보 처리방침 만든 후 구현하기 O
             R.id.service_btn -> { // 이용약관
                 goViewer(Contents.CHILD_TERMS_OF_SERVICE)
             }
@@ -157,10 +154,16 @@ class SettingFragment : Fragment(), View.OnClickListener {
             }
             setPositiveButton("확인") { dialog, which ->
                 CoroutineScope(Dispatchers.IO).launch {
-                    mViewModel.deleteAccount(user)
-
-                    withContext(Dispatchers.Main) {
-                        findNavController().navigate(R.id.action_settingFragment_to_loginFragment)
+                    try {
+                        mViewModel.deleteAccount(user)
+                    } catch (e: Exception) {
+                        mViewModel.ready()
+                        Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    } finally {
+                        withContext(Dispatchers.Main) {
+                            findNavController().navigate(R.id.action_settingFragment_to_loginFragment)
+                        }
                     }
                 }
             }

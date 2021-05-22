@@ -15,15 +15,14 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val repository: ProfileRepository) :
     ViewModel() {
-    private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading // 로딩 여부
+    val isLoading = MutableLiveData(false) // 로딩 여부
 
     // 프로필 변경
     suspend fun changeProfileImage(user: User, imageUri: Uri) {
-        _isLoading.postValue(true)
+        isLoading.postValue(true)
         repository.changeProfileImage(user, imageUri)
 
-        _isLoading.postValue(false)
+        isLoading.postValue(false)
     }
 
     // 로그아웃

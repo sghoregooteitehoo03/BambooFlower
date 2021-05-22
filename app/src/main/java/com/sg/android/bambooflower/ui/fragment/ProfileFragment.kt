@@ -4,8 +4,6 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -80,10 +78,16 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Contents.GET_IMAGE) {
                 CoroutineScope(Dispatchers.IO).launch {
-                    mViewModel.changeProfileImage(user, data?.data!!)
+                    try {
+                        mViewModel.changeProfileImage(user, data?.data!!)
 
-                    gViewModel.user.postValue(user)
-                    gViewModel.syncData.postValue(true)
+                        gViewModel.user.postValue(user)
+                        gViewModel.syncData.postValue(true)
+                    } catch (e: Exception) {
+                        mViewModel.isLoading.value = false
+                        Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.style.UnderlineSpan
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -113,6 +114,13 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
                         fragmentBinding!!.errorMsgText.text = msg
                     }
                 }
+            }
+        }
+        mViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError) {
+                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                mViewModel.isError.value = false
             }
         }
         mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->

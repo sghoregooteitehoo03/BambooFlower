@@ -22,6 +22,7 @@ class CreateAccountViewModel @Inject constructor(
     val name = MutableLiveData("")
     val firstCheck = MutableLiveData(false)
     val secondCheck = MutableLiveData(false)
+    val isError = MutableLiveData(false) // 서버에러
 
     val errorMsg: LiveData<String> = _errorMsg
     val isLoading: LiveData<Boolean> = _isLoading
@@ -40,10 +41,14 @@ class CreateAccountViewModel @Inject constructor(
             repository.createAccount(email.value!!, password.value!!)
                 .addOnSuccessListener {
                     viewModelScope.launch {
-                        repository.setUserData(email.value!!, password.value!!, name.value!!)
+                        try {
+                            repository.setUserData(email.value!!, password.value!!, name.value!!)
 
-                        _errorMsg.value = ErrorMessage.SUCCESS
-                        _isLoading.value = false // 로딩 끝
+                            _errorMsg.value = ErrorMessage.SUCCESS
+                            _isLoading.value = false // 로딩 끝
+                        } catch (e: Exception) {
+                            isError.value = true
+                        }
                     }
                 }
                 .addOnFailureListener {

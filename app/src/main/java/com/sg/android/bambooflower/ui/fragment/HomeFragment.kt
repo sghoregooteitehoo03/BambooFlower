@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -128,9 +129,6 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             R.id.more_text -> { // 더보기
                 findNavController().navigate(R.id.action_homeFragment_to_postListFragment)
             }
-            R.id.search_diary_btn -> { // 일기 찾기
-                findNavController().navigate(R.id.action_homeFragment_to_calendarDialog)
-            }
             else -> {
             }
         }
@@ -144,6 +142,13 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             if (it) {
                 mViewModel.isLoading.value = true
                 gViewModel.syncData.value = false
+            }
+        }
+        mViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError) {
+                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                mViewModel.isLoading.value = false
             }
         }
         mViewModel.isLoading.observe(viewLifecycleOwner) { // 데이터 갱신
@@ -184,6 +189,9 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                 mViewModel.currentTime.value = System.currentTimeMillis()
 
                 mViewModel.isLoading.value = false
+            }
+            .addOnFailureListener {
+                mViewModel.isError.value = true
             }
     }
 
@@ -246,8 +254,12 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
 
             // 광고를 본 후
             CoroutineScope(Dispatchers.IO).launch {
-                mViewModel.changeMission(user)
-                gViewModel.user.postValue(user)
+                try {
+                    mViewModel.changeMission(user)
+                    gViewModel.user.postValue(user)
+                } catch (e: Exception) {
+                    mViewModel.isError.value = true
+                }
             }
         }
     }

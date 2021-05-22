@@ -1,6 +1,9 @@
 package com.sg.android.bambooflower.viewmodel.loginFragment
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
 import com.sg.android.bambooflower.other.Contents
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,6 +19,7 @@ class LoginViewModel @Inject constructor(
 
     val loginWay: LiveData<Int> = _loginWay
     val isSuccessLogin: LiveData<Boolean> = _isSuccessLogin
+    val isError = MutableLiveData(false)
 
     fun loginEmail() {
         _loginWay.value = Contents.LOGIN_WITH_EMAIL
@@ -30,8 +34,12 @@ class LoginViewModel @Inject constructor(
     }
 
     fun login(credential: AuthCredential) = viewModelScope.launch {
-        repository.login(credential)
-        _isSuccessLogin.value = true
+        try {
+            repository.login(credential)
+            _isSuccessLogin.value = true
+        } catch (e: Exception) {
+            isError.value = true
+        }
     }
 
     fun getUserData() =
@@ -40,6 +48,7 @@ class LoginViewModel @Inject constructor(
     fun clear() {
         _loginWay.value = 0
         _isSuccessLogin.value = false
+        isError.value = false
     }
 
     fun isLogin() =

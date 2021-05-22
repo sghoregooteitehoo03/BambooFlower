@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -27,7 +28,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 이용약관 (나중에) O
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private val mViewModel by viewModels<LoginViewModel>()
@@ -120,6 +120,14 @@ class LoginFragment : Fragment() {
                 successLogin()
             }
         }
+        // 오류 발생 시
+        mViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError) {
+                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                mViewModel.isError.value = false
+            }
+        }
     }
 
     // 이메일로 로그인
@@ -178,6 +186,9 @@ class LoginFragment : Fragment() {
                         .actionLoginFragmentToCreateUserFragment(token, loginWay)
                     findNavController().navigate(directions)
                 }
+            }
+            .addOnFailureListener {
+                mViewModel.isError.value = true
             }
     }
 

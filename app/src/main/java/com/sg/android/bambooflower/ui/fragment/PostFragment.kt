@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -135,10 +136,24 @@ class PostFragment : Fragment(), View.OnClickListener {
         // 삭제 완료 확인
         mViewModel.isDeleted.observe(viewLifecycleOwner) {
             if (it) {
-                (requireActivity() as MainActivity).ready()
                 gViewModel.syncData.value = true
 
                 findNavController().navigateUp()
+            }
+        }
+        // 서버 오류
+        mViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError) {
+                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                    .show()
+                mViewModel.isError.value = false
+            }
+        }
+        mViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                (requireActivity() as MainActivity).loading()
+            } else {
+                (requireActivity() as MainActivity).ready()
             }
         }
         // 이미지 위치
@@ -205,7 +220,6 @@ class PostFragment : Fragment(), View.OnClickListener {
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("정말로 삭제하시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
-                (requireActivity() as MainActivity).loading() // 로딩화면 표시
                 mViewModel.deletePost(postData)
             }
             setNegativeButton("취소") { dialog, which ->

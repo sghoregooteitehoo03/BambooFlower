@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/divide_color"
-            android:visibility="@{viewmodel.isLoading ? View.GONE : View.VISIBLE}">
+            android:visibility="@{viewmodel.isLoading || viewmodel.isError ? View.GONE : View.VISIBLE}">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -293,16 +293,16 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
 
-                    <ImageButton
-                        android:id="@+id/search_diary_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:onClick="@{clickListener}"
-                        android:padding="4dp"
-                        android:src="@drawable/ic_calendar_today"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/search_diary_btn"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:background="?attr/selectableItemBackground"-->
+<!--                        android:onClick="@{clickListener}"-->
+<!--                        android:padding="4dp"-->
+<!--                        android:src="@drawable/ic_calendar_today"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"/>-->
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/diary_list"

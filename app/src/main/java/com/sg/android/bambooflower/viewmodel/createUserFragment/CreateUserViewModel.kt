@@ -24,6 +24,7 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateAcco
 
     val errorMsg: LiveData<String> = _errorMsg
     val isLoading: LiveData<Boolean> = _isLoading
+    val isError = MutableLiveData(false) // 서버 연결 에러
 
     fun checkAbleData() = email.value!!.isNotEmpty() && name.value!!.isNotEmpty()
             && firstCheck.value!!
@@ -35,10 +36,14 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateAcco
 
             if (checkEmail()) { // 이메일 형식 체크
                 viewModelScope.launch {
-                    repository.setUserData(email.value!!, name.value!!, token, loginWay)
+                    try {
+                        repository.setUserData(email.value!!, name.value!!, token, loginWay)
 
-                    _errorMsg.value = ErrorMessage.SUCCESS
-                    _isLoading.value = false // 로딩 끝
+                        _isLoading.value = false // 로딩 끝
+                        _errorMsg.value = ErrorMessage.SUCCESS
+                    } catch (e: Exception) {
+                        isError.value = true
+                    }
                 }
             } else {
                 _errorMsg.value = ErrorMessage.NOT_EMAIL_TYPE
