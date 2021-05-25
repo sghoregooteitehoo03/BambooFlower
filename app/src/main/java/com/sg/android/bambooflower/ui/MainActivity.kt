@@ -2,9 +2,8 @@ package com.sg.android.bambooflower.ui
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.content.res.Configuration
+import android.content.SharedPreferences
 import android.graphics.Bitmap
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -22,6 +21,8 @@ import com.sg.android.bambooflower.databinding.ActivityMainBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
+import javax.inject.Named
 
 //  TODO:
 //   . bottom nav을 이용한 화면 전환시 상태 저장기능 구현
@@ -30,6 +31,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()
 
+    @Inject
+    @Named(Contents.PREF_CHECK_FIRST)
+    lateinit var checkPref: SharedPreferences
     private lateinit var binding: ActivityMainBinding
     private lateinit var imm: InputMethodManager
     private var backAvailable = true
@@ -63,8 +67,11 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
             // 로그인 되어있으면 홈 화면으로 넘어감
-            navController.navigate(R.id.action_loginFragment_to_homeFragment)
+            navController.navigate(R.id.action_onboardFragment_to_homeFragment)
             intent.putExtra(Contents.EXTRA_IS_LOGIN, false)
+        } else if (!checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
+            // 온보딩 화면이 아닌 로그인 화면으로 이동
+            navController.navigate(R.id.action_onboardFragment_to_loginFragment)
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {

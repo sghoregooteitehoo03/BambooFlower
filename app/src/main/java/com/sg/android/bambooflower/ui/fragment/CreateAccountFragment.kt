@@ -111,14 +111,12 @@ class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
                 when (msg) {
                     ErrorMessage.SUCCESS ->
                         findNavController().navigate(R.id.action_createAccountFragment_to_homeFragment)
-                    else -> {
-                        fragmentBinding!!.errorMsgText.text = msg
-                    }
+                    else -> fragmentBinding!!.errorMsgText.text = msg
                 }
             }
         }
         mViewModel.isError.observe(viewLifecycleOwner) { isError ->
-            if(isError) {
+            if (isError) {
                 Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
                     .show()
                 mViewModel.isError.value = false

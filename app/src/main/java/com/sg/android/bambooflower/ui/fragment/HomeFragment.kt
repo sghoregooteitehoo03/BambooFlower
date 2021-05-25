@@ -1,5 +1,6 @@
 package com.sg.android.bambooflower.ui.fragment
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +26,7 @@ import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.HomeData
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentHomeBinding
+import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel
@@ -34,6 +36,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import javax.inject.Inject
+import javax.inject.Named
 
 // TODO:
 //  . 제공할 미션 없을 때 처리 O
@@ -44,6 +48,9 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<HomeViewModel>()
 
+    @Inject
+    @Named(Contents.PREF_CHECK_FIRST)
+    lateinit var checkPref: SharedPreferences
     private lateinit var user: User
     private lateinit var postAdapter: PostAdapter
     private lateinit var diaryAdapter: DiaryPagingAdapter
@@ -84,6 +91,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkFirst()
         setObserver()
     }
 
@@ -260,6 +268,15 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                 } catch (e: Exception) {
                     mViewModel.isError.value = true
                 }
+            }
+        }
+    }
+
+    private fun checkFirst() {
+        if (checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
+            with(checkPref.edit()) {
+                putBoolean(Contents.PREF_KEY_IS_FIRST, false)
+                commit()
             }
         }
     }

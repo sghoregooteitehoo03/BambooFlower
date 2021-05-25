@@ -7,10 +7,15 @@ object Contents {
     const val GET_IMAGE = 3300
     const val SHOW_IMAGE = 3400
 
+    const val PREF_CHECK_FIRST = "PREF_CHECK_FIRST"
+
+    const val PREF_KEY_IS_FIRST = "PREF_KEY_IS_FIRST"
+
     const val EXTRA_SET_IMAGE = "EXTRA_SET_IMAGE"
     const val EXTRA_GET_IMAGE = "EXTRA_GET_IMAGE"
     const val EXTRA_SET_POS = "EXTRA_SET_POS"
     const val EXTRA_IS_LOGIN = "EXTRA_IS_LOGIN"
+    const val EXTRA_IS_FIRST = "EXTRA_IS_FIRST"
     const val EXTRA_TITLE = "EXTRA_TITLE"
 
     const val PERMISSION_CODE = 250
