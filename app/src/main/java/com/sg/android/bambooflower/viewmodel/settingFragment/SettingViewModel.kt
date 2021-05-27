@@ -1,5 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.settingFragment
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,9 +24,9 @@ class SettingViewModel @Inject constructor(private val repository: SettingReposi
     }
 
     // 계정 탈퇴
-    suspend fun deleteAccount(user: User) {
+    suspend fun deleteAccount(user: User, context: Context) {
         _isLoading.postValue(true)
-        repository.deleteAccount(user)
+        repository.deleteAccount(user, context)
 
         _isLoading.postValue(false)
     }

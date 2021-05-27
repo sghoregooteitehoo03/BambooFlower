@@ -82,7 +82,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         mViewModel.changeProfileImage(user, data?.data!!)
 
                         gViewModel.user.postValue(user)
-                        gViewModel.syncData.postValue(true)
                     } catch (e: Exception) {
                         mViewModel.isLoading.value = false
                         Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
@@ -194,7 +193,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private fun signOut() { // 로그아웃
         findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
-        mViewModel.signOut()
+        mViewModel.signOut(requireContext())
     }
 
     // 권한 체크

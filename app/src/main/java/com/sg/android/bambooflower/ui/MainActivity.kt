@@ -5,14 +5,16 @@ import android.animation.AnimatorListenerAdapter
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.MobileAds
@@ -25,8 +27,12 @@ import javax.inject.Inject
 import javax.inject.Named
 
 //  TODO:
-//   . bottom nav을 이용한 화면 전환시 상태 저장기능 구현
+//   . bottom nav backstack 저장 안되게구현 O
+//   . back 버튼 두번 눌려야 종료되게 구현 O
+//   . 애니메이션 버그 수정 (CreateAccount, CreateUser, Profile) X
 //   . 게시글 작성 후 갱신되게 구현 O
+//   . 게시물 존재 여부 확인 O
+//   . facebook google 로그아웃 구현 (Profile O, Splash O, Setting O, CreateUser O)
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()
@@ -37,6 +43,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var imm: InputMethodManager
     private var backAvailable = true
+
+    private val FINISH_INTERVAL_TIME = 2000L
+    private var backPressedTime = 0L
+    private lateinit var backToast: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +59,8 @@ class MainActivity : AppCompatActivity() {
         // 툴바 설정
         setSupportActionBar(binding.mainToolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navFrag = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navFrag.navController
 
         binding.bottomNavView.setupWithNavController(navController)
         binding.inputSearch.setOnEditorActionListener { v, actionId, event ->
@@ -67,11 +78,11 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
             // 로그인 되어있으면 홈 화면으로 넘어감
-            navController.navigate(R.id.action_onboardFragment_to_homeFragment)
+            navController.navigate(R.id.action_loginFragment_to_homeFragment)
             intent.putExtra(Contents.EXTRA_IS_LOGIN, false)
-        } else if (!checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
-            // 온보딩 화면이 아닌 로그인 화면으로 이동
-            navController.navigate(R.id.action_onboardFragment_to_loginFragment)
+        } else if (checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
+            // 처음 앱을 킨 유저일 시 온보딩 화면으로 이동
+            navController.navigate(R.id.action_global_onboardFragment)
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
@@ -87,7 +98,23 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (backAvailable) {
-            super.onBackPressed()
+            if (binding.bottomNavView.visibility == View.VISIBLE) {
+                val tempTime = System.currentTimeMillis()
+                val intervalTime = tempTime - backPressedTime
+
+                if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+                    finish()
+                    backToast.cancel()
+                } else {
+                    backPressedTime = tempTime
+                    backToast = Toast.makeText(this, "뒤로 가기 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT)
+                        .apply {
+                            show()
+                        }
+                }
+            } else {
+                super.onBackPressed()
+            }
         }
     }
 

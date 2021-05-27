@@ -71,6 +71,7 @@ class PostFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        isExistPost() // 게시글 존재 여부
         setObserver()
     }
 
@@ -213,6 +214,25 @@ class PostFragment : Fragment(), View.OnClickListener {
                 mViewModel.imagePos.value = position
             }
         })
+    }
+
+    // 게시글 존재 여부
+    private fun isExistPost() {
+        mViewModel.getPostData(postData.postPath!!)
+            .addOnSuccessListener {
+                if (it.toObject(Post::class.java) == null) {
+                    // 게시글 존재 X
+                    with(MaterialAlertDialogBuilder(requireContext())) {
+                        setMessage("해당 게시글이 존재하지 않습니다.")
+                        setPositiveButton("확인") { dialog, which ->
+                            findNavController().navigateUp()
+                        }
+                        setCancelable(false)
+
+                        show()
+                    }
+                }
+            }
     }
 
     // 게시글 삭제

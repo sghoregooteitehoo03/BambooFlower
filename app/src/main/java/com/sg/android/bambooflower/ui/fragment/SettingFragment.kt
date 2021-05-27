@@ -155,7 +155,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
             setPositiveButton("확인") { dialog, which ->
                 CoroutineScope(Dispatchers.IO).launch {
                     try {
-                        mViewModel.deleteAccount(user)
+                        mViewModel.deleteAccount(user, requireContext())
                     } catch (e: Exception) {
                         mViewModel.ready()
                         Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)

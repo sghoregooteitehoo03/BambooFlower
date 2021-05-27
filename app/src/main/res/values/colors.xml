@@ -23,4 +23,5 @@
     <color name="default_item_color">@color/black</color>
     <color name="divide_color">@color/gray_bright</color>
     <color name="diary_color">@color/white</color>
+    <color name="post_color">#F8F8F8</color>
 </resources>

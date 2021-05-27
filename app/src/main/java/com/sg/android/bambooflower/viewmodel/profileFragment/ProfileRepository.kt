@@ -1,10 +1,12 @@
 package com.sg.android.bambooflower.viewmodel.profileFragment
 
+import android.content.Context
 import android.net.Uri
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
-import com.google.firebase.functions.HttpsCallableResult
 import com.google.firebase.storage.FirebaseStorage
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
@@ -47,7 +49,16 @@ class ProfileRepository @Inject constructor(
     }
 
     // 로그아웃
-    fun signOut() {
+    suspend fun signOut(context: Context) {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .build()
+        val googleClient = GoogleSignIn.getClient(context, gso)
+        val loginManager = LoginManager.getInstance()
+
+        googleClient.signOut()
+            .await()
+        loginManager.logOut()
+
         auth.signOut()
     }
 }

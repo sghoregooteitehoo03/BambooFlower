@@ -1,5 +1,9 @@
 package com.sg.android.bambooflower.viewmodel.loginFragment
 
+import android.content.Context
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -23,4 +27,17 @@ class LoginRepository @Inject constructor(
 
     fun isLogin() =
         auth.currentUser != null
+
+    suspend fun signOut(context: Context) {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .build()
+        val googleClient = GoogleSignIn.getClient(context, gso)
+        val loginManager = LoginManager.getInstance()
+
+        googleClient.signOut()
+            .await()
+        loginManager.logOut()
+
+        auth.signOut()
+    }
 }

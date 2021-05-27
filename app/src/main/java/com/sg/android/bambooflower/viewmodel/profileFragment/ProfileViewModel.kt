@@ -1,14 +1,12 @@
 package com.sg.android.bambooflower.viewmodel.profileFragment
 
+import android.content.Context
 import android.net.Uri
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,7 +24,7 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     }
 
     // 로그아웃
-    fun signOut() {
-        repository.signOut()
+    fun signOut(context: Context) = viewModelScope.launch {
+        repository.signOut(context)
     }
 }

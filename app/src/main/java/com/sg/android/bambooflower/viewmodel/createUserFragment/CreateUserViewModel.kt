@@ -1,5 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.createUserFragment
 
+import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -55,4 +56,8 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateAcco
     // 이메일 형식 확인
     private fun checkEmail() =
         Patterns.EMAIL_ADDRESS.matcher(email.value!!).matches()
+
+    fun signOut(context: Context) = viewModelScope.launch {
+        repository.signOut(context)
+    }
 }

@@ -1,6 +1,10 @@
 package com.sg.android.bambooflower.viewmodel.settingFragment
 
+import android.content.Context
 import android.util.Log
+import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -24,7 +28,7 @@ class SettingRepository @Inject constructor(
     }
 
     // 계정 탈퇴
-    suspend fun deleteAccount(user: User) {
+    suspend fun deleteAccount(user: User, context: Context) {
         val uid = user.uid!!
         val account = store.collection(Contents.COLLECTION_ACCOUNT)
             .document(uid)
@@ -103,6 +107,19 @@ class SettingRepository @Inject constructor(
             auth.currentUser // 계정 삭제
                 ?.delete()
                 ?.await()
+
+            signOut(context)
         }
+    }
+
+    private suspend fun signOut(context: Context) {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .build()
+        val googleClient = GoogleSignIn.getClient(context, gso)
+        val loginManager = LoginManager.getInstance()
+
+        googleClient.signOut()
+            .await()
+        loginManager.logOut()
     }
 }

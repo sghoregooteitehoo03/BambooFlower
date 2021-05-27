@@ -12,6 +12,12 @@ class PostRepository @Inject constructor(
     private val storage: FirebaseStorage
 ) {
 
+    // 게시글 읽어오기
+    fun getPostData(doc: String) =
+        store.collection(Contents.COLLECTION_POST)
+            .document(doc)
+            .get()
+
     // 응원하기
     suspend fun cheerUp(uid: String, postData: Post): Boolean {
         val postRef = store.collection(Contents.COLLECTION_POST)

@@ -42,6 +42,9 @@ class SplashActivity : AppCompatActivity() {
 
     private fun makeIntent(isExistUser: Boolean = false) =
         Intent(this, MainActivity::class.java).apply {
+            if (!isExistUser) {
+                signOut()
+            }
             putExtra(Contents.EXTRA_IS_LOGIN, isExistUser)
         }
 
@@ -49,5 +52,10 @@ class SplashActivity : AppCompatActivity() {
     private fun goMainActivity(intent: Intent) {
         startActivity(intent)
         finish()
+    }
+
+    // 계정 로그아웃
+    private fun signOut() {
+        mViewModel.signOut(this)
     }
 }

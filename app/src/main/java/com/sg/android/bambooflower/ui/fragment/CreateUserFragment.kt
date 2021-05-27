@@ -8,11 +8,13 @@ import android.text.style.UnderlineSpan
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.FragmentCreateAccountBinding
 import com.sg.android.bambooflower.other.Contents
@@ -27,6 +29,11 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
     private val mViewModel by viewModels<CreateUserViewModel>()
     private val args by navArgs<CreateUserFragmentArgs>()
     private var fragmentBinding: FragmentCreateAccountBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        activity?.onBackPressedDispatcher?.addCallback(backPressed)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,14 +54,16 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
     }
 
     override fun onDestroyView() {
+        backPressed.isEnabled = false
         fragmentBinding = null
+
         super.onDestroyView()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                findNavController().navigateUp()
+                exitFragment()
                 true
             }
             else -> false
@@ -108,8 +117,9 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
         mViewModel.errorMsg.observe(viewLifecycleOwner) { msg ->
             if (msg.isNotEmpty()) {
                 when (msg) {
-                    ErrorMessage.SUCCESS ->
+                    ErrorMessage.SUCCESS -> {
                         findNavController().navigate(R.id.action_createUserFragment_to_homeFragment)
+                    }
                     else -> {
                         fragmentBinding!!.errorMsgText.text = msg
                     }
@@ -151,5 +161,25 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
             action = Contents.SHOW_WEB_VIEWER
         }
         startActivity(intent)
+    }
+
+    private fun exitFragment() {
+        with(MaterialAlertDialogBuilder(requireContext())) {
+            setMessage("회원가입을 종료하시겠습니까?")
+            setPositiveButton("확인") { dialog, which ->
+                mViewModel.signOut(requireContext())
+                findNavController().navigateUp()
+            }
+
+            show()
+        }
+    }
+
+    // 뒤로가기 동작
+    private val backPressed = object : OnBackPressedCallback(true) {
+
+        override fun handleOnBackPressed() {
+            exitFragment()
+        }
     }
 }

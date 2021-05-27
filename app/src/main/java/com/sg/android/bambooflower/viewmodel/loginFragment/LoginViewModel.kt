@@ -1,5 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.loginFragment
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -53,4 +54,8 @@ class LoginViewModel @Inject constructor(
 
     fun isLogin() =
         repository.isLogin()
+
+    fun signOut(context: Context) = viewModelScope.launch {
+        repository.signOut(context)
+    }
 }
