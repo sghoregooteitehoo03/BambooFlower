@@ -2,17 +2,14 @@ package com.sg.android.bambooflower.viewmodel.homeFragment
 
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.insertHeaderItem
 import androidx.paging.map
 import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.DiaryDataModel
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -48,11 +45,12 @@ class HomeViewModel @Inject constructor(
         val result = repository.changeMission()
         val updateData = result.data as Map<*, *>
         with(user) {
-            myMission = updateData["myMission"] as String?
+            myMissionTitle = updateData["myMissionTitle"] as String?
+            myMissionHow = updateData["myMissionHow"] as String?
             missionDoc = updateData["missionDoc"] as String?
         }
 
-        Log.i("ChangeMission", "성공: ${user.myMission}")
+        Log.i("ChangeMission", "성공: ${user.myMissionTitle}")
         _isChanging.postValue(false)
     }
 }

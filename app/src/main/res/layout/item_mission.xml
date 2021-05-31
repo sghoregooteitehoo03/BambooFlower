@@ -32,7 +32,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:setTitle="@{mission.mission}"
+                app:setTitle="@{mission.missionTitle}"
                 tools:text="[대충 미션내용]"/>
 
             <TextView

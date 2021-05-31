@@ -85,6 +85,9 @@
             app:destination="@id/addPostFragment"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_homeFragment_to_levelUpDialog"
+            app:destination="@id/levelUpDialog"/>
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"
@@ -228,6 +231,12 @@
         android:name="com.sg.android.bambooflower.ui.dialog.CalendarDialog"
         android:label="CalendarDialog"
         tools:layout="@layout/dialog_calendar"/>
+    <dialog
+        android:id="@+id/levelUpDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.LevelUpDialog"
+        android:label="levelUpDialog"
+        tools:layout="@layout/dialog_level_up"
+        />
     <dialog
         android:id="@+id/reportDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.ReportDialog"

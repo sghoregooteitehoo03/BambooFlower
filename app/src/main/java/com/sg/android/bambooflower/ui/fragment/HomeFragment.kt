@@ -185,11 +185,16 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     // 홈 화면에 표시할 데이터를 가져 옴
     private fun getHomeData() {
         mViewModel.getHomeData()
-            .addOnSuccessListener {
-                val jsonObject = JSONObject(it.data as MutableMap<Any?, Any?>).toString()
+            .addOnSuccessListener { result ->
+                val jsonObject = JSONObject(result.data as MutableMap<Any?, Any?>).toString()
                 val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
                 Log.i("Check", "data: ${homeData.user}")
 
+                gViewModel.user.value?.let {
+                    if (it.myLevel != homeData.user.myLevel) { // 레벨업 했을 때
+                        findNavController().navigate(R.id.levelUpDialog)
+                    }
+                }
                 gViewModel.user.value = homeData.user // 유저를 공유할 수 있게 GlobalViewModel에 저장함
                 user = homeData.user
 
@@ -206,7 +211,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     // 미션 수행 버튼 눌렀을 때
     private fun successMission() {
         with(MaterialAlertDialogBuilder(requireContext())) {
-            setMessage("인증게시판으로 이동합니다.")
+            setMessage("인증 화면으로 이동합니다.")
             setPositiveButton("확인") { dialog, which ->
                 findNavController().navigate(R.id.action_homeFragment_to_addPostFragment)
             }

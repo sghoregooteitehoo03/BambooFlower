@@ -1,7 +1,5 @@
 package com.sg.android.bambooflower.data
 
-import javax.annotation.Nullable
-
 data class User(
     val uid: String? = null,
     val name: String? = null,
@@ -10,7 +8,8 @@ data class User(
     var achievedCount: Int? = null,
     var achieved: Boolean? = null,
     val myLevel: Int? = null,
-    var myMission: String? = null,
+    var myMissionTitle: String? = null,
+    var myMissionHow: String? = null,
     var missionDoc: String? = null,
     val latestStart: Long? = null
 ) {

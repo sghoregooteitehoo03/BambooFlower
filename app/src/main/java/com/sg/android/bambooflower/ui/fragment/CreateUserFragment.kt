@@ -170,6 +170,9 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_account) {
                 mViewModel.signOut(requireContext())
                 findNavController().navigateUp()
             }
+            setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
 
             show()
         }

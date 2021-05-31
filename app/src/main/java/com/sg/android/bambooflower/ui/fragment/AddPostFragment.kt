@@ -19,7 +19,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.transition.MaterialFadeThrough
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.ImageAdapter
 import com.sg.android.bambooflower.data.User
@@ -84,7 +83,7 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
             setOnImageItemListener(this@AddPostFragment)
         }
         user = gViewModel.user.value!!
-        mViewModel.title.value = "[${gViewModel.user.value?.myMission}]"
+        mViewModel.title.value = "[${gViewModel.user.value?.myMissionTitle}]"
 
         // 바인딩 설정
         with(binding) {

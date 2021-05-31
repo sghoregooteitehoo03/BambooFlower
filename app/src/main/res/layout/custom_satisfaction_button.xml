@@ -5,7 +5,7 @@
     android:layout_width="80dp"
     android:layout_height="80dp"
     android:background="@drawable/shape_round"
-    android:backgroundTint="@color/divide_color"
+    android:backgroundTint="@color/post_color"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="12dp">
