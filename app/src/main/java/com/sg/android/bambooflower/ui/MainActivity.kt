@@ -26,10 +26,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 // TODO:
-//  . 사용자마다 랜덤 안되는 버그 O
-//  . 미션 추가 후 미션 데이터모델 수정하기 O
-//  . 미션 보여주는 뷰 수정하기 (미션만 제공하지 말고 재밌는 제목과 그 내용 적기, 다음 레벨까지 남은 미션 표시) O
-//  . 작성 규칙 적기
 //  . 출시 후 추가 및 변경: 미션 보여주는 뷰 디자인 수정, 서버 점검할 때 앱 못들어오게, 게시글 삭제 시 수행안되게 처리
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

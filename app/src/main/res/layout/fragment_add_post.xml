@@ -54,6 +54,7 @@
                     app:layout_constraintTop_toBottomOf="@id/input_title"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/content_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
@@ -83,6 +84,16 @@
                         app:layout_constraintTop_toBottomOf="@id/input_content"
                         tools:listitem="@layout/item_image"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="- 미션이랑 관련 없는 내용을 게시하실 경우 삭제처리가 될 수 있습니다.\n- 게시 후 수정이 불가능하니 게시전에 꼭 확인하시기 바랍니다."
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/content_layout"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

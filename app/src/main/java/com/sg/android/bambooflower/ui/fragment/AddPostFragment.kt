@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.ImageAdapter
 import com.sg.android.bambooflower.data.User
@@ -133,9 +134,7 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
                 true
             }
             R.id.menu_add_post -> { // 게시 버튼
-                CoroutineScope(Dispatchers.IO).launch {
-                    mViewModel.addPost(user, imageList, requireContext().contentResolver)
-                }
+                addPost()
                 true
             }
             else -> false
@@ -231,6 +230,22 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
                     .show()
                 mViewModel.errorMsg.value = ""
             }
+        }
+    }
+
+    private fun addPost() {
+        with(MaterialAlertDialogBuilder(requireContext())) {
+            setMessage("내용을 게시하시겠습니까?")
+            setPositiveButton("확인") { dialog, which ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    mViewModel.addPost(user, imageList, requireContext().contentResolver)
+                }
+            }
+            setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            show()
         }
     }
 
