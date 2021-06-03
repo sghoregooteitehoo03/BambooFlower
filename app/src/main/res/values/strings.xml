@@ -6,4 +6,7 @@
 
     <string name="ad_banner_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ad_full_unit_id_test">ca-app-pub-3940256099942544/1033173712</string>
+
+    <string name="ad_full_unit_id_change">ca-app-pub-7835153855071596/7006211452</string>
+    <string name="ad_banner_unit_id_default">ca-app-pub-7835153855071596/5643020715</string>
 </resources>

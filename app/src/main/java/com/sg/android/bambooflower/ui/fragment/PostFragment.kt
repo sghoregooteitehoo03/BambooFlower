@@ -26,7 +26,7 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 광고 릴리스 키로 바꾸기
+// TODO: 광고 릴리스 키로 바꾸기 O
 @AndroidEntryPoint
 class PostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

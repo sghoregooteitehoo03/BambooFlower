@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 // TODO:
-//  . 광고 릴리스 키로 변경
+//  . 광고 릴리스 키로 변경 O
 
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {

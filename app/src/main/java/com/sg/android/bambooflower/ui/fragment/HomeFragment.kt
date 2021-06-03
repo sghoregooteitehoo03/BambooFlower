@@ -41,7 +41,7 @@ import javax.inject.Named
 
 // TODO:
 //  . 제공할 미션 없을 때 처리 O
-//  . 광고 릴리스 키로 바꾸기
+//  . 광고 릴리스 키로 바꾸기 O
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
@@ -243,7 +243,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     private fun loadAdAndChange() {
         InterstitialAd.load(
             requireContext(),
-            resources.getString(R.string.ad_full_unit_id_test),
+            resources.getString(R.string.ad_full_unit_id_change),
             AdRequest.Builder().build(),
             adCallBack
         )
