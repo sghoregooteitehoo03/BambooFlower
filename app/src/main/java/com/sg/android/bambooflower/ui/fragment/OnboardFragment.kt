@@ -22,12 +22,6 @@ import com.sg.android.bambooflower.databinding.FragmentOnboardBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.onboardFragment.OnboardViewModel
 
-// TODO:
-//  . 시작하기 누를 시 넘어가게 구현 O
-//  . 내용 채워넣기 O
-//  . 앱을 처음 킬때만 이 화면이 나오게 구현 O
-//  . 버튼에 애니메이션 추가 O
-
 class OnboardFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<OnboardViewModel>()
     private val dots = mutableListOf<ImageView>()

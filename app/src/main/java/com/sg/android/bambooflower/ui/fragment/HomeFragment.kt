@@ -39,9 +39,6 @@ import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Named
 
-// TODO:
-//  . 제공할 미션 없을 때 처리 O
-//  . 광고 릴리스 키로 바꾸기 O
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
