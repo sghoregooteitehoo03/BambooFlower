@@ -5,7 +5,6 @@ object Contents {
     const val LOGIN_WITH_GOOGLE = 3100
     const val LOGIN_WITH_FACEBOOK = 3200
     const val GET_IMAGE = 3300
-    const val SHOW_IMAGE = 3400
 
     const val PREF_CHECK_FIRST = "PREF_CHECK_FIRST"
 
@@ -15,7 +14,6 @@ object Contents {
     const val EXTRA_GET_IMAGE = "EXTRA_GET_IMAGE"
     const val EXTRA_SET_POS = "EXTRA_SET_POS"
     const val EXTRA_IS_LOGIN = "EXTRA_IS_LOGIN"
-    const val EXTRA_IS_FIRST = "EXTRA_IS_FIRST"
     const val EXTRA_TITLE = "EXTRA_TITLE"
 
     const val PERMISSION_CODE = 250
@@ -29,6 +27,8 @@ object Contents {
     const val COLLECTION_POST = "Post"
     const val COLLECTION_REPORT = "Report"
     const val COLLECTION_ACCOUNT = "Account"
+    const val COLLECTION_SERVER = "Server"
+    const val COLLECTION_ACCEPT = "Accept"
 
     const val CHILD_POST_IMAGE = "PostImage"
     const val CHILD_TERMS_OF_SERVICE = "TermsOfService.html"
@@ -36,7 +36,8 @@ object Contents {
     const val CHILD_PRIVACY_POLICY = "PrivacyPolicy.html"
 
     const val FUNC_GET_HOME_DATA = "getHomeData"
-    const val FUNC_SUCCESS_MISSION = "successMission"
+    const val FUNC_ADD_POST = "addPost"
+    const val FUNC_DELETE_POST = "deletePost"
     const val FUNC_CHANGE_MISSION = "changeMission"
     const val FUNC_CHANGE_PROFILE = "changeProfile"
 }

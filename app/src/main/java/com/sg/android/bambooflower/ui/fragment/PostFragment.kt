@@ -27,6 +27,14 @@ import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: 광고 릴리스 키로 바꾸기
+//  . 게시글을 작성한 사람은 좋아요 누를 시 눌러 준 사람 표시 O
+//  . 프로필 이미지 변경 코드 수정 O
+//  . 성공 누르면 인증완료로 처리하게 바꾸기(서버에서 작업) O
+//  . 오늘 게시글인 경우만 인증처리 O
+//  . 게시글 타임스탬프 수정 O
+//  . 인증된 게시글은 디자인 다르게 처리 O
+//  . 삭제 시 유저 상태에 따라 다르게 처리 O
+//  . 마무리 테스트(게시글 작성 O, 성공 버튼 눌러주면 미션 성공 확인 O, 프로필 변경 O, 삭제 테스트 O)
 @AndroidEntryPoint
 class PostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -95,7 +103,7 @@ class PostFragment : Fragment(), View.OnClickListener {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu_post_fragment, menu)
 
-        if (postData.uid == userData.uid) {
+        if (postData.uid == userData.uid || userData.uid == "DQ09dobyPqY0SrLHIMcRYmdOdfO2") {
             // 내 게시글일 경우 삭제하기만 표시
             menu.getItem(1).isVisible = false
         } else {
@@ -127,6 +135,9 @@ class PostFragment : Fragment(), View.OnClickListener {
         when (v.id) {
             R.id.fullscreen_btn -> {
                 showImage()
+            }
+            R.id.cheer_up_btn -> {
+                cheerUpAction()
             }
             else -> {
             }
@@ -171,7 +182,7 @@ class PostFragment : Fragment(), View.OnClickListener {
             dots[pos].setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
-                    R.drawable.active_dot_shape
+                    R.drawable.active_image_dot_shape
                 )
             )
         }
@@ -185,6 +196,39 @@ class PostFragment : Fragment(), View.OnClickListener {
             action = Contents.SHOW_IMAGE_FRAG
         }
         startActivity(intent)
+    }
+
+    // 성공 버튼 액션
+    private fun cheerUpAction() {
+        if (userData.uid == postData.uid) {
+            showAccept()
+        } else {
+            acceptMission()
+        }
+    }
+
+    private fun showAccept() {
+        findNavController().navigate(R.id.acceptListDialog)
+    }
+
+    // 미션 인정
+    private fun acceptMission() {
+        with(MaterialAlertDialogBuilder(requireContext())) {
+            setMessage("성공으로 인정하시겠습니까?")
+            setPositiveButton("확인") { dialog, which ->
+                if (!mViewModel.isCheerUp.value!!) {
+                    mViewModel.cheerUp(userData, postData)
+                } else {
+                    Toast.makeText(requireContext(), "이미 인정한 게시글입니다.", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            show()
+        }
     }
 
     // 페이저 위치를 표시하는 뷰

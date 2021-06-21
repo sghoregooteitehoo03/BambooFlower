@@ -35,6 +35,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
+// TODO: 디자인 수정
 @AndroidEntryPoint
 class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

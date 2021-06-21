@@ -151,6 +151,9 @@
         <action
             android:id="@+id/action_postFragment_to_reportDialog"
             app:destination="@id/reportDialog"/>
+        <action
+            android:id="@+id/action_postFragment_to_acceptListDialog"
+            app:destination="@id/acceptListDialog"/>
     </fragment>
     <fragment
         android:id="@+id/diaryWriteFragment"
@@ -283,4 +286,9 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="false"/>
     </fragment>
+    <dialog
+        android:id="@+id/acceptListDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.AcceptListDialog"
+        android:label="AcceptListDialog"
+        tools:layout="@layout/dialog_accept_list"/>
 </navigation>

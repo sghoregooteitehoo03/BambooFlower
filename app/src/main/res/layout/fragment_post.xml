@@ -87,7 +87,7 @@
                         app:layout_constraintBottom_toTopOf="@id/divide_view"
                         app:layout_constraintStart_toEndOf="@id/profile_image"
                         app:layout_constraintTop_toBottomOf="@id/title_text"
-                        app:setInfo="@{post}"
+                        app:setPostInfo="@{post}"
                         tools:text="닉네임 | 2021.03.19"/>
 
                     <View
@@ -147,10 +147,11 @@
                         app:layout_constraintStart_toStartOf="@id/image_pager"/>
 
                     <com.sg.android.bambooflower.ui.view.CustomButton
+                        android:id="@+id/cheer_up_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="40dp"
-                        android:onClick="@{() -> viewmodel.cheerUp(user.uid, post)}"
+                        android:onClick="@{clickListener}"
                         app:cheerUpCount="@{post.favoriteCount}"
                         app:customButtonIcon="@drawable/ic_thumb_up_off"
                         app:isCheerUp="@{viewmodel.isCheerUp()}"

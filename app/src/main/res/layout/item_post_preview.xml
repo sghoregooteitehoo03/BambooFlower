@@ -7,6 +7,8 @@
 
         <import type="android.net.Uri"/>
 
+        <import type="android.view.View"/>
+
         <variable
             name="postData"
             type="com.sg.android.bambooflower.data.Post"/>
@@ -38,7 +40,7 @@
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="게시글 제목"/>
+                tools:text="[게시글 제목]"/>
 
             <ImageView
                 android:id="@+id/favorite_image"
@@ -70,8 +72,20 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_text"
-                app:setInfo="@{postData}"
-                tools:text="닉네임 | 2021.03.19."/>
+                app:setPostItemInfo="@{postData}"
+                tools:text="닉네임 | 21.03.19."/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="4dp"
+                android:text="(인증 완료)"
+                android:textColor="@color/green_300"
+                android:textStyle="bold"
+                android:visibility="@{postData.favoriteCount >= 1 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintStart_toEndOf="@id/info_text"
+                app:layout_constraintTop_toBottomOf="@id/title_text"/>
 
             <ImageView
                 android:id="@+id/post_image"

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sg.android.bambooflower.data.Post
+import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,9 +27,9 @@ class PostViewModel @Inject constructor(private val repository: PostRepository) 
         repository.getPostData(doc)
 
     // 응원하기
-    fun cheerUp(uid: String, postData: Post) = viewModelScope.launch {
+    fun cheerUp(userData: User, postData: Post) = viewModelScope.launch {
         try {
-            isCheerUp.value = repository.cheerUp(uid, postData)
+            isCheerUp.value = repository.cheerUp(userData, postData)
         } catch (e: Exception) {
             isError.value = true
             _isLoading.value = false
