@@ -1,7 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.addPostFragment
 
 import android.content.ContentResolver
-import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

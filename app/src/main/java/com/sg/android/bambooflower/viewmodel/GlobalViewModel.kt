@@ -3,15 +3,11 @@ package com.sg.android.bambooflower.viewmodel
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Diary
-import com.sg.android.bambooflower.data.HomeData
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
-import com.sg.android.bambooflower.other.Contents
 
 class GlobalViewModel : ViewModel() {
     val user = MutableLiveData<User?>(null) // 유저 데이터

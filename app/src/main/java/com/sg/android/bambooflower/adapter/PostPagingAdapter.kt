@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.sg.android.bambooflower.adapter.viewholder.PostPreviewViewHolder
 import com.sg.android.bambooflower.adapter.viewholder.PostViewHolder
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.databinding.ItemPostBinding

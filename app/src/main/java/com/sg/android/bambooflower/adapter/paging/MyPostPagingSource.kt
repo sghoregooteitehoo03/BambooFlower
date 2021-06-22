@@ -3,7 +3,6 @@ package com.sg.android.bambooflower.adapter.paging
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.other.Contents

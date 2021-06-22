@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.viewholder.DiaryHeaderViewHolder
 import com.sg.android.bambooflower.adapter.viewholder.DiaryViewHolder
 import com.sg.android.bambooflower.data.DataType
-import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.DiaryDataModel
 import com.sg.android.bambooflower.databinding.ItemDiaryBinding
 import com.sg.android.bambooflower.databinding.ItemDiaryHeaderBinding

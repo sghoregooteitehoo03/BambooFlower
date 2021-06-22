@@ -1,7 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.settingFragment
 
 import android.content.Context
-import android.util.Log
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

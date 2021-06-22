@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.adapter.viewholder
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.ItemRankingBinding

@@ -13,6 +13,7 @@ class AcceptListViewModel @Inject constructor(
 ) : ViewModel() {
 
     val isLoading = MutableLiveData(true)
+    val size = MutableLiveData(-1)
 
     // 인정한 사람들의 리스트를 가져옴
     fun getAcceptList(postPath: String) =
