@@ -25,9 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
-// TODO:
-//  . 바텀 다이얼로그 디자인 수정 O
-
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()
