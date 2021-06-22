@@ -26,11 +26,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 // TODO:
-//  . 미션 보여주는 뷰 디자인 수정 O
-//  . 서버 점검할 때 앱 못들어오게 O
-//  . 인증방식 변경 O
-//  . 당일 수행한 미션 삭제 시 다시 수행할 수 있게 구현 O
-//  . 바텀 다이얼로그 디자인 수정
+//  . 바텀 다이얼로그 디자인 수정 O
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {

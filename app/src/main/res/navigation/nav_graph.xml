@@ -247,9 +247,9 @@
         tools:layout="@layout/dialog_report"/>
     <dialog
         android:id="@+id/satisfactionFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.SatisfactionFragment"
+        android:name="com.sg.android.bambooflower.ui.dialog.SatisfactionDialog"
         android:label="SatisfactionFragment"
-        tools:layout="@layout/fragment_satisfaction"/>
+        tools:layout="@layout/dialog_satisfaction"/>
     <fragment
         android:id="@+id/diaryEditFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryEditFragment"

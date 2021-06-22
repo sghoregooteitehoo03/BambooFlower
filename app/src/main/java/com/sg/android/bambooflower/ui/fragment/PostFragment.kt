@@ -27,14 +27,6 @@ import com.sg.android.bambooflower.viewmodel.postFragment.PostViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO: 광고 릴리스 키로 바꾸기
-//  . 게시글을 작성한 사람은 좋아요 누를 시 눌러 준 사람 표시 O
-//  . 프로필 이미지 변경 코드 수정 O
-//  . 성공 누르면 인증완료로 처리하게 바꾸기(서버에서 작업) O
-//  . 오늘 게시글인 경우만 인증처리 O
-//  . 게시글 타임스탬프 수정 O
-//  . 인증된 게시글은 디자인 다르게 처리 O
-//  . 삭제 시 유저 상태에 따라 다르게 처리 O
-//  . 마무리 테스트(게시글 작성 O, 성공 버튼 눌러주면 미션 성공 확인 O, 프로필 변경 O, 삭제 테스트 O)
 @AndroidEntryPoint
 class PostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

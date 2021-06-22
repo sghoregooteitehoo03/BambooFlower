@@ -1,5 +1,7 @@
 package com.sg.android.bambooflower.ui.dialog
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.AcceptPagingAdapter
 import com.sg.android.bambooflower.databinding.DialogAcceptListBinding
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
-        <import type="com.sg.android.bambooflower.R" />
+        <import type="com.sg.android.bambooflower.R"/>
 
         <variable
             name="gviewmodel"
-            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel" />
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
 
         <variable
             name="resources"
-            type="android.content.res.Resources" />
+            type="android.content.res.Resources"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +28,9 @@
             android:textColor="@color/default_item_color"
             android:textSize="18sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <com.sg.android.bambooflower.ui.view.CustomSatisfactionButton
             android:id="@+id/low_button"
@@ -42,7 +43,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_text"
             app:satisfactionButtonIcon="@drawable/low_image"
-            app:satisfactionButtonText="보통" />
+            app:satisfactionButtonText="보통"/>
 
         <com.sg.android.bambooflower.ui.view.CustomSatisfactionButton
             android:id="@+id/medium_button"
@@ -55,7 +56,7 @@
             app:layout_constraintStart_toEndOf="@+id/low_button"
             app:layout_constraintTop_toBottomOf="@id/title_text"
             app:satisfactionButtonIcon="@drawable/medium_image"
-            app:satisfactionButtonText="만족" />
+            app:satisfactionButtonText="만족"/>
 
         <com.sg.android.bambooflower.ui.view.CustomSatisfactionButton
             android:id="@+id/high_button"
@@ -68,6 +69,6 @@
             app:layout_constraintStart_toEndOf="@+id/medium_button"
             app:layout_constraintTop_toBottomOf="@id/title_text"
             app:satisfactionButtonIcon="@drawable/high_image"
-            app:satisfactionButtonText="매우만족" />
+            app:satisfactionButtonText="매우만족"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
