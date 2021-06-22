@@ -39,6 +39,8 @@ import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Named
 
+// TODO:
+//  . 광고 릴리스 키로 바꾸기
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
@@ -240,7 +242,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     private fun loadAdAndChange() {
         InterstitialAd.load(
             requireContext(),
-            resources.getString(R.string.ad_full_unit_id_change),
+            resources.getString(R.string.ad_full_unit_id_test),
             AdRequest.Builder().build(),
             adCallBack
         )

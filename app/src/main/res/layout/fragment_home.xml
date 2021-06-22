@@ -10,6 +10,8 @@
 
         <import type="com.sg.android.bambooflower.other.Contents"/>
 
+        <import type="com.sg.android.bambooflower.data.User"/>
+
         <variable
             name="viewmodel"
             type="com.sg.android.bambooflower.viewmodel.homeFragment.HomeViewModel"/>
@@ -137,30 +139,34 @@
                         android:orientation="horizontal"
                         app:layout_constraintGuide_percent="0.75"/>
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/success_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/green_300"
+                        android:layout_marginEnd="4dp"
                         android:onClick="@{clickListener}"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_check"
-                        android:visibility="@{gviewmodel.user.achieved || gviewmodel.user.missionDoc.equals(blank) ? View.INVISIBLE : View.VISIBLE}"
+                        android:text="인증하기"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="@{!(gviewmodel.user.achieveState.equals(User.STATE_NOTHING)) || gviewmodel.user.missionDoc.equals(blank) ? View.INVISIBLE : View.VISIBLE}"
                         app:buttonEnabled="@{!viewmodel.isChanging()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/guideline_between_btn"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/guideline_mission"/>
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/change_button"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="@color/green_300"
+                        android:layout_marginStart="4dp"
                         android:onClick="@{clickListener}"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_refresh"
-                        android:visibility="@{gviewmodel.user.achieved || gviewmodel.user.missionDoc.equals(blank) ? View.INVISIBLE : View.VISIBLE}"
+                        android:text="바꾸기"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="@{!(gviewmodel.user.achieveState.equals(User.STATE_NOTHING)) || gviewmodel.user.missionDoc.equals(blank) ? View.INVISIBLE : View.VISIBLE}"
                         app:buttonEnabled="@{!viewmodel.isChanging()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +181,7 @@
                         android:layout_marginBottom="4dp"
                         android:background="@drawable/shape_rectangle"
                         android:backgroundTint="@color/green_300"
-                        android:visibility="@{gviewmodel.user.achieved ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{!gviewmodel.user.achieveState.equals(User.STATE_NOTHING) ? View.VISIBLE : View.GONE}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -185,23 +191,25 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="수행완료!"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:textStyle="bold"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:setStateText="@{gviewmodel.user.achieveState}"
+                            tools:text="수행완료!"/>
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="12dp"
-                            android:src="@drawable/ic_check_circle"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:setStateImage="@{gviewmodel.user.achieveState}"
+                            tools:src="@drawable/ic_check_circle"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.Guideline

@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
@@ -34,12 +33,59 @@ import java.util.*
 
 //Set
 @SuppressLint("SetTextI18n")
-@BindingAdapter("app:setInfo")
-fun setInfo(view: TextView, postData: Post) {
+@BindingAdapter("app:setPostItemInfo")
+fun setPostItemInfo(view: TextView, postData: Post) {
     val name = postData.writer
-    val date = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(postData.timeStamp)
+    val postTime = postData.timeStamp!!
+
+    val diffTime = System.currentTimeMillis() - postTime
+    val date = when {
+        diffTime / 3600000 >= 24 -> {
+            SimpleDateFormat("yy.MM.dd", Locale.KOREA).format(postTime)
+        }
+        diffTime / 3600000 != 0.toLong() -> {
+            "${diffTime / 3600000}시간 전"
+        }
+        diffTime / 60000 != 0.toLong() -> {
+            "${diffTime / 60000}분 전"
+        }
+        else -> {
+            "${diffTime / 6000}초 전"
+        }
+    }
 
     view.text = "$name | $date"
+}
+
+@BindingAdapter("app:setPostInfo")
+fun setPostInfo(view: TextView, postData: Post) {
+    val name = postData.writer
+    val date = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+        .format(postData.timeStamp)
+
+    view.text = "$name | $date"
+}
+
+@BindingAdapter("app:setStateText")
+fun setStateText(view: TextView, state: String?) {
+    if (state != null) {
+        if (state == User.STATE_LOADING) {
+            view.text = "인증 중..."
+        } else if (state == User.STATE_ALLOW) {
+            view.text = "인증완료"
+        }
+    }
+}
+
+@BindingAdapter("app:setStateImage")
+fun setStateImage(view: ImageView, state: String?) {
+    if (state != null) {
+        if (state == User.STATE_LOADING) {
+            view.setImageResource(R.drawable.ic_cancel_white)
+        } else if (state == User.STATE_ALLOW) {
+            view.setImageResource(R.drawable.ic_check_circle)
+        }
+    }
 }
 
 @BindingAdapter("app:setCalendar")
@@ -148,12 +194,12 @@ fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitma
 
 @BindingAdapter("app:isCheerUp", "app:cheerUpCount")
 fun isCheerUp(view: CustomButton, cheerUp: Boolean, count: Int) {
+    view.setCustomButtonText(count.toString())
+
     if (cheerUp) {
         view.setCustomButtonIcon(R.drawable.ic_thumb_up)
-        view.setCustomButtonText(count.toString())
     } else {
         view.setCustomButtonIcon(R.drawable.ic_thumb_up_off)
-        view.setCustomButtonText("화이팅")
     }
 }
 

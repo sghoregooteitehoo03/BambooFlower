@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentDiaryWriteBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel

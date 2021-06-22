@@ -1,7 +1,5 @@
 package com.sg.android.bambooflower.viewmodel.diaryViewerFragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sg.android.bambooflower.data.Diary

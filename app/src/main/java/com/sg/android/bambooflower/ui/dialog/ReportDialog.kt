@@ -5,17 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sg.android.bambooflower.databinding.DialogReportBinding
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.reportDialog.ReportViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ReportDialog : DialogFragment() {
+class ReportDialog : BottomSheetDialogFragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<ReportViewModel>()
 

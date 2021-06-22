@@ -1,7 +1,6 @@
 package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -11,7 +10,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.transition.MaterialSharedAxis
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentPostListBinding
@@ -20,7 +18,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postListFragment.PostListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

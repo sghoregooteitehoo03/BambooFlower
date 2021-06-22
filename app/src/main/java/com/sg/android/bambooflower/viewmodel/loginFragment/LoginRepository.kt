@@ -28,6 +28,11 @@ class LoginRepository @Inject constructor(
     fun isLogin() =
         auth.currentUser != null
 
+    fun checkServer() =
+        store.collection(Contents.COLLECTION_SERVER)
+            .document("Important")
+            .get()
+
     suspend fun signOut(context: Context) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .build()

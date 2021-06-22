@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.databinding.ItemPostBinding
-import com.sg.android.bambooflower.databinding.ItemPostPreviewBinding
 
 class PostViewHolder(
     private val binding: ItemPostBinding,

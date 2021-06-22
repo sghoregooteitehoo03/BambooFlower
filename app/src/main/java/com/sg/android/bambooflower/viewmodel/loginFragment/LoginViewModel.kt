@@ -43,6 +43,10 @@ class LoginViewModel @Inject constructor(
         }
     }
 
+    // 서버 점검 확인
+    fun checkServer() =
+        repository.checkServer()
+
     fun getUserData() =
         repository.getUserData()
 

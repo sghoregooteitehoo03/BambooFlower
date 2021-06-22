@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.adapter.viewholder
 
-import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.AlbumAdapter
 import com.sg.android.bambooflower.data.Album

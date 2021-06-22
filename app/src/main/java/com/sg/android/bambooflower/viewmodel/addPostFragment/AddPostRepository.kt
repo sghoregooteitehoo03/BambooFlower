@@ -1,31 +1,23 @@
 package com.sg.android.bambooflower.viewmodel.addPostFragment
 
 import android.content.ContentResolver
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
-import android.util.Log
 import androidx.core.net.toUri
-import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
 import com.google.firebase.storage.FirebaseStorage
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
-import java.io.File
-import java.net.URI
 import javax.inject.Inject
 
 class AddPostRepository @Inject constructor(
@@ -78,7 +70,7 @@ class AddPostRepository @Inject constructor(
             put("currentTime", currentTime)
         }
 
-        return functions.getHttpsCallable(Contents.FUNC_SUCCESS_MISSION)
+        return functions.getHttpsCallable(Contents.FUNC_ADD_POST)
             .call(jsonObj)
             .await()
     }

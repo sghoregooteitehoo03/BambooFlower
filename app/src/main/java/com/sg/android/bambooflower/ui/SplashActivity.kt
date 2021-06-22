@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
@@ -16,11 +17,27 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 로그인 되어있는지 확인
-        if (mViewModel.isLogin()) {
-            login()
-        } else {
-            goMainActivity(makeIntent())
+        // 서버 점검 확인
+        mViewModel.checkServer().addOnSuccessListener {
+            if (!(it["serverCheck"] as Boolean)) {
+                // 로그인 되어있는지 확인
+                if (mViewModel.isLogin()) {
+                    login()
+                } else {
+                    goMainActivity(makeIntent())
+                }
+            } else {
+                // 점검 중일 때
+                with(MaterialAlertDialogBuilder(this)) {
+                    setMessage(it["serverCheckMsg"].toString())
+                    setPositiveButton("확인") { dialog, which ->
+                        finish()
+                    }
+                    setCancelable(false)
+
+                    show()
+                }
+            }
         }
     }
 

@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.Report
-import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

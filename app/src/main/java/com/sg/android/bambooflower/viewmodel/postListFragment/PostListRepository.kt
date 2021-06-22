@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.viewmodel.postListFragment
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.sg.android.bambooflower.adapter.paging.MyPostPagingSource
 import com.sg.android.bambooflower.adapter.paging.PostPagingSource

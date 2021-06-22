@@ -32,11 +32,11 @@ class CreateAccountRepository @Inject constructor(
             profileImage = "",
             email = email,
             achievedCount = 0,
+            achieveState = User.STATE_NOTHING,
             myLevel = 1,
             myMissionTitle = "",
             myMissionHow = "",
             latestStart = 0,
-            achieved = false,
             missionDoc = null
         )
 
@@ -64,11 +64,11 @@ class CreateAccountRepository @Inject constructor(
             profileImage = "",
             email = email,
             achievedCount = 0,
+            achieveState = User.STATE_NOTHING,
             myLevel = 1,
             myMissionTitle = "",
             myMissionHow = "",
             latestStart = 0,
-            achieved = false,
             missionDoc = null
         )
 

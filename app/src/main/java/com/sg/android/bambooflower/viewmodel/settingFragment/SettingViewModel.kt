@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel

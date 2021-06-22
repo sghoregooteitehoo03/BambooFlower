@@ -25,8 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
-// TODO:
-//  . 출시 후 추가 및 변경: 미션 보여주는 뷰 디자인 수정, 서버 점검할 때 앱 못들어오게, 게시글 삭제 시 수행안되게 처리
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()

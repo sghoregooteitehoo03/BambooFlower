@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.ui.fragment
+package com.sg.android.bambooflower.ui.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.sg.android.bambooflower.databinding.FragmentSatisfactionBinding
+import com.sg.android.bambooflower.databinding.DialogSatisfactionBinding
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 
-class SatisfactionFragment : BottomSheetDialogFragment() {
+class SatisfactionDialog : BottomSheetDialogFragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private var isTwice = false // 첫 시작 때 옵저버 무시하기 위한 변수
 
@@ -20,7 +20,7 @@ class SatisfactionFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = FragmentSatisfactionBinding.inflate(inflater)
+        val binding = DialogSatisfactionBinding.inflate(inflater)
 
         // 바인딩 설정
         with(binding) {

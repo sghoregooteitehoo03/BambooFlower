@@ -151,6 +151,9 @@
         <action
             android:id="@+id/action_postFragment_to_reportDialog"
             app:destination="@id/reportDialog"/>
+        <action
+            android:id="@+id/action_postFragment_to_acceptListDialog"
+            app:destination="@id/acceptListDialog"/>
     </fragment>
     <fragment
         android:id="@+id/diaryWriteFragment"
@@ -244,9 +247,9 @@
         tools:layout="@layout/dialog_report"/>
     <dialog
         android:id="@+id/satisfactionFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.SatisfactionFragment"
+        android:name="com.sg.android.bambooflower.ui.dialog.SatisfactionDialog"
         android:label="SatisfactionFragment"
-        tools:layout="@layout/fragment_satisfaction"/>
+        tools:layout="@layout/dialog_satisfaction"/>
     <fragment
         android:id="@+id/diaryEditFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryEditFragment"
@@ -283,4 +286,9 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="false"/>
     </fragment>
+    <dialog
+        android:id="@+id/acceptListDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.AcceptListDialog"
+        android:label="AcceptListDialog"
+        tools:layout="@layout/dialog_accept_list"/>
 </navigation>
