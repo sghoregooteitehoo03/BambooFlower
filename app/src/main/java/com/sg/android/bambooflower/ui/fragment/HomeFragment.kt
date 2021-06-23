@@ -242,7 +242,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     private fun loadAdAndChange() {
         InterstitialAd.load(
             requireContext(),
-            resources.getString(R.string.ad_full_unit_id_test),
+            resources.getString(R.string.ad_full_unit_id_change),
             AdRequest.Builder().build(),
             adCallBack
         )
