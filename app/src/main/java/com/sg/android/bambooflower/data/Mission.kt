@@ -7,4 +7,5 @@ data class Mission(
     val missionTitle: String? = null,
     val missionHow: String? = null
 ) {
+    var isSelected = false
 }

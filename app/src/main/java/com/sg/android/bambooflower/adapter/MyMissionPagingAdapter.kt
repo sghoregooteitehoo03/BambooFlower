@@ -4,18 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.sg.android.bambooflower.adapter.viewholder.MissionViewHolder
+import com.sg.android.bambooflower.adapter.viewholder.MyMissionViewHolder
 import com.sg.android.bambooflower.data.Mission
-import com.sg.android.bambooflower.databinding.ItemMissionBinding
+import com.sg.android.bambooflower.databinding.ItemMyMissionBinding
 
-class MissionPagingAdapter(private val uid: String) : PagingDataAdapter<Mission, MissionViewHolder>(diffUtil) {
-    override fun onBindViewHolder(holder: MissionViewHolder, position: Int) {
+class MyMissionPagingAdapter(private val uid: String) : PagingDataAdapter<Mission, MyMissionViewHolder>(diffUtil) {
+    override fun onBindViewHolder(holder: MyMissionViewHolder, position: Int) {
         holder.bind(getItem(position), uid)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MissionViewHolder {
-        val view = ItemMissionBinding.inflate(LayoutInflater.from(parent.context), parent,false)
-        return MissionViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyMissionViewHolder {
+        val view = ItemMyMissionBinding.inflate(LayoutInflater.from(parent.context), parent,false)
+        return MyMissionViewHolder(view)
     }
 
     private companion object diffUtil : DiffUtil.ItemCallback<Mission>() {

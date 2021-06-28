@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/homeFragment"
+        android:id="@+id/missionFragment"
         android:icon="@drawable/ic_home"
-        android:title="홈" />
+        android:title="미션" />
 
     <item
         android:id="@+id/rankingFragment"

@@ -180,7 +180,7 @@ class LoginFragment : Fragment() {
                 ready()
 
                 if (user != null) { // 기존 유저인지 확인
-                    findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
+                    findNavController().navigate(R.id.action_loginFragment_to_missionFragment)
                 } else {
                     val directions = LoginFragmentDirections
                         .actionLoginFragmentToCreateUserFragment(token, loginWay)

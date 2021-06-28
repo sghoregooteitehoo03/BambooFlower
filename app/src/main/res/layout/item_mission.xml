@@ -10,49 +10,55 @@
             type="com.sg.android.bambooflower.data.Mission"/>
 
         <variable
-            name="uid"
-            type="String"/>
+            name="user"
+            type="com.sg.android.bambooflower.data.User"/>
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <androidx.cardview.widget.CardView
+        android:layout_width="110dp"
+        android:layout_height="140dp"
+        android:layout_margin="4dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="12dp">
+            app:setSelectMission="@{mission.isSelected}">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setMissionCompleteLayout="@{mission}"
+                app:setMissionTodayLayout="@{user}"
+                tools:background="@color/green_300">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:setMissionCompleteText="@{mission}"
+                    app:setMissionTodayText="@{user}"
+                    tools:text="인증 완료"/>
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/default_item_color"
-                android:textSize="16sp"
+                android:gravity="center"
+                android:padding="12dp"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:setTitle="@{mission.missionTitle}"
-                tools:text="[대충 미션내용]"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/default_item_color"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:setLevel="@{mission.level}"
-                tools:text="Lv 1"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_text"
-                app:setCompleteDate="@{mission.complete.get(uid)}"
-                tools:text="수행완료: 2021.03.23"/>
+                tools:text="[오늘은 내가 요리사!]"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

@@ -197,7 +197,7 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                 gViewModel.user.value = homeData.user // 유저를 공유할 수 있게 GlobalViewModel에 저장함
                 user = homeData.user
 
-                mViewModel.posts.value = homeData.posts
+//                mViewModel.posts.value = homeData.post
                 mViewModel.currentTime.value = System.currentTimeMillis()
 
                 mViewModel.isLoading.value = false

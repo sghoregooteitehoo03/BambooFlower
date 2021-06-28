@@ -25,6 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
+// TODO: 디자인 갈아엎기
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()
@@ -70,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
             // 로그인 되어있으면 홈 화면으로 넘어감
-            navController.navigate(R.id.action_loginFragment_to_homeFragment)
+            navController.navigate(R.id.action_loginFragment_to_missionFragment)
             intent.putExtra(Contents.EXTRA_IS_LOGIN, false)
         } else if (checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
             // 처음 앱을 킨 유저일 시 온보딩 화면으로 이동
@@ -78,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.homeFragment, R.id.rankingFragment, R.id.profileFragment -> {
+                R.id.missionFragment, R.id.rankingFragment, R.id.profileFragment -> {
                     showBottomView()
                 }
                 else -> {
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                 val tempTime = System.currentTimeMillis()
                 val intervalTime = tempTime - backPressedTime
 
-                if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+                if (intervalTime in 0..FINISH_INTERVAL_TIME) {
                     finish()
                     backToast.cancel()
                 } else {

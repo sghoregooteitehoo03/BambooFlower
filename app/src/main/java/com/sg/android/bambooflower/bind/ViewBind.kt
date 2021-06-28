@@ -3,6 +3,7 @@ package com.sg.android.bambooflower.bind
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.view.View
@@ -10,8 +11,11 @@ import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.CalendarView
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
@@ -23,10 +27,12 @@ import com.google.android.gms.ads.AdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Diary
+import com.sg.android.bambooflower.data.Mission
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
+import com.sg.android.bambooflower.ui.view.CustomMissionButton
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,27 +40,123 @@ import java.util.*
 //Set
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setPostItemInfo")
-fun setPostItemInfo(view: TextView, postData: Post) {
-    val name = postData.writer
-    val postTime = postData.timeStamp!!
+fun setPostItemInfo(view: TextView, postData: Post?) {
+    if (postData != null) {
+        val name = postData.writer
+        val postTime = postData.timeStamp!!
 
-    val diffTime = System.currentTimeMillis() - postTime
-    val date = when {
-        diffTime / 3600000 >= 24 -> {
-            SimpleDateFormat("yy.MM.dd", Locale.KOREA).format(postTime)
+        val diffTime = System.currentTimeMillis() - postTime
+        val date = when {
+            diffTime / 3600000 >= 24 -> {
+                SimpleDateFormat("yy.MM.dd", Locale.KOREA).format(postTime)
+            }
+            diffTime / 3600000 != 0.toLong() -> {
+                "${diffTime / 3600000}시간 전"
+            }
+            diffTime / 60000 != 0.toLong() -> {
+                "${diffTime / 60000}분 전"
+            }
+            else -> {
+                "${diffTime / 6000}초 전"
+            }
         }
-        diffTime / 3600000 != 0.toLong() -> {
-            "${diffTime / 3600000}시간 전"
-        }
-        diffTime / 60000 != 0.toLong() -> {
-            "${diffTime / 60000}분 전"
-        }
-        else -> {
-            "${diffTime / 6000}초 전"
+
+        view.text = "$name | $date"
+    }
+}
+
+@BindingAdapter("app:setSelectMission")
+fun setSelectMission(view: ConstraintLayout, isSelected: Boolean) {
+    if (isSelected) {
+        view.setBackgroundResource(R.drawable.shape_mission_text)
+    } else {
+        view.setBackgroundResource(0)
+    }
+}
+
+@BindingAdapter("app:setMissionCompleteLayout", "app:setMissionTodayLayout", requireAll = true)
+fun setMissionLayout(view: LinearLayout, mission: Mission, user: User) {
+    view.visibility = View.VISIBLE
+
+    if (mission.document == user.missionDoc) { // 유저가 수행중인 미션일 때
+        view.setBackgroundResource(R.color.deep_orange_300)
+    } else if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
+        view.setBackgroundResource(R.color.green_300)
+    } else {
+        view.setBackgroundResource(R.color.gray)
+    }
+}
+
+@BindingAdapter("app:setMissionCompleteText", "app:setMissionTodayText", requireAll = true)
+fun setMissionText(view: TextView, mission: Mission, user: User) {
+    view.text = if (mission.document == user.missionDoc) { // 유저가 수행중인 미션일 때
+        "오늘 미션"
+    } else if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
+        "수행 완료"
+    } else {
+        "미수행"
+    }
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setLastMissions")
+fun setLastMissions(view: TextView, achievedCount: Int?) {
+    if (achievedCount != null) {
+        view.text = "다음 레벨까지 남은 미션: ${10 - (achievedCount % 10)}"
+    }
+}
+
+@BindingAdapter("app:setButtonStateUser", "app:setButtonStateMission", requireAll = true)
+fun setButtonState(view: CustomMissionButton, user: User?, mission: Mission?) {
+    if (user != null && mission != null) {
+        if (mission.document != user.missionDoc) {
+            // 유저가 수행중인 미션과 다를 경우
+            val timestamp = mission.complete[user.uid]
+
+            if (timestamp != null) {
+                // 수행 완료한 미션일 경우
+                val successDay = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+                    .format(timestamp)
+
+                with(view) {
+                    setButtonText("수행 완료: $successDay", Color.WHITE)
+                    setButtonIcon(R.drawable.ic_check_circle)
+
+                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+                }
+            } else {
+                // 수행하지 않은 미션일 경우
+                with(view) {
+                    setButtonText(
+                        "미수행",
+                        view.resources.getColor(android.R.color.tab_indicator_text, null)
+                    )
+                    setButtonIcon(R.drawable.ic_baseline_block)
+
+                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.gray)
+                }
+            }
+        } else {
+            // 유저가 수행하고 있는 미션일 경우
+            if (user.achieveState == User.STATE_LOADING) {
+                // 유저 상태가 "인증 중"일 떄
+                with(view) {
+                    setButtonText("인증 중...", Color.WHITE)
+                    setButtonIcon(R.drawable.ic_cancel_white)
+
+                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+                }
+            } else if (user.achieveState == User.STATE_ALLOW) {
+                // 유저 상태가 "인증 완료"일 떄
+                with(view) {
+                    setButtonText("인증 완료", Color.WHITE)
+                    setButtonIcon(R.drawable.ic_check_circle)
+
+                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+                }
+            }
         }
     }
-
-    view.text = "$name | $date"
 }
 
 @BindingAdapter("app:setPostInfo")
@@ -66,28 +168,6 @@ fun setPostInfo(view: TextView, postData: Post) {
     view.text = "$name | $date"
 }
 
-@BindingAdapter("app:setStateText")
-fun setStateText(view: TextView, state: String?) {
-    if (state != null) {
-        if (state == User.STATE_LOADING) {
-            view.text = "인증 중..."
-        } else if (state == User.STATE_ALLOW) {
-            view.text = "인증완료"
-        }
-    }
-}
-
-@BindingAdapter("app:setStateImage")
-fun setStateImage(view: ImageView, state: String?) {
-    if (state != null) {
-        if (state == User.STATE_LOADING) {
-            view.setImageResource(R.drawable.ic_cancel_white)
-        } else if (state == User.STATE_ALLOW) {
-            view.setImageResource(R.drawable.ic_check_circle)
-        }
-    }
-}
-
 @BindingAdapter("app:setCalendar")
 fun setCalendar(view: TextView, diaryData: Diary) {
     val date = SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diaryData.timeStamp)
@@ -97,7 +177,7 @@ fun setCalendar(view: TextView, diaryData: Diary) {
 
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setTitle")
-fun setTitle(view: TextView, title: String) {
+fun setTitle(view: TextView, title: String?) {
     view.text = "[$title]"
 }
 
@@ -164,30 +244,22 @@ fun selectDate(view: CalendarView, dateTime: Long) {
 }
 
 @BindingAdapter("app:searchPosition")
-fun searchPosition(view: RecyclerView, position: Int?) {
-    if (position != null && position != -1) {
-        view.scrollToPosition(position + 1)
+fun searchPosition(view: RecyclerView, position: Int) {
+    if (position != -1) {
+        view.scrollToPosition(position)
     }
 }
 
-@BindingAdapter("app:leftHour")
-fun leftHour(view: TextView, currentTime: Long) {
-    val currentHour = SimpleDateFormat("HH", Locale.KOREA)
-        .format(currentTime)
-        .toInt()
-    val leftHour = 24 - currentHour
-
-    view.text = "${leftHour}h 남음"
-}
-
-@BindingAdapter("app:setUriImage", "app:setResourceImage", "app:setBitmapImage", requireAll = false)
-fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitmap: Bitmap?) {
+@BindingAdapter("app:setUriImage", "app:setResourceImage", "app:setBitmapImage", "app:setPostImage", requireAll = false)
+fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitmap: Bitmap?, postData: Post?) {
     if (imageUri != null) {
         Glide.with(view.context).load(imageUri).into(view)
     } else if (imageResource != null) {
         Glide.with(view.context).load(imageResource).into(view)
     } else if (imageBitmap != null) {
         Glide.with(view.context).load(imageBitmap).into(view)
+    } else if (postData != null) {
+        Glide.with(view.context).load(postData.image!![0]).into(view)
     }
     view.clipToOutline = true
 }

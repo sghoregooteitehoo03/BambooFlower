@@ -30,8 +30,8 @@
         android:label="LoginFragment"
         tools:layout="@layout/fragment_login">
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"/>
+            android:id="@+id/action_loginFragment_to_missionFragment"
+            app:destination="@id/missionFragment"/>
         <action
             android:id="@+id/action_loginFragment_to_emailLoginFragment"
             app:destination="@id/emailLoginFragment"
@@ -78,16 +78,10 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
         <action
-            android:id="@+id/action_homeFragment_to_calendarDialog"
-            app:destination="@id/calendarDialog"/>
-        <action
             android:id="@+id/action_homeFragment_to_addPostFragment"
             app:destination="@id/addPostFragment"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_homeFragment_to_levelUpDialog"
-            app:destination="@id/levelUpDialog"/>
     </fragment>
     <fragment
         android:id="@+id/emailLoginFragment"
@@ -95,8 +89,8 @@
         android:label="EmailLoginFragment"
         tools:layout="@layout/fragment_email_login">
         <action
-            android:id="@+id/action_emailLoginFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_emailLoginFragment_to_missionFragment"
+            app:destination="@id/missionFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="false"/>
         <action
@@ -120,8 +114,8 @@
         android:label="CreateAccountFragment"
         tools:layout="@layout/fragment_create_account">
         <action
-            android:id="@+id/action_createAccountFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_createAccountFragment_to_missionFragment"
+            app:destination="@id/missionFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="false"/>
     </fragment>
@@ -218,8 +212,8 @@
         android:label="CreateUserFragment"
         tools:layout="@layout/fragment_create_account">
         <action
-            android:id="@+id/action_createUserFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
+            android:id="@+id/action_createUserFragment_to_missionFragment"
+            app:destination="@id/missionFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="false"/>
         <argument
@@ -229,11 +223,6 @@
             android:name="loginWay"
             app:argType="string"/>
     </fragment>
-    <dialog
-        android:id="@+id/calendarDialog"
-        android:name="com.sg.android.bambooflower.ui.dialog.CalendarDialog"
-        android:label="CalendarDialog"
-        tools:layout="@layout/dialog_calendar"/>
     <dialog
         android:id="@+id/levelUpDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.LevelUpDialog"
@@ -291,4 +280,25 @@
         android:name="com.sg.android.bambooflower.ui.dialog.AcceptListDialog"
         android:label="AcceptListDialog"
         tools:layout="@layout/dialog_accept_list"/>
+    <fragment
+        android:id="@+id/missionFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.MissionFragment"
+        android:label="MissionFragment"
+        tools:layout="@layout/fragment_mission">
+        <action
+            android:id="@+id/action_missionFragment_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_missionFragment_to_postFragment"
+            app:destination="@id/postFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_missionFragment_to_levelUpDialog"
+            app:destination="@id/levelUpDialog"/>
+    </fragment>
 </navigation>
