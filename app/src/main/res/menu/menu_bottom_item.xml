@@ -7,6 +7,11 @@
         android:title="미션" />
 
     <item
+        android:id="@+id/postListFragment"
+        android:icon="@drawable/test_image"
+        android:title="게시판"/>
+
+    <item
         android:id="@+id/rankingFragment"
         android:icon="@drawable/ic_star"
         android:title="랭킹" />

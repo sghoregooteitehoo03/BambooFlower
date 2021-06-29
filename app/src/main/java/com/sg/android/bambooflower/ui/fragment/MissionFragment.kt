@@ -31,18 +31,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  . 미션 리스트 표시 O
-//  . 미션 선택 O, 수행완료 O, 오늘미션 처리 O
-//  . 남은 미션 텍스트 O, 오늘 미션으로 위치 이동 및 선택되게 구현 O
-//  . 선택된 미션마다 미션 텍스트 O, 버튼 바뀌는거 구현
-//  . 버튼 기능 구현 O
-//  . 각 미션 클릭할 때 마다 작성했던 게시글 표시 O
-//  . 게시글 클릭 시 이동 O
-//  . 갱신 기능 구현 O
-//  . 홈 데이터 대신 이 화면 표시하게 구현 O
-//  . 바텀 nav 표시 O
-//  . 백스택 O
-//  . 레벨업 처리 구현
+//  . 레벨업 처리 구현 (갱신 될 때 레벨업 구현)
 @AndroidEntryPoint
 class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnClickListener {
     private val mViewModel by viewModels<MissionViewModel>()

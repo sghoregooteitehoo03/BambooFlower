@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sg.android.bambooflower.R
@@ -45,6 +46,7 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         with(binding) {
             this.viewmodel = mViewModel
 
+            filterPostText.visibility = View.GONE
             with(postList) {
                 adapter = postAdapter
                 addItemDecoration(
@@ -65,6 +67,13 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         setHasOptionsMenu(true)
 
         setObserver()
+        postAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh !is LoadState.Loading
+                && mViewModel.postList.value != null
+            ) {
+                mViewModel.isLoading.value = false
+            }
+        }
     }
 
     override fun onStart() {
@@ -108,12 +117,9 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                         postAdapter.submitData(pagingData)
                     }
                 }
+            } else {
                 lifecycleScope.launch {
-                    postAdapter.loadStateFlow.collect {
-                        if (it.refresh !is LoadState.Loading) {
-                            mViewModel.isLoading.value = false
-                        }
-                    }
+                    postAdapter.submitData(PagingData.empty()) // 리스트뷰를 초기화 함
                 }
             }
         }
@@ -128,7 +134,10 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         }
         gViewModel.syncData.observe(viewLifecycleOwner) {
             if (it) {
+                mViewModel.postList.value = null // 게시글 리스트 초기화
+
                 mViewModel.isLoading.value = true
+                gViewModel.syncData.value = false
             }
         }
     }

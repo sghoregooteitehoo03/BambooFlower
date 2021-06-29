@@ -108,12 +108,10 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
     // 리사이클러뷰 아이템 클릭
     override fun onItemClickListener(pos: Int) {
         gViewModel.post.value = postAdapter.getItem(pos)
-        findNavController().navigate(R.id.action_homeFragment_to_postFragment)
     }
 
     // 일기 작성 클릭
     override fun addItemClickListener() {
-        findNavController().navigate(R.id.action_homeFragment_to_diaryWriteFragment)
     }
 
     // 일기 아이템 클릭
@@ -121,7 +119,6 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         val diaryData = diaryAdapter.getDiaryItem(pos)
         gViewModel.diary.value = diaryData
 
-        findNavController().navigate(R.id.action_homeFragment_to_diaryViewerFragment)
     }
 
     // 버튼 액션
@@ -134,7 +131,6 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
                 changeMission()
             }
             R.id.more_text -> { // 더보기
-                findNavController().navigate(R.id.action_homeFragment_to_postListFragment)
             }
             else -> {
             }
@@ -212,7 +208,6 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("인증 화면으로 이동합니다.")
             setPositiveButton("확인") { dialog, which ->
-                findNavController().navigate(R.id.action_homeFragment_to_addPostFragment)
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()

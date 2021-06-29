@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.missionFragment, R.id.rankingFragment, R.id.profileFragment -> {
+                R.id.missionFragment, R.id.postListFragment, R.id.rankingFragment, R.id.profileFragment -> {
                     showBottomView()
                 }
                 else -> {

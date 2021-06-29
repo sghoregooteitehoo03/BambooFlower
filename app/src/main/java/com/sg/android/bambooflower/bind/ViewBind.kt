@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.view.View
@@ -173,6 +174,19 @@ fun setCalendar(view: TextView, diaryData: Diary) {
     val date = SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diaryData.timeStamp)
 
     view.text = date
+}
+
+@BindingAdapter("app:setSelectedText")
+fun setSelectedText(view: TextView, isSelected: Boolean) {
+    if (isSelected) {
+        view.setTextColor(Color.BLACK)
+        view.setTypeface(view.typeface, Typeface.BOLD)
+        view.textSize = 16f
+    } else {
+        view.setTextColor(view.resources.getColor(android.R.color.tab_indicator_text, null))
+        view.setTypeface(view.typeface, Typeface.NORMAL)
+        view.textSize = 14f
+    }
 }
 
 @SuppressLint("SetTextI18n")

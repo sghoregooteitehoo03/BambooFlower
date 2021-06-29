@@ -49,41 +49,6 @@
     </fragment>
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_postListFragment"
-            app:destination="@id/postListFragment"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_homeFragment_to_postFragment"
-            app:destination="@id/postFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_homeFragment_to_diaryWriteFragment"
-            app:destination="@id/diaryWriteFragment"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_homeFragment_to_diaryViewerFragment"
-            app:destination="@id/diaryViewerFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_homeFragment_to_addPostFragment"
-            app:destination="@id/addPostFragment"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-    </fragment>
-    <fragment
         android:id="@+id/emailLoginFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.EmailLoginFragment"
         android:label="EmailLoginFragment"
