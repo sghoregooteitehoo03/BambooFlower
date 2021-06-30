@@ -21,6 +21,7 @@ class GlobalViewModel : ViewModel() {
 
     val searchValue = MutableLiveData("") // 찾을 데이터
     val satisfaction = MutableLiveData<Bitmap?>(null) // 만족도
+    val userImage = MutableLiveData<String?>(null) // 유저 이미지
 
     fun setSatisfaction(satisfactionRes: Int, resources: Resources) {
         satisfaction.value = BitmapFactory.decodeResource(resources, satisfactionRes)

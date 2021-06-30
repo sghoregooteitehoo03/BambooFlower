@@ -57,7 +57,6 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener {
             this?.setDisplayHomeAsUpEnabled(false)
             this?.show()
         }
-        (activity as MainActivity).hideSatisfaction()
     }
 
     // 일기 작성 클릭

@@ -3,10 +3,8 @@ package com.sg.android.bambooflower.ui
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.SharedPreferences
-import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -49,22 +47,19 @@ class MainActivity : AppCompatActivity() {
         imm =
             applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
-        // 툴바 설정
-        setSupportActionBar(binding.mainToolbar)
+        setSupportActionBar(binding.mainToolbar) // 툴바 설정
+        setObserver() // 옵저버 설정
 
         val navFrag = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navFrag.navController
 
         binding.bottomNavView.setupWithNavController(navController)
-        binding.inputSearch.setOnEditorActionListener { v, actionId, event ->
-            when (actionId) {
-                EditorInfo.IME_ACTION_SEARCH -> {
-                    gViewModel.searchValue.value = binding.inputSearch.text.toString()
-                    true
-                }
-                else -> false
+        binding.profileImage.setOnClickListener { // 프로필 클릭
+            if (gViewModel.userImage.value != null) {
+                navController.navigate(R.id.profileFragment)
             }
         }
+
 
         // Ad Init
         MobileAds.initialize(this)
@@ -79,11 +74,13 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.missionFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment, R.id.profileFragment -> {
+                R.id.missionFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment -> {
                     showBottomView()
+                    showProfile()
                 }
                 else -> {
                     hideBottomView()
+                    hideProfile()
                 }
             }
         }
@@ -111,6 +108,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setObserver() {
+        gViewModel.userImage.observe(this) { image ->
+            if (image != null) {
+                if (image.isEmpty()) {
+                    Glide.with(applicationContext)
+                        .load(R.drawable.ic_person)
+                        .into(binding.profileImage)
+                } else {
+                    Glide.with(applicationContext)
+                        .load(image)
+                        .into(binding.profileImage)
+                }
+            }
+        }
+    }
+
     // 로딩 화면 표시
     fun loading() {
         backAvailable = false
@@ -123,16 +136,16 @@ class MainActivity : AppCompatActivity() {
         binding.loadingView.setVisible(false, window)
     }
 
-    fun showSatisfaction(image: Bitmap) {
-        with(binding.satisfactionImage) {
-            visibility = View.VISIBLE
-            Glide.with(context).load(image)
-                .into(this)
+    private fun showProfile() {
+        if (binding.profileImage.visibility == View.GONE) {
+            binding.profileImage.visibility = View.VISIBLE
         }
     }
 
-    fun hideSatisfaction() {
-        binding.satisfactionImage.visibility = View.GONE
+    private fun hideProfile() {
+        if (binding.profileImage.visibility == View.VISIBLE) {
+            binding.profileImage.visibility = View.GONE
+        }
     }
 
     fun showBottomView() {

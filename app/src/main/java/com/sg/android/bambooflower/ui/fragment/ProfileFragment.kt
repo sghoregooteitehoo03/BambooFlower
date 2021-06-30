@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -58,6 +59,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
 
         setObserver()
     }
@@ -68,7 +70,17 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         with((activity as MainActivity).supportActionBar) {
             this?.title = "프로필"
             this?.show()
-            this?.setDisplayHomeAsUpEnabled(false)
+            this?.setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+                true
+            }
+            else -> false
         }
     }
 
@@ -82,8 +94,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                         mViewModel.changeProfileImage(user, data?.data!!)
 
                         gViewModel.user.postValue(user)
+                        gViewModel.userImage.postValue(user.profileImage)
+
+                        gViewModel.syncData.postValue(true)
                     } catch (e: Exception) {
-                        mViewModel.isLoading.value = false
+                        mViewModel.isLoading.postValue(false)
                         Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
                             .show()
                     }

@@ -59,8 +59,6 @@ class DiaryViewerFragment : Fragment() {
                 this?.show()
                 this?.setDisplayHomeAsUpEnabled(true)
             }
-
-            showSatisfaction(diary.satisfaction)
         }
     }
 

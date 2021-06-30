@@ -21,15 +21,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/satisfaction_image"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="4dp"
-                android:scaleType="centerCrop"
-                android:visibility="gone"
-                tools:src="@drawable/high_image"/>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:background="?selectableItemBackground"
+                app:civ_border_color="@color/gray"
+                app:civ_border_width="1dp"
+                app:civ_circle_background_color="@color/gray_bright"
+                tools:src="@drawable/ic_person"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_search_layout"

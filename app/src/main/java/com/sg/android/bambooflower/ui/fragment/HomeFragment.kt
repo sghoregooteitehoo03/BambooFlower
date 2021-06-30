@@ -102,7 +102,6 @@ class HomeFragment : Fragment(), PostPagingAdapter.PostItemListener,
             this?.setDisplayHomeAsUpEnabled(false)
             this?.show()
         }
-        (activity as MainActivity).hideSatisfaction()
     }
 
     // 리사이클러뷰 아이템 클릭

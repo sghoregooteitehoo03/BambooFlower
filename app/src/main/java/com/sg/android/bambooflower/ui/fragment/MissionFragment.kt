@@ -78,7 +78,7 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
     override fun onStart() {
         super.onStart()
         with((activity as MainActivity).supportActionBar) {
-            this?.title = "홈"
+            this?.title = "미션"
             this?.setDisplayHomeAsUpEnabled(false)
             this?.show()
         }
@@ -188,6 +188,7 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
                 gViewModel.user.value = user // 유저 정보
                 if (homeData.missions.isNotEmpty()) { // 유저가 수행할 수 있는 미션리스트
                     gViewModel.missionList.value = homeData.missions
+                    gViewModel.userImage.value = user.profileImage
                 }
 
                 mViewModel.isLoading.value = false // 로딩 끝
