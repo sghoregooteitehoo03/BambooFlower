@@ -25,8 +25,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 // TODO:
-//  . 게시글 디자인 O
-//  . 게시글 필터링 기능 O
 //  . 광고 릴리스 키로 변경
 
 @AndroidEntryPoint

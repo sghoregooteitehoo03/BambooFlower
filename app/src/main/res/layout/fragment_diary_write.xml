@@ -34,6 +34,7 @@
             android:hint="자유롭게 작성해보세요."
             android:minHeight="280dp"
             android:text="@={viewmodel.contents}"
+            app:hideKeyboard="@{viewmodel.isSaved()}"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <ImageView

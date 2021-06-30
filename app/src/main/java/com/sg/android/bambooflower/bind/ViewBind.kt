@@ -189,6 +189,16 @@ fun setSelectedText(view: TextView, isSelected: Boolean) {
     }
 }
 
+@BindingAdapter("app:setYearText")
+fun setYearText(view: TextView, timeStamp: Long) {
+    view.text = SimpleDateFormat("yyyy", Locale.KOREA).format(timeStamp)
+}
+
+@BindingAdapter("app:setMonthDayText")
+fun setMonthDayText(view: TextView, timeStamp: Long) {
+    view.text = SimpleDateFormat("MM월 dd(EE)", Locale.KOREA).format(timeStamp)
+}
+
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setTitle")
 fun setTitle(view: TextView, title: String?) {
