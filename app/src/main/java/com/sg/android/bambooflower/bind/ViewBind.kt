@@ -179,7 +179,7 @@ fun setCalendar(view: TextView, diaryData: Diary) {
 @BindingAdapter("app:setSelectedText")
 fun setSelectedText(view: TextView, isSelected: Boolean) {
     if (isSelected) {
-        view.setTextColor(Color.BLACK)
+        view.setTextColor(view.resources.getColor(R.color.default_item_color, null))
         view.setTypeface(view.typeface, Typeface.BOLD)
         view.textSize = 16f
     } else {

@@ -65,8 +65,12 @@
 
             <ImageView
                 android:id="@+id/icon_image"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_round"
+                android:backgroundTint="@color/post_color"
+                android:padding="6dp"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

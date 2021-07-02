@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
+    <!--    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
     <item
         android:id="@+id/missionFragment"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_mission"
         android:title="미션"/>
 
     <item
         android:id="@+id/postListFragment"
-        android:icon="@drawable/test_image"
-        android:title="게시판"/>
+        android:icon="@drawable/ic_post"
+        android:title="인증게시판"/>
 
     <item
         android:id="@+id/diaryListFragment"
@@ -18,6 +20,6 @@
 
     <item
         android:id="@+id/rankingFragment"
-        android:icon="@drawable/ic_star"
+        android:icon="@drawable/ic_ranking"
         android:title="랭킹"/>
 </menu>
