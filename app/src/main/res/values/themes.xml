@@ -22,6 +22,7 @@
         <item name="android:navigationBarColor">@color/green_300</item>
     </style>
 
+    <!-- BottomSheet Style -->
     <style name="BottomSheetTheme" parent="Theme.Design.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>

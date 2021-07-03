@@ -207,6 +207,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun signOut() { // 로그아웃
+        gViewModel.user.value = null
+        gViewModel.missionList.value = null
+        gViewModel.userImage.value = null
+
         findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
         mViewModel.signOut(requireContext())
     }

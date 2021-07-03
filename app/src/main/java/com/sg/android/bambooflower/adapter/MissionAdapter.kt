@@ -48,13 +48,21 @@ class MissionAdapter() : RecyclerView.Adapter<MissionViewHolder>() {
 
     fun getTodayMissionIndex(): Int {
         var index = -1
-        for(i in missionList.indices) {
-            if(missionList[i].document == user.missionDoc) {
+        for (i in missionList.indices) {
+            if (missionList[i].document == user.missionDoc) {
                 index = i
                 break
             }
         }
 
         return index
+    }
+
+    fun clearList() {
+        for (i in missionList.indices) {
+            if (missionList[i].document != user.missionDoc) {
+                missionList[i].isSelected = false
+            }
+        }
     }
 }

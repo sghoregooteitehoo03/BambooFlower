@@ -162,6 +162,10 @@ class SettingFragment : Fragment(), View.OnClickListener {
                             .show()
                     } finally {
                         withContext(Dispatchers.Main) {
+                            gViewModel.user.value = null
+                            gViewModel.missionList.value = null
+                            gViewModel.userImage.value = null
+
                             findNavController().navigate(R.id.action_settingFragment_to_loginFragment)
                         }
                     }

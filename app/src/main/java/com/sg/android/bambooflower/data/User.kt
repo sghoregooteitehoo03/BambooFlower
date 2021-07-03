@@ -11,7 +11,8 @@ data class User(
     var myMissionTitle: String? = null,
     var myMissionHow: String? = null,
     var missionDoc: String? = null,
-    val latestStart: Long? = null
+    val latestStart: Long? = null,
+    val isLevelUp: Boolean = false
 ) {
     companion object {
         const val STATE_NOTHING = "STATE_NOTHING"

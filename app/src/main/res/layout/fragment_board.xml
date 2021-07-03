@@ -2,19 +2,19 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:padding="12dp">
 
     <ImageView
+        android:id="@+id/board_image"
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/undraw_task"
         app:layout_constraintBottom_toTopOf="@id/guideline_divide"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@drawable/ic_undraw_online_popularity"/>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_divide"
@@ -24,28 +24,28 @@
         app:layout_constraintGuide_percent="0.5"/>
 
     <TextView
-        android:id="@+id/title_text"
+        android:id="@+id/board_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="간단한 미션 수행!"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/default_item_color"
         android:textSize="24sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/guideline_divide"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline_divide"
+        tools:text="응원하기!"/>
 
     <TextView
-        android:id="@+id/content_text"
+        android:id="@+id/board_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:gravity="center"
-        android:text="매일 다양하고 간단한 미션들을 수행한 것을 인증하면서 새로운 하루를 즐겨보세요."
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title_text"/>
+        app:layout_constraintTop_toBottomOf="@id/board_title"
+        tools:text="다른 사람들의 게시글의 좋아요를 눌러주어 응원과 함께 미션을 수행했다는 것을 인정해주세요."/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

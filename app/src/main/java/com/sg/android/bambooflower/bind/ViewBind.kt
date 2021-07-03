@@ -79,12 +79,12 @@ fun setSelectMission(view: ConstraintLayout, isSelected: Boolean) {
 fun setMissionLayout(view: LinearLayout, mission: Mission, user: User) {
     view.visibility = View.VISIBLE
 
-    if (mission.document == user.missionDoc) { // 유저가 수행중인 미션일 때
-        view.setBackgroundResource(R.color.deep_orange_300)
+    view.backgroundTintList = if (mission.document == user.missionDoc) { // 유저가 수행중인 미션일 때
+        ContextCompat.getColorStateList(view.context, R.color.deep_orange_300)
     } else if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
-        view.setBackgroundResource(R.color.green_300)
+        ContextCompat.getColorStateList(view.context, R.color.green_300)
     } else {
-        view.setBackgroundResource(R.color.gray)
+        ContextCompat.getColorStateList(view.context, R.color.gray)
     }
 }
 

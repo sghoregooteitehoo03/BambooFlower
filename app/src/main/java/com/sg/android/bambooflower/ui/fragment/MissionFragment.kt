@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  . 레벨업 처리 구현 (갱신 될 때 레벨업 구현)
+//  . 레벨업 처리 구현 (갱신 될 때 레벨업 구현) O
 @AndroidEntryPoint
 class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnClickListener {
     private val mViewModel by viewModels<MissionViewModel>()
@@ -84,6 +84,11 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
         }
     }
 
+    override fun onDestroyView() {
+        missionsAdapter.clearList()
+        super.onDestroyView()
+    }
+
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
@@ -95,7 +100,7 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
             }
             R.id.post_layout -> { // 게시글 클릭
                 if (mViewModel.searchPostData.value != null) {
-                    // 선택한 게시글로 이
+                    // 선택한 게시글로 이동
                     findNavController().navigate(R.id.action_missionFragment_to_postFragment)
                     gViewModel.post.value = mViewModel.searchPostData.value
                 }
@@ -189,6 +194,10 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
                 if (homeData.missions.isNotEmpty()) { // 유저가 수행할 수 있는 미션리스트
                     gViewModel.missionList.value = homeData.missions
                     gViewModel.userImage.value = user.profileImage
+
+                    if (user.isLevelUp) { // 레벨업 하였을 경우
+                        findNavController().navigate(R.id.levelUpDialog)
+                    }
                 }
 
                 mViewModel.isLoading.value = false // 로딩 끝

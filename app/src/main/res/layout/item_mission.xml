@@ -25,17 +25,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="12dp"
             app:setSelectMission="@{mission.isSelected}">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:layout_marginTop="12dp"
+                android:background="@drawable/shape_round_button"
                 android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:setMissionCompleteLayout="@{mission}"
                 app:setMissionTodayLayout="@{user}"
-                tools:background="@color/green_300">
+                tools:backgroundTint="@color/green_300">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -52,7 +53,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="12dp"
                 android:textColor="@color/default_item_color"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

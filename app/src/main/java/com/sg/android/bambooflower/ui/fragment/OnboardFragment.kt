@@ -34,7 +34,28 @@ class OnboardFragment : Fragment(), View.OnClickListener {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         // 인스턴스 설정
         fragBinding = FragmentOnboardBinding.inflate(inflater)
-        fragList = listOf(BoardFirstFragment(), BoardSecondFragment(), BoardThirdFragment())
+        fragList = listOf(
+            BoardFragment(
+                R.drawable.ic_undraw_mission_impossible,
+                "매일 제공되는 미션!",
+                "매일 다양하고 간단한 미션들을 수행하는 모습을 게시글에 인증하면서 새로운 하루를 즐겨보세요."
+            ),
+            BoardFragment(
+                R.drawable.ic_undraw_online_popularity,
+                "응원하기!",
+                "다른 사람들의 게시글의 좋아요를 눌러주어 응원과 함께 미션을 수행했다는 것을 인정해주세요."
+            ),
+            BoardFragment(
+                R.drawable.ic_undraw_day_of_park,
+                "오늘 하루는 어땠나요?",
+                "일기를 통해 하루를 돌아보면서 행복했던 일이나 우울했던 일들을 한번 정리해보세요."
+            ),
+            BoardFragment(
+                R.drawable.ic_undraw_grades,
+                "랭킹 시스템",
+                "다른 사람들과 누가 더 많은 미션을 수행하였는지 경쟁해보세요."
+            ),
+        )
 
         // 바인딩 설정
         with(fragBinding!!) {

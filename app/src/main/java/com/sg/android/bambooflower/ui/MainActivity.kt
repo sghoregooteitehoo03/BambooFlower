@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         // Ad Init
         MobileAds.initialize(this)
 
