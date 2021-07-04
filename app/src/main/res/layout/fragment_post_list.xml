@@ -88,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         app:adSize="BANNER"
-                        app:adUnitId="@string/ad_banner_unit_id_test"
+                        app:adUnitId="@string/ad_banner_unit_id_default"
                         app:loadBannerAd="@{true}"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

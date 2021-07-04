@@ -254,7 +254,7 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
     private fun loadAdAndChange() {
         InterstitialAd.load(
             requireContext(),
-            resources.getString(R.string.ad_full_unit_id_test),
+            resources.getString(R.string.ad_full_unit_id_change),
             AdRequest.Builder().build(),
             adCallBack
         )
