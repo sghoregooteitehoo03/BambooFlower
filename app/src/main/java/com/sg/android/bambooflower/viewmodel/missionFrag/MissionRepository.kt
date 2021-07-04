@@ -30,8 +30,7 @@ class MissionRepository @Inject constructor(
             put("uid", auth.currentUser?.uid)
         }
 
-        // TODO: 나중에 수정
-        return functions.getHttpsCallable("test")
+        return functions.getHttpsCallable(Contents.FUNC_GET_HOME_DATA)
             .call(jsonData)
     }
 
@@ -46,8 +45,7 @@ class MissionRepository @Inject constructor(
             put("missions", missionsJson)
         }
 
-        // TODO: 나중에 수정
-        return functions.getHttpsCallable("changeMissionTest")
+        return functions.getHttpsCallable(Contents.FUNC_CHANGE_MISSION)
             .call(jsonData)
             .await()!!
     }

@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  . 레벨업 처리 구현 (갱신 될 때 레벨업 구현) O
+//  . 광고 릴리스 키로 바꾸기
 @AndroidEntryPoint
 class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnClickListener {
     private val mViewModel by viewModels<MissionViewModel>()

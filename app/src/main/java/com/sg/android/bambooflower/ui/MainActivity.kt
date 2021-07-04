@@ -23,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
-// TODO: 디자인 갈아엎기
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()

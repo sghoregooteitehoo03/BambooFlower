@@ -169,13 +169,6 @@ fun setPostInfo(view: TextView, postData: Post) {
     view.text = "$name | $date"
 }
 
-@BindingAdapter("app:setCalendar")
-fun setCalendar(view: TextView, diaryData: Diary) {
-    val date = SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diaryData.timeStamp)
-
-    view.text = date
-}
-
 @BindingAdapter("app:setSelectedText")
 fun setSelectedText(view: TextView, isSelected: Boolean) {
     if (isSelected) {
