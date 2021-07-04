@@ -55,10 +55,9 @@ class ProfileRepository @Inject constructor(
         val googleClient = GoogleSignIn.getClient(context, gso)
         val loginManager = LoginManager.getInstance()
 
+        auth.signOut()
+        loginManager.logOut()
         googleClient.signOut()
             .await()
-        loginManager.logOut()
-
-        auth.signOut()
     }
 }

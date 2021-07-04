@@ -93,7 +93,7 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                                 mViewModel.setLoading(false)
 
                                 if (user != null) { // 기존 유저일 때
-                                    findNavController().navigate(R.id.action_emailLoginFragment_to_homeFragment)
+                                    findNavController().navigate(R.id.action_emailLoginFragment_to_missionFragment)
                                 } else {
                                     findNavController().navigate(R.id.createUserFragment)
                                 }

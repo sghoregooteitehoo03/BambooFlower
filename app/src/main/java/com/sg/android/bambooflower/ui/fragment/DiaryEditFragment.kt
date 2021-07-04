@@ -70,7 +70,6 @@ class DiaryEditFragment : Fragment() {
             this?.title = "일기 수정"
             this?.setDisplayHomeAsUpEnabled(true)
         }
-        (activity as MainActivity).hideSatisfaction()
     }
 
     override fun onDestroyView() {

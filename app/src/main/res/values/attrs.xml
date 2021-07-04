@@ -6,6 +6,12 @@
         <attr name="buttonTextColor" format="reference|color|integer" />
     </declare-styleable>
 
+    <declare-styleable name="CustomMissionButton">
+        <attr name="missionButtonIcon" format="reference|integer" />
+        <attr name="missionButtonText" format="reference|string" />
+        <attr name="missionButtonTextColor" format="reference|color|integer" />
+    </declare-styleable>
+
     <declare-styleable name="LoadingView">
         <attr name="visible" format="reference|boolean" />
     </declare-styleable>

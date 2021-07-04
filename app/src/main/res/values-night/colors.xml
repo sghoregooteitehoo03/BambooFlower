@@ -4,5 +4,5 @@
     <color name="default_item_color">@color/white</color>
     <color name="divide_color">#292929</color>
     <color name="diary_color">#292929</color>
-    <color name="post_color">#292929</color>
+    <color name="post_color">@color/black_bright</color>
 </resources>

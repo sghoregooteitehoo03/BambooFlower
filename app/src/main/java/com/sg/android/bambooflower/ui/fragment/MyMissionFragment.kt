@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sg.android.bambooflower.adapter.MissionPagingAdapter
+import com.sg.android.bambooflower.adapter.MyMissionPagingAdapter
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentMyMissionBinding
 import com.sg.android.bambooflower.ui.MainActivity
@@ -29,7 +29,7 @@ class MyMissionFragment : Fragment() {
     private val mViewModel by viewModels<MyMissionViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
-    private lateinit var missionAdapter: MissionPagingAdapter
+    private lateinit var missionAdapter: MyMissionPagingAdapter
     private lateinit var user: User
 
     override fun onCreateView(
@@ -40,7 +40,7 @@ class MyMissionFragment : Fragment() {
         // 인스턴스 설정
         val binding = FragmentMyMissionBinding.inflate(inflater)
         user = gViewModel.user.value!!
-        missionAdapter = MissionPagingAdapter(user.uid!!)
+        missionAdapter = MyMissionPagingAdapter(user.uid!!)
 
         // 바인딩 설정
         with(binding) {

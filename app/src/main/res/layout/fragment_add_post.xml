@@ -94,6 +94,7 @@
                     android:backgroundTint="@color/gray_bright"
                     android:padding="4dp"
                     android:text="주의사항"
+                    android:textColor="@android:color/tab_indicator_text"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/content_layout"/>

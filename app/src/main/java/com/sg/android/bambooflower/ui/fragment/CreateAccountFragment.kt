@@ -110,7 +110,7 @@ class CreateAccountFragment : Fragment(R.layout.fragment_create_account) {
             if (msg.isNotEmpty()) {
                 when (msg) {
                     ErrorMessage.SUCCESS ->
-                        findNavController().navigate(R.id.action_createAccountFragment_to_homeFragment)
+                        findNavController().navigate(R.id.action_createAccountFragment_to_missionFragment)
                     else -> fragmentBinding!!.errorMsgText.text = msg
                 }
             }

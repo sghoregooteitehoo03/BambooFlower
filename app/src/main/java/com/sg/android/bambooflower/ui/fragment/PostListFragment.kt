@@ -1,13 +1,17 @@
 package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sg.android.bambooflower.R
@@ -22,7 +26,7 @@ import kotlinx.coroutines.launch
 
 // 광고 릴리스 키로 바꾸기
 @AndroidEntryPoint
-class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
+class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<PostListViewModel>()
 
@@ -42,6 +46,7 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
+            this.clickListener = this@PostListFragment
 
             with(postList) {
                 adapter = postAdapter
@@ -63,6 +68,13 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         setHasOptionsMenu(true)
 
         setObserver()
+        postAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh !is LoadState.Loading
+                && mViewModel.postList.value != null
+            ) {
+                mViewModel.isLoading.value = false
+            }
+        }
     }
 
     override fun onStart() {
@@ -71,7 +83,31 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         with((activity as MainActivity).supportActionBar) {
             this?.title = "인증 게시판"
             this?.show()
-            this?.setDisplayHomeAsUpEnabled(true)
+            this?.setDisplayHomeAsUpEnabled(false)
+        }
+    }
+
+    // 뷰 클릭 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.all_post_text -> { // "전체" 텍스트
+                if (mViewModel.isFiltering.value != false) { // 두번 동작 안되게
+                    mViewModel.isFiltering.value = false
+
+                    mViewModel.postList.value = null // 게시글 리스트 초기화
+                    mViewModel.isLoading.value = true // 리스트 다시 읽어오기
+                }
+            }
+            R.id.filter_post_text -> { // "인증 전" 텍스트
+                if (mViewModel.isFiltering.value != true) { // 두번 동작 안되게
+                    mViewModel.isFiltering.value = true
+
+                    mViewModel.postList.value = null // 게시글 리스트 초기화
+                    mViewModel.isLoading.value = true // 리스트 다시 읽어오기
+                }
+            }
+            else -> {
+            }
         }
     }
 
@@ -83,10 +119,6 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().navigateUp()
-                true
-            }
             R.id.menu_search -> {
                 true
             }
@@ -110,12 +142,9 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                         postAdapter.submitData(pagingData)
                     }
                 }
+            } else {
                 lifecycleScope.launch {
-                    postAdapter.loadStateFlow.collect {
-                        if (it.refresh !is LoadState.Loading) {
-                            mViewModel.isLoading.value = false
-                        }
-                    }
+                    postAdapter.submitData(PagingData.empty()) // 리스트뷰를 초기화 함
                 }
             }
         }
@@ -127,9 +156,13 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                 mViewModel.size.value = postAdapter.itemCount
             }
         }
+        // 게시글 갱신 여부
         gViewModel.syncData.observe(viewLifecycleOwner) {
             if (it) {
+                mViewModel.postList.value = null // 게시글 리스트 초기화
+
                 mViewModel.isLoading.value = true
+                gViewModel.syncData.value = false
             }
         }
     }

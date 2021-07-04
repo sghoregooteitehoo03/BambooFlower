@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <!--    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
+    <item
+        android:id="@+id/missionFragment"
+        android:icon="@drawable/ic_mission"
+        android:title="미션"/>
 
     <item
-        android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_home"
-        android:title="홈" />
+        android:id="@+id/postListFragment"
+        android:icon="@drawable/ic_post"
+        android:title="인증게시판"/>
+
+    <item
+        android:id="@+id/diaryListFragment"
+        android:icon="@drawable/ic_diary"
+        android:title="하루일기"/>
 
     <item
         android:id="@+id/rankingFragment"
-        android:icon="@drawable/ic_star"
-        android:title="랭킹" />
-
-    <item
-        android:id="@+id/profileFragment"
-        android:icon="@drawable/ic_person"
-        android:title="프로필" />
+        android:icon="@drawable/ic_ranking"
+        android:title="랭킹"/>
 </menu>

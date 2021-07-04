@@ -37,6 +37,7 @@ class CreateAccountRepository @Inject constructor(
             myMissionTitle = "",
             myMissionHow = "",
             latestStart = 0,
+            isLevelUp = false,
             missionDoc = null
         )
 
@@ -69,6 +70,7 @@ class CreateAccountRepository @Inject constructor(
             myMissionTitle = "",
             myMissionHow = "",
             latestStart = 0,
+            isLevelUp = false,
             missionDoc = null
         )
 
