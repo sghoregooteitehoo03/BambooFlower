@@ -2,21 +2,16 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentPostFilterBinding
-import com.sg.android.bambooflower.databinding.FragmentPostListBinding
-import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postFilterFrag.PostFilterViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +19,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
+class PostFilterFragment(private val isFiltering: Boolean) : Fragment(), PostPagingAdapter.PostItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<PostFilterViewModel>()
 
@@ -38,7 +33,7 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         // 인스턴스 설정
         val binding = FragmentPostFilterBinding.inflate(inflater)
         postAdapter = PostPagingAdapter().apply {
-            setOnPostItemListener(this@MyPostListFragment)
+            setOnPostItemListener(this@PostFilterFragment)
         }
 
         // 바인딩 설정
@@ -48,14 +43,15 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
 
             lifecycleOwner = viewLifecycleOwner
         }
+
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
+        setObserver() // 옵저버 설정
 
-        setObserver()
         postAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh !is LoadState.Loading
                 && mViewModel.postList.value != null
@@ -65,37 +61,12 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        // 툴바설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "내 게시글"
-            this?.show()
-            this?.setDisplayHomeAsUpEnabled(true)
-        }
-    }
-
-    // 메뉴 설정
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                findNavController().navigateUp()
-                true
-            }
-            R.id.menu_search -> {
-                true
-            }
-            else -> false
-        }
-    }
-
     // 아이템 클릭
     override fun onItemClickListener(pos: Int) {
         gViewModel.post.value = postAdapter.getPost(pos)!!
-        findNavController().navigate(R.id.action_myPostListFragment_to_postFragment)
     }
 
+    // 옵저버 설정
     private fun setObserver() {
         // 게시글 리스트
         mViewModel.postList.observe(viewLifecycleOwner) { postFlow ->
@@ -114,18 +85,10 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         // 로딩 여부
         mViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it) {
-                val user = gViewModel.user.value!!
-                mViewModel.postList.value = null // 게시글 리스트 초기화
-
-                mViewModel.syncPost(user.uid!!, false)
+                mViewModel.postList.value = null
+                mViewModel.syncPost(isFiltering = isFiltering)
             } else {
                 mViewModel.size.value = postAdapter.itemCount
-            }
-        }
-        gViewModel.syncData.observe(viewLifecycleOwner) {
-            if (it) {
-                mViewModel.isLoading.value = true
-                gViewModel.syncData.value = false
             }
         }
     }

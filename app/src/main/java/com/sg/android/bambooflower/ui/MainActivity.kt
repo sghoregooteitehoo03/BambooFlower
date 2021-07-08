@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private val FINISH_INTERVAL_TIME = 2000L
     private var backPressedTime = 0L
+    private var isExit = false
     private lateinit var backToast: Toast
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,10 +74,14 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.missionFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment -> {
+                    isExit = true
+
                     showBottomView()
                     showProfile()
                 }
                 else -> {
+                    isExit = false
+
                     hideBottomView()
                     hideProfile()
                 }
@@ -86,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (backAvailable) {
-            if (binding.bottomNavView.visibility == View.VISIBLE) {
+            if (isExit) {
                 val tempTime = System.currentTimeMillis()
                 val intervalTime = tempTime - backPressedTime
 

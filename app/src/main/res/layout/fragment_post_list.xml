@@ -16,116 +16,99 @@
             type="android.view.View.OnClickListener"/>
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/loading_view"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:setRefresh="@={viewmodel.isLoading()}">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/all_post_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/all_post_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:background="?attr/selectableItemBackground"
                 android:onClick="@{clickListener}"
                 android:text="전체"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:setSelectedText="@{!viewmodel.isFiltering()}"/>
+
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/shape_round"
+                android:backgroundTint="@color/default_item_color"
+                android:visibility="@{!viewmodel.isFiltering() ? View.VISIBLE : View.GONE}"
+                tools:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/filter_post_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="vertical"
+            app:layout_constraintStart_toEndOf="@id/all_post_layout"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/filter_post_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:background="?attr/selectableItemBackground"
                 android:onClick="@{clickListener}"
                 android:text="인증 전"
-                app:layout_constraintStart_toEndOf="@id/all_post_text"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:setSelectedText="@{viewmodel.isFiltering()}"
-                tools:textColor="@color/default_item_color"
-                tools:textSize="16sp"
-                tools:textStyle="bold"/>
+                tools:textColor="@color/default_item_color"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <View
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/shape_round"
+                android:backgroundTint="@color/default_item_color"
+                android:visibility="@{viewmodel.isFiltering() ? View.VISIBLE : View.GONE}"/>
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.06"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/filter_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/ad_layout"
+            app:layout_constraintTop_toBottomOf="@id/guideline_text"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ad_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/gray_darker"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.gms.ads.AdView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="@{viewmodel.isLoading() ? View.GONE : View.VISIBLE}">
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.05"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/post_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/guideline_text"
-                    tools:listitem="@layout/item_post"/>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/gray_darker"
-                    app:layout_constraintBottom_toBottomOf="parent">
-
-                    <com.google.android.gms.ads.AdView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:adSize="BANNER"
-                        app:adUnitId="@string/ad_banner_unit_id_test"
-                        app:loadBannerAd="@{true}"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <LinearLayout
-                    android:id="@+id/no_search_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="@{viewmodel.size == 0 ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/guideline_top"
-                    tools:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_cancel"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="작성한 게시글이 없습니다."
-                        android:textColor="@color/gray_darker"
-                        android:textSize="20sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_top"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.20"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:adSize="BANNER"
+                app:adUnitId="@string/ad_banner_unit_id_test"
+                app:loadBannerAd="@{true}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

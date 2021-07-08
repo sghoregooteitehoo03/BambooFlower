@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.viewmodel.postListFragment
+package com.sg.android.bambooflower.viewmodel.postFilterFrag
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -8,7 +8,7 @@ import com.sg.android.bambooflower.adapter.paging.PostFilterPagingSource
 import com.sg.android.bambooflower.adapter.paging.PostPagingSource
 import javax.inject.Inject
 
-class PostListRepository @Inject constructor(
+class PostFilterRepository @Inject constructor(
     private val store: FirebaseFirestore
 ) {
     fun getPostList() =

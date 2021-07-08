@@ -173,12 +173,8 @@ fun setPostInfo(view: TextView, postData: Post) {
 fun setSelectedText(view: TextView, isSelected: Boolean) {
     if (isSelected) {
         view.setTextColor(view.resources.getColor(R.color.default_item_color, null))
-        view.setTypeface(view.typeface, Typeface.BOLD)
-        view.textSize = 16f
     } else {
         view.setTextColor(view.resources.getColor(android.R.color.tab_indicator_text, null))
-        view.setTypeface(view.typeface, Typeface.NORMAL)
-        view.textSize = 14f
     }
 }
 
