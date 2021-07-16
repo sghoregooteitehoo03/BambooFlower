@@ -16,8 +16,10 @@ import javax.inject.Inject
 class SignUpViewModel @Inject constructor(
     private val repository: SignUpRepository
 ) : ViewModel() {
-    private val _isSuccessLogin = MutableLiveData(false)
+    private val _isSuccessLogin = MutableLiveData(false) // 로그인 성공 여부
+    private val _hideKeyBoard = MutableLiveData(false) // 키보드 숨기기
     val isSuccessLogin: LiveData<Boolean> = _isSuccessLogin
+    val hideKeyBoard: LiveData<Boolean> = _hideKeyBoard
 
     val email = MutableLiveData("") // 이메일
     val password = MutableLiveData("") // 비밀번호
@@ -43,6 +45,13 @@ class SignUpViewModel @Inject constructor(
     // 회원가입
     fun signUp() = viewModelScope.launch {
         try {
+            errorEmailMsg.value = ""
+            errorPasswordMsg.value = ""
+            errorRepasswordMsg.value = ""
+
+            isLoading.value = true // 로딩 시작
+            _hideKeyBoard.value = true // 키보드 숨기기
+
             if (repassword.value == password.value) {
                 repository.signUp(email.value!!, password.value!!)
                 _isSuccessLogin.value = true
@@ -61,6 +70,9 @@ class SignUpViewModel @Inject constructor(
                 else -> isError.value = true
             }
         }
+
+        _hideKeyBoard.value = false
+        isLoading.value = false
     }
 
     // 서버 점검 확인

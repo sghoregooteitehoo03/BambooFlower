@@ -12,11 +12,11 @@ import androidx.navigation.fragment.findNavController
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentEmailLoginBinding
-import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: 이메일 및 비밀번호 넘기는 기능 구현
 @AndroidEntryPoint
 class EmailLoginFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<EmailLoginViewModel>()
@@ -57,8 +57,8 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onDestroyView() {
-        mViewModel.clear()
         super.onDestroyView()
+        mViewModel.clear()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -74,8 +74,11 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.create_account_text -> { // 회원가입 버튼 눌렀을 때
-                findNavController().navigate(R.id.action_emailLoginFragment_to_createAccountFragment)
+            R.id.login_btn -> {
+                mViewModel.login()
+            }
+            R.id.reset_password_text -> {
+                // TODO: 비밀번호 재설정 기능 구현
             }
             else -> {
             }
@@ -83,29 +86,23 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setObserver() {
-        mViewModel.errorMsg.observe(viewLifecycleOwner) { msg ->
-            if (msg.isNotEmpty()) {
-                when (msg) {
-                    ErrorMessage.SUCCESS -> {
-                        mViewModel.getUserData()
-                            .addOnSuccessListener {
-                                val user = it.toObject(User::class.java)
-                                mViewModel.setLoading(false)
+        mViewModel.isLoginSuccess.observe(viewLifecycleOwner) { isSuccess ->
+            if (isSuccess) { // 로그인 성공 시
+                mViewModel.getUserData()
+                    .addOnSuccessListener {
+                        val user = it.toObject(User::class.java)
+                        mViewModel.setLoading(false)
 
-                                if (user != null) { // 기존 유저일 때
-                                    findNavController().navigate(R.id.action_emailLoginFragment_to_missionFragment)
-                                } else {
-                                    findNavController().navigate(R.id.createUserFragment)
-                                }
-                            }
-                            .addOnFailureListener {
-                                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
-                                    .show()
-                            }
+                        if (user != null) { // 유저 데이터가 존재할 때
+                            findNavController().navigate(R.id.action_emailLoginFragment_to_missionFragment)
+                        } else {
+                            findNavController().navigate(R.id.createUserFragment)
+                        }
                     }
-                    else -> {
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                            .show()
                     }
-                }
             }
         }
         mViewModel.isLoading.observe(viewLifecycleOwner) {

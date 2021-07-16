@@ -20,7 +20,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -40,22 +40,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.24"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_id_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="74dp"
                 app:boxBackgroundColor="@color/white"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
-                app:layout_constraintTop_toBottomOf="@id/title_text">
+                app:layout_constraintTop_toBottomOf="@id/guideline_top">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:hint="이메일 입력"
                     android:inputType="textEmailAddress"
-                    android:text="@={viewmodel.email}"/>
+                    android:text="@={viewmodel.email}"
+                    app:hideKeyboard="@{viewmodel.hideKeyBoard}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -86,7 +93,8 @@
                     android:layout_height="match_parent"
                     android:hint="비밀번호 입력"
                     android:inputType="textPassword"
-                    android:text="@={viewmodel.password}"/>
+                    android:text="@={viewmodel.password}"
+                    app:hideKeyboard="@{viewmodel.hideKeyBoard}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -116,7 +124,8 @@
                     android:layout_height="match_parent"
                     android:hint="비밀번호 재입력"
                     android:inputType="textPassword"
-                    android:text="@={viewmodel.repassword}"/>
+                    android:text="@={viewmodel.repassword}"
+                    app:hideKeyboard="@{viewmodel.hideKeyBoard}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

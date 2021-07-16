@@ -138,35 +138,10 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 (requireActivity() as MainActivity).ready()
             }
         }
-        mViewModel.errorEmailMsg.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()) {
-                mViewModel.isLoading.value = false
-
-                mViewModel.errorPasswordMsg.value = ""
-                mViewModel.errorRepasswordMsg.value = ""
-            }
-        }
-        mViewModel.errorPasswordMsg.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()) {
-                mViewModel.isLoading.value = false
-
-                mViewModel.errorEmailMsg.value = ""
-                mViewModel.errorRepasswordMsg.value = ""
-            }
-        }
-        mViewModel.errorRepasswordMsg.observe(viewLifecycleOwner) {
-            if(it.isNotEmpty()) {
-                mViewModel.isLoading.value = false
-
-                mViewModel.errorEmailMsg.value = ""
-                mViewModel.errorPasswordMsg.value = ""
-            }
-        }
     }
 
     // 회원가입
     private fun signUp() {
-        mViewModel.isLoading.value = true
         mViewModel.signUp()
     }
 

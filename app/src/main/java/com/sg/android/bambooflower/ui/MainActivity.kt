@@ -89,6 +89,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_ios)
+    }
+
     override fun onBackPressed() {
         if (backAvailable) {
             if (isExit) {
