@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.viewmodel.loginFragment
+package com.sg.android.bambooflower.viewmodel.signUpFrag
 
 import android.content.Context
 import com.facebook.login.LoginManager
@@ -11,12 +11,17 @@ import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class LoginRepository @Inject constructor(
+class SignUpRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val store: FirebaseFirestore
 ) {
     suspend fun login(credential: AuthCredential) {
         auth.signInWithCredential(credential)
+            .await()
+    }
+
+    suspend fun signUp(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
             .await()
     }
 

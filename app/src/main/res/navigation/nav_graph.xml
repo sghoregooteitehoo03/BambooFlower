@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/signUpFragment">
 
     <action
         android:id="@+id/action_global_onboardFragment"
@@ -19,28 +19,28 @@
 
         <action
             android:id="@+id/action_onboardFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            app:destination="@id/signUpFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="false"/>
     </fragment>
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.LoginFragment"
-        android:label="LoginFragment"
-        tools:layout="@layout/fragment_login">
+        android:id="@+id/signUpFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.SignUpFragment"
+        android:label="SignOutFragment"
+        tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_loginFragment_to_missionFragment"
+            android:id="@+id/action_signUpFragment_to_missionFragment"
             app:destination="@id/missionFragment"/>
         <action
-            android:id="@+id/action_loginFragment_to_emailLoginFragment"
+            android:id="@+id/action_signUpFragment_to_emailLoginFragment"
             app:destination="@id/emailLoginFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
         <action
-            android:id="@+id/action_loginFragment_to_createUserFragment"
+            android:id="@+id/action_signUpFragment_to_createUserFragment"
             app:destination="@id/createUserFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
@@ -56,7 +56,7 @@
         <action
             android:id="@+id/action_emailLoginFragment_to_missionFragment"
             app:destination="@id/missionFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="false"/>
         <action
             android:id="@+id/action_emailLoginFragment_to_createAccountFragment"
@@ -81,7 +81,7 @@
         <action
             android:id="@+id/action_createAccountFragment_to_missionFragment"
             app:destination="@id/missionFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="false"/>
     </fragment>
     <fragment
@@ -144,7 +144,7 @@
         tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_profileFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            app:destination="@id/signUpFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/nav_graph"
@@ -179,7 +179,7 @@
         <action
             android:id="@+id/action_createUserFragment_to_missionFragment"
             app:destination="@id/missionFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="false"/>
         <argument
             android:name="token"
@@ -234,7 +234,7 @@
         tools:layout="@layout/fragment_setting">
         <action
             android:id="@+id/action_settingFragment_to_loginFragment"
-            app:destination="@id/loginFragment"
+            app:destination="@id/signUpFragment"
             app:enterAnim="@anim/slide_in_left"
             app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/nav_graph"

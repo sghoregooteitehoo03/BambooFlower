@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.facebook.CallbackManager
@@ -21,17 +20,16 @@ import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.User
-import com.sg.android.bambooflower.databinding.FragmentLoginBinding
+import com.sg.android.bambooflower.databinding.FragmentSignUpBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
-import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
+import com.sg.android.bambooflower.viewmodel.signUpFrag.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: 나중에 수정
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
-    private val mViewModel by viewModels<LoginViewModel>()
-    private val gViewModel by activityViewModels<GlobalViewModel>()
+class SignUpFragment : Fragment(), View.OnClickListener {
+    private val mViewModel by viewModels<SignUpViewModel>()
 
     private lateinit var callbackManager: CallbackManager
     private lateinit var loginWay: String
@@ -43,13 +41,15 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = FragmentLoginBinding.inflate(inflater)
+        val binding = FragmentSignUpBinding.inflate(inflater)
         callbackManager = CallbackManager.Factory.create()
-        gViewModel.user.value = null
 
         // 바인딩 설정
         with(binding) {
-            viewmodel = mViewModel
+            this.viewmodel = mViewModel
+            this.blank = ""
+            this.clickListener = this@SignUpFragment
+
             lifecycleOwner = viewLifecycleOwner
         }
 
@@ -84,7 +84,7 @@ class LoginFragment : Fragment() {
             Contents.LOGIN_WITH_GOOGLE -> {
                 val result = GoogleSignIn.getSignedInAccountFromIntent(data)
                 if (result.isSuccessful) {
-                    loading()
+                    mViewModel.isLoading.value = true
 
                     token = result.result?.idToken!!
                     loginWay = "Google"
@@ -97,23 +97,25 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun setObserver() { // 옵저버 설정
-        // 로그인 방법
-        mViewModel.loginWay.observe(viewLifecycleOwner) { it ->
-            when (it) {
-                Contents.LOGIN_WITH_EMAIL -> {
-                    loginEmail()
-                }
-                Contents.LOGIN_WITH_GOOGLE -> {
-                    loginGoogle()
-                }
-                Contents.LOGIN_WITH_FACEBOOK -> {
-                    loginFacebook()
-                }
-                else -> {
-                }
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.sign_up_btn -> { // 가입하기 버튼
+                signUp()
+            }
+            R.id.facebook_login -> { // 페이스북 로그인
+                loginFacebook()
+            }
+            R.id.google_login -> { // 구글 로그인
+                loginGoogle()
+            }
+            R.id.email_login -> { // 이메일 로그인
+                loginEmail()
             }
         }
+    }
+
+    private fun setObserver() { // 옵저버 설정
         // 로그인 성공 시
         mViewModel.isSuccessLogin.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
@@ -128,11 +130,49 @@ class LoginFragment : Fragment() {
                 mViewModel.isError.value = false
             }
         }
+        // 로딩여부
+        mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                (requireActivity() as MainActivity).loading()
+            } else {
+                (requireActivity() as MainActivity).ready()
+            }
+        }
+        mViewModel.errorEmailMsg.observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()) {
+                mViewModel.isLoading.value = false
+
+                mViewModel.errorPasswordMsg.value = ""
+                mViewModel.errorRepasswordMsg.value = ""
+            }
+        }
+        mViewModel.errorPasswordMsg.observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()) {
+                mViewModel.isLoading.value = false
+
+                mViewModel.errorEmailMsg.value = ""
+                mViewModel.errorRepasswordMsg.value = ""
+            }
+        }
+        mViewModel.errorRepasswordMsg.observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()) {
+                mViewModel.isLoading.value = false
+
+                mViewModel.errorEmailMsg.value = ""
+                mViewModel.errorPasswordMsg.value = ""
+            }
+        }
+    }
+
+    // 회원가입
+    private fun signUp() {
+        mViewModel.isLoading.value = true
+        mViewModel.signUp()
     }
 
     // 이메일로 로그인
     private fun loginEmail() {
-        findNavController().navigate(R.id.action_loginFragment_to_emailLoginFragment)
+        findNavController().navigate(R.id.action_signUpFragment_to_emailLoginFragment)
     }
 
     private fun loginGoogle() { // 구글 로그인
@@ -148,12 +188,12 @@ class LoginFragment : Fragment() {
     // 페이스북 로그인
     private fun loginFacebook() {
         val loginManager = LoginManager.getInstance().apply {
-            logInWithReadPermissions(this@LoginFragment, listOf("email", "public_profile"))
+            logInWithReadPermissions(this@SignUpFragment, listOf("email", "public_profile"))
         }
 
         loginManager.registerCallback(callbackManager, object : FacebookCallback<LoginResult> {
             override fun onSuccess(result: LoginResult?) {
-                loading()
+                mViewModel.isLoading.value = true
 
                 token = result?.accessToken!!.token
                 loginWay = "Facebook"
@@ -177,26 +217,18 @@ class LoginFragment : Fragment() {
         mViewModel.getUserData()
             .addOnSuccessListener {
                 val user = it.toObject(User::class.java)
-                ready()
+                mViewModel.isLoading.value = false
 
                 if (user != null) { // 기존 유저인지 확인
-                    findNavController().navigate(R.id.action_loginFragment_to_missionFragment)
+                    findNavController().navigate(R.id.action_signUpFragment_to_missionFragment)
                 } else {
-                    val directions = LoginFragmentDirections
-                        .actionLoginFragmentToCreateUserFragment(token, loginWay)
+                    val directions = SignUpFragmentDirections
+                        .actionSignUpFragmentToCreateUserFragment(token, loginWay)
                     findNavController().navigate(directions)
                 }
             }
             .addOnFailureListener {
                 mViewModel.isError.value = true
             }
-    }
-
-    private fun loading() {
-        (requireActivity() as MainActivity).loading()
-    }
-
-    private fun ready() {
-        (requireActivity() as MainActivity).ready()
     }
 }

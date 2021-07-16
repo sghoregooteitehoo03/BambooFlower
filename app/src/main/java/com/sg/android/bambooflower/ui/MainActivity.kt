@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
             // 로그인 되어있으면 홈 화면으로 넘어감
-            navController.navigate(R.id.action_loginFragment_to_missionFragment)
+            navController.navigate(R.id.action_signUpFragment_to_missionFragment)
             intent.putExtra(Contents.EXTRA_IS_LOGIN, false)
         } else if (checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
             // 처음 앱을 킨 유저일 시 온보딩 화면으로 이동

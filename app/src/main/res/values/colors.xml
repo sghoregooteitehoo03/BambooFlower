@@ -19,6 +19,7 @@
     <color name="green_500">#519657</color>
     <color name="deep_orange_300">#ff8a65</color>
     <color name="deep_orange_500">#c75b39</color>
+    <color name="facebook_color">#1877F2</color>
 
     <color name="default_background_color">@color/white</color>
     <color name="default_item_color">@color/black</color>
