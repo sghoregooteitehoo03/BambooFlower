@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.viewmodel.missionFrag
+package com.sg.android.bambooflower.viewmodel.missionListFrag
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -14,22 +14,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MissionViewModel @Inject constructor(
-    private val repository: MissionRepository
+class MissionListViewModel @Inject constructor(
+    private val repository: MissionListRepository
 ) : ViewModel() {
-    private val _searchPostData = MutableLiveData<Post?>(null) // 유저가 작성했던 게시글
-    private val _isSearching = MutableLiveData<Boolean>(true) // 게시글 찾기
 
+    val myMission = MutableLiveData<Mission>(null)
     val isLoading = MutableLiveData(true) // 로딩 창
     val isError = MutableLiveData(false) // 서버 오류
 
-    val movePos = MutableLiveData(-1) // 리스트가 이동할 위치
-    val selectedPos = MutableLiveData(-1) // 선택된 미션의 위치
-    val selectedMission = MutableLiveData<Mission?>(null) // 선택된 미션 데이터
     val interstitialAd = MutableLiveData<InterstitialAd?>(null) // 광고
-
-    val searchPostData: LiveData<Post?> = _searchPostData
-    val isSearching: LiveData<Boolean> = _isSearching
 
     // 홈 데이터 가져오기
     fun getHomeData(isLoadMission: Boolean) =
@@ -50,13 +43,6 @@ class MissionViewModel @Inject constructor(
 
         Log.i("ChangeMission", "성공: ${user.myMissionTitle}")
         isLoading.postValue(false)
-    }
-
-    fun searchPost(mission: Mission, user: User) = viewModelScope.launch {
-        _isSearching.value = true
-
-        _searchPostData.value = repository.searchPost(mission, user)
-        _isSearching.value = false
     }
 
     fun checkFirst() {

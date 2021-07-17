@@ -36,7 +36,9 @@ class MissionAdapter() : RecyclerView.Adapter<MissionViewHolder>() {
         missionList[pos]
 
     fun submitData(_missionList: List<Mission>, _user: User) {
-        missionList = _missionList
+        missionList = _missionList.filterNot {
+            it.document == _user.missionDoc
+        }
         user = _user
 
         notifyDataSetChanged()
@@ -44,25 +46,5 @@ class MissionAdapter() : RecyclerView.Adapter<MissionViewHolder>() {
 
     fun setOnItemListener(_listener: MissionItemListener) {
         itemListener = _listener
-    }
-
-    fun getTodayMissionIndex(): Int {
-        var index = -1
-        for (i in missionList.indices) {
-            if (missionList[i].document == user.missionDoc) {
-                index = i
-                break
-            }
-        }
-
-        return index
-    }
-
-    fun clearList() {
-        for (i in missionList.indices) {
-            if (missionList[i].document != user.missionDoc) {
-                missionList[i].isSelected = false
-            }
-        }
     }
 }

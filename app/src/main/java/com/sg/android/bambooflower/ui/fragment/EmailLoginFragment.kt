@@ -93,7 +93,7 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                         mViewModel.setLoading(false)
 
                         if (user != null) { // 유저 데이터가 존재할 때
-                            findNavController().navigate(R.id.action_emailLoginFragment_to_missionFragment)
+                            findNavController().navigate(R.id.action_emailLoginFragment_to_missionListFragment)
                         } else {
                             val directions = EmailLoginFragmentDirections
                                 .actionEmailLoginFragmentToCreateUserFragment(

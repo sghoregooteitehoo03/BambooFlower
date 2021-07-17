@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.UnderlineSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -170,7 +169,7 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClick
         // 완료 여부
         mViewModel.isComplete.observe(viewLifecycleOwner) { isComplete ->
             if (isComplete) {
-                findNavController().navigate(R.id.action_createUserFragment_to_missionFragment)
+                findNavController().navigate(R.id.action_createUserFragment_to_missionListFragment)
             }
         }
         // 오류 여부

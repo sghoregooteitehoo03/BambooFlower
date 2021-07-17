@@ -166,7 +166,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
                             gViewModel.missionList.value = null
                             gViewModel.userImage.value = null
 
-                            findNavController().navigate(R.id.action_settingFragment_to_loginFragment)
+                            findNavController().navigate(R.id.action_settingFragment_to_signUpFragment)
                         }
                     }
                 }

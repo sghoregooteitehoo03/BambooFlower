@@ -200,7 +200,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 mViewModel.isLoading.value = false
 
                 if (user != null) { // 기존 유저인지 확인
-                    findNavController().navigate(R.id.action_signUpFragment_to_missionFragment)
+                    findNavController().navigate(R.id.action_signUpFragment_to_missionListFragment)
                 } else {
                     val directions = SignUpFragmentDirections
                         .actionSignUpFragmentToCreateUserFragment(token, loginWay, password, email)

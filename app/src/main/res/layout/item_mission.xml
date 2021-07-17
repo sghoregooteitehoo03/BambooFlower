@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.sg.android.bambooflower.R"/>
+
         <variable
             name="mission"
             type="com.sg.android.bambooflower.data.Mission"/>
@@ -14,28 +16,64 @@
             type="com.sg.android.bambooflower.data.User"/>
     </data>
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="110dp"
-        android:layout_height="140dp"
-        android:layout_margin="4dp"
-        app:cardBackgroundColor="@color/diary_color"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/diary_color">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="12dp"
-            app:setSelectMission="@{mission.isSelected}">
+            android:background="?attr/selectableItemBackground"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/mission_image"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/shape_rounded_image"
+                android:scaleType="centerCrop"
+                android:src="@drawable/test_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setResourceImage="@{R.drawable.test_image}"
+                tools:src="@drawable/test_image"/>
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/default_item_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/guideline_divide"
+                app:layout_constraintStart_toEndOf="@id/mission_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setTitle="@{mission.missionTitle}"
+                tools:text="[간단한 산책]"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_divide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.86"/>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="@drawable/shape_round_button"
                 android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="@id/title_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/guideline_divide"
                 app:layout_constraintTop_toTopOf="parent"
                 app:setMissionCompleteLayout="@{mission}"
-                app:setMissionTodayLayout="@{user}"
+                app:setUserCompleteLayout="@{user}"
                 tools:backgroundTint="@color/green_300">
 
                 <TextView
@@ -45,21 +83,57 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     app:setMissionCompleteText="@{mission}"
-                    app:setMissionTodayText="@{user}"
-                    tools:text="인증 완료"/>
+                    app:setUserCompleteText="@{user}"
+                    tools:text="수행완료"/>
             </LinearLayout>
 
             <TextView
+                android:id="@+id/mission_way_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{mission.missionHow}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/mission_image"
+                app:layout_constraintTop_toBottomOf="@id/title_text"
+                tools:text="할만한 취미생활을 찾아본 후 관심 있는 취미생…"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="12dp"
+                app:civ_border_color="@color/gray"
+                app:civ_border_width="1dp"
+                app:civ_circle_background_color="@color/gray_bright"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/mission_image"
+                app:setProfileImage="@{mission.profileImage}"
+                tools:src="@drawable/ic_person"/>
+
+            <TextView
+                android:id="@+id/name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/default_item_color"
+                android:layout_marginStart="4dp"
+                android:fontWeight="500"
+                android:text="@{mission.name}"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/profile_image"
+                app:layout_constraintTop_toTopOf="@id/profile_image"
+                tools:text="Dev"/>
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@drawable/ic_arrow_forward_ios"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:setTitle="@{mission.missionTitle}"
-                tools:text="[오늘은 내가 요리사!]"/>
+                app:layout_constraintTop_toTopOf="@id/profile_image"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

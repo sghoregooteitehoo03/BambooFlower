@@ -19,11 +19,12 @@ import com.google.gson.Gson
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.MissionAdapter
 import com.sg.android.bambooflower.data.HomeData
+import com.sg.android.bambooflower.data.Mission
 import com.sg.android.bambooflower.data.User
-import com.sg.android.bambooflower.databinding.FragmentMissionBinding
+import com.sg.android.bambooflower.databinding.FragmentMissionListBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.missionFrag.MissionViewModel
+import com.sg.android.bambooflower.viewmodel.missionListFrag.MissionListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,17 +32,16 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
+//  . 미션 이미지 및 프로필 이미지 구현
 //  . 광고 릴리스 키로 바꾸기
 @AndroidEntryPoint
-class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnClickListener {
-    private val mViewModel by viewModels<MissionViewModel>()
+class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnClickListener {
+    private val mViewModel by viewModels<MissionListViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
     private lateinit var missionsAdapter: MissionAdapter
     private lateinit var user: User
     private var isChange = false
-
-    private var previousPos = -1
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,16 +49,16 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = FragmentMissionBinding.inflate(inflater)
+        val binding = FragmentMissionListBinding.inflate(inflater)
         missionsAdapter = MissionAdapter().apply {
-            setOnItemListener(this@MissionFragment)
+            setOnItemListener(this@MissionListFragment)
         }
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
-            this.clickListener = this@MissionFragment
+            this.clickListener = this@MissionListFragment
 
             this.missionList.adapter = missionsAdapter
 
@@ -84,26 +84,14 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
         }
     }
 
-    override fun onDestroyView() {
-        missionsAdapter.clearList()
-        super.onDestroyView()
-    }
-
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.authenticate_button -> { // 인증하기 버튼
-                authenticateMission()
+            R.id.mission_layout -> {
+
             }
-            R.id.change_button -> { // 바꾸기 버튼
+            R.id.change_btn -> {
                 changeMission()
-            }
-            R.id.post_layout -> { // 게시글 클릭
-                if (mViewModel.searchPostData.value != null) {
-                    // 선택한 게시글로 이동
-                    findNavController().navigate(R.id.action_missionFragment_to_postFragment)
-                    gViewModel.post.value = mViewModel.searchPostData.value
-                }
             }
             else -> {
             }
@@ -112,7 +100,7 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
 
     // 미션 아이템 클릭
     override fun itemClickListener(pos: Int) {
-        mViewModel.selectedPos.value = pos
+
     }
 
     // 옵저버 설정
@@ -124,44 +112,13 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
                 getHomeData() // 홈 데이터를 가져옴
             } else {
                 (activity as MainActivity).showBottomView()
-
                 missionsAdapter.submitData(gViewModel.missionList.value!!, user) // 미션 리스트 갱신
-                mViewModel.movePos.value = missionsAdapter.getTodayMissionIndex()
             }
         }
         gViewModel.syncData.observe(viewLifecycleOwner) {
             if (it) {
                 mViewModel.isLoading.value = true
                 gViewModel.syncData.value = false
-            }
-        }
-        // 미션 위치 이동
-        mViewModel.movePos.observe(viewLifecycleOwner) { pos ->
-            if (pos != -1) {
-                mViewModel.selectedPos.value = pos
-            }
-        }
-        // 미션 선택 액션
-        mViewModel.selectedPos.observe(viewLifecycleOwner) { pos ->
-            if (previousPos != pos) {
-                val currentMission = missionsAdapter.getItem(pos)
-                mViewModel.selectedMission.value = currentMission
-
-                currentMission.isSelected = true
-
-                if (previousPos != -1) { // 전에 선택한 데이터가 있으면 초기화
-                    missionsAdapter.getItem(previousPos).isSelected = false
-                    missionsAdapter.notifyItemChanged(previousPos)
-                }
-
-                missionsAdapter.notifyItemChanged(pos)
-                previousPos = pos
-            }
-        }
-        // 선택된 미션
-        mViewModel.selectedMission.observe(viewLifecycleOwner) { mission ->
-            if (mission != null) {
-                mViewModel.searchPost(mission, user)
             }
         }
         // 광고 로드 확인
@@ -200,27 +157,17 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
                     }
                 }
 
+                val index = gViewModel.missionList // 유저가 수행중인 미션의 인덱스를 가져옴
+                    .value!!
+                    .indexOf(Mission(document = user.missionDoc!!))
+                mViewModel.myMission.value = gViewModel.missionList.value?.get(index) // 미션 저장
+
                 mViewModel.isLoading.value = false // 로딩 끝
                 Log.i("Check", "동작 완료")
             }
             .addOnFailureListener {
                 mViewModel.isError.value = true
             }
-    }
-
-    // 인증 하러가기
-    private fun authenticateMission() {
-        with(MaterialAlertDialogBuilder(requireContext())) {
-            setMessage("인증 화면으로 이동합니다.")
-            setPositiveButton("확인") { dialog, which ->
-                findNavController().navigate(R.id.action_missionFragment_to_addPostFragment)
-            }
-            setNegativeButton("취소") { dialog, which ->
-                dialog.dismiss()
-            }
-
-            show()
-        }
     }
 
     // 미션 바꾸기
@@ -270,8 +217,14 @@ class MissionFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnC
                 try {
                     isChange = true
 
+                    // 미션을 바꿈
                     mViewModel.changeMission(user, gViewModel.missionList.value!!)
                     gViewModel.user.postValue(user)
+
+                    val index = gViewModel.missionList // 유저가 수행중인 미션의 인덱스를 가져옴
+                        .value!!
+                        .indexOf(Mission(document = user.missionDoc!!))
+                    mViewModel.myMission.postValue(gViewModel.missionList.value?.get(index)) // 미션 저장
 
                     isChange = false
                 } catch (e: Exception) {

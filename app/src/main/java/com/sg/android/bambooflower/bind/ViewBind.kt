@@ -9,9 +9,11 @@ import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
-import android.widget.*
+import android.widget.CheckBox
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -61,33 +63,20 @@ fun setPostItemInfo(view: TextView, postData: Post?) {
     }
 }
 
-@BindingAdapter("app:setSelectMission")
-fun setSelectMission(view: ConstraintLayout, isSelected: Boolean) {
-    if (isSelected) {
-        view.setBackgroundResource(R.drawable.shape_mission_text)
-    } else {
-        view.setBackgroundResource(0)
-    }
-}
-
-@BindingAdapter("app:setMissionCompleteLayout", "app:setMissionTodayLayout", requireAll = true)
+@BindingAdapter("app:setMissionCompleteLayout", "app:setUserCompleteLayout", requireAll = true)
 fun setMissionLayout(view: LinearLayout, mission: Mission, user: User) {
     view.visibility = View.VISIBLE
 
-    view.backgroundTintList = if (mission.document == user.missionDoc) { // 유저가 수행중인 미션일 때
-        ContextCompat.getColorStateList(view.context, R.color.deep_orange_300)
-    } else if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
+    view.backgroundTintList = if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
         ContextCompat.getColorStateList(view.context, R.color.green_300)
     } else {
         ContextCompat.getColorStateList(view.context, R.color.gray)
     }
 }
 
-@BindingAdapter("app:setMissionCompleteText", "app:setMissionTodayText", requireAll = true)
+@BindingAdapter("app:setMissionCompleteText", "app:setUserCompleteText", requireAll = true)
 fun setMissionText(view: TextView, mission: Mission, user: User) {
-    view.text = if (mission.document == user.missionDoc) { // 유저가 수행중인 미션일 때
-        "오늘 미션"
-    } else if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
+    view.text = if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
         "수행 완료"
     } else {
         "미수행"
@@ -285,15 +274,17 @@ fun setPosition(view: TextView, pos: Int, size: Int) {
 }
 
 @BindingAdapter("app:setProfileImage")
-fun setProfileImage(view: CircleImageView, imageUri: String) {
-    if (imageUri.isNotEmpty()) {
-        Glide.with(view)
-            .load(imageUri)
-            .into(view)
-    } else {
-        Glide.with(view)
-            .load(R.drawable.ic_person)
-            .into(view)
+fun setProfileImage(view: CircleImageView, imageUri: String?) {
+    if (imageUri != null) {
+        if (imageUri.isNotEmpty()) {
+            Glide.with(view)
+                .load(imageUri)
+                .into(view)
+        } else {
+            Glide.with(view)
+                .load(R.drawable.ic_person)
+                .into(view)
+        }
     }
 }
 

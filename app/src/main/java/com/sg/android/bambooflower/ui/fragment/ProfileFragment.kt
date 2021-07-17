@@ -211,7 +211,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         gViewModel.missionList.value = null
         gViewModel.userImage.value = null
 
-        findNavController().navigate(R.id.action_profileFragment_to_loginFragment)
+        findNavController().navigate(R.id.action_profileFragment_to_signUpFragment)
         mViewModel.signOut(requireContext())
     }
 
