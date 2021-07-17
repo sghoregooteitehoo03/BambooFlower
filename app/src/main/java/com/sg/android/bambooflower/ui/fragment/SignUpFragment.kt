@@ -26,14 +26,15 @@ import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.signUpFrag.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 나중에 수정
 @AndroidEntryPoint
 class SignUpFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SignUpViewModel>()
 
     private lateinit var callbackManager: CallbackManager
-    private lateinit var loginWay: String
-    private lateinit var token: String
+    private var loginWay = ""
+    private var token = ""
+    private var email = ""
+    private var password = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -142,6 +143,10 @@ class SignUpFragment : Fragment(), View.OnClickListener {
 
     // 회원가입
     private fun signUp() {
+        loginWay = "Email"
+        email = mViewModel.email.value!!
+        password = mViewModel.password.value!!
+
         mViewModel.signUp()
     }
 
@@ -198,7 +203,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     findNavController().navigate(R.id.action_signUpFragment_to_missionFragment)
                 } else {
                     val directions = SignUpFragmentDirections
-                        .actionSignUpFragmentToCreateUserFragment(token, loginWay)
+                        .actionSignUpFragmentToCreateUserFragment(token, loginWay, password, email)
                     findNavController().navigate(directions)
                 }
             }

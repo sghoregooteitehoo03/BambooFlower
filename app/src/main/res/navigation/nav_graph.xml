@@ -59,30 +59,12 @@
             app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="false"/>
         <action
-            android:id="@+id/action_emailLoginFragment_to_createAccountFragment"
-            app:destination="@id/createAccountFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
-        <action
             android:id="@+id/action_emailLoginFragment_to_createUserFragment"
             app:destination="@id/createUserFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
-    </fragment>
-    <fragment
-        android:id="@+id/createAccountFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.CreateAccountFragment"
-        android:label="CreateAccountFragment"
-        tools:layout="@layout/fragment_create_account">
-        <action
-            android:id="@+id/action_createAccountFragment_to_missionFragment"
-            app:destination="@id/missionFragment"
-            app:popUpTo="@id/signUpFragment"
-            app:popUpToInclusive="false"/>
     </fragment>
     <fragment
         android:id="@+id/postListFragment"
@@ -175,7 +157,7 @@
         android:id="@+id/createUserFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.CreateUserFragment"
         android:label="CreateUserFragment"
-        tools:layout="@layout/fragment_create_account">
+        tools:layout="@layout/fragment_create_user">
         <action
             android:id="@+id/action_createUserFragment_to_missionFragment"
             app:destination="@id/missionFragment"
@@ -186,6 +168,12 @@
             app:argType="string"/>
         <argument
             android:name="loginWay"
+            app:argType="string"/>
+        <argument
+            android:name="password"
+            app:argType="string"/>
+        <argument
+            android:name="email"
             app:argType="string"/>
     </fragment>
     <dialog

@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
-import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
-import android.widget.CalendarView
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -27,7 +23,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.Mission
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
@@ -251,11 +246,6 @@ fun setRefresh(view: SwipeRefreshLayout, isLoading: Boolean) {
     view.isRefreshing = isLoading
 }
 
-@BindingAdapter("app:selectDate")
-fun selectDate(view: CalendarView, dateTime: Long) {
-    view.date = dateTime
-}
-
 @BindingAdapter("app:searchPosition")
 fun searchPosition(view: RecyclerView, position: Int) {
     if (position != -1) {
@@ -340,6 +330,11 @@ fun loadUrl(view: WebView, url: String) {
     }
 }
 
+@BindingAdapter("app:setCheckBox")
+fun setCheckBox(view: CheckBox, isChecked: Boolean) {
+    view.isChecked = isChecked
+}
+
 // Listener
 @BindingAdapter("app:setRefreshListener")
 fun setRefreshListener(view: SwipeRefreshLayout, listener: InverseBindingListener) {
@@ -348,14 +343,9 @@ fun setRefreshListener(view: SwipeRefreshLayout, listener: InverseBindingListene
     }
 }
 
-@BindingAdapter("app:selectDateListener")
-fun selectDateListener(view: CalendarView, listener: InverseBindingListener) {
-    view.setOnDateChangeListener { view, year, month, dayOfMonth ->
-        val date = Calendar.getInstance().apply {
-            set(year, month, dayOfMonth)
-        }.timeInMillis
-        view.date = date
-
+@BindingAdapter("app:setCheckBoxListener")
+fun setCheckBoxListener(view: CheckBox, listener: InverseBindingListener) {
+    view.setOnCheckedChangeListener { buttonView, isChecked ->
         listener.onChange()
     }
 }
@@ -366,7 +356,7 @@ fun getRefresh(view: SwipeRefreshLayout): Boolean {
     return view.isRefreshing
 }
 
-@InverseBindingAdapter(attribute = "app:selectDate", event = "app:selectDateListener")
-fun getSelectDate(view: CalendarView): Long {
-    return view.date
+@InverseBindingAdapter(attribute = "app:setCheckBox", event = "app:setCheckBoxListener")
+fun getCheckBox(view: CheckBox): Boolean {
+    return view.isChecked
 }

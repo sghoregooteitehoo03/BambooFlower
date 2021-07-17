@@ -1,69 +1,52 @@
-package com.sg.android.bambooflower.viewmodel.createAccountFragment
+package com.sg.android.bambooflower.viewmodel.createUserFragment
 
 import android.content.Context
+import androidx.core.net.toUri
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.sg.android.bambooflower.data.Account
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class CreateAccountRepository @Inject constructor(
+class CreateUserRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val store: FirebaseFirestore
+    private val store: FirebaseFirestore,
+    private val storage: FirebaseStorage
 ) {
-    fun createAccount(id: String, password: String) =
-        auth.createUserWithEmailAndPassword(id, password)
 
-    suspend fun setUserData(email: String, password: String, name: String) {
+    suspend fun setUserData(
+        profileImage: String,
+        account: Account,
+        name: String
+    ) {
         val uid = auth.currentUser?.uid!!
-        val account = Account(
-            loginWay = "Email",
-            email = email,
-            password = password
-        )
+        val imageName = "profile.png"
+        val storageRef = storage.reference
+            .child(uid)
+            .child(imageName)
+
+        val profileImageUri = if (profileImage.isNotEmpty()) {
+            // storage에 프로필 이미지 추가
+            storageRef.putFile(profileImage.toUri())
+                .await()
+            storageRef.downloadUrl
+                .await()
+                .toString()
+        } else {
+            ""
+        }
+
         val userData = User(
             uid = uid,
             name = name,
-            profileImage = "",
-            email = email,
-            achievedCount = 0,
-            achieveState = User.STATE_NOTHING,
-            myLevel = 1,
-            myMissionTitle = "",
-            myMissionHow = "",
-            latestStart = 0,
-            isLevelUp = false,
-            missionDoc = null
-        )
-
-        store.collection(Contents.COLLECTION_USER)
-            .document(auth.currentUser!!.uid)
-            .set(userData)
-            .await()
-
-        store.collection(Contents.COLLECTION_ACCOUNT)
-            .document(uid)
-            .set(account)
-            .await()
-    }
-
-    suspend fun setUserData(email: String, name: String, token: String, loginWay: String) {
-        val uid = auth.currentUser?.uid!!
-        val account = Account(
-            loginWay = loginWay,
-            email = email,
-            token = token
-        )
-        val userData = User(
-            uid = uid,
-            name = name,
-            profileImage = "",
-            email = email,
+            profileImage = profileImageUri,
+            email = account.email,
             achievedCount = 0,
             achieveState = User.STATE_NOTHING,
             myLevel = 1,

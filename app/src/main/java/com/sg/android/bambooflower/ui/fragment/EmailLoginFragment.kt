@@ -16,7 +16,6 @@ import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 이메일 및 비밀번호 넘기는 기능 구현
 @AndroidEntryPoint
 class EmailLoginFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<EmailLoginViewModel>()
@@ -50,8 +49,8 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
 
         // 툴바 설정
         with((activity as MainActivity).supportActionBar) {
+            this?.title = ""
             this?.show()
-            this?.title = "로그인"
             this?.setDisplayHomeAsUpEnabled(true)
         }
     }
@@ -96,7 +95,14 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                         if (user != null) { // 유저 데이터가 존재할 때
                             findNavController().navigate(R.id.action_emailLoginFragment_to_missionFragment)
                         } else {
-                            findNavController().navigate(R.id.createUserFragment)
+                            val directions = EmailLoginFragmentDirections
+                                .actionEmailLoginFragmentToCreateUserFragment(
+                                    "",
+                                    "Email",
+                                    mViewModel.password.value!!,
+                                    mViewModel.email.value!!
+                                )
+                            findNavController().navigate(directions)
                         }
                     }
                     .addOnFailureListener {
