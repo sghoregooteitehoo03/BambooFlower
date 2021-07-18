@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
 //  . 뷰 표시 ㅁ
-//  . 액션 구현 ㅁ
 @AndroidEntryPoint
 class MissionDialog : BottomSheetDialogFragment(),
     MissionImageAdapter.ImageItemListener,
@@ -95,8 +93,7 @@ class MissionDialog : BottomSheetDialogFragment(),
                 findNavController().navigateUp()
             }
             R.id.action_btn -> {
-                // TODO: 나중에 구현
-                Log.i("Check", "버튼")
+                findNavController().navigate(R.id.action_missionDialog_to_addPostFragment)
             }
         }
     }

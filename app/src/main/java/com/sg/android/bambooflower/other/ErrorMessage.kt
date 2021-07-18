@@ -12,5 +12,7 @@ object ErrorMessage {
     const val ERROR_LOGIN = "아이디 및 비밀번호가 잘못됐습니다."
     const val ERROR_SIGN_UP = "회원가입에 실패하였습니다."
 
+    const val ERROR_ADD_POST = "게시글 작성 중 오류가 발생하였습니다."
+
     const val SUCCESS = "SUCCESS"
 }

@@ -267,5 +267,11 @@
         android:id="@+id/missionDialog"
         android:name="com.sg.android.bambooflower.ui.fragment.MissionDialog"
         android:label="MissionDialog"
-        tools:layout="@layout/dialog_mission"/>
+        tools:layout="@layout/dialog_mission">
+        <action
+            android:id="@+id/action_missionDialog_to_addPostFragment"
+            app:destination="@id/addPostFragment"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+    </dialog>
 </navigation>

@@ -5,7 +5,6 @@ data class Post(
     val missionDoc: String? = null,
     val contents: String? = null,
     val image: String? = null,
-    val viewCount: Int? = null,
     var favoriteCount: Int = 0,
     var favorites: MutableMap<String, Boolean> = mutableMapOf(),
     val timeStamp: Long? = null,
