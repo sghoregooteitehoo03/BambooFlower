@@ -9,10 +9,7 @@ import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -30,7 +27,6 @@ import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
-import com.sg.android.bambooflower.ui.view.CustomMissionButton
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -92,52 +88,64 @@ fun setLastMissions(view: TextView, achievedCount: Int?) {
 }
 
 @BindingAdapter("app:setButtonStateUser", "app:setButtonStateMission", requireAll = true)
-fun setButtonState(view: CustomMissionButton, user: User?, mission: Mission?) {
-    if (user != null && mission != null) {
-        if (mission.document != user.missionDoc) {
-            // 유저가 수행중인 미션과 다를 경우
-            val timestamp = mission.complete[user.uid]
+fun setButtonState(view: Button, user: User, mission: Mission) {
+    if (mission.document != user.missionDoc) {
+        // 유저가 수행중인 미션과 다를 경우
+        val timestamp = mission.complete[user.uid]
 
-            if (timestamp != null) {
-                // 수행 완료한 미션일 경우
-                val successDay = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
-                    .format(timestamp)
+        if (timestamp != null) {
+            // 수행 완료한 미션일 경우
+            val successDay = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+                .format(timestamp)
 
-                with(view) {
-                    setButtonText("수행 완료: $successDay", Color.WHITE)
-                    setButtonIcon(R.drawable.ic_check_circle)
+            with(view) {
+                text = "수행 완료: $successDay"
+                setTextColor(Color.WHITE)
 
-                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-                }
-            } else {
-                // 수행하지 않은 미션일 경우
-                with(view) {
-                    setButtonText(
-                        "미수행",
-                        view.resources.getColor(android.R.color.tab_indicator_text, null)
-                    )
-                    setButtonIcon(R.drawable.ic_baseline_block)
-
-                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.gray)
-                }
+                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
             }
         } else {
-            // 유저가 수행하고 있는 미션일 경우
-            if (user.achieveState == User.STATE_LOADING) {
+            // 수행하지 않은 미션일 경우
+            with(view) {
+                text = "미수행"
+                setTextColor(view.resources.getColor(android.R.color.tab_indicator_text, null))
+
+                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.gray)
+            }
+        }
+        view.isClickable = false
+
+    } else if (mission.document == user.missionDoc) {
+        // 유저가 수행하고 있는 미션일 경우
+        when (user.achieveState) {
+            User.STATE_LOADING -> {
                 // 유저 상태가 "인증 중"일 떄
                 with(view) {
-                    setButtonText("인증 중...", Color.WHITE)
-                    setButtonIcon(R.drawable.ic_cancel_white)
+                    text = "인증 중..."
+                    setTextColor(Color.WHITE)
 
                     backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+                    isClickable = false
                 }
-            } else if (user.achieveState == User.STATE_ALLOW) {
+            }
+            User.STATE_ALLOW -> {
                 // 유저 상태가 "인증 완료"일 떄
                 with(view) {
-                    setButtonText("인증 완료", Color.WHITE)
-                    setButtonIcon(R.drawable.ic_check_circle)
+                    text = "인증 완료"
+                    setTextColor(Color.WHITE)
 
                     backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+                    isClickable = false
+                }
+            }
+            else -> {
+                // 유저 상태가 "NOTHING" 일 때
+                with(view) {
+                    text = "인증하기"
+                    setTextColor(Color.WHITE)
+
+                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+                    isClickable = true
                 }
             }
         }

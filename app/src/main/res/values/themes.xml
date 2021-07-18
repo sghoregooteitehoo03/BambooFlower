@@ -23,7 +23,7 @@
     </style>
 
     <!-- BottomSheet Style -->
-    <style name="BottomSheetTheme" parent="Theme.Design.BottomSheetDialog">
+    <style name="BottomSheetTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>
 

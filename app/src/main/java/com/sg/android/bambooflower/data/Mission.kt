@@ -6,9 +6,9 @@ data class Mission(
     val level: Int? = null,
     val missionTitle: String? = null,
     val missionHow: String? = null,
-    val missionImage: String? = null,
+    val missionImage: List<String> = listOf(),
     val uid: String? = null,
-    val name: String? = null,
+    val madeBy: String? = null,
     val profileImage: String = ""
 ) {
     override fun equals(other: Any?): Boolean {

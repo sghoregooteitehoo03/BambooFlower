@@ -239,20 +239,11 @@
         android:label="MissionListFragment"
         tools:layout="@layout/fragment_mission_list">
         <action
-            android:id="@+id/action_missionListFragment_to_addPostFragment"
-            app:destination="@id/addPostFragment"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_missionListFragment_to_postFragment"
-            app:destination="@id/postFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
             android:id="@+id/action_missionListFragment_to_levelUpDialog"
             app:destination="@id/levelUpDialog"/>
+        <action
+            android:id="@+id/action_missionListFragment_to_missionDialog"
+            app:destination="@id/missionDialog"/>
     </fragment>
     <fragment
         android:id="@+id/diaryListFragment"
@@ -272,4 +263,9 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
     </fragment>
+    <dialog
+        android:id="@+id/missionDialog"
+        android:name="com.sg.android.bambooflower.ui.fragment.MissionDialog"
+        android:label="MissionDialog"
+        tools:layout="@layout/dialog_mission"/>
 </navigation>

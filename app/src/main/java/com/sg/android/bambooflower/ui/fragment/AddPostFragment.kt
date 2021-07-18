@@ -17,11 +17,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.adapter.ImageAdapter
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentAddPostBinding
 import com.sg.android.bambooflower.other.Contents
@@ -33,43 +30,42 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
-class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClickListener {
+class AddPostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<AddPostViewModel>()
     private var imageList: MutableList<Uri> = mutableListOf() // 선택한 이미지를 담을 리스트
 
-    private lateinit var imageAdapter: ImageAdapter
+//    private lateinit var imageAdapter: ImageAdapter
     private lateinit var imm: InputMethodManager
     private lateinit var user: User
-    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP
-                or ItemTouchHelper.DOWN
-                or ItemTouchHelper.START
-                or ItemTouchHelper.END,
-        0
-    ) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            val fromPosition = viewHolder.bindingAdapterPosition // 이전에 있던 위치
-            val toPosition = target.bindingAdapterPosition // 바뀔 위치
-
-            // 리스트의 위치를 바꿈
-            Collections.swap(imageList, fromPosition, toPosition)
-            imageAdapter.notifyItemMoved(fromPosition, toPosition)
-
-            return false
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            // NOT USED
-        }
-    }
+//    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(
+//        ItemTouchHelper.UP
+//                or ItemTouchHelper.DOWN
+//                or ItemTouchHelper.START
+//                or ItemTouchHelper.END,
+//        0
+//    ) {
+//        override fun onMove(
+//            recyclerView: RecyclerView,
+//            viewHolder: RecyclerView.ViewHolder,
+//            target: RecyclerView.ViewHolder
+//        ): Boolean {
+//            val fromPosition = viewHolder.bindingAdapterPosition // 이전에 있던 위치
+//            val toPosition = target.bindingAdapterPosition // 바뀔 위치
+//
+//            // 리스트의 위치를 바꿈
+//            Collections.swap(imageList, fromPosition, toPosition)
+//            imageAdapter.notifyItemMoved(fromPosition, toPosition)
+//
+//            return false
+//        }
+//
+//        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//            // NOT USED
+//        }
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,12 +73,12 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val itemTouchHelper = ItemTouchHelper(simpleCallback)
+//        val itemTouchHelper = ItemTouchHelper(simpleCallback)
         val binding = FragmentAddPostBinding.inflate(inflater)
         imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imageAdapter = ImageAdapter().apply {
-            setOnImageItemListener(this@AddPostFragment)
-        }
+//        imageAdapter = ImageAdapter().apply {
+//            setOnImageItemListener(this@AddPostFragment)
+//        }
         user = gViewModel.user.value!!
         mViewModel.title.value = "[${gViewModel.user.value?.myMissionTitle}]"
 
@@ -92,10 +88,10 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
             this.user = user
             this.clickListener = this@AddPostFragment
 
-            with(imageList) {
-                adapter = imageAdapter
-                itemTouchHelper.attachToRecyclerView(this)
-            }
+//            with(imageList) {
+//                adapter = imageAdapter
+//                itemTouchHelper.attachToRecyclerView(this)
+//            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -142,10 +138,10 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
     }
 
     // 이미지 제거
-    override fun onRemoveListener(pos: Int) {
-        imageList.removeAt(pos)
-        imageAdapter.notifyItemRemoved(pos)
-    }
+//    override fun onRemoveListener(pos: Int) {
+//        imageList.removeAt(pos)
+//        imageAdapter.notifyItemRemoved(pos)
+//    }
 
     // 선택한 이미지를 받아 옴
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -157,7 +153,7 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
                 }?.toMutableList() // 이미지 선택 화면에서 선택한 이미지를 가져옴
             imageList = selectedImageList!!
 
-            imageAdapter.syncData(imageList) // 리스트 갱신
+//            imageAdapter.syncData(imageList) // 리스트 갱신
         }
     }
 

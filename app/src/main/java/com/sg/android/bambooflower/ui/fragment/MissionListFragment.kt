@@ -88,7 +88,8 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
     override fun onClick(v: View) {
         when (v.id) {
             R.id.mission_layout -> {
-
+                gViewModel.mission.value = mViewModel.myMission.value
+                findNavController().navigate(R.id.missionDialog)
             }
             R.id.change_btn -> {
                 changeMission()
@@ -100,7 +101,8 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
 
     // 미션 아이템 클릭
     override fun itemClickListener(pos: Int) {
-
+        gViewModel.mission.value = missionsAdapter.getItem(pos)
+        findNavController().navigate(R.id.missionDialog)
     }
 
     // 옵저버 설정

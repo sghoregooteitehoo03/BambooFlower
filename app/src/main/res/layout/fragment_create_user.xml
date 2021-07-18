@@ -176,8 +176,10 @@
             <Button
                 android:id="@+id/start_btn"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="54dp"
                 android:layout_marginTop="48dp"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
                 android:enabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.name.equals(blank) &amp;&amp; viewmodel.firstCheck &amp;&amp; viewmodel.secondCheck}"
                 android:onClick="@{clickListener}"
                 android:text="시작하기"

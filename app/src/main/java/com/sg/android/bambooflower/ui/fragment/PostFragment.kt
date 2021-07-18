@@ -46,7 +46,7 @@ class PostFragment : Fragment(), View.OnClickListener {
         val binding = FragmentPostBinding.inflate(inflater)
         postData = gViewModel.post.value!!
         userData = gViewModel.user.value!!
-        imageAdapter = ImagePagerAdapter(postData.image!!)
+//        imageAdapter = ImagePagerAdapter(postData.image!!)
         mViewModel.isCheerUp.value = postData.favorites.contains(userData.uid)
 
         Log.i("Check", "data: $postData")
@@ -183,7 +183,7 @@ class PostFragment : Fragment(), View.OnClickListener {
     // 이미지를 크게 보여주는 화면으로 이동함
     private fun showImage() {
         val intent = Intent(requireContext(), SecondActivity::class.java).apply {
-            putExtra(Contents.EXTRA_SET_IMAGE, postData.image!!.toTypedArray())
+//            putExtra(Contents.EXTRA_SET_IMAGE, postData.image!!.toTypedArray())
             putExtra(Contents.EXTRA_SET_POS, mViewModel.imagePos.value!!)
             action = Contents.SHOW_IMAGE_FRAG
         }

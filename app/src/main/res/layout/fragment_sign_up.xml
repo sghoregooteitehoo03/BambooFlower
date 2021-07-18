@@ -143,8 +143,10 @@
             <Button
                 android:id="@+id/sign_up_btn"
                 android:layout_width="match_parent"
-                android:layout_height="64dp"
+                android:layout_height="54dp"
                 android:layout_marginTop="48dp"
+                android:insetBottom="0dp"
+                android:insetTop="0dp"
                 android:enabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.password.equals(blank) &amp;&amp; !viewmodel.repassword.equals(blank)}"
                 android:onClick="@{clickListener}"
                 android:text="가입하기"
