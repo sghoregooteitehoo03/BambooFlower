@@ -13,7 +13,7 @@ class DiaryViewHolder(
 
     init {
         itemView.setOnClickListener {
-            diaryListener.onDiaryItemClickListener(bindingAdapterPosition - 1)
+            diaryListener.onDiaryItemClickListener(bindingAdapterPosition)
         }
     }
 

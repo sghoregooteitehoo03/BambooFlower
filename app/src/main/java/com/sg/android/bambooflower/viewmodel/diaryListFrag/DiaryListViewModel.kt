@@ -18,9 +18,5 @@ class DiaryListViewModel @Inject constructor(private val repository: DiaryListRe
 
     val diaries = repository.getAllDiaries() // 일기 리스트
         .flow
-        .map { pagingData ->
-            pagingData.map { DiaryDataModel.Item(it) as DiaryDataModel }
-                .insertHeaderItem(item = DiaryDataModel.Header)
-        }
         .cachedIn(viewModelScope)
 }

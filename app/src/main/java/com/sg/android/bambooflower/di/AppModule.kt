@@ -54,7 +54,9 @@ object AppModule {
             context,
             AppDatabase::class.java,
             "DiaryDatabase"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Singleton
     @Provides

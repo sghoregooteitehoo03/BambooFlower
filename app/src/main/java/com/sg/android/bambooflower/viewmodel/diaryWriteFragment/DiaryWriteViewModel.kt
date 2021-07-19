@@ -26,7 +26,7 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
             val diaryData = Diary(
                 id = null,
                 contents = contents.value!!,
-                satisfaction = satisfaction,
+                weather = satisfaction,
                 timeStamp = System.currentTimeMillis(),
                 uid = uid
             )
@@ -41,7 +41,7 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
         val editDiary = Diary(
             id = ordinaryData.id,
             contents = contents.value!!,
-            satisfaction = satisfaction,
+            weather = satisfaction,
             timeStamp = ordinaryData.timeStamp,
             uid = ordinaryData.uid
         )

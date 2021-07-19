@@ -47,7 +47,6 @@
             android:scaleType="centerCrop"
             android:src="@drawable/low_image"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:setBitmapImage="@{diaryData.satisfaction}"/>
+            app:layout_constraintStart_toStartOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

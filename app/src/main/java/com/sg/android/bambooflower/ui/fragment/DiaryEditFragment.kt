@@ -37,7 +37,7 @@ class DiaryEditFragment : Fragment() {
 
         // 이미 작성된 내용을 넣음
         diary = gViewModel.diary.value!!
-        gViewModel.satisfaction.value = diary.satisfaction
+//        gViewModel.satisfaction.value = diary.satisfaction
         mViewModel.contents.value = diary.contents
 
         // 바인딩 설정

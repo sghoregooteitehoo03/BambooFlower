@@ -136,15 +136,6 @@ fun setButtonState(view: Button, user: User, mission: Mission) {
     }
 }
 
-@BindingAdapter("app:setPostInfo")
-fun setPostInfo(view: TextView, postData: Post) {
-    val name = postData.writer
-    val date = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
-        .format(postData.timeStamp)
-
-    view.text = "$name | $date"
-}
-
 @BindingAdapter("app:setSelectedText")
 fun setSelectedText(view: TextView, isSelected: Boolean) {
     if (isSelected) {
@@ -159,9 +150,9 @@ fun setYearText(view: TextView, timeStamp: Long) {
     view.text = SimpleDateFormat("yyyy", Locale.KOREA).format(timeStamp)
 }
 
-@BindingAdapter("app:setMonthDayText")
-fun setMonthDayText(view: TextView, timeStamp: Long) {
-    view.text = SimpleDateFormat("MM월 dd(EE)", Locale.KOREA).format(timeStamp)
+@BindingAdapter("app:setDiaryTimestamp")
+fun setDiaryTimestamp(view: TextView, timeStamp: Long) {
+    view.text = SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(timeStamp)
 }
 
 @SuppressLint("SetTextI18n")

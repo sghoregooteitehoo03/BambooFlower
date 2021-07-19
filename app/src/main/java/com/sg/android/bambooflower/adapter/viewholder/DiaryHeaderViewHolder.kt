@@ -12,7 +12,7 @@ class DiaryHeaderViewHolder(
 
     init {
         itemView.setOnClickListener {
-            clickListener.addItemClickListener()
+
         }
     }
 }

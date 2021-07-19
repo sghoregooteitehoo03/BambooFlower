@@ -20,8 +20,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+// TODO: 아이콘 구현 후 표시하기
 @AndroidEntryPoint
-class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener {
+class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<DiaryListViewModel>()
 
@@ -37,6 +38,7 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener {
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
+            this.clickListener = this@DiaryListFragment
             this.diaryList.adapter = diaryAdapter
 
             lifecycleOwner = viewLifecycleOwner
@@ -59,9 +61,13 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener {
         }
     }
 
-    // 일기 작성 클릭
-    override fun addItemClickListener() {
-        findNavController().navigate(R.id.action_diaryListFragment_to_diaryWriteFragment)
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.add_diary_btn -> { // 일기 작성버튼
+                findNavController().navigate(R.id.action_diaryListFragment_to_diaryWriteFragment)
+            }
+        }
     }
 
     // 일기 아이템 클릭
