@@ -15,6 +15,7 @@ class GlobalViewModel : ViewModel() {
     val missionList = MutableLiveData<List<Mission>?>(null) // 미션 리스트
 
     val post = MutableLiveData<Post?>() // 선택한 게시글
+    val action = MutableLiveData("") // 프래그먼트 이동
     val mission = MutableLiveData<Mission?>() // 선택한 미션
     val diary = MutableLiveData<Diary?>() // 선택한 일기
     val syncData = MutableLiveData(false) // 갱신 여부

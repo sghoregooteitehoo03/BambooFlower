@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackground"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackground"
             android:orientation="vertical"
             app:layout_constraintStart_toEndOf="@id/all_post_layout"
@@ -87,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.06"/>
+            app:layout_constraintGuide_percent="0.068"/>
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/filter_pager"

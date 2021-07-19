@@ -72,30 +72,17 @@
         android:label="PostListFragment"
         tools:layout="@layout/fragment_post_list">
         <action
-            android:id="@+id/action_postListFragment_to_postFragment"
-            app:destination="@id/postFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
+            android:id="@+id/action_postListFragment_to_acceptListDialog"
+            app:destination="@id/acceptListDialog"/>
+        <action
+            android:id="@+id/action_postListFragment_to_reportDialog"
+            app:destination="@id/reportDialog"/>
     </fragment>
     <fragment
         android:id="@+id/addPostFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.AddPostFragment"
         android:label="AddPostFragment"
         tools:layout="@layout/fragment_add_post"/>
-    <fragment
-        android:id="@+id/postFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.PostFragment"
-        android:label="PostFragment"
-        tools:layout="@layout/fragment_post">
-        <action
-            android:id="@+id/action_postFragment_to_reportDialog"
-            app:destination="@id/reportDialog"/>
-        <action
-            android:id="@+id/action_postFragment_to_acceptListDialog"
-            app:destination="@id/acceptListDialog"/>
-    </fragment>
     <fragment
         android:id="@+id/diaryWriteFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryWriteFragment"
@@ -201,15 +188,7 @@
         android:id="@+id/myPostListFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.MyPostListFragment"
         android:label="MyPostListFragment"
-        tools:layout="@layout/fragment_post_list">
-        <action
-            android:id="@+id/action_myPostListFragment_to_postFragment"
-            app:destination="@id/postFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-    </fragment>
+        tools:layout="@layout/fragment_post_list"/>
     <fragment
         android:id="@+id/myMissionFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.MyMissionFragment"

@@ -12,10 +12,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
-import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentPostFilterBinding
-import com.sg.android.bambooflower.databinding.FragmentPostListBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.postFilterFrag.PostFilterViewModel
@@ -24,7 +22,9 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
+class MyPostListFragment : Fragment()
+//    , PostPagingAdapter.PostItemListener
+{
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<PostFilterViewModel>()
 
@@ -37,9 +37,10 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     ): View {
         // 인스턴스 설정
         val binding = FragmentPostFilterBinding.inflate(inflater)
-        postAdapter = PostPagingAdapter().apply {
-            setOnPostItemListener(this@MyPostListFragment)
-        }
+        val user = gViewModel.user.value!!
+//        postAdapter = PostPagingAdapter(user.uid!!).apply {
+//            setOnPostItemListener(this@MyPostListFragment)
+//        }
 
         // 바인딩 설정
         with(binding) {
@@ -83,18 +84,14 @@ class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                 findNavController().navigateUp()
                 true
             }
-            R.id.menu_search -> {
-                true
-            }
             else -> false
         }
     }
 
     // 아이템 클릭
-    override fun onItemClickListener(pos: Int) {
-        gViewModel.post.value = postAdapter.getPost(pos)!!
-        findNavController().navigate(R.id.action_myPostListFragment_to_postFragment)
-    }
+//    override fun onItemClickListener(pos: Int) {
+//
+//    }
 
     private fun setObserver() {
         // 게시글 리스트

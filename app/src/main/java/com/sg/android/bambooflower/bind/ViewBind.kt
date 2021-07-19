@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
@@ -33,29 +32,22 @@ import java.util.*
 
 //Set
 @SuppressLint("SetTextI18n")
-@BindingAdapter("app:setPostItemInfo")
-fun setPostItemInfo(view: TextView, postData: Post?) {
-    if (postData != null) {
-        val name = postData.writer
-        val postTime = postData.timeStamp!!
-
-        val diffTime = System.currentTimeMillis() - postTime
-        val date = when {
-            diffTime / 3600000 >= 24 -> {
-                SimpleDateFormat("yy.MM.dd", Locale.KOREA).format(postTime)
-            }
-            diffTime / 3600000 != 0.toLong() -> {
-                "${diffTime / 3600000}시간 전"
-            }
-            diffTime / 60000 != 0.toLong() -> {
-                "${diffTime / 60000}분 전"
-            }
-            else -> {
-                "${diffTime / 6000}초 전"
-            }
+@BindingAdapter("app:setPostTimestamp")
+fun setPostTimestamp(view: TextView, timeStamp: Long) {
+    val diffTime = System.currentTimeMillis() - timeStamp
+    view.text = when {
+        diffTime / 3600000 >= 24 -> {
+            SimpleDateFormat("yy.MM.dd", Locale.KOREA).format(timeStamp)
         }
-
-        view.text = "$name | $date"
+        diffTime / 3600000 != 0.toLong() -> {
+            "${diffTime / 3600000}시간 전"
+        }
+        diffTime / 60000 != 0.toLong() -> {
+            "${diffTime / 60000}분 전"
+        }
+        else -> {
+            "${diffTime / 6000}초 전"
+        }
     }
 }
 
@@ -76,14 +68,6 @@ fun setMissionText(view: TextView, mission: Mission, user: User) {
         "수행 완료"
     } else {
         "미수행"
-    }
-}
-
-@SuppressLint("SetTextI18n")
-@BindingAdapter("app:setLastMissions")
-fun setLastMissions(view: TextView, achievedCount: Int?) {
-    if (achievedCount != null) {
-        view.text = "다음 레벨까지 남은 미션: ${10 - (achievedCount % 10)}"
     }
 }
 
@@ -243,13 +227,6 @@ fun setRefresh(view: SwipeRefreshLayout, isLoading: Boolean) {
     view.isRefreshing = isLoading
 }
 
-@BindingAdapter("app:searchPosition")
-fun searchPosition(view: RecyclerView, position: Int) {
-    if (position != -1) {
-        view.scrollToPosition(position)
-    }
-}
-
 @BindingAdapter("app:setUriImage", "app:setResourceImage", "app:setBitmapImage", "app:setPostImage", requireAll = false)
 fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitmap: Bitmap?, postData: Post?) {
     if (imageUri != null) {
@@ -264,14 +241,12 @@ fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitma
     view.clipToOutline = true
 }
 
-@BindingAdapter("app:isCheerUp", "app:cheerUpCount")
-fun isCheerUp(view: CustomButton, cheerUp: Boolean, count: Int) {
-    view.setCustomButtonText(count.toString())
-
-    if (cheerUp) {
-        view.setCustomButtonIcon(R.drawable.ic_thumb_up)
+@BindingAdapter("app:isFavorite")
+fun isFavorite(view: ImageView, favorite: Boolean) {
+    if (favorite) {
+        view.setImageResource(R.drawable.ic_thumb_up)
     } else {
-        view.setCustomButtonIcon(R.drawable.ic_thumb_up_off)
+        view.setImageResource(R.drawable.ic_thumb_up_off)
     }
 }
 

@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -28,7 +27,6 @@ class PostListFragment : Fragment(), View.OnClickListener {
 
     private lateinit var postPagerAdapter: PostFilterPagerAdapter
     private lateinit var postPager: ViewPager2
-    private var isFirst = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,8 +60,6 @@ class PostListFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setHasOptionsMenu(true)
-
         setObserver()
     }
 
@@ -95,28 +91,22 @@ class PostListFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    // 메뉴 설정
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//        inflater.inflate(R.menu.menu_postlist_fragment, menu)
-//    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.menu_search -> {
-                true
-            }
-            else -> false
-        }
-    }
-
     private fun setObserver() {
-        gViewModel.post.observe(viewLifecycleOwner) { post ->
-            if (post != null && isFirst) {
-                findNavController().navigate(R.id.action_postListFragment_to_postFragment)
-                isFirst = false
-            } else if (post == null) {
-                isFirst = true
+        // 화면 이동 액션
+        gViewModel.action.observe(viewLifecycleOwner) { action ->
+            if (action.isNotEmpty()) {
+                when (action) {
+                    "Report" -> {
+                        findNavController().navigate(R.id.action_postListFragment_to_reportDialog)
+                    }
+                    "ShowPeople" -> {
+                        findNavController().navigate(R.id.action_postListFragment_to_acceptListDialog)
+                    }
+                    else -> {
+                    }
+                }
+
+                gViewModel.action.value = "" // 초기화
             }
         }
         // 게시글 갱신 여부
