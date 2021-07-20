@@ -1,40 +1,34 @@
 package com.sg.android.bambooflower.ui.fragment
 
-import android.Manifest
-import android.app.Activity
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import com.sg.android.bambooflower.R
+import com.sg.android.bambooflower.adapter.MyPhotoPagingAdapter
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentProfileBinding
-import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.profileFragment.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 // TODO: 광고 릴리스 키로 변경
+//  . 내 게시글 모아보기 구현
+//  . 프로필 편집 기능 구현
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<ProfileViewModel>()
 
     private lateinit var user: User
+    private lateinit var myPhotoAdapter: MyPhotoPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,12 +38,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         // 인스턴스 설정
         val binding = FragmentProfileBinding.inflate(inflater)
         user = gViewModel.user.value!!
-        exitTransition = null
+        myPhotoAdapter = MyPhotoPagingAdapter()
 
         with(binding) {
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
-            this.clickListener = this@ProfileFragment
+
+            this.photoList.adapter = myPhotoAdapter
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -62,6 +57,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         setHasOptionsMenu(true)
 
         setObserver()
+        setList()
     }
 
     override fun onStart() {
@@ -74,151 +70,52 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    // 메뉴 설정
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_profile_frag, menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 findNavController().navigateUp()
+                true
+            }
+            R.id.setting_menu -> {
+                findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
                 true
             }
             else -> false
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == Contents.GET_IMAGE) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        mViewModel.changeProfileImage(user, data?.data!!)
-
-                        gViewModel.user.postValue(user)
-                        gViewModel.userImage.postValue(user.profileImage)
-
-                        gViewModel.syncData.postValue(true)
-                    } catch (e: Exception) {
-                        mViewModel.isLoading.postValue(false)
-                        Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
-                }
-            }
-        }
-    }
-
-    // 권한 설정
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        when (requestCode) {
-            Contents.PERMISSION_CODE -> {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                    if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-                        getImage()
-                    }
-                } else {
-                    if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    ) {
-                        Toast.makeText(requireContext(), "권한을 허용해주세요.", Toast.LENGTH_SHORT)
-                            .show()
-                    } else {
-                        getImage()
-                    }
-                }
-            }
-            else -> {
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            }
-        }
-    }
-
     // 버튼 액션
     override fun onClick(v: View) {
-        when (v.id) {
-            R.id.profile_image -> { // 프로필 이미지
-                getImage()
-            }
-            R.id.my_post_btn -> { // 내 게시글
-                findNavController().navigate(R.id.action_profileFragment_to_myPostListFragment)
-            }
-            R.id.complete_mission_btn -> { // 수행한 미션
-                findNavController().navigate(R.id.action_profileFragment_to_myMissionFragment)
-            }
-            R.id.setting_btn -> { // 설정
-                findNavController().navigate(R.id.action_profileFragment_to_settingFragment)
-            }
-            R.id.sign_out_btn -> { // 로그아웃
-                signOut()
-            }
-            else -> {
-            }
-        }
+
     }
 
     private fun setObserver() {
         mViewModel.isLoading.observe(viewLifecycleOwner) { // 로딩 여부
             if (it) {
-                (requireActivity() as MainActivity).loading()
+                mViewModel.getMyPostList(user.uid!!)
             } else {
-                (requireActivity() as MainActivity).ready()
+                mViewModel.size.value = myPhotoAdapter.itemCount
             }
         }
     }
 
-    private fun getImage() { // 갤러리에서 이미지를 선택함
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) { // 권한 설정
-                requestPermissions(
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    Contents.PERMISSION_CODE
-                )
-            } else {
-                getImageIntent()
-            }
-        } else {
-            if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                || checkPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            ) {
-                requestPermissions(
-                    arrayOf(
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ), Contents.PERMISSION_CODE
-                )
-            } else {
-                getImageIntent()
+    private fun setList() {
+        lifecycleScope.launch {
+            mViewModel.getMyPostList(user.uid!!)
+                .collect {
+                    myPhotoAdapter.submitData(it)
+                }
+        }
+        myPhotoAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh !is LoadState.Loading) {
+                mViewModel.isLoading.value = false
             }
         }
     }
-
-    private fun getImageIntent() {
-        val intent = Intent().apply {
-            type = "image/*"
-            action = Intent.ACTION_PICK
-        }
-        startActivityForResult(intent, Contents.GET_IMAGE)
-    }
-
-    private fun signOut() { // 로그아웃
-        gViewModel.user.value = null
-        gViewModel.missionList.value = null
-        gViewModel.userImage.value = null
-
-        findNavController().navigate(R.id.action_profileFragment_to_signUpFragment)
-        mViewModel.signOut(requireContext())
-    }
-
-    // 권한 체크
-    private fun checkPermission(permission: String): Boolean =
-        ContextCompat.checkSelfPermission(
-            requireContext(),
-            permission
-        ) != PackageManager.PERMISSION_GRANTED
 }

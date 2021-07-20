@@ -5,52 +5,67 @@
 
     <data>
 
-        <variable
-            name="gviewmodel"
-            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
+        <import type="android.view.View"/>
+
+        <import type="com.sg.android.bambooflower.R"/>
 
         <variable
             name="viewmodel"
             type="com.sg.android.bambooflower.viewmodel.profileFragment.ProfileViewModel"/>
 
         <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener"/>
+            name="gviewmodel"
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/divide_color">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/head_layout"
-                android:layout_width="match_parent"
+            <ProgressBar
+                android:id="@+id/loading_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/shape_layout_top"
-                android:padding="12dp"
+                android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="12dp"
+                android:visibility="@{viewmodel.isLoading() ? View.GONE : View.VISIBLE}">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginTop="8dp"
-                    android:onClick="@{clickListener}"
-                    android:src="@drawable/ic_person"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     app:civ_border_color="@color/gray"
                     app:civ_border_width="2dp"
                     app:civ_circle_background_color="@color/gray_bright"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:setProfileImage="@{gviewmodel.user.profileImage}"/>
+                    app:setProfileImage="@{gviewmodel.user.profileImage}"
+                    tools:src="@drawable/ic_person"/>
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:layout_margin="2dp"
+                    android:background="@drawable/shape_round"
+                    android:backgroundTint="@color/deep_orange_300"
+                    android:padding="6dp"
+                    app:layout_constraintBottom_toBottomOf="@id/profile_image"
+                    app:layout_constraintEnd_toEndOf="@id/profile_image"
+                    app:setResourceImage="@{R.drawable.ic_edit}"
+                    tools:src="@drawable/ic_edit"/>
 
                 <TextView
                     android:id="@+id/name_text"
@@ -59,173 +74,146 @@
                     android:layout_marginTop="12dp"
                     android:text="@{gviewmodel.user.name}"
                     android:textColor="@color/default_item_color"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/profile_image"
                     tools:text="닉네임"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/info_layout"
+                <View
+                    android:id="@+id/top_view"
                     android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="22dp"
+                    android:background="@color/white_darker"
+                    app:layout_constraintTop_toBottomOf="@id/name_text"/>
+
+                <TextView
+                    android:id="@+id/level_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginEnd="6dp"
-                    android:background="@drawable/shape_rectangle_border"
-                    android:padding="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/name_text">
+                    android:text="@{String.valueOf(gviewmodel.user.myLevel)}"
+                    android:textColor="@color/default_item_color"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/top_view"
+                    tools:text="1"/>
+
+                <TextView
+                    android:id="@+id/level_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="레벨"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/level_text"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5"/>
+
+                <TextView
+                    android:id="@+id/achieved_count_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="@{String.valueOf(gviewmodel.user.achievedCount)}"
+                    android:textColor="@color/default_item_color"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_center"
+                    app:layout_constraintTop_toBottomOf="@id/top_view"
+                    tools:text="7"/>
+
+                <TextView
+                    android:id="@+id/achieved_count_title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="수행한 미션"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_center"
+                    app:layout_constraintTop_toBottomOf="@id/achieved_count_text"/>
+
+                <View
+                    android:id="@+id/center_view"
+                    android:layout_width="2dp"
+                    android:layout_height="0dp"
+                    android:background="@color/white_darker"
+                    app:layout_constraintBottom_toBottomOf="@id/level_title_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/level_text"/>
+
+                <View
+                    android:id="@+id/bottom_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@color/white_darker"
+                    app:layout_constraintTop_toBottomOf="@id/center_view"/>
+
+                <TextView
+                    android:id="@+id/photo_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="인증한 사진"
+                    android:textColor="@color/default_item_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/bottom_view"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="@{viewmodel.size == 0 ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/photo_text">
+
+                    <ImageView
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:src="@drawable/ic_camera"/>
 
                     <TextView
-                        android:id="@+id/achieved_count_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@{gviewmodel.user.achievedCount.toString()}"
-                        android:textColor="@color/default_item_color"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/achieved_text"
-                        app:layout_constraintEnd_toStartOf="@id/center_view"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="19"/>
-
-                    <TextView
-                        android:id="@+id/achieved_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="수행한 미션"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@id/center_view"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/achieved_count_text"/>
-
-                    <View
-                        android:id="@+id/center_view"
-                        android:layout_width="1dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@color/divide_color"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"/>
-
-                    <TextView
-                        android:id="@+id/level_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="@{gviewmodel.user.myLevel.toString()}"
-                        android:textColor="@color/default_item_color"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toTopOf="@+id/my_level_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@id/center_view"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="2"/>
-
-                    <TextView
-                        android:id="@+id/my_level_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
-                        android:text="내 단계"
+                        android:gravity="center"
+                        android:text="아직 인증한 사진이 없네요.\n미션 수행을 통해 채워나가보세요."
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@id/center_view"
-                        app:layout_constraintTop_toBottomOf="@+id/achieved_count_text"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:textStyle="bold"/>
+                </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/ad_layout"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="12dp"
-                android:background="@color/default_background_color"
-                app:layout_constraintTop_toBottomOf="@id/head_layout">
-
-                <com.google.android.gms.ads.AdView
-                    android:id="@+id/ad_view"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/photo_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:adSize="LARGE_BANNER"
-                    app:adUnitId="@string/ad_banner_unit_id_test"
-                    app:loadBannerAd="@{true}"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <LinearLayout
-                android:id="@+id/option_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/shape_layout_bottom"
-                android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/ad_layout">
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
                     android:layout_marginTop="12dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="정보"
-                    android:textColor="@color/default_item_color"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
-
-                <com.sg.android.bambooflower.ui.view.CustomProfileButton
-                    android:id="@+id/my_post_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{clickListener}"
-                    app:profileButtonIcon="@drawable/ic_assignment"
-                    app:profileButtonText="내 게시글"/>
-
-                <com.sg.android.bambooflower.ui.view.CustomProfileButton
-                    android:id="@+id/complete_mission_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{clickListener}"
-                    app:profileButtonIcon="@drawable/ic_check_box"
-                    app:profileButtonText="내가 수행한 미션"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="4dp"
-                    android:text="기타"
-                    android:textColor="@color/default_item_color"
-                    android:textSize="18sp"
-                    android:textStyle="bold"/>
-
-                <com.sg.android.bambooflower.ui.view.CustomProfileButton
-                    android:id="@+id/setting_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{clickListener}"
-                    app:profileButtonIcon="@drawable/ic_settings"
-                    app:profileButtonText="설정"/>
-
-                <com.sg.android.bambooflower.ui.view.CustomProfileButton
-                    android:id="@+id/sign_out_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{clickListener}"
-                    app:profileButtonIcon="@drawable/ic_exit"
-                    app:profileButtonText="로그아웃"/>
-            </LinearLayout>
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/photo_text"
+                    app:spanCount="3"
+                    tools:listitem="@layout/item_my_photo"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

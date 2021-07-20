@@ -11,9 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.sg.android.bambooflower.adapter.MyMissionPagingAdapter
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentMyMissionBinding
 import com.sg.android.bambooflower.ui.MainActivity
@@ -21,7 +18,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.myMissionFragment.MyMissionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -29,7 +25,6 @@ class MyMissionFragment : Fragment() {
     private val mViewModel by viewModels<MyMissionViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
-    private lateinit var missionAdapter: MyMissionPagingAdapter
     private lateinit var user: User
 
     override fun onCreateView(
@@ -40,21 +35,10 @@ class MyMissionFragment : Fragment() {
         // 인스턴스 설정
         val binding = FragmentMyMissionBinding.inflate(inflater)
         user = gViewModel.user.value!!
-        missionAdapter = MyMissionPagingAdapter(user.uid!!)
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-
-            with(missionList) { // 리스트 설정
-                adapter = missionAdapter
-                addItemDecoration(
-                    DividerItemDecoration(
-                        requireContext(),
-                        LinearLayoutManager.VERTICAL
-                    )
-                )
-            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -91,21 +75,6 @@ class MyMissionFragment : Fragment() {
     }
 
     private fun setObserver() {
-        mViewModel.isLoading.observe(viewLifecycleOwner) {
-            if (!it) {
-                mViewModel.size.value = missionAdapter.itemCount
-            }
-        }
-        lifecycleScope.launch {
-            // 내가 수행한 미션을 가져옴
-            mViewModel.getMyMission(user.uid!!).collect { pagingData ->
-                missionAdapter.submitData(pagingData)
-            }
-        }
-        lifecycleScope.launch {
-            missionAdapter.loadStateFlow.collectLatest {
-                mViewModel.isLoading.value = it.refresh is LoadState.Loading // 로딩 표시여부
-            }
-        }
+
     }
 }
