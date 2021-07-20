@@ -87,11 +87,7 @@
         android:id="@+id/diaryWriteFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryWriteFragment"
         android:label="DiaryWriteFragment"
-        tools:layout="@layout/fragment_diary_write">
-        <action
-            android:id="@+id/action_diaryWriteFragment_to_satisfactionFragment"
-            app:destination="@id/satisfactionFragment"/>
-    </fragment>
+        tools:layout="@layout/fragment_diary_write"/>
     <fragment
         android:id="@+id/diaryViewerFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryViewerFragment"
@@ -174,11 +170,6 @@
         android:name="com.sg.android.bambooflower.ui.dialog.ReportDialog"
         android:label="ReportDialog"
         tools:layout="@layout/dialog_report"/>
-    <dialog
-        android:id="@+id/satisfactionFragment"
-        android:name="com.sg.android.bambooflower.ui.dialog.SatisfactionDialog"
-        android:label="SatisfactionFragment"
-        tools:layout="@layout/dialog_satisfaction"/>
     <fragment
         android:id="@+id/diaryEditFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryEditFragment"
