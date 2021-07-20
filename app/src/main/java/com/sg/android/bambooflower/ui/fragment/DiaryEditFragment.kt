@@ -53,14 +53,14 @@ class DiaryEditFragment : Fragment() {
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            this.weatherViewpager.adapter = weatherAdapter
-            this.weatherViewpager.setCurrentItem(mViewModel.pos.value!!, false)
-            setDots(this)
-
-            with(writeDiaryInput) {
-                requestFocus()
-                imm.showSoftInput(this, 0)
+            with(weatherViewpager) {
+                adapter = weatherAdapter
+                setCurrentItem(mViewModel.pos.value!!, false)
             }
+            this.writeDiaryInput.requestFocus()
+
+            setDots(this)
+            imm.toggleSoftInput(0, 0)
 
             lifecycleOwner = viewLifecycleOwner
         }

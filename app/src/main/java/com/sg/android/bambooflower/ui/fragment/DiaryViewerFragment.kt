@@ -79,7 +79,7 @@ class DiaryViewerFragment : Fragment() {
                 true
             }
             R.id.menu_edit_diary -> { // 수정하기
-                findNavController().navigate(R.id.diaryEditFragment)
+                findNavController().navigate(R.id.action_diaryViewerFragment_to_diaryEditFragment)
                 true
             }
             else -> false
