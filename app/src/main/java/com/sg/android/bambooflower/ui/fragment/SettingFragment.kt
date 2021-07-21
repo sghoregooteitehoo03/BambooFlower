@@ -28,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+// TODO: 탈퇴기능 수정하기
 @AndroidEntryPoint
 class SettingFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SettingViewModel>()

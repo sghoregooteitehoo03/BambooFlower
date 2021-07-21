@@ -73,6 +73,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_emailLoginFragment_to_resetPasswordFragment"
+            app:destination="@id/resetPasswordFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/postListFragment"
@@ -233,4 +240,9 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
     </dialog>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.ResetPasswordFragment"
+        android:label="ResetPasswordFragment"
+        tools:layout="@layout/fragment_reset_password"/>
 </navigation>

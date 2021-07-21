@@ -131,6 +131,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
+                android:onClick="@{clickListener}"
                 android:background="?attr/selectableItemBackground"
                 android:text="비밀번호 재설정"
                 android:textStyle="bold"

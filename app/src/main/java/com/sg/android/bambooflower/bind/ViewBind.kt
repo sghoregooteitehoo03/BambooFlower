@@ -31,6 +31,22 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 //Set
+@BindingAdapter("app:setErrorMessageState")
+fun setErrorMessageState(view: TextView, isSuccess: Boolean) {
+    val color = if (isSuccess) {
+        view.resources.getColor(
+            R.color.green_500,
+            null
+        )
+    } else {
+        view.resources.getColor(
+            android.R.color.holo_red_dark,
+            null
+        )
+    }
+    view.setTextColor(color)
+}
+
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setPostTimestamp")
 fun setPostTimestamp(view: TextView, timeStamp: Long) {

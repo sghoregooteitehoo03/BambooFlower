@@ -22,10 +22,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 // TODO:
-//  . bottom Nan 애니메이션 없애기 O
-//  . toolbar에 divide선 표시 O
-//  . animate O
-//  . 로그아웃 후에도 프로필 이미지 남아있는 버그 O
 //  . 나이트모드
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -73,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.action_global_onboardFragment)
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            Log.i("Check", "size: ${navController.backStack.size}")
             when (destination.id) {
                 R.id.missionListFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment -> {
                     isExit = true

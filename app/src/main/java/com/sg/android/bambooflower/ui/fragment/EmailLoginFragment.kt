@@ -77,7 +77,7 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                 mViewModel.login()
             }
             R.id.reset_password_text -> {
-                // TODO: 비밀번호 재설정 기능 구현
+                findNavController().navigate(R.id.action_emailLoginFragment_to_resetPasswordFragment)
             }
             else -> {
             }

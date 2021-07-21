@@ -22,6 +22,7 @@ import kotlinx.coroutines.launch
 // TODO: 광고 릴리스 키로 변경
 //  . 내 게시글 모아보기 구현
 //  . 프로필 편집 기능 구현
+//  . 로딩뷰
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
