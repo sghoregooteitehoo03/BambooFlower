@@ -67,18 +67,16 @@ class SettingRepository @Inject constructor(
         postList.forEach {
             val postData = it.toObject(Post::class.java)
 
-            // 게시글에 사진들을 차례로 삭제함
-            for (i in postData.image!!.indices) {
-                val imageName = "$i.png"
-                val reference = storage.reference
-                    .child(uid)
-                    .child(Contents.CHILD_POST_IMAGE)
-                    .child(postData.postPath!!)
-                    .child(imageName)
+            // 게시글에 사진을 차례로 삭제함
+            val imageName = "${postData.timeStamp}.png"
+            val reference = storage.reference
+                .child(uid)
+                .child(Contents.CHILD_POST_IMAGE)
+                .child(postData.postPath!!)
+                .child(imageName)
 
-                reference.delete()
-                    .await()
-            }
+            reference.delete()
+                .await()
 
             // 게시글 데이터 삭제
             it.reference.delete()
@@ -111,12 +109,13 @@ class SettingRepository @Inject constructor(
         }
     }
 
-    private suspend fun signOut(context: Context) {
+    suspend fun signOut(context: Context) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .build()
         val googleClient = GoogleSignIn.getClient(context, gso)
         val loginManager = LoginManager.getInstance()
 
+        auth.signOut()
         googleClient.signOut()
             .await()
         loginManager.logOut()

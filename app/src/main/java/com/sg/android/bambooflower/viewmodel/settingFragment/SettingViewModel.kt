@@ -33,4 +33,8 @@ class SettingViewModel @Inject constructor(private val repository: SettingReposi
     fun ready() {
         _isLoading.value = false
     }
+
+    fun signOut(context: Context) = viewModelScope.launch {
+        repository.signOut(context)
+    }
 }

@@ -98,6 +98,9 @@ class SettingFragment : Fragment(), View.OnClickListener {
             R.id.send_email_btn -> { // 문의하기
                 sendEmail()
             }
+            R.id.sign_out_btn -> { // 로그아웃
+                signOut()
+            }
             R.id.delete_account_btn -> { // 회원 탈퇴
                 deleteAccount()
             }
@@ -143,6 +146,11 @@ class SettingFragment : Fragment(), View.OnClickListener {
         if (intent.resolveActivity(requireContext().packageManager) != null) {
             startActivity(intent)
         }
+    }
+
+    private fun signOut() { // 로그아웃
+        mViewModel.signOut(requireContext())
+        findNavController().navigate(R.id.action_settingFragment_to_signUpFragment)
     }
 
     private fun deleteAccount() { // 계정 삭제

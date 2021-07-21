@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CustomLoginButton">
-        <attr name="buttonIcon" format="reference|integer" />
-        <attr name="buttonText" format="reference|string" />
-        <attr name="buttonTextColor" format="reference|color|integer" />
+        <attr name="buttonIcon" format="reference|integer"/>
+        <attr name="buttonText" format="reference|string"/>
+        <attr name="buttonTextColor" format="reference|color|integer"/>
     </declare-styleable>
 
     <declare-styleable name="CustomMissionButton">
-        <attr name="missionButtonIcon" format="reference|integer" />
-        <attr name="missionButtonText" format="reference|string" />
-        <attr name="missionButtonTextColor" format="reference|color|integer" />
+        <attr name="missionButtonIcon" format="reference|integer"/>
+        <attr name="missionButtonText" format="reference|string"/>
+        <attr name="missionButtonTextColor" format="reference|color|integer"/>
     </declare-styleable>
 
     <declare-styleable name="LoadingView">
-        <attr name="visible" format="reference|boolean" />
+        <attr name="visible" format="reference|boolean"/>
     </declare-styleable>
 
     <declare-styleable name="CustomButton">
-        <attr name="customButtonIcon" format="reference|integer" />
-        <attr name="customButtonText" format="reference|string" />
+        <attr name="customButtonIcon" format="reference|integer"/>
+        <attr name="customButtonText" format="reference|string"/>
     </declare-styleable>
 
     <declare-styleable name="CustomSatisfactionButton">
-        <attr name="satisfactionButtonIcon" format="reference|integer" />
-        <attr name="satisfactionButtonText" format="reference|string" />
+        <attr name="satisfactionButtonIcon" format="reference|integer"/>
+        <attr name="satisfactionButtonText" format="reference|string"/>
     </declare-styleable>
 
     <declare-styleable name="CustomProfileButton">
-        <attr name="profileButtonIcon" format="reference|integer" />
-        <attr name="profileButtonText" format="reference|string" />
+        <attr name="profileButtonIcon" format="reference|integer"/>
+        <attr name="profileButtonText" format="reference|string"/>
     </declare-styleable>
 
     <declare-styleable name="CustomSettingView">
-        <attr name="settingText" format="reference|string" />
-        <attr name="settingIconVisible" format="reference|boolean" />
+        <attr name="settingText" format="reference|string"/>
+        <attr name="settingTextColor" format="reference|color"/>
+        <attr name="settingIconVisible" format="reference|boolean"/>
     </declare-styleable>
 </resources>

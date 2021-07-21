@@ -54,17 +54,4 @@ class ProfileRepository @Inject constructor(
 //
 //        user.profileImage = profileImage
 //    }
-
-//    // 로그아웃
-//    suspend fun signOut(context: Context) {
-//        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//            .build()
-//        val googleClient = GoogleSignIn.getClient(context, gso)
-//        val loginManager = LoginManager.getInstance()
-//
-//        auth.signOut()
-//        loginManager.logOut()
-//        googleClient.signOut()
-//            .await()
-//    }
 }
