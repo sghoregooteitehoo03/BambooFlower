@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 
 // TODO: 광고 릴리스 키로 변경
 //  . 내 게시글 모아보기 구현
-//  . 프로필 편집 기능 구현
-//  . 로딩뷰
+//  . 프로필 편집 기능 구현 O
+//  . 로딩뷰 O
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -44,6 +44,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         with(binding) {
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
+            this.clickListener = this@ProfileFragment
 
             this.photoList.adapter = myPhotoAdapter
 
@@ -93,7 +94,11 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     // 버튼 액션
     override fun onClick(v: View) {
-
+        when (v.id) {
+            R.id.profile_image -> {
+                findNavController().navigate(R.id.action_profileFragment_to_profileEditFragment)
+            }
+        }
     }
 
     private fun setObserver() {
@@ -104,17 +109,23 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 mViewModel.size.value = myPhotoAdapter.itemCount
             }
         }
+        // 리스트
+        mViewModel.postList.observe(viewLifecycleOwner) { postFlow ->
+            if (postFlow != null) {
+                lifecycleScope.launch {
+                    postFlow.collect { pagingData ->
+                        myPhotoAdapter.submitData(pagingData)
+                    }
+                }
+            }
+        }
     }
 
     private fun setList() {
-        lifecycleScope.launch {
-            mViewModel.getMyPostList(user.uid!!)
-                .collect {
-                    myPhotoAdapter.submitData(it)
-                }
-        }
         myPhotoAdapter.addLoadStateListener { loadState ->
-            if (loadState.refresh !is LoadState.Loading) {
+            if (loadState.refresh !is LoadState.Loading &&
+                mViewModel.postList.value != null
+            ) {
                 mViewModel.isLoading.value = false
             }
         }

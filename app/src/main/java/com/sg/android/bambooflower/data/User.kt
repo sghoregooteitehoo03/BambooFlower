@@ -2,9 +2,9 @@ package com.sg.android.bambooflower.data
 
 data class User(
     val uid: String? = null,
-    val name: String? = null,
+    var name: String? = null,
     var profileImage: String = "",
-    val email: String? = null,
+    var email: String? = null,
     var achievedCount: Int? = null,
     var achieveState: String? = null,
     val myLevel: Int? = null,

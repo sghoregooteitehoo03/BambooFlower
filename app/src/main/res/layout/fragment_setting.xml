@@ -93,6 +93,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:onClick="@{clickListener}"
-            android:text="회원탈퇴"/>
+            android:text="회원탈퇴"
+            android:textStyle="bold"/>
     </LinearLayout>
 </layout>
