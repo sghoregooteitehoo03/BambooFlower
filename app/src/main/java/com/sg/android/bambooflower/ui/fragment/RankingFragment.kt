@@ -54,10 +54,10 @@ class RankingFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         // 툴바 설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.show()
-            this?.title = "랭킹"
-            this?.setDisplayHomeAsUpEnabled(false)
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "랭킹"
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            showToolbar()
         }
     }
 

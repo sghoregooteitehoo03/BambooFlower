@@ -66,10 +66,10 @@ class PostListFragment : Fragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         // 툴바설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "인증 게시판"
-            this?.show()
-            this?.setDisplayHomeAsUpEnabled(false)
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "인증 게시판"
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            showToolbar()
         }
     }
 

@@ -63,10 +63,10 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         // 툴바 설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "프로필"
-            this?.show()
-            this?.setDisplayHomeAsUpEnabled(true)
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "프로필"
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            showToolbar()
         }
     }
 

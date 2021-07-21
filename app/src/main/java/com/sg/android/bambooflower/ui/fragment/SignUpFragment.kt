@@ -66,9 +66,10 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         super.onStart()
 
         // 툴바 설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = ""
-            this?.setDisplayHomeAsUpEnabled(false)
+        with((activity as MainActivity)) {
+            supportActionBar?.title = ""
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            showToolbar(false)
         }
     }
 

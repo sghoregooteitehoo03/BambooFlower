@@ -1,11 +1,9 @@
 package com.sg.android.bambooflower.ui
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -24,8 +22,11 @@ import javax.inject.Inject
 import javax.inject.Named
 
 // TODO:
-//  . bottom Nan 애니메이션 없애기
-//  . toolbar에 divide선 표시
+//  . bottom Nan 애니메이션 없애기 O
+//  . toolbar에 divide선 표시 O
+//  . animate O
+//  . 로그아웃 후에도 프로필 이미지 남아있는 버그 O
+//  . 나이트모드
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()
@@ -34,7 +35,6 @@ class MainActivity : AppCompatActivity() {
     @Named(Contents.PREF_CHECK_FIRST)
     lateinit var checkPref: SharedPreferences
     private lateinit var binding: ActivityMainBinding
-    private lateinit var imm: InputMethodManager
     private var backAvailable = true
 
     private val FINISH_INTERVAL_TIME = 2000L
@@ -47,8 +47,6 @@ class MainActivity : AppCompatActivity() {
 
         // 인스턴스 설정
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        imm =
-            applicationContext.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
 
         setSupportActionBar(binding.mainToolbar) // 툴바 설정
         setObserver() // 옵저버 설정
@@ -59,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setupWithNavController(navController)
         binding.profileImage.setOnClickListener { // 프로필 클릭
             if (gViewModel.userImage.value != null) {
-                navController.navigate(R.id.profileFragment)
+                navController.navigate(R.id.action_global_profileFragment)
             }
         }
 
@@ -75,12 +73,16 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.action_global_onboardFragment)
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            Log.i("Check", "size: ${navController.backStack.size}")
             when (destination.id) {
                 R.id.missionListFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment -> {
                     isExit = true
 
                     showBottomView()
                     showProfile()
+                }
+                R.id.acceptListDialog, R.id.levelUpDialog, R.id.missionDialog, R.id.reportDialog -> {
+                    isExit = false
                 }
                 else -> {
                     isExit = false
@@ -122,6 +124,8 @@ class MainActivity : AppCompatActivity() {
     private fun setObserver() {
         gViewModel.userImage.observe(this) { image ->
             if (image != null) {
+                binding.profileImage.visibility = View.VISIBLE
+
                 if (image.isEmpty()) {
                     Glide.with(applicationContext)
                         .load(R.drawable.ic_person)
@@ -131,6 +135,8 @@ class MainActivity : AppCompatActivity() {
                         .load(image)
                         .into(binding.profileImage)
                 }
+            } else {
+                binding.profileImage.visibility = View.GONE
             }
         }
     }
@@ -147,8 +153,19 @@ class MainActivity : AppCompatActivity() {
         binding.loadingView.setVisible(false, window)
     }
 
+    fun showToolbar(isDivide: Boolean = true) {
+        supportActionBar?.show()
+        binding.divideView.visibility = if (isDivide) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+    }
+
     private fun showProfile() {
-        if (binding.profileImage.visibility == View.GONE) {
+        if (binding.profileImage.visibility == View.GONE &&
+            gViewModel.userImage.value != null
+        ) {
             binding.profileImage.visibility = View.VISIBLE
         }
     }
@@ -159,59 +176,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showBottomView() {
-        if (binding.bottomNavView.visibility == View.GONE) {
-            with(binding.bottomNavView) {
+    private fun showBottomView() {
+        with(binding.bottomNavView) {
+            if (visibility == View.GONE) {
                 visibility = View.VISIBLE
-                binding.bottomNavView.menu.forEach {
-                    it.isEnabled = true
-                }
-
-                animate().setDuration(resources.getInteger(R.integer.transaction_duration).toLong())
-                    .alpha(1f)
-                    .translationY(0f)
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator?) {
-                            super.onAnimationEnd(animation)
-                            visibility = View.VISIBLE
-                        }
-                    })
-                    .withLayer()
             }
         }
     }
 
-    fun hideBottomView() {
-        if (binding.bottomNavView.visibility == View.VISIBLE) {
-            with(binding.bottomNavView) {
-                binding.bottomNavView.menu.forEach {
-                    it.isEnabled = false
-                }
-
-                animate().setDuration(resources.getInteger(R.integer.transaction_duration).toLong())
-                    .alpha(0f)
-                    .translationY(100f)
-                    .setListener(object : AnimatorListenerAdapter() {
-                        override fun onAnimationEnd(animation: Animator?) {
-                            super.onAnimationEnd(animation)
-                            visibility = View.GONE
-                        }
-                    })
-                    .withLayer()
+    private fun hideBottomView() {
+        with(binding.bottomNavView) {
+            if (visibility == View.VISIBLE) {
+                visibility = View.GONE
             }
         }
     }
 
-    // 검색화면 설정
-    fun activationSearch() {
-        with(binding.inputSearchLayout) {
-            visibility = View.VISIBLE
-            imm.showSoftInput(this, 0)
-        }
+    fun enableBottomView() {
+        binding.bottomNavView
+            .menu
+            .forEach {
+                it.isEnabled = true
+            }
     }
 
-    fun disabledSearch() {
-        binding.inputSearchLayout.visibility = View.GONE
-        gViewModel.searchValue.value = ""
+    fun unEnableBottomView() {
+        binding.bottomNavView
+            .menu
+            .forEach {
+                it.isEnabled = false
+            }
     }
 }

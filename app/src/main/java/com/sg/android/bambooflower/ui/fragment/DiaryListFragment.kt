@@ -54,10 +54,10 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
     override fun onStart() {
         super.onStart()
         // 툴바설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "하루일기"
-            this?.setDisplayHomeAsUpEnabled(false)
-            this?.show()
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "하루일기"
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            showToolbar()
         }
     }
 

@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.ui.fragment
+package com.sg.android.bambooflower.ui.dialog
 
 import android.content.Intent
 import android.os.Bundle

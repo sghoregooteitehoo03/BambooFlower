@@ -77,10 +77,10 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
 
     override fun onStart() {
         super.onStart()
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "미션"
-            this?.setDisplayHomeAsUpEnabled(false)
-            this?.show()
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "미션"
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            showToolbar()
         }
     }
 
@@ -110,10 +110,10 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
         // 로딩 여부
         mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading && !isChange) {
-                (activity as MainActivity).hideBottomView()
+                (requireActivity() as MainActivity).unEnableBottomView()
                 getHomeData() // 홈 데이터를 가져옴
             } else {
-                (activity as MainActivity).showBottomView()
+                (requireActivity() as MainActivity).enableBottomView()
                 missionsAdapter.submitData(gViewModel.missionList.value!!, user) // 미션 리스트 갱신
             }
         }

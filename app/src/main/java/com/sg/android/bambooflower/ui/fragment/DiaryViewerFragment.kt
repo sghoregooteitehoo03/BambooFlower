@@ -53,12 +53,10 @@ class DiaryViewerFragment : Fragment() {
         super.onStart()
         // 툴바 설정
         with((activity as MainActivity)) {
-            with(supportActionBar) {
-                this?.title =
-                    SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diary.timeStamp)
-                this?.show()
-                this?.setDisplayHomeAsUpEnabled(true)
-            }
+            supportActionBar?.title =
+                SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diary.timeStamp)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            showToolbar()
         }
     }
 

@@ -59,10 +59,10 @@ class DiaryWriteFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         // 툴바설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.show()
-            this?.title = "일기 작성"
-            this?.setDisplayHomeAsUpEnabled(true)
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "일기 작성"
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            showToolbar()
         }
     }
 

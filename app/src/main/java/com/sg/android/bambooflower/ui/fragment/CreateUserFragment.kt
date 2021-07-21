@@ -82,10 +82,10 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClick
     override fun onStart() {
         super.onStart()
         // 툴바 설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = ""
-            this?.show()
-            this?.setDisplayHomeAsUpEnabled(true)
+        with((activity as MainActivity)) {
+            supportActionBar?.title = ""
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            showToolbar(false)
         }
     }
 

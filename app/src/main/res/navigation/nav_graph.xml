@@ -11,6 +11,14 @@
         app:destination="@id/onboardFragment"
         app:launchSingleTop="true"/>
 
+    <action
+        android:id="@+id/action_global_profileFragment"
+        app:destination="@id/profileFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out"/>
+
     <fragment
         android:id="@+id/onboardFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.OnboardFragment"
@@ -35,10 +43,10 @@
         <action
             android:id="@+id/action_signUpFragment_to_emailLoginFragment"
             app:destination="@id/emailLoginFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_signUpFragment_to_createUserFragment"
             app:destination="@id/createUserFragment"
@@ -107,20 +115,6 @@
         android:name="com.sg.android.bambooflower.ui.fragment.ProfileFragment"
         android:label="ProfileFragment"
         tools:layout="@layout/fragment_profile">
-        <action
-            android:id="@+id/action_profileFragment_to_myPostListFragment"
-            app:destination="@id/myPostListFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
-        <action
-            android:id="@+id/action_profileFragment_to_myMissionFragment"
-            app:destination="@id/myMissionFragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_profileFragment_to_settingFragment"
             app:destination="@id/settingFragment"
@@ -216,6 +210,8 @@
         <action
             android:id="@+id/action_diaryListFragment_to_diaryWriteFragment"
             app:destination="@id/diaryWriteFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
         <action
@@ -228,7 +224,7 @@
     </fragment>
     <dialog
         android:id="@+id/missionDialog"
-        android:name="com.sg.android.bambooflower.ui.fragment.MissionDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.MissionDialog"
         android:label="MissionDialog"
         tools:layout="@layout/dialog_mission">
         <action

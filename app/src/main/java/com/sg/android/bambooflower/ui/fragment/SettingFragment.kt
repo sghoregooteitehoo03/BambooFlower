@@ -65,10 +65,10 @@ class SettingFragment : Fragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         // 툴바 설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "설정"
-            this?.show()
-            this?.setDisplayHomeAsUpEnabled(true)
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "설정"
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            showToolbar()
         }
     }
 
@@ -149,6 +149,10 @@ class SettingFragment : Fragment(), View.OnClickListener {
     }
 
     private fun signOut() { // 로그아웃
+        gViewModel.user.value = null
+        gViewModel.missionList.value = null
+        gViewModel.userImage.value = null
+
         mViewModel.signOut(requireContext())
         findNavController().navigate(R.id.action_settingFragment_to_signUpFragment)
     }
