@@ -31,10 +31,9 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SignUpViewModel>()
 
     private lateinit var callbackManager: CallbackManager
-    private var loginWay = ""
     private var token = ""
     private var email = ""
-    private var password = ""
+    private var loginWay = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,6 +88,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     mViewModel.isLoading.value = true
 
                     token = result.result?.idToken!!
+                    email = ""
                     loginWay = "Google"
 
                     val credential =
@@ -144,9 +144,9 @@ class SignUpFragment : Fragment(), View.OnClickListener {
 
     // 회원가입
     private fun signUp() {
-        loginWay = "Email"
+        token = ""
         email = mViewModel.email.value!!
-        password = mViewModel.password.value!!
+        loginWay = "Email"
 
         mViewModel.signUp()
     }
@@ -177,6 +177,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 mViewModel.isLoading.value = true
 
                 token = result?.accessToken!!.token
+                email = ""
                 loginWay = "Facebook"
 
                 val credential = FacebookAuthProvider.getCredential(token)
@@ -204,7 +205,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     findNavController().navigate(R.id.action_signUpFragment_to_missionListFragment)
                 } else {
                     val directions = SignUpFragmentDirections
-                        .actionSignUpFragmentToCreateUserFragment(token, loginWay, password, email)
+                        .actionSignUpFragmentToCreateUserFragment(token, email, loginWay)
                     findNavController().navigate(directions)
                 }
             }

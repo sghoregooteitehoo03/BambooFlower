@@ -8,7 +8,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.sg.android.bambooflower.data.Account
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
@@ -22,8 +21,10 @@ class CreateUserRepository @Inject constructor(
 
     suspend fun setUserData(
         profileImage: String,
-        account: Account,
-        name: String
+        email: String,
+        name: String,
+        token: String,
+        loginWay: String
     ) {
         val uid = auth.currentUser?.uid!!
         val imageName = "profile.png"
@@ -46,7 +47,7 @@ class CreateUserRepository @Inject constructor(
             uid = uid,
             name = name,
             profileImage = profileImageUri,
-            email = account.email,
+            email = email,
             achievedCount = 0,
             achieveState = User.STATE_NOTHING,
             myLevel = 1,
@@ -54,17 +55,14 @@ class CreateUserRepository @Inject constructor(
             myMissionHow = "",
             latestStart = 0,
             isLevelUp = false,
-            missionDoc = null
+            missionDoc = null,
+            token = token,
+            loginWay = loginWay
         )
 
         store.collection(Contents.COLLECTION_USER)
             .document(auth.currentUser!!.uid)
             .set(userData)
-            .await()
-
-        store.collection(Contents.COLLECTION_ACCOUNT)
-            .document(uid)
-            .set(account)
             .await()
     }
 

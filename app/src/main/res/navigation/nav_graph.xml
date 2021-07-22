@@ -151,13 +151,10 @@
             android:name="token"
             app:argType="string"/>
         <argument
-            android:name="loginWay"
-            app:argType="string"/>
-        <argument
-            android:name="password"
-            app:argType="string"/>
-        <argument
             android:name="email"
+            app:argType="string"/>
+        <argument
+            android:name="loginWay"
             app:argType="string"/>
     </fragment>
     <dialog
@@ -198,6 +195,13 @@
             app:exitAnim="@anim/slide_out_right"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_settingFragment_to_deleteAccountFragment"
+            app:destination="@id/deleteAccountFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <dialog
         android:id="@+id/acceptListDialog"
@@ -257,4 +261,17 @@
         android:name="com.sg.android.bambooflower.ui.fragment.ProfileEditFragment"
         android:label="ProfileEditFragment"
         tools:layout="@layout/fragment_profile_edit"/>
+    <fragment
+        android:id="@+id/deleteAccountFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.DeleteAccountFragment"
+        android:label="DeleteAccountFragment"
+        tools:layout="@layout/fragment_delete_account">
+        <action
+            android:id="@+id/action_deleteAccountFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"/>
+    </fragment>
 </navigation>

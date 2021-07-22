@@ -51,6 +51,7 @@ class ProfileEditRepository @Inject constructor(
             put("name", name)
         }
 
+        // TODO: 업데이트 전에 수정하기
         functions.getHttpsCallable("changeProfileTest")
             .call(jsonObj)
             .await()

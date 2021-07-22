@@ -41,14 +41,10 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClick
     ): View {
         // 인스턴스 설정
         val binding = FragmentCreateUserBinding.inflate(inflater)
-        if (args.loginWay != "Email") {
-            mViewModel.loginWay.value = args.loginWay
-            mViewModel.token.value = args.token
-        } else {
-            mViewModel.email.value = args.email
-            mViewModel.password.value = args.password
-            mViewModel.loginWay.value = args.loginWay
-        }
+        mViewModel.email.value = args.email
+        mViewModel.token.value = args.token
+        mViewModel.loginWay.value = args.loginWay
+
         activity?.onBackPressedDispatcher?.addCallback(backPressed)
 
         // 바인딩 설정

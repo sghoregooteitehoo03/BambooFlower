@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -15,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.BuildConfig
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentSettingBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
@@ -23,18 +21,11 @@ import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.settingFragment.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-// TODO: 탈퇴기능 수정하기
 @AndroidEntryPoint
 class SettingFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SettingViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
-
-    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +34,6 @@ class SettingFragment : Fragment(), View.OnClickListener {
     ): View {
         // 인스턴스 설정
         val binding = FragmentSettingBinding.inflate(inflater)
-        user = gViewModel.user.value!!
 
         // 바인딩 설정
         with(binding) {
@@ -129,7 +119,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
                 dialog.dismiss()
             }
             setPositiveButton("확인") { dialog, which ->
-                mViewModel.clearDiary(user.uid)
+                mViewModel.clearDiary(gViewModel.user.value!!.uid)
             }
 
             show()
@@ -159,34 +149,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
     }
 
     private fun deleteAccount() { // 계정 삭제
-        with(MaterialAlertDialogBuilder(requireContext())) {
-            setTitle("회원탈퇴")
-            setMessage("회원탈퇴 후에는 데이터가 모두 지워지게 됩니다 정말로 탈퇴하시겠습니까?")
-            setNegativeButton("취소") { dialog, which ->
-                dialog.dismiss()
-            }
-            setPositiveButton("확인") { dialog, which ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    try {
-                        mViewModel.deleteAccount(user, requireContext())
-                    } catch (e: Exception) {
-                        mViewModel.ready()
-                        Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
-                            .show()
-                    } finally {
-                        withContext(Dispatchers.Main) {
-                            gViewModel.user.value = null
-                            gViewModel.missionList.value = null
-                            gViewModel.userImage.value = null
-
-                            findNavController().navigate(R.id.action_settingFragment_to_signUpFragment)
-                        }
-                    }
-                }
-            }
-
-            show()
-        }
+        findNavController().navigate(R.id.action_settingFragment_to_deleteAccountFragment)
     }
 
     // html 읽어오는 화면으로 이동

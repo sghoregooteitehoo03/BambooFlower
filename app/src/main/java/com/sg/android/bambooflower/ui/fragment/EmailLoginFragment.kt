@@ -98,9 +98,8 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                             val directions = EmailLoginFragmentDirections
                                 .actionEmailLoginFragmentToCreateUserFragment(
                                     "",
-                                    "Email",
-                                    mViewModel.password.value!!,
-                                    mViewModel.email.value!!
+                                    mViewModel.email.value!!,
+                                    "Email"
                                 )
                             findNavController().navigate(directions)
                         }
