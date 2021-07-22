@@ -1,7 +1,9 @@
 package com.sg.android.bambooflower.viewmodel.diaryWriteFragment
 
-import android.content.res.Resources
-import android.graphics.BitmapFactory
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -25,14 +27,11 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
     val editData: LiveData<Diary?> = _editData
 
     // 일기 작성
-    fun saveDiary(uid: String, resources: Resources) = viewModelScope.launch {
+    fun saveDiary(uid: String, context: Context) = viewModelScope.launch {
         val diaryData = Diary(
             id = null,
             contents = contents.value!!,
-            weatherImage = BitmapFactory.decodeResource(
-                resources,
-                weather.value!!.weatherImage
-            ),
+            weatherImage = getBitmap(context),
             weather = weather.value!!.weather,
             timeStamp = System.currentTimeMillis(),
             uid = uid
@@ -43,15 +42,12 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
     }
 
     // 일기 수정
-    fun editDiary(ordinaryData: Diary, resources: Resources) = viewModelScope.launch {
+    fun editDiary(ordinaryData: Diary, context: Context) = viewModelScope.launch {
         if (weather.value != null) {
             val editDiary = Diary(
                 id = ordinaryData.id,
                 contents = contents.value!!,
-                weatherImage = BitmapFactory.decodeResource(
-                    resources,
-                    weather.value!!.weatherImage
-                ),
+                weatherImage = getBitmap(context),
                 weather = weather.value!!.weather,
                 timeStamp = ordinaryData.timeStamp,
                 uid = ordinaryData.uid
@@ -60,5 +56,19 @@ class DiaryWriteViewModel @Inject constructor(private val repository: DiaryWrite
             repository.editDiary(editDiary)
             _editData.value = editDiary
         }
+    }
+
+    private fun getBitmap(context: Context): Bitmap {
+        val drawable = ContextCompat.getDrawable(context, weather.value!!.weatherImage)!!
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.width, canvas.height);
+        drawable.draw(canvas);
+
+        return bitmap
     }
 }

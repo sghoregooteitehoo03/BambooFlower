@@ -155,6 +155,6 @@ class DiaryWriteFragment : Fragment() {
     // 일기 작성
     private fun diaryWrite() {
         val uid = gViewModel.user.value?.uid!! // 작성자 id
-        mViewModel.saveDiary(uid, resources)
+        mViewModel.saveDiary(uid, requireContext())
     }
 }

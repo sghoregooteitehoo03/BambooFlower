@@ -84,10 +84,11 @@
                     android:id="@+id/weather_image"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:src="@drawable/test_image"
                     app:layout_constraintBottom_toBottomOf="@id/timestamp_text"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/timestamp_text"/>
+                    app:layout_constraintTop_toTopOf="@id/timestamp_text"
+                    app:setBitmapImage="@{diaryData.weatherImage}"
+                    tools:src="@drawable/ic_sun"/>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_divide"

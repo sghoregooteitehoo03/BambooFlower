@@ -176,6 +176,6 @@ class DiaryEditFragment : Fragment() {
 
     // 일기 수정
     private fun diaryEdit() {
-        mViewModel.editDiary(diary, resources)
+        mViewModel.editDiary(diary, requireContext())
     }
 }

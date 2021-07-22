@@ -10,10 +10,10 @@ import com.sg.android.bambooflower.databinding.PagerWeatherBinding
 
 class WeatherPagerAdapter() : RecyclerView.Adapter<WeatherViewHolder>() {
     private val imageResources = listOf(
-        Weather(R.drawable.test_image, Weather.SUNNY),
-        Weather(R.drawable.test_image, Weather.CLOUDY),
-        Weather(R.drawable.test_image, Weather.RAINY),
-        Weather(R.drawable.test_image, Weather.SNOWY)
+        Weather(R.drawable.ic_sun, Weather.SUNNY),
+        Weather(R.drawable.ic_cloud, Weather.CLOUDY),
+        Weather(R.drawable.ic_rain, Weather.RAINY),
+        Weather(R.drawable.ic_snow, Weather.SNOWY)
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {
