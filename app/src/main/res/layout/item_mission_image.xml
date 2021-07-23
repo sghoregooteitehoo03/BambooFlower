@@ -25,7 +25,7 @@
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setResourceImage="@{R.drawable.test_image}"
+            app:setUriImage="@{imageUri}"
             tools:src="@drawable/test_image"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

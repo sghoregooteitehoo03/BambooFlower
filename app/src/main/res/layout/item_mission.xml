@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="com.sg.android.bambooflower.R"/>
-
         <variable
             name="mission"
             type="com.sg.android.bambooflower.data.Mission"/>
@@ -37,7 +35,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:setResourceImage="@{R.drawable.test_image}"
+                app:setMissionImage="@{mission}"
                 tools:src="@drawable/test_image"/>
 
             <TextView

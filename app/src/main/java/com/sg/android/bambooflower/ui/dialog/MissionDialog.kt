@@ -21,8 +21,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.missionDialog.MissionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  . 뷰 표시 ㅁ
 @AndroidEntryPoint
 class MissionDialog : BottomSheetDialogFragment(),
     MissionImageAdapter.ImageItemListener,
@@ -101,11 +99,9 @@ class MissionDialog : BottomSheetDialogFragment(),
     private fun setObserver() {
         mViewModel.otherUserImageList.observe(viewLifecycleOwner) { list ->
             if (list != null) {
-                // TODO: 미션 데이터 수정 후 코드 수정하기
                 val mission = gViewModel.mission.value!!
-                val testList =
-                    listOf("https://firebasestorage.googleapis.com/v0/b/bambooflower-3b508.appspot.com/o/yLqWcjAMxLVb6pj4DHy5A0a9ttt2%2FPostImage%2F1624696617965-yLqWcjAMxLVb6pj4DHy5A0a9ttt2%2F0.png?alt=media&token=ce3f9263-3d24-4cf4-93a5-bc415d9510bc".toUri())
-                missionImageAdapter.syncData(testList)
+
+                missionImageAdapter.syncData(mission.missionImage!!.map { it.toUri() })
                 imageOtherAdapter.syncData(list)
             } else {
                 val mission = gViewModel.mission.value!!

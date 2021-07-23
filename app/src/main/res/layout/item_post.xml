@@ -170,6 +170,6 @@
             android:id="@+id/divide_view"
             android:layout_width="match_parent"
             android:layout_height="12dp"
-            android:background="@color/gray"/>
+            android:background="@color/divide_color"/>
     </LinearLayout>
 </layout>

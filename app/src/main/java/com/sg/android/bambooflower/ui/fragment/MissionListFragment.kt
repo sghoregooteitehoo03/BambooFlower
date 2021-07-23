@@ -32,7 +32,6 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 // TODO:
-//  . 미션 이미지 및 프로필 이미지 구현
 //  . 광고 릴리스 키로 바꾸기
 @AndroidEntryPoint
 class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View.OnClickListener {

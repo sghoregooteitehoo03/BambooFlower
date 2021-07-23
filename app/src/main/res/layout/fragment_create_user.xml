@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="프로필 설정"
-                android:textColor="@color/black"
+                android:textColor="@color/default_item_color"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -67,14 +67,15 @@
                 android:padding="6dp"
                 app:layout_constraintBottom_toBottomOf="@id/profile_image"
                 app:layout_constraintEnd_toEndOf="@id/profile_image"
-                app:setResourceImage="@{R.drawable.ic_camera}"/>
+                app:setResourceImage="@{R.drawable.ic_camera}"
+                tools:src="@drawable/ic_camera"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/input_id_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="36dp"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/default_background_color"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
                 app:layout_constraintTop_toBottomOf="@id/profile_image">
@@ -105,7 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                app:boxBackgroundColor="@color/white"
+                app:boxBackgroundColor="@color/default_background_color"
                 app:hintEnabled="false"
                 app:layout_constraintTop_toBottomOf="@id/input_id_layout">
 
@@ -178,9 +179,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginTop="48dp"
-                android:insetBottom="0dp"
-                android:insetTop="0dp"
                 android:enabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.name.equals(blank) &amp;&amp; viewmodel.firstCheck &amp;&amp; viewmodel.secondCheck}"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
                 android:onClick="@{clickListener}"
                 android:text="시작하기"
                 android:textColor="@color/white"

@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
@@ -22,7 +23,6 @@ import com.google.android.gms.ads.AdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Mission
-import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomButton
@@ -234,16 +234,22 @@ fun setRefresh(view: SwipeRefreshLayout, isLoading: Boolean) {
     view.isRefreshing = isLoading
 }
 
-@BindingAdapter("app:setUriImage", "app:setResourceImage", "app:setBitmapImage", "app:setPostImage", requireAll = false)
-fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitmap: Bitmap?, postData: Post?) {
+@BindingAdapter(
+    "app:setUriImage",
+    "app:setResourceImage",
+    "app:setBitmapImage",
+    "app:setMissionImage",
+    requireAll = false
+)
+fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitmap: Bitmap?, missionData: Mission?) {
     if (imageUri != null) {
         Glide.with(view.context).load(imageUri).into(view)
     } else if (imageResource != null) {
         Glide.with(view.context).load(imageResource).into(view)
     } else if (imageBitmap != null) {
         Glide.with(view.context).load(imageBitmap).into(view)
-    } else if (postData != null) {
-        Glide.with(view.context).load(postData.image!![0]).into(view)
+    } else if (missionData != null) {
+        Glide.with(view.context).load(missionData.missionImage?.get(0)).into(view)
     }
     view.clipToOutline = true
 }

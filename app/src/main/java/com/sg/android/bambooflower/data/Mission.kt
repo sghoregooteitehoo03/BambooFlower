@@ -6,10 +6,11 @@ data class Mission(
     val level: Int? = null,
     val missionTitle: String? = null,
     val missionHow: String? = null,
-    val missionImage: List<String> = listOf(),
+    val missionImage: List<String>? = null,
     val uid: String? = null,
     val madeBy: String? = null,
-    val profileImage: String = ""
+    val profileImage: String = "",
+    val timestamp: Long? = null,
 ) {
     override fun equals(other: Any?): Boolean {
         other as Mission
