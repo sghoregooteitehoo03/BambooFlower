@@ -174,16 +174,6 @@
         android:label="DiaryEditFragment"
         tools:layout="@layout/fragment_diary_write"/>
     <fragment
-        android:id="@+id/myPostListFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.MyPostListFragment"
-        android:label="MyPostListFragment"
-        tools:layout="@layout/fragment_post_list"/>
-    <fragment
-        android:id="@+id/myMissionFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.MyMissionFragment"
-        android:label="MyMissionFragment"
-        tools:layout="@layout/fragment_my_mission"/>
-    <fragment
         android:id="@+id/settingFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.SettingFragment"
         android:label="SettingFragment"

@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.DiaryPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentDiaryListBinding
@@ -20,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+// TODO: 광고 릴리스 키로 변경
 @AndroidEntryPoint
 class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -39,6 +42,12 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
             this.viewmodel = mViewModel
             this.clickListener = this@DiaryListFragment
             this.diaryList.adapter = diaryAdapter
+            with(this.adLayout) {
+                iconView = adImage
+                headlineView = adHeadline
+                bodyView = adBody
+                callToActionView = adBtn
+            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -48,6 +57,15 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setList()
+
+        // 광고 로드
+        val adLoader = AdLoader
+            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+            .forNativeAd {
+                mViewModel.loadAd.value = it
+            }
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
     override fun onStart() {

@@ -4,6 +4,7 @@ import androidx.core.net.toUri
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.storage.FirebaseStorage
 import com.sg.android.bambooflower.data.User
+import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import org.json.JSONObject
 import javax.inject.Inject
@@ -51,8 +52,7 @@ class ProfileEditRepository @Inject constructor(
             put("name", name)
         }
 
-        // TODO: 업데이트 전에 수정하기
-        functions.getHttpsCallable("changeProfileTest")
+        functions.getHttpsCallable(Contents.FUNC_CHANGE_PROFILE)
             .call(jsonObj)
             .await()
     }

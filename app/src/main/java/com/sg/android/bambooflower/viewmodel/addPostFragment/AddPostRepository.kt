@@ -60,8 +60,7 @@ class AddPostRepository @Inject constructor(
             put("currentTime", currentTime)
         }
 
-        // TODO: 업데이트 전에 수정하기
-        return functions.getHttpsCallable("testAddPost")
+        return functions.getHttpsCallable(Contents.FUNC_ADD_POST)
             .call(jsonObj)
             .await()
     }

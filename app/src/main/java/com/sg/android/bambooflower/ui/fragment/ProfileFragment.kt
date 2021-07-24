@@ -19,7 +19,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO: 광고 릴리스 키로 변경
+// TODO
 //  . 내 게시글 모아보기 구현 (나중에 구현)
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {

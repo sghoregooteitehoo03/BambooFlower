@@ -13,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import androidx.paging.PagingData
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.PostPagingAdapter
@@ -54,6 +56,13 @@ class PostFilterFragment(private val isFiltering: Boolean) : Fragment(), PostPag
         with(binding) {
             this.viewmodel = mViewModel
             this.postList.adapter = postAdapter
+            with(this.adLayout) {
+                iconView = adImage
+                headlineView = adHeadline
+                mediaView = adMedia
+                bodyView = adBody
+                callToActionView = adBtn
+            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -73,6 +82,15 @@ class PostFilterFragment(private val isFiltering: Boolean) : Fragment(), PostPag
                 mViewModel.isLoading.value = false
             }
         }
+
+        // 광고 로드
+        val adLoader = AdLoader
+            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+            .forNativeAd {
+                mViewModel.loadAd.value = it
+            }
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
     // 더보기 버튼 누름

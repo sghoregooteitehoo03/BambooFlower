@@ -95,22 +95,7 @@
             android:id="@+id/filter_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/ad_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline_text"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ad_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/gray_darker"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <com.google.android.gms.ads.AdView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:adSize="BANNER"
-                app:adUnitId="@string/ad_banner_unit_id_test"
-                app:loadBannerAd="@{true}"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.google.android.gms.ads.nativead.NativeAd
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.data.User
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,8 @@ class PostFilterViewModel @Inject constructor(private val repository: PostFilter
     val isFavorite = MutableLiveData(false) // 좋아요 여부
     val isDeleted = MutableLiveData(false) // 삭제 여부
     val isError = MutableLiveData(false) // 오류 여부
+
+    val loadAd = MutableLiveData<NativeAd?>(null) // 로드된 광고
     val postList = MutableLiveData<Flow<PagingData<Post>>?>(null) // 게시글 리스트
     val size = MutableLiveData(-1)
 

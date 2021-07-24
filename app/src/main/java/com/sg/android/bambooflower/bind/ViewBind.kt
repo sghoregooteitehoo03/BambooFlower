@@ -5,13 +5,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -20,12 +17,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MediaContent
+import com.google.android.gms.ads.nativead.MediaView
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Mission
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
-import com.sg.android.bambooflower.ui.view.CustomButton
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -161,11 +161,6 @@ fun setSelectedText(view: TextView, isSelected: Boolean) {
     }
 }
 
-@BindingAdapter("app:setYearText")
-fun setYearText(view: TextView, timeStamp: Long) {
-    view.text = SimpleDateFormat("yyyy", Locale.KOREA).format(timeStamp)
-}
-
 @BindingAdapter("app:setDiaryTimestamp")
 fun setDiaryTimestamp(view: TextView, timeStamp: Long) {
     view.text = SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(timeStamp)
@@ -189,27 +184,6 @@ fun setRankingInfo(view: TextView, user: User) {
     view.text = "Lv: ${user.myLevel} | 수행한 미션: ${user.achievedCount}"
 }
 
-@BindingAdapter("app:setRankingImage")
-fun setRankingImage(view: ImageView, rank: Int) {
-    when (rank) {
-        1 -> {
-            view.visibility = View.VISIBLE
-            Glide.with(view).load(R.drawable.rank1).into(view)
-        }
-        2 -> {
-            view.visibility = View.VISIBLE
-            Glide.with(view).load(R.drawable.rank2).into(view)
-        }
-        3 -> {
-            view.visibility = View.VISIBLE
-            Glide.with(view).load(R.drawable.rank3).into(view)
-        }
-        else -> {
-            view.visibility = View.GONE
-        }
-    }
-}
-
 @BindingAdapter("app:errorMessage")
 fun errorMessage(view: TextView, errorMsg: String) {
     if (errorMsg.isNotEmpty() && errorMsg != ErrorMessage.SUCCESS) {
@@ -218,20 +192,24 @@ fun errorMessage(view: TextView, errorMsg: String) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.M)
-@BindingAdapter("app:customButtonEnabled")
-fun customButtonEnabled(view: CustomButton, isEnabled: Boolean) {
-    view.setCustomEnabled(isEnabled)
-}
-
-@BindingAdapter("app:buttonEnabled")
-fun buttonEnabled(view: View, isEnabled: Boolean) {
-    view.isEnabled = isEnabled
-}
-
 @BindingAdapter("app:setRefresh")
 fun setRefresh(view: SwipeRefreshLayout, isLoading: Boolean) {
     view.isRefreshing = isLoading
+}
+
+@BindingAdapter("app:setNativeAd")
+fun setNativeAd(view: NativeAdView, nativeAd: NativeAd?) {
+    if (nativeAd != null) {
+        view.setNativeAd(nativeAd)
+    }
+}
+
+@BindingAdapter("app:setMediaContents")
+fun setMediaContents(view: MediaView, content: MediaContent?) {
+    if (content != null) {
+        view.setImageScaleType(ImageView.ScaleType.CENTER_CROP)
+        view.setMediaContent(content)
+    }
 }
 
 @BindingAdapter(
