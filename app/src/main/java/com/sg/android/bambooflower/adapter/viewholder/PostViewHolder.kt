@@ -7,16 +7,29 @@ import com.sg.android.bambooflower.databinding.ItemPostBinding
 
 class PostViewHolder(
     private val binding: ItemPostBinding,
-    private val listener: PostPagingAdapter.PostItemListener
+    private val listener: PostPagingAdapter.PostItemListener,
+    private val userId: String
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        itemView.setOnClickListener {
-            listener.onItemClickListener(bindingAdapterPosition)
+        binding.moreBtn.setOnClickListener {
+            listener.onMoreItemClickListener(bindingAdapterPosition, it)
+        }
+        binding.postImage.setOnClickListener {
+            listener.onImageClickListener(bindingAdapterPosition)
+        }
+        binding.favoriteLayout.setOnClickListener {
+            listener.onFavoriteClickListener(bindingAdapterPosition)
+        }
+        binding.showPeopleBtn.setOnClickListener {
+            listener.onShowPeopleClickListener(bindingAdapterPosition)
         }
     }
 
     fun bind(post: Post?) {
-        binding.postData = post
+        with(binding) {
+            this.postData = post
+            this.uid = userId
+        }
     }
 }

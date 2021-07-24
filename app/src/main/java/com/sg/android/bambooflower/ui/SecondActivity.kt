@@ -35,9 +35,6 @@ class SecondActivity : AppCompatActivity() {
             Contents.SHOW_IMAGE_FRAG -> {
                 navController.navigate(R.id.action_emptyFragment_to_imageDetailFragment)
             }
-            Contents.SHOW_ALBUM_FRAG -> {
-                navController.navigate(R.id.action_emptyFragment_to_albumFragment)
-            }
             Contents.SHOW_WEB_VIEWER -> {
                 val title = intent.getStringExtra(Contents.EXTRA_TITLE)
 

@@ -23,7 +23,7 @@
     </style>
 
     <!-- BottomSheet Style -->
-    <style name="BottomSheetTheme" parent="Theme.Design.BottomSheetDialog">
+    <style name="BottomSheetTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>
 
@@ -34,6 +34,8 @@
     <style name="BottomSheetShape" parent="">
         <item name="cornerSizeTopLeft">16dp</item>
         <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerFamily">rounded</item>
     </style>
 </resources>

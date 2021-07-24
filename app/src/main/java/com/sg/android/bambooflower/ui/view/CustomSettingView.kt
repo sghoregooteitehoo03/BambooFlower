@@ -61,10 +61,15 @@ class CustomSettingView : ConstraintLayout {
     private fun setTypeArray(typedArray: TypedArray) {
         val text =
             typedArray.getString(R.styleable.CustomSettingView_settingText)
+        val textColor = typedArray.getColor(
+            R.styleable.CustomSettingView_settingTextColor,
+            resources.getColor(R.color.black, null)
+        )
         val visible =
             typedArray.getBoolean(R.styleable.CustomSettingView_settingIconVisible, true)
 
         customTextView.text = text
+        customTextView.setTextColor(textColor)
         customIconView.visibility = if (visible) {
             View.VISIBLE
         } else {

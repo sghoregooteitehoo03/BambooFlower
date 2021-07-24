@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,47 +9,60 @@
         <variable
             name="viewmodel"
             type="com.sg.android.bambooflower.viewmodel.diaryWriteFragment.DiaryWriteViewModel"/>
-
-        <variable
-            name="gviewmodel"
-            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
-
-        <variable
-            name="navController"
-            type="androidx.navigation.NavController"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="12dp">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/weather_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintBottom_toTopOf="@id/slider_dots"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/slider_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/guideline_center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white_darker"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/guideline_center"/>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/write_diary_input"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
             android:background="@color/default_background_color"
             android:gravity="top"
             android:hint="자유롭게 작성해보세요."
-            android:minHeight="280dp"
             android:text="@={viewmodel.contents}"
             app:hideKeyboard="@{viewmodel.isSaved()}"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <ImageView
-            android:id="@+id/satisfaction_image"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_margin="8dp"
-            android:background="@drawable/shape_round"
-            android:backgroundTint="@color/divide_color"
-            android:onClick="@{() -> navController.navigate(R.id.satisfactionFragment)}"
-            android:padding="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/low_image"
-            app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:setBitmapImage="@{gviewmodel.satisfaction}"/>
+            app:layout_constraintTop_toBottomOf="@id/guideline_center"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

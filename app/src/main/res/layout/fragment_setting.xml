@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="clickListener"
-            type="android.view.View.OnClickListener" />
+            type="android.view.View.OnClickListener"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/divide_color"
+        android:background="@color/bright_background_color"
         android:orientation="vertical">
 
         <LinearLayout
@@ -28,31 +28,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{clickListener}"
-                app:settingText="이용약관" />
+                app:settingText="이용약관"/>
 
             <com.sg.android.bambooflower.ui.view.CustomSettingView
                 android:id="@+id/personal_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{clickListener}"
-                app:settingText="개인정보 처리방침" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/shape_layout_center"
-            android:orientation="vertical"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp">
-
-            <com.sg.android.bambooflower.ui.view.CustomSettingView
-                android:id="@+id/diary_clear_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="@{clickListener}"
-                app:settingText="일기 모두삭제" />
+                app:settingText="개인정보 처리방침"/>
         </LinearLayout>
 
         <LinearLayout
@@ -69,20 +52,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{clickListener}"
-                app:settingText="문의하기" />
-
-            <com.sg.android.bambooflower.ui.view.CustomSettingView
-                android:id="@+id/delete_account_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:onClick="@{clickListener}"
-                app:settingText="회원 탈퇴하기" />
+                app:settingText="문의하기"/>
 
             <com.sg.android.bambooflower.ui.view.CustomSettingView
                 android:id="@+id/version_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:settingIconVisible="false" />
+                app:settingIconVisible="false"
+                app:settingTextColor="@android:color/tab_indicator_text"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/shape_layout_center"
+            android:orientation="vertical"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp">
+
+            <com.sg.android.bambooflower.ui.view.CustomSettingView
+                android:id="@+id/diary_clear_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{clickListener}"
+                app:settingText="일기 모두삭제"/>
+
+            <com.sg.android.bambooflower.ui.view.CustomSettingView
+                android:id="@+id/sign_out_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="@{clickListener}"
+                app:settingText="로그아웃"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/delete_account_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:onClick="@{clickListener}"
+            android:text="회원탈퇴"
+            android:textStyle="bold"/>
     </LinearLayout>
 </layout>

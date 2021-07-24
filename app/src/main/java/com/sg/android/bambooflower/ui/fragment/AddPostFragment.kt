@@ -2,74 +2,36 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.Manifest
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.view.*
-import android.view.inputmethod.InputMethodManager
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.adapter.ImageAdapter
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentAddPostBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
-import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.addPostFragment.AddPostViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.util.*
 
 @AndroidEntryPoint
-class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClickListener {
+class AddPostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<AddPostViewModel>()
-    private var imageList: MutableList<Uri> = mutableListOf() // 선택한 이미지를 담을 리스트
 
-    private lateinit var imageAdapter: ImageAdapter
-    private lateinit var imm: InputMethodManager
     private lateinit var user: User
-    private val simpleCallback = object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP
-                or ItemTouchHelper.DOWN
-                or ItemTouchHelper.START
-                or ItemTouchHelper.END,
-        0
-    ) {
-        override fun onMove(
-            recyclerView: RecyclerView,
-            viewHolder: RecyclerView.ViewHolder,
-            target: RecyclerView.ViewHolder
-        ): Boolean {
-            val fromPosition = viewHolder.bindingAdapterPosition // 이전에 있던 위치
-            val toPosition = target.bindingAdapterPosition // 바뀔 위치
-
-            // 리스트의 위치를 바꿈
-            Collections.swap(imageList, fromPosition, toPosition)
-            imageAdapter.notifyItemMoved(fromPosition, toPosition)
-
-            return false
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            // NOT USED
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,25 +39,15 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val itemTouchHelper = ItemTouchHelper(simpleCallback)
         val binding = FragmentAddPostBinding.inflate(inflater)
-        imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imageAdapter = ImageAdapter().apply {
-            setOnImageItemListener(this@AddPostFragment)
-        }
         user = gViewModel.user.value!!
-        mViewModel.title.value = "[${gViewModel.user.value?.myMissionTitle}]"
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
             this.user = user
             this.clickListener = this@AddPostFragment
-
-            with(imageList) {
-                adapter = imageAdapter
-                itemTouchHelper.attachToRecyclerView(this)
-            }
+            this.blank = ""
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -114,17 +66,11 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
         super.onStart()
 
         // 툴바 설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "인증하기"
-            this?.setDisplayHomeAsUpEnabled(true)
-            this?.show()
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "[${user.myMissionTitle}]"
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            showToolbar()
         }
-    }
-
-    // 메뉴 설정
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_addpost_fragment, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -133,31 +79,15 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
                 findNavController().navigateUp()
                 true
             }
-            R.id.menu_add_post -> { // 게시 버튼
-                addPost()
-                true
-            }
             else -> false
         }
-    }
-
-    // 이미지 제거
-    override fun onRemoveListener(pos: Int) {
-        imageList.removeAt(pos)
-        imageAdapter.notifyItemRemoved(pos)
     }
 
     // 선택한 이미지를 받아 옴
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Contents.GET_IMAGE && resultCode == Activity.RESULT_OK) {
-            val selectedImageList =
-                data?.getStringArrayExtra(Contents.EXTRA_GET_IMAGE)?.map {
-                    it.toUri()
-                }?.toMutableList() // 이미지 선택 화면에서 선택한 이미지를 가져옴
-            imageList = selectedImageList!!
-
-            imageAdapter.syncData(imageList) // 리스트 갱신
+            mViewModel.image.value = data?.data?.toString()!! // 이미지 저장
         }
     }
 
@@ -196,8 +126,11 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.get_image_btn -> {
+            R.id.get_image_layout -> {
                 getImage()
+            }
+            R.id.add_post_btn -> {
+                addPost()
             }
             else -> {
             }
@@ -210,8 +143,6 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
         mViewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
                 gViewModel.user.value = user
-                gViewModel.syncData.value = true
-
                 findNavController().navigateUp()
             }
         }
@@ -223,7 +154,7 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
                 (requireActivity() as MainActivity).ready()
             }
         }
-        // 오류메세지
+        // 오류 메세지
         mViewModel.errorMsg.observe(viewLifecycleOwner) { msg ->
             if (msg.isNotEmpty()) {
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT)
@@ -233,13 +164,12 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
         }
     }
 
+    // 게시물 게시
     private fun addPost() {
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("내용을 게시하시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    mViewModel.addPost(user, imageList, requireContext().contentResolver)
-                }
+                mViewModel.addPost(user, requireContext().contentResolver)
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()
@@ -249,7 +179,8 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
         }
     }
 
-    private fun getImage() { // 이미지를 가져오는 화면으로 이동함
+    // 이미지를 가져옴
+    private fun getImage() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             if (checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) { // 권한 설정
                 requestPermissions(
@@ -276,17 +207,16 @@ class AddPostFragment : Fragment(), ImageAdapter.ImageItemListener, View.OnClick
         }
     }
 
+    // 이미지를 가져오는 인텐트를 실행
     private fun getImageIntent() {
-        val intent = Intent(requireContext(), SecondActivity::class.java).apply {
-            putExtra(
-                Contents.EXTRA_SET_IMAGE,
-                imageList.map { it.toString() }.toTypedArray()
-            )
-            action = Contents.SHOW_ALBUM_FRAG
+        val intent = Intent().apply {
+            type = "image/*"
+            action = Intent.ACTION_PICK
         }
         startActivityForResult(intent, Contents.GET_IMAGE)
     }
 
+    // 권한 확인
     private fun checkPermission(permission: String): Boolean =
         ContextCompat.checkSelfPermission(
             requireContext(),

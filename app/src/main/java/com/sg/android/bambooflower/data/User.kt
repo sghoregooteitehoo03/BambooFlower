@@ -2,9 +2,9 @@ package com.sg.android.bambooflower.data
 
 data class User(
     val uid: String? = null,
-    val name: String? = null,
+    var name: String? = null,
     var profileImage: String = "",
-    val email: String? = null,
+    var email: String? = null,
     var achievedCount: Int? = null,
     var achieveState: String? = null,
     val myLevel: Int? = null,
@@ -12,7 +12,9 @@ data class User(
     var myMissionHow: String? = null,
     var missionDoc: String? = null,
     val latestStart: Long? = null,
-    val isLevelUp: Boolean = false
+    val isLevelUp: Boolean = false,
+    val token: String = "",
+    val loginWay: String? = null,
 ) {
     companion object {
         const val STATE_NOTHING = "STATE_NOTHING"

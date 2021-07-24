@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="게시글 신고"
             android:textColor="@color/default_item_color"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,11 +46,10 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/input_report_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/green_300"
+            app:boxBackgroundColor="@color/default_background_color"
             app:hintEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/title_text">
 
@@ -69,10 +68,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:backgroundTint="@color/green_300"
             android:enabled="@{!viewmodel.reportReason.equals(blank)}"
             android:onClick="@{() -> viewmodel.reportPost(post)}"
             android:text="신고하기"
-            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/input_report_layout"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

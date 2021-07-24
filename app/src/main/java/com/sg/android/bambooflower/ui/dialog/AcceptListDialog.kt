@@ -45,6 +45,11 @@ class AcceptListDialog : BottomSheetDialogFragment() {
         setObserver()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        gViewModel.post.value = null
+    }
+
     private fun setObserver() {
         mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (!isLoading) {

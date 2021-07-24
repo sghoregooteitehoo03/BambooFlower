@@ -10,6 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.DiaryPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentDiaryListBinding
@@ -20,8 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+// TODO: 광고 릴리스 키로 변경
 @AndroidEntryPoint
-class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener {
+class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<DiaryListViewModel>()
 
@@ -37,7 +40,14 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener {
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
+            this.clickListener = this@DiaryListFragment
             this.diaryList.adapter = diaryAdapter
+            with(this.adLayout) {
+                iconView = adImage
+                headlineView = adHeadline
+                bodyView = adBody
+                callToActionView = adBtn
+            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -47,21 +57,34 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setList()
+
+        // 광고 로드
+        val adLoader = AdLoader
+            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+            .forNativeAd {
+                mViewModel.loadAd.value = it
+            }
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
     override fun onStart() {
         super.onStart()
         // 툴바설정
-        with((activity as MainActivity).supportActionBar) {
-            this?.title = "하루일기"
-            this?.setDisplayHomeAsUpEnabled(false)
-            this?.show()
+        with((activity as MainActivity)) {
+            supportActionBar?.title = "하루일기"
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            showToolbar()
         }
     }
 
-    // 일기 작성 클릭
-    override fun addItemClickListener() {
-        findNavController().navigate(R.id.action_diaryListFragment_to_diaryWriteFragment)
+    // 버튼 액션
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.add_diary_btn -> { // 일기 작성버튼
+                findNavController().navigate(R.id.action_diaryListFragment_to_diaryWriteFragment)
+            }
+        }
     }
 
     // 일기 아이템 클릭

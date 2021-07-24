@@ -9,7 +9,8 @@ import androidx.room.PrimaryKey
 data class Diary(
     @PrimaryKey(autoGenerate = true) val id: Int?,
     @ColumnInfo(name = "contents") val contents: String,
-    @ColumnInfo(name = "satisfaction") val satisfaction: Bitmap,
+    @ColumnInfo(name = "weatherImage") val weatherImage: Bitmap,
+    @ColumnInfo(name = "weather") val weather: String,
     @ColumnInfo(name = "timeStamp") val timeStamp: Long,
     @ColumnInfo(name = "uid") val uid: String
 ) {

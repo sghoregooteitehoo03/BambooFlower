@@ -12,88 +12,164 @@
         <variable
             name="postData"
             type="com.sg.android.bambooflower.data.Post"/>
+
+        <variable
+            name="uid"
+            type="String"/>
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:padding="8dp">
+            android:layout_height="match_parent"
+            android:padding="12dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:civ_border_color="@color/gray"
+                app:civ_border_width="1dp"
+                app:civ_circle_background_color="@color/gray_bright"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setProfileImage="@{postData.profileImage}"
+                tools:src="@drawable/ic_person"/>
+
+            <TextView
+                android:id="@+id/writer_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@{postData.writer}"
+                android:textColor="@color/default_item_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/profile_image"
+                app:layout_constraintStart_toEndOf="@id/profile_image"
+                app:layout_constraintTop_toTopOf="@id/profile_image"
+                tools:text="Dev"/>
+
+            <ImageButton
+                android:id="@+id/more_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:src="@drawable/ic_more_horiz"
+                app:layout_constraintBottom_toBottomOf="@id/profile_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/profile_image"/>
+
+            <ImageView
+                android:id="@+id/post_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/shape_rounded_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toTopOf="@id/guideline_divide"
+                app:layout_constraintTop_toBottomOf="@id/profile_image"
+                app:setUriImage="@{Uri.parse(postData.image)}"
+                tools:src="@drawable/test_image"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_divide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.81"/>
 
             <TextView
                 android:id="@+id/title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
-                android:maxLines="1"
+                android:layout_marginTop="12dp"
                 android:text="@{postData.title}"
                 android:textColor="@color/default_item_color"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="[게시글 제목]"/>
-
-            <ImageView
-                android:id="@+id/favorite_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/ic_thumb_up_black"
-                app:layout_constraintStart_toEndOf="@id/title_text"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/post_image"
+                tools:text="[간단한 산책]"/>
 
             <TextView
-                android:id="@+id/favorite_text"
+                android:id="@+id/timestamp_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="11dp"
-                android:text="@{String.valueOf(postData.favoriteCount)}"
-                android:textColor="@color/default_item_color"
+                android:layout_marginStart="12dp"
                 android:textSize="12sp"
-                app:layout_constraintStart_toEndOf="@id/favorite_image"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="13"/>
+                app:layout_constraintBottom_toBottomOf="@id/title_text"
+                app:layout_constraintStart_toEndOf="@id/title_text"
+                app:layout_constraintTop_toTopOf="@id/title_text"
+                app:setPostTimestamp="@{postData.timeStamp}"
+                tools:text="5분 전"/>
 
             <TextView
-                android:id="@+id/info_text"
+                android:id="@+id/post_content_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
+                android:text="@{postData.contents}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_text"
-                app:setPostItemInfo="@{postData}"
-                tools:text="닉네임 | 21.03.19."/>
+                tools:text="인증합니다 ㅎㅎ"/>
 
-            <TextView
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="(인증 완료)"
-                android:textColor="@color/green_300"
-                android:textStyle="bold"
-                android:visibility="@{postData.favoriteCount >= 1 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintStart_toEndOf="@id/info_text"
-                app:layout_constraintTop_toBottomOf="@id/title_text"/>
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.784"/>
 
-            <ImageView
-                android:id="@+id/post_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/shape_rectangle"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/ic_launcher"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <LinearLayout
+                android:id="@+id/favorite_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/post_content_text"
+                app:layout_constraintEnd_toStartOf="@id/show_people_btn"
+                app:layout_constraintStart_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toTopOf="@id/title_text">
+
+                <ImageView
+                    android:id="@+id/favorite_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    app:isFavorite="@{postData.favorites.containsKey(uid)}"
+                    tools:src="@drawable/ic_thumb_up_off"/>
+
+                <TextView
+                    android:id="@+id/favorite_count_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@{String.valueOf(postData.favoriteCount)}"
+                    android:textColor="@color/default_item_color"
+                    tools:text="100"/>
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/show_people_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:src="@drawable/ic_arrow_drop_down"
+                app:layout_constraintBottom_toBottomOf="@id/post_content_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:setUriImage="@{Uri.parse(postData.image[0])}"/>
+                app:layout_constraintTop_toTopOf="@id/title_text"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/divide_view"
+            android:layout_width="match_parent"
+            android:layout_height="12dp"
+            android:background="@color/divide_color"/>
     </LinearLayout>
 </layout>

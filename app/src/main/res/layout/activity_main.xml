@@ -23,8 +23,8 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="16dp"
                 android:background="?selectableItemBackground"
@@ -32,29 +32,14 @@
                 app:civ_border_width="1dp"
                 app:civ_circle_background_color="@color/gray_bright"
                 tools:src="@drawable/ic_person"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/input_search_layout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:paddingTop="4dp"
-                android:paddingBottom="4dp"
-                android:visibility="gone"
-                app:endIconMode="clear_text"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/input_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="게시글 제목 및 내용을 입력해주세요."
-                    android:imeOptions="actionSearch"
-                    android:inputType="text"
-                    android:textSize="12sp"/>
-            </com.google.android.material.textfield.TextInputLayout>
         </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:id="@+id/divide_view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#f4f4f4"
+            app:layout_constraintBottom_toBottomOf="@id/main_toolbar"/>
 
         <fragment
             android:id="@+id/nav_host_fragment"

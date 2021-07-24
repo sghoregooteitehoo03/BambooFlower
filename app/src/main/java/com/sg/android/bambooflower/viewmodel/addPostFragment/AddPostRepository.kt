@@ -15,7 +15,6 @@ import com.google.gson.Gson
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
@@ -26,46 +25,37 @@ class AddPostRepository @Inject constructor(
 ) {
     // 게시글 작성
     suspend fun addPost(
-        title: String,
         content: String,
-        images: List<Uri>,
+        imageUri: Uri,
         user: User,
         contentResolver: ContentResolver
     ): HttpsCallableResult? {
         val currentTime = System.currentTimeMillis() // 현재 시간
-        val uid = user.uid!!
+        val uid = user.uid!! // 유저 아이디
         val docPath = "$currentTime-$uid" // 게시글 문서 위치
 
-        val imagePath = mutableListOf<String>() // 이미지 위치
+        // 압축 된 이미지
+        val image = imageSizeConvert(imageUri, contentResolver)
+        val imageName = "${currentTime}.png" // 이미지 이름
+
+        val reference = storage.reference // 저장될 경로
+            .child(uid)
+            .child(Contents.CHILD_POST_IMAGE)
+            .child(docPath)
+            .child(imageName)
 
         // storage에 저장
-        for (i in images.indices) {
-            val image = imageSizeConvert(images[i], contentResolver)
-            val imageName = "$i.png" // 이미지 이름
+        reference.putFile(image)
+            .await()
 
-            val reference = storage.reference // 저장될 경로
-                .child(uid)
-                .child(Contents.CHILD_POST_IMAGE)
-                .child(docPath)
-                .child(imageName)
-
-            reference.putFile(image)
-                .await()
-            imagePath.add(reference.downloadUrl.await().toString()) // 이미지 위치 저장
-
-            contentResolver.delete(image, null, null) // 생성한 이미지를 다시 삭제함
-        }
+        // 이미지 위치 저장
+        val imagePath = reference.downloadUrl.await().toString()
+        contentResolver.delete(image, null, null) // 생성 된 이미지를 다시 삭제함
 
         // 나머지는 Functions에서 처리
-        val imagesJson = JSONArray().apply {
-            for (image in imagePath) {
-                put(image)
-            }
-        }
         val jsonObj = JSONObject().apply {
-            put("title", title)
             put("content", content)
-            put("images", imagesJson)
+            put("image", imagePath)
             put("user", Gson().toJson(user))
             put("currentTime", currentTime)
         }
@@ -84,8 +74,10 @@ class AddPostRepository @Inject constructor(
         } else {
             MediaStore.Images.Media.getBitmap(contentResolver, uri)
         }
+
+        // 이미지 압축
         val outputStream = ByteArrayOutputStream()
-        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream) // 이미지 압축
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream)
 
         // bitmap -> uri
         val bytes = outputStream.toByteArray()

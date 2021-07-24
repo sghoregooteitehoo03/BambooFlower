@@ -5,7 +5,15 @@ data class Mission(
     val document: String? = null,
     val level: Int? = null,
     val missionTitle: String? = null,
-    val missionHow: String? = null
+    val missionHow: String? = null,
+    val missionImage: List<String>? = null,
+    val uid: String? = null,
+    val madeBy: String? = null,
+    val profileImage: String = "",
+    val timestamp: Long? = null,
 ) {
-    var isSelected = false
+    override fun equals(other: Any?): Boolean {
+        other as Mission
+        return document == other.document
+    }
 }

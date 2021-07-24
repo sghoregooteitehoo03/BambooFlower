@@ -53,12 +53,10 @@ class DiaryViewerFragment : Fragment() {
         super.onStart()
         // 툴바 설정
         with((activity as MainActivity)) {
-            with(supportActionBar) {
-                this?.title =
-                    SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diary.timeStamp)
-                this?.show()
-                this?.setDisplayHomeAsUpEnabled(true)
-            }
+            supportActionBar?.title =
+                SimpleDateFormat("yy.MM.dd (EE)", Locale.KOREA).format(diary.timeStamp)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            showToolbar()
         }
     }
 
@@ -79,7 +77,7 @@ class DiaryViewerFragment : Fragment() {
                 true
             }
             R.id.menu_edit_diary -> { // 수정하기
-                findNavController().navigate(R.id.diaryEditFragment)
+                findNavController().navigate(R.id.action_diaryViewerFragment_to_diaryEditFragment)
                 true
             }
             else -> false

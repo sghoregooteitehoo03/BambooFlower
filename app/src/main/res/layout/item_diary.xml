@@ -13,86 +13,103 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         app:cardBackgroundColor="@color/diary_color"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="72dp"
-            android:background="?attr/selectableItemBackground"
-            android:padding="8dp">
+            android:layout_height="match_parent"
+            android:background="?attr/selectableItemBackground">
 
-            <TextView
-                android:id="@+id/year_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_round_button"
-                android:backgroundTint="@color/deep_orange_300"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/guideline_divide"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:setYearText="@{diaryData.timeStamp}"
-                tools:text="2021"/>
-
-            <TextView
-                android:id="@+id/month_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guideline_divide"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/year_text"
-                app:setMonthDayText="@{diaryData.timeStamp}"
-                tools:text="12월 25(금)"/>
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_divide"
+            <LinearLayout
+                android:id="@+id/divide_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.31"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/icon_image"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/shape_round"
-                android:backgroundTint="@color/post_color"
-                android:padding="6dp"
-                android:scaleType="centerCrop"
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/shape_round"
+                    android:backgroundTint="@color/gray"/>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_round"
+                    android:backgroundTint="@color/gray"/>
+
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/shape_round"
+                    android:backgroundTint="@color/gray"/>
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="12dp"
+                android:padding="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:setBitmapImage="@{diaryData.satisfaction}"
-                tools:src="@drawable/high_image"/>
+                app:layout_constraintStart_toStartOf="@id/divide_view"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/diary_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:text="@{diaryData.contents}"
-                android:textColor="@color/default_item_color"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toStartOf="@id/icon_image"
-                app:layout_constraintStart_toEndOf="@id/guideline_divide"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="고행을 하였으며 예수는 무엇을 위하여..."/>
+                <TextView
+                    android:id="@+id/timestamp_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:textColor="@color/default_item_color"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@id/guideline_divide"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:setDiaryTimestamp="@{diaryData.timeStamp}"
+                    tools:text="21.07.15 (목)"/>
+
+                <ImageView
+                    android:id="@+id/weather_image"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:layout_constraintBottom_toBottomOf="@id/timestamp_text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/timestamp_text"
+                    app:setBitmapImage="@{diaryData.weatherImage}"
+                    tools:src="@drawable/ic_sun"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_divide"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_percent="0.37"/>
+
+                <TextView
+                    android:id="@+id/content_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="4dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:text="@{diaryData.contents}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/guideline_divide"
+                    tools:text="인간에 남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

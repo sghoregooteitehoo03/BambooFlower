@@ -12,7 +12,7 @@
         android:id="@+id/button_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        tools:src="@drawable/ic_lock_open" />
+        tools:src="@drawable/ic_check" />
 
     <TextView
         android:id="@+id/button_text"
@@ -21,5 +21,5 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:text="로그인" />
+        tools:text="확인" />
 </LinearLayout>

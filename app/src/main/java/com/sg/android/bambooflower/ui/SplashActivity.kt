@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
-import com.sg.android.bambooflower.viewmodel.loginFragment.LoginViewModel
+import com.sg.android.bambooflower.viewmodel.signUpFrag.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-    private val mViewModel by viewModels<LoginViewModel>()
+    private val mViewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
