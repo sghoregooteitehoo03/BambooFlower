@@ -202,7 +202,7 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
     private fun loadAdAndChange() {
         InterstitialAd.load(
             requireContext(),
-            resources.getString(R.string.ad_full_unit_id_change),
+            resources.getString(R.string.ad_full_unit_id),
             AdRequest.Builder().build(),
             adCallBack
         )

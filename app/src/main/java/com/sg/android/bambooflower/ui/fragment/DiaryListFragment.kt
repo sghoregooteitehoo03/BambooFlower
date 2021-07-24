@@ -60,7 +60,7 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
 
         // 광고 로드
         val adLoader = AdLoader
-            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id))
             .forNativeAd {
                 mViewModel.loadAd.value = it
             }

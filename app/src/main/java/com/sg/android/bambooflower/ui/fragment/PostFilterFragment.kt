@@ -30,6 +30,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+// TODO:
+//  . 광고 릴리스 키로 변경
 @AndroidEntryPoint
 class PostFilterFragment(private val isFiltering: Boolean) : Fragment(), PostPagingAdapter.PostItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -85,7 +87,7 @@ class PostFilterFragment(private val isFiltering: Boolean) : Fragment(), PostPag
 
         // 광고 로드
         val adLoader = AdLoader
-            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id))
             .forNativeAd {
                 mViewModel.loadAd.value = it
             }

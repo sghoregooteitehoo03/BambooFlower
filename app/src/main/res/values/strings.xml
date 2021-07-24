@@ -4,6 +4,9 @@
     <string name="facebook_app_id">1171522799971458</string>
     <string name="fb_login_protocol_scheme">fb1171522799971458</string>
 
+    <string name="ad_full_unit_id">ca-app-pub-7835153855071596/7006211452</string>
+    <string name="ad_native_unit_id">ca-app-pub-7835153855071596/5046780416</string>
+
     <string name="ad_banner_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
     <string name="ad_full_unit_id_test">ca-app-pub-3940256099942544/1033173712</string>
     <string name="ad_native_unit_id_test">ca-app-pub-3940256099942544/2247696110</string>
