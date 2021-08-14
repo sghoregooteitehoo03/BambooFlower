@@ -6,14 +6,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.functions.FirebaseFunctions
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class SignUpRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val store: FirebaseFirestore
+    private val functions: FirebaseFunctions
 ) {
     suspend fun login(credential: AuthCredential) {
         auth.signInWithCredential(credential)
@@ -25,18 +25,12 @@ class SignUpRepository @Inject constructor(
             .await()
     }
 
-    fun getUserData() =
-        store.collection(Contents.COLLECTION_USER)
-            .document(auth.currentUser!!.uid)
-            .get()
+    fun checkUserData() = functions.getHttpsCallable(Contents.FUNC_GET_USER_DATA)
+        .call(auth.currentUser?.uid!!)
+
 
     fun isLogin() =
         auth.currentUser != null
-
-    fun checkServer() =
-        store.collection(Contents.COLLECTION_SERVER)
-            .document("Important")
-            .get()
 
     suspend fun signOut(context: Context) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

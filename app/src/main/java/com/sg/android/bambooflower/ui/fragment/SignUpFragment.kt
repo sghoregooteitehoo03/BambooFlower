@@ -2,6 +2,7 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,9 +20,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentSignUpBinding
 import com.sg.android.bambooflower.other.Contents
+import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.signUpFrag.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -127,7 +128,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         // 오류 발생 시
         mViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError) {
-                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
                     .show()
                 mViewModel.isError.value = false
             }
@@ -196,14 +197,15 @@ class SignUpFragment : Fragment(), View.OnClickListener {
 
     // 로그인 성공
     private fun successLogin() {
-        mViewModel.getUserData()
-            .addOnSuccessListener {
-                val user = it.toObject(User::class.java)
-                mViewModel.isLoading.value = false
+        mViewModel.checkUserData()
+            .addOnSuccessListener { result ->
+                val resultMap = result.data as MutableMap<*, *>
+                Log.i("Check", "result: ${resultMap}")
 
-                if (user != null) { // 기존 유저인지 확인
+                mViewModel.isLoading.value = false // 로딩 끝
+                if ((resultMap["isExist"] as Int) == 1) { // 유저가 존재할 때
                     findNavController().navigate(R.id.action_signUpFragment_to_missionListFragment)
-                } else {
+                } else { // 존재하지 않을 때
                     val directions = SignUpFragmentDirections
                         .actionSignUpFragmentToCreateUserFragment(token, email, loginWay)
                     findNavController().navigate(directions)

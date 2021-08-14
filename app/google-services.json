@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "916831218906",
+    "firebase_url": "https://bambooflower-3b508-default-rtdb.firebaseio.com",
     "project_id": "bambooflower-3b508",
     "storage_bucket": "bambooflower-3b508.appspot.com"
   },
@@ -22,6 +23,14 @@
           }
         },
         {
+          "client_id": "916831218906-ps7kfudqt4frou0ge08du765d30ncoaf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sg.android.bambooflower",
+            "certificate_hash": "f5009dceca774c4b029bbc1893c4eb9410a29311"
+          }
+        },
+        {
           "client_id": "916831218906-8l8g7uqqu4ibushimpof1bmrgt1q429f.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -40,7 +49,8 @@
             }
           ]
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-7835153855071596~1435306686"
     }
   ],
   "configuration_version": "1"

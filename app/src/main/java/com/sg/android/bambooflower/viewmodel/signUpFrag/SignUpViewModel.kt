@@ -75,12 +75,9 @@ class SignUpViewModel @Inject constructor(
         isLoading.value = false
     }
 
-    // 서버 점검 확인
-    fun checkServer() =
-        repository.checkServer()
-
-    fun getUserData() =
-        repository.getUserData()
+    // 유저 존재여부
+    fun checkUserData() =
+        repository.checkUserData()
 
     fun clear() {
         _isSuccessLogin.value = false

@@ -20,14 +20,15 @@ class EmailLoginViewModel @Inject constructor(
     private val _hideKeyboard = MutableLiveData(false) // 키보드 숨기기
     private val _errorEmailMsg = MutableLiveData("") // 이메일 에러 메시지
     private val _errorPasswordMsg = MutableLiveData("") // 비밀번호 에러 메시지
+
     val isLoading: LiveData<Boolean> = _isLoading
     val isLoginSuccess: LiveData<Boolean> = _isLoginSuccess
     val hideKeyboard: LiveData<Boolean> = _hideKeyboard
+    val errorEmailMsg: LiveData<String> = _errorEmailMsg
+    val errorPasswordMsg: LiveData<String> = _errorPasswordMsg
 
     val email = MutableLiveData("") // 이메일
     val password = MutableLiveData("") // 비밀번호
-    val errorEmailMsg: LiveData<String> = _errorEmailMsg
-    val errorPasswordMsg: LiveData<String> = _errorPasswordMsg
 
     fun login() = viewModelScope.launch { // 로그인
         val credential = EmailAuthProvider.getCredential(email.value!!, password.value!!)

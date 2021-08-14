@@ -3,22 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/ic_check.xml" value="0.2537037037037037" />
-        <entry key="app/src/main/res/layout/custom_profile_button.xml" value="0.2833333333333333" />
-        <entry key="app/src/main/res/layout/custom_setting_view.xml" value="0.2833333333333333" />
-        <entry key="app/src/main/res/layout/dialog_calendar.xml" value="0.24791666666666667" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.20277777777777778" />
-        <entry key="app/src/main/res/layout/fragment_onboard.xml" value="0.321875" />
+        <entry key="app/src/main/res/layout/fragment_html_viewer.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_accept.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/item_diary.xml" value="0.5845581519802308" />
+        <entry key="app/src/main/res/layout/item_mission_image.xml" value="0.28229166666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
-    <output url="file://$PROJECT_DIR$/build/classes" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="Android" />
-  </component>
-  <component name="SuppressKotlinCodeStyleNotification">
-    <option name="disableForAll" value="true" />
-  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK" />
 </project>
