@@ -109,7 +109,6 @@
                 app:civ_circle_background_color="@color/gray_bright"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/mission_image"
-                app:setProfileImage="@{mission.profileImage}"
                 tools:src="@drawable/ic_person"/>
 
             <TextView

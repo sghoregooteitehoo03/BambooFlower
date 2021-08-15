@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     showBottomView()
                     showProfile()
                 }
-                R.id.acceptListDialog, R.id.levelUpDialog, R.id.missionDialog, R.id.reportDialog -> {
+                R.id.acceptListDialog, R.id.missionDialog, R.id.reportDialog -> {
                     isExit = false
                 }
                 else -> {

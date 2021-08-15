@@ -41,7 +41,7 @@ class ProfileEditFragment : Fragment(), View.OnClickListener {
         // 인스턴스 설정
         val binding = FragmentProfileEditBinding.inflate(inflater)
         user = gViewModel.user.value!!
-        mViewModel.profileImage.value = user.profileImage
+//        mViewModel.profileImage.value = user.profileImage
         mViewModel.email.value = user.email
         mViewModel.name.value = user.name
 
@@ -152,7 +152,7 @@ class ProfileEditFragment : Fragment(), View.OnClickListener {
         mViewModel.isUpdate.observe(viewLifecycleOwner) { isUpdate ->
             if (isUpdate) {
                 gViewModel.user.value = user
-                gViewModel.userImage.value = user.profileImage
+//                gViewModel.userImage.value = user.profileImage
 
                 findNavController().navigateUp()
             }

@@ -23,7 +23,6 @@ object Contents {
     const val COLLECTION_USER = "User"
     const val COLLECTION_POST = "Post"
     const val COLLECTION_REPORT = "Report"
-    const val COLLECTION_SERVER = "Server"
     const val COLLECTION_ACCEPT = "Accept"
 
     const val CHILD_POST_IMAGE = "PostImage"
@@ -32,6 +31,7 @@ object Contents {
     const val CHILD_PRIVACY_POLICY = "PrivacyPolicy.html"
 
     const val FUNC_GET_USER_DATA = "getUserData"
+    const val FUNC_CREATE_USER = "createUser"
     const val FUNC_GET_HOME_DATA = "getHomeData"
     const val FUNC_ADD_POST = "addPost"
     const val FUNC_DELETE_POST = "deletePost"

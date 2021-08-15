@@ -21,39 +21,39 @@ class ProfileEditRepository @Inject constructor(
         email: String,
         name: String
     ) {
-        val uid = user.uid!!
-
-        // storage에 이미지 추가
-        val downloadImage = if (user.profileImage == profileImage) {
-            // 같은 이미지 일 경우
-            profileImage
-        } else if (profileImage.isNotEmpty()) {
-            // 다른 이미지일 경우
-            val imageName = "profile.png"
-            val storageRef = storage.reference
-                .child(uid)
-                .child(imageName)
-
-            storageRef.putFile(profileImage.toUri()) // storage에 이미지 추가
-                .await()
-
-            storageRef.downloadUrl
-                .await()
-                .toString()
-        } else {
-            // 이미지가 없는 경우
-            ""
-        }
-
-        val jsonObj = JSONObject().apply {
-            put("uid", uid)
-            put("profileImage", downloadImage)
-            put("email", email)
-            put("name", name)
-        }
-
-        functions.getHttpsCallable(Contents.FUNC_CHANGE_PROFILE)
-            .call(jsonObj)
-            .await()
+//        val uid = user.uid!!
+//
+//        // storage에 이미지 추가
+//        val downloadImage = if (user.profileImage == profileImage) {
+//            // 같은 이미지 일 경우
+//            profileImage
+//        } else if (profileImage.isNotEmpty()) {
+//            // 다른 이미지일 경우
+//            val imageName = "profile.png"
+//            val storageRef = storage.reference
+//                .child(uid)
+//                .child(imageName)
+//
+//            storageRef.putFile(profileImage.toUri()) // storage에 이미지 추가
+//                .await()
+//
+//            storageRef.downloadUrl
+//                .await()
+//                .toString()
+//        } else {
+//            // 이미지가 없는 경우
+//            ""
+//        }
+//
+//        val jsonObj = JSONObject().apply {
+//            put("uid", uid)
+//            put("profileImage", downloadImage)
+//            put("email", email)
+//            put("name", name)
+//        }
+//
+//        functions.getHttpsCallable(Contents.FUNC_CHANGE_PROFILE)
+//            .call(jsonObj)
+//            .await()
     }
 }

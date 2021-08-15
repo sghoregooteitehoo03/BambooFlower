@@ -41,15 +41,15 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
             this.viewmodel = mViewModel
             this.clickListener = this@DeleteAccountFragment
 
-            if (user.loginWay != "Email") {
-                // 구글 및 페이스북으로 로그인 한 유저일 경우
-                subTitleText.text = "\"회원탈퇴\"를 입력해주세요."
-                inputView.hint = "회원탈퇴 입력"
-            } else {
-                // 이메일로 로그인 한 유저일 경우
-                subTitleText.text = "해당 계정의 비밀번호를 입력해주세요."
-                inputView.hint = "비밀번호 입력"
-            }
+//            if (user.loginWay != "Email") {
+//                // 구글 및 페이스북으로 로그인 한 유저일 경우
+//                subTitleText.text = "\"회원탈퇴\"를 입력해주세요."
+//                inputView.hint = "회원탈퇴 입력"
+//            } else {
+//                // 이메일로 로그인 한 유저일 경우
+//                subTitleText.text = "해당 계정의 비밀번호를 입력해주세요."
+//                inputView.hint = "비밀번호 입력"
+//            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -123,13 +123,13 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
         }
         // 입력 칸
         mViewModel.inputData.observe(viewLifecycleOwner) { data ->
-            mViewModel.isEnabled.value = if (user.loginWay != "Email") {
-                // 구글 및 페이스북으로 로그인 한 유저일 경우
-                data == "회원탈퇴"
-            } else {
-                // 이메일로 로그인 한 유저일 경우
-                data.isNotEmpty()
-            }
+//            mViewModel.isEnabled.value = if (user.loginWay != "Email") {
+//                // 구글 및 페이스북으로 로그인 한 유저일 경우
+//                data == "회원탈퇴"
+//            } else {
+//                // 이메일로 로그인 한 유저일 경우
+//                data.isNotEmpty()
+//            }
         }
     }
 

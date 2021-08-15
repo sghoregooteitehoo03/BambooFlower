@@ -36,9 +36,9 @@ class MissionAdapter() : RecyclerView.Adapter<MissionViewHolder>() {
         missionList[pos]
 
     fun submitData(_missionList: List<Mission>, _user: User) {
-        missionList = _missionList.filterNot {
-            it.document == _user.missionDoc
-        }
+//        missionList = _missionList.filterNot {
+//            it.document == _user.missionDoc
+//        }
         user = _user
 
         notifyDataSetChanged()

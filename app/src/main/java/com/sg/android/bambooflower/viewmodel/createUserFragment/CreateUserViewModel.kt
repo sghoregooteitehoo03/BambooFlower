@@ -1,6 +1,8 @@
 package com.sg.android.bambooflower.viewmodel.createUserFragment
 
+import android.content.ContentResolver
 import android.content.Context
+import android.net.Uri
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,7 +22,7 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateUser
     val token = MutableLiveData("") // 토큰
     val loginWay = MutableLiveData("") // 로그인 방법
 
-    val profileImage = MutableLiveData("") // 프로필 이미지
+    val profileImage = MutableLiveData<Uri?>(null) // 프로필 이미지
     val email = MutableLiveData("") // 이메일
     val name = MutableLiveData("") // 닉네임
     val firstCheck = MutableLiveData(false) // 동의 여부 1
@@ -33,7 +35,7 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateUser
     val isComplete: LiveData<Boolean> = _isComplete
     val isError = MutableLiveData(false) // 서버 연결 에러
 
-    fun setUserData() = viewModelScope.launch {
+    fun setUserData(contentResolver: ContentResolver) = viewModelScope.launch {
         errorEmailMsg.value = ""
         errorNameMsg.value = ""
         _isLoading.value = true // 로딩 시작
@@ -41,15 +43,23 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateUser
         if (checkEmail()) { // 이메일 형식 체크
             try {
                 // 유저 데이터 생성
-                repository.setUserData(
-                    profileImage.value!!,
+                val result = repository.setUserData(
+                    profileImage.value,
                     email.value!!,
                     name.value!!,
                     token.value!!,
-                    loginWay.value!!
-                )
-                _isComplete.value = true
+                    loginWay.value!!,
+                    contentResolver
+                ).data as Map<*, *>
+
+                // 동작 성공여부
+                if (result["success"] as Boolean) {
+                    _isComplete.value = true
+                } else {
+                    isError.value = true
+                }
             } catch (e: Exception) {
+                e.printStackTrace()
                 isError.value = true
             }
         } else {

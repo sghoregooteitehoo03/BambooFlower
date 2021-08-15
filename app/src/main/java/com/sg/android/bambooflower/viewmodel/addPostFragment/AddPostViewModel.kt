@@ -39,7 +39,7 @@ class AddPostViewModel @Inject constructor(private val repository: AddPostReposi
                     )
                 val updateData = result?.data as Map<*, *>
                 with(user) {
-                    achieveState = updateData["achieveState"] as String?
+//                    achieveState = updateData["achieveState"] as String?
                 }
 
                 _isSuccess.value = true

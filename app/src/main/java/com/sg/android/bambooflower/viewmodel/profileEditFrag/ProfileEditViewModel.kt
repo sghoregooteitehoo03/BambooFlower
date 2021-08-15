@@ -41,7 +41,7 @@ class ProfileEditViewModel @Inject constructor(
                     email.value!!,
                     name.value!!
                 )
-                user.profileImage = profileImage.value!!
+//                user.profileImage = profileImage.value!!
                 user.email = email.value!!
                 user.name = name.value!!
 

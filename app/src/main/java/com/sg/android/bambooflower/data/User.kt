@@ -1,24 +1,16 @@
 package com.sg.android.bambooflower.data
 
+import android.graphics.Bitmap
+
 data class User(
-    val uid: String? = null,
-    var name: String? = null,
-    var profileImage: String = "",
-    var email: String? = null,
-    var achievedCount: Int? = null,
-    var achieveState: String? = null,
-    val myLevel: Int? = null,
-    var myMissionTitle: String? = null,
-    var myMissionHow: String? = null,
-    var missionDoc: String? = null,
-    val latestStart: Long? = null,
-    val isLevelUp: Boolean = false,
-    val token: String = "",
-    val loginWay: String? = null,
+    val uid: String,
+    var name: String,
+    var email: String,
+    var profileImage: Bitmap? = null,
+    val loginToken: String,
+    var startedTime: Long,
+    var progress: Int,
+    var money: Int,
+    var flowerId: Int
 ) {
-    companion object {
-        const val STATE_NOTHING = "STATE_NOTHING"
-        const val STATE_LOADING = "STATE_LOADING"
-        const val STATE_ALLOW = "STATE_ALLOW"
-    }
 }

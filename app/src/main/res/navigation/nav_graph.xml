@@ -158,12 +158,6 @@
             app:argType="string"/>
     </fragment>
     <dialog
-        android:id="@+id/levelUpDialog"
-        android:name="com.sg.android.bambooflower.ui.dialog.LevelUpDialog"
-        android:label="levelUpDialog"
-        tools:layout="@layout/dialog_level_up"
-        />
-    <dialog
         android:id="@+id/reportDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.ReportDialog"
         android:label="ReportDialog"
@@ -203,9 +197,6 @@
         android:name="com.sg.android.bambooflower.ui.fragment.MissionListFragment"
         android:label="MissionListFragment"
         tools:layout="@layout/fragment_mission_list">
-        <action
-            android:id="@+id/action_missionListFragment_to_levelUpDialog"
-            app:destination="@id/levelUpDialog"/>
         <action
             android:id="@+id/action_missionListFragment_to_missionDialog"
             app:destination="@id/missionDialog"/>

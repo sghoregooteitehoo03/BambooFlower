@@ -59,8 +59,8 @@ class EmailLoginViewModel @Inject constructor(
         _isLoading.value = false // 로딩 끝
     }
 
-    fun getUserData() =
-        repository.getUserData()
+    fun checkUserData() =
+        repository.checkUserData()
 
     fun setLoading(loading: Boolean) {
         _isLoading.value = loading

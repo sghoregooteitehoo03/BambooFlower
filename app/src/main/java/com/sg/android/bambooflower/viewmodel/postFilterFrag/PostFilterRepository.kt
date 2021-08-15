@@ -44,33 +44,33 @@ class PostFilterRepository @Inject constructor(
         val acceptRef = store.collection(Contents.COLLECTION_ACCEPT)
             .document() // 인정한 사람 문서
 
-        store.runTransaction { transition ->
-            val currentData = transition[postRef].toObject(Post::class.java) // 해당 게시글 데이터
-            val acceptData = Accept(
-                userData.uid,
-                userData.name,
-                userData.profileImage,
-                postData.postPath,
-                System.currentTimeMillis()
-            ) // 인정한 사람 데이터
-
-            if (currentData != null) {
-                currentData.favoriteCount += 1 // 미션 인정 카운트
-                currentData.favorites[userData.uid!!] = true // 누른 사람들 표시
-
-                postData.favoriteCount = currentData.favoriteCount
-                postData.favorites = currentData.favorites
-
-                transition.update( // 게시글 정보 업데이트
-                    postRef,
-                    "favorites",
-                    currentData.favorites,
-                    "favoriteCount",
-                    postData.favoriteCount
-                )
-                transition.set(acceptRef, acceptData) // 인정한 사람 데이터 저장
-            }
-        }.await()
+//        store.runTransaction { transition ->
+//            val currentData = transition[postRef].toObject(Post::class.java) // 해당 게시글 데이터
+//            val acceptData = Accept(
+//                userData.uid,
+//                userData.name,
+//                userData.profileImage,
+//                postData.postPath,
+//                System.currentTimeMillis()
+//            ) // 인정한 사람 데이터
+//
+//            if (currentData != null) {
+//                currentData.favoriteCount += 1 // 미션 인정 카운트
+//                currentData.favorites[userData.uid!!] = true // 누른 사람들 표시
+//
+//                postData.favoriteCount = currentData.favoriteCount
+//                postData.favorites = currentData.favorites
+//
+//                transition.update( // 게시글 정보 업데이트
+//                    postRef,
+//                    "favorites",
+//                    currentData.favorites,
+//                    "favoriteCount",
+//                    postData.favoriteCount
+//                )
+//                transition.set(acceptRef, acceptData) // 인정한 사람 데이터 저장
+//            }
+//        }.await()
     }
 
     // 게시글 삭제

@@ -35,13 +35,13 @@ class MissionListViewModel @Inject constructor(
         val result = repository.changeMission(user, missions)
         val updateData = result.data as Map<*, *>
 
-        with(user) { // 유저 데이터 갱신
-            myMissionTitle = updateData["myMissionTitle"] as String?
-            myMissionHow = updateData["myMissionHow"] as String?
-            missionDoc = updateData["missionDoc"] as String?
-        }
-
-        Log.i("ChangeMission", "성공: ${user.myMissionTitle}")
+//        with(user) { // 유저 데이터 갱신
+//            myMissionTitle = updateData["myMissionTitle"] as String?
+//            myMissionHow = updateData["myMissionHow"] as String?
+//            missionDoc = updateData["missionDoc"] as String?
+//        }
+//
+//        Log.i("ChangeMission", "성공: ${user.myMissionTitle}")
         isLoading.postValue(false)
     }
 

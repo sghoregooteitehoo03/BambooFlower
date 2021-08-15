@@ -26,26 +26,26 @@ class DeleteAccountRepository @Inject constructor(
 
     // 재로그인
     suspend fun reLogin(user: User, password: String) {
-        val credential = when (user.loginWay!!) {
-            "Email" -> {
-                EmailAuthProvider.getCredential(auth.currentUser?.email!!, password)
-            }
-            "Google" -> {
-                GoogleAuthProvider.getCredential(user.token, null)
-            }
-            "Facebook" -> {
-                FacebookAuthProvider.getCredential(user.token)
-            }
-            else -> {
-                null
-            }
-        }
-
-        credential?.let {
-            auth.currentUser // 재인증
-                ?.reauthenticate(credential)
-                ?.await()
-        }
+//        val credential = when (user.loginWay!!) {
+//            "Email" -> {
+//                EmailAuthProvider.getCredential(auth.currentUser?.email!!, password)
+//            }
+//            "Google" -> {
+//                GoogleAuthProvider.getCredential(user.token, null)
+//            }
+//            "Facebook" -> {
+//                FacebookAuthProvider.getCredential(user.token)
+//            }
+//            else -> {
+//                null
+//            }
+//        }
+//
+//        credential?.let {
+//            auth.currentUser // 재인증
+//                ?.reauthenticate(credential)
+//                ?.await()
+//        }
     }
 
     suspend fun deleteAccount(user: User, context: Context) {
@@ -61,12 +61,12 @@ class DeleteAccountRepository @Inject constructor(
             .await()
 
         // 유저 프로필 사진 삭제
-        if (user.profileImage.isNotEmpty()) {
-            storage.reference.child(uid)
-                .child("profile.png")
-                .delete()
-                .await()
-        }
+//        if (user.profileImage.isNotEmpty()) {
+//            storage.reference.child(uid)
+//                .child("profile.png")
+//                .delete()
+//                .await()
+//        }
 
         // 유저의 게시글 및 사진 삭제
         val postList = store.collection(Contents.COLLECTION_POST)

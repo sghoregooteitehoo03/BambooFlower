@@ -89,67 +89,67 @@ fun setMissionText(view: TextView, mission: Mission, user: User) {
 
 @BindingAdapter("app:setButtonStateUser", "app:setButtonStateMission", requireAll = true)
 fun setButtonState(view: Button, user: User, mission: Mission) {
-    if (mission.document != user.missionDoc) {
-        // 유저가 수행중인 미션과 다를 경우
-        val timestamp = mission.complete[user.uid]
-
-        if (timestamp != null) {
-            // 수행 완료한 미션일 경우
-            val successDay = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
-                .format(timestamp)
-
-            with(view) {
-                text = "수행 완료: $successDay"
-                setTextColor(Color.WHITE)
-
-                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-            }
-        } else {
-            // 수행하지 않은 미션일 경우
-            with(view) {
-                text = "미수행"
-                setTextColor(view.resources.getColor(android.R.color.tab_indicator_text, null))
-
-                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.gray)
-            }
-        }
-        view.isClickable = false
-
-    } else if (mission.document == user.missionDoc) {
-        // 유저가 수행하고 있는 미션일 경우
-        when (user.achieveState) {
-            User.STATE_LOADING -> {
-                // 유저 상태가 "인증 중"일 떄
-                with(view) {
-                    text = "인증 중..."
-                    setTextColor(Color.WHITE)
-
-                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-                    isClickable = false
-                }
-            }
-            User.STATE_ALLOW -> {
-                // 유저 상태가 "인증 완료"일 떄
-                with(view) {
-                    text = "인증 완료"
-                    setTextColor(Color.WHITE)
-
-                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-                    isClickable = false
-                }
-            }
-            else -> {
-                // 유저 상태가 "NOTHING" 일 때
-                with(view) {
-                    text = "인증하기"
-                    setTextColor(Color.WHITE)
-
-                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-                    isClickable = true
-                }
-            }
-        }
-    }
+//    if (mission.document != user.missionDoc) {
+//        // 유저가 수행중인 미션과 다를 경우
+//        val timestamp = mission.complete[user.uid]
+//
+//        if (timestamp != null) {
+//            // 수행 완료한 미션일 경우
+//            val successDay = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+//                .format(timestamp)
+//
+//            with(view) {
+//                text = "수행 완료: $successDay"
+//                setTextColor(Color.WHITE)
+//
+//                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+//            }
+//        } else {
+//            // 수행하지 않은 미션일 경우
+//            with(view) {
+//                text = "미수행"
+//                setTextColor(view.resources.getColor(android.R.color.tab_indicator_text, null))
+//
+//                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.gray)
+//            }
+//        }
+//        view.isClickable = false
+//
+//    } else if (mission.document == user.missionDoc) {
+//        // 유저가 수행하고 있는 미션일 경우
+//        when (user.achieveState) {
+//            User.STATE_LOADING -> {
+//                // 유저 상태가 "인증 중"일 떄
+//                with(view) {
+//                    text = "인증 중..."
+//                    setTextColor(Color.WHITE)
+//
+//                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+//                    isClickable = false
+//                }
+//            }
+//            User.STATE_ALLOW -> {
+//                // 유저 상태가 "인증 완료"일 떄
+//                with(view) {
+//                    text = "인증 완료"
+//                    setTextColor(Color.WHITE)
+//
+//                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+//                    isClickable = false
+//                }
+//            }
+//            else -> {
+//                // 유저 상태가 "NOTHING" 일 때
+//                with(view) {
+//                    text = "인증하기"
+//                    setTextColor(Color.WHITE)
+//
+//                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
+//                    isClickable = true
+//                }
+//            }
+//        }
+//    }
 }
 
 @BindingAdapter("app:setSelectedText")
@@ -181,7 +181,7 @@ fun setRanking(view: TextView, rank: Int) {
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setRankingInfo")
 fun setRankingInfo(view: TextView, user: User) {
-    view.text = "Lv: ${user.myLevel} | 수행한 미션: ${user.achievedCount}"
+//    view.text = "Lv: ${user.myLevel} | 수행한 미션: ${user.achievedCount}"
 }
 
 @BindingAdapter("app:errorMessage")
@@ -248,17 +248,15 @@ fun setPosition(view: TextView, pos: Int, size: Int) {
 }
 
 @BindingAdapter("app:setProfileImage")
-fun setProfileImage(view: CircleImageView, imageUri: String?) {
+fun setProfileImage(view: CircleImageView, imageUri: Uri?) {
     if (imageUri != null) {
-        if (imageUri.isNotEmpty()) {
-            Glide.with(view)
-                .load(imageUri)
-                .into(view)
-        } else {
-            Glide.with(view)
-                .load(R.drawable.ic_person)
-                .into(view)
-        }
+        Glide.with(view)
+            .load(imageUri)
+            .into(view)
+    } else {
+        Glide.with(view)
+            .load(R.drawable.ic_person)
+            .into(view)
     }
 }
 

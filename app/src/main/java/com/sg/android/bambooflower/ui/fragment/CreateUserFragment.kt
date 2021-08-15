@@ -29,6 +29,9 @@ import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.createUserFragment.CreateUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO:
+//  . 데이터베이스에 유저 데이터 추가 O
+//  . 오류 수정 O
 @AndroidEntryPoint
 class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClickListener {
     private val mViewModel by viewModels<CreateUserViewModel>()
@@ -95,7 +98,7 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClick
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Contents.GET_IMAGE) {
-                mViewModel.profileImage.value = data?.data?.toString()
+                mViewModel.profileImage.value = data?.data
             }
         }
     }
@@ -155,7 +158,7 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClick
                 goViewer(Contents.CHILD_PERSONAL_INFORMATION)
             }
             R.id.start_btn -> {
-                mViewModel.setUserData()
+                mViewModel.setUserData(requireContext().contentResolver)
             }
         }
     }

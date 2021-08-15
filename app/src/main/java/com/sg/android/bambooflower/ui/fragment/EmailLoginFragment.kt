@@ -1,6 +1,7 @@
 package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -10,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentEmailLoginBinding
+import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.emailLoginFragment.EmailLoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,27 +88,7 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
     private fun setObserver() {
         mViewModel.isLoginSuccess.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) { // 로그인 성공 시
-                mViewModel.getUserData()
-                    .addOnSuccessListener {
-                        val user = it.toObject(User::class.java)
-                        mViewModel.setLoading(false)
-
-                        if (user != null) { // 유저 데이터가 존재할 때
-                            findNavController().navigate(R.id.action_emailLoginFragment_to_missionListFragment)
-                        } else {
-                            val directions = EmailLoginFragmentDirections
-                                .actionEmailLoginFragmentToCreateUserFragment(
-                                    "",
-                                    mViewModel.email.value!!,
-                                    "Email"
-                                )
-                            findNavController().navigate(directions)
-                        }
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                successLogin()
             }
         }
         mViewModel.isLoading.observe(viewLifecycleOwner) {
@@ -117,5 +98,31 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                 (requireActivity() as MainActivity).ready()
             }
         }
+    }
+
+    // 로그인 성공
+    private fun successLogin() {
+        mViewModel.checkUserData()
+            .addOnSuccessListener { result ->
+                val resultMap = result.data as MutableMap<*, *>
+                Log.i("Check", "result: ${resultMap}")
+
+                mViewModel.setLoading(false) // 로딩 끝
+                if ((resultMap["isExist"] as Int) == 1) { // 유저 데이터가 존재할 때
+                    findNavController().navigate(R.id.action_emailLoginFragment_to_missionListFragment)
+                } else {
+                    val directions = EmailLoginFragmentDirections
+                        .actionEmailLoginFragmentToCreateUserFragment(
+                            "",
+                            mViewModel.email.value!!,
+                            "Email"
+                        )
+                    findNavController().navigate(directions)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
+                    .show()
+            }
     }
 }

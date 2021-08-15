@@ -144,26 +144,26 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
     private fun getHomeData() {
         mViewModel.getHomeData(gViewModel.missionList.value == null)
             .addOnSuccessListener { result ->
-                val jsonObject = JSONObject(result.data as MutableMap<Any?, Any?>).toString()
-                val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
-
-                user = homeData.user
-                gViewModel.user.value = user // 유저 정보
-                if (homeData.missions.isNotEmpty()) { // 유저가 수행할 수 있는 미션리스트
-                    gViewModel.missionList.value = homeData.missions
-                    gViewModel.userImage.value = user.profileImage
-
-                    if (user.isLevelUp) { // 레벨업 하였을 경우
-                        findNavController().navigate(R.id.levelUpDialog)
-                    }
-                }
-
-                val index = gViewModel.missionList // 유저가 수행중인 미션의 인덱스를 가져옴
-                    .value!!
-                    .indexOf(Mission(document = user.missionDoc!!))
-                mViewModel.myMission.value = gViewModel.missionList.value?.get(index) // 미션 저장
-
-                mViewModel.isLoading.value = false // 로딩 끝
+//                val jsonObject = JSONObject(result.data as MutableMap<Any?, Any?>).toString()
+//                val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
+//
+//                user = homeData.user
+//                gViewModel.user.value = user // 유저 정보
+//                if (homeData.missions.isNotEmpty()) { // 유저가 수행할 수 있는 미션리스트
+//                    gViewModel.missionList.value = homeData.missions
+//                    gViewModel.userImage.value = user.profileImage
+//
+//                    if (user.isLevelUp) { // 레벨업 하였을 경우
+//                        findNavController().navigate(R.id.levelUpDialog)
+//                    }
+//                }
+//
+//                val index = gViewModel.missionList // 유저가 수행중인 미션의 인덱스를 가져옴
+//                    .value!!
+//                    .indexOf(Mission(document = user.missionDoc!!))
+//                mViewModel.myMission.value = gViewModel.missionList.value?.get(index) // 미션 저장
+//
+//                mViewModel.isLoading.value = false // 로딩 끝
                 Log.i("Check", "동작 완료")
             }
             .addOnFailureListener {
@@ -222,10 +222,10 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
                     mViewModel.changeMission(user, gViewModel.missionList.value!!)
                     gViewModel.user.postValue(user)
 
-                    val index = gViewModel.missionList // 유저가 수행중인 미션의 인덱스를 가져옴
-                        .value!!
-                        .indexOf(Mission(document = user.missionDoc!!))
-                    mViewModel.myMission.postValue(gViewModel.missionList.value?.get(index)) // 미션 저장
+//                    val index = gViewModel.missionList // 유저가 수행중인 미션의 인덱스를 가져옴
+//                        .value!!
+//                        .indexOf(Mission(document = user.missionDoc!!))
+//                    mViewModel.myMission.postValue(gViewModel.missionList.value?.get(index)) // 미션 저장
 
                     isChange = false
                 } catch (e: Exception) {

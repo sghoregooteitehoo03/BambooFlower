@@ -67,7 +67,7 @@ class AddPostFragment : Fragment(), View.OnClickListener {
 
         // 툴바 설정
         with((activity as MainActivity)) {
-            supportActionBar?.title = "[${user.myMissionTitle}]"
+//            supportActionBar?.title = "[${user.myMissionTitle}]"
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             showToolbar()
         }
