@@ -15,13 +15,23 @@
     <color name="gray_darker">#a6a6a6</color>
     <color name="brown">#8f5d53</color>
     <color name="green_300">#81c784</color>
-    <color name="green_bright">#CC81c784</color>
+    <color name="green_bright">#C6E2C7</color>
     <color name="green_500">#519657</color>
     <color name="deep_orange_300">#ff8a65</color>
     <color name="deep_orange_500">#c75b39</color>
-    <color name="facebook_color">#1877F2</color>
     <color name="yellow">#FFC464</color>
 
+    <!-- custom color -->
+    <color name="facebook_color">#1877F2</color>
+    <color name="flower_background_color">#E8F6FF</color>
+    <color name="quest_main_color">#E0CC59</color>
+    <color name="quest_sub_color">#E0D69E</color>
+    <color name="diary_main_color">#A33E3E</color>
+    <color name="diary_sub_color">#BC6868</color>
+    <color name="fence_main_color">#8EB974</color>
+    <color name="fence_sub_color">#B0C7A2</color>
+
+    <!-- support night color -->
     <color name="default_background_color">@color/white</color>
     <color name="bright_background_color">@color/white_darker</color>
     <color name="default_item_color">@color/black</color>

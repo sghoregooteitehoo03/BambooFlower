@@ -29,9 +29,6 @@ import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.createUserFragment.CreateUserViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  . 데이터베이스에 유저 데이터 추가 O
-//  . 오류 수정 O
 @AndroidEntryPoint
 class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClickListener {
     private val mViewModel by viewModels<CreateUserViewModel>()
@@ -168,7 +165,7 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClick
         // 완료 여부
         mViewModel.isComplete.observe(viewLifecycleOwner) { isComplete ->
             if (isComplete) {
-                findNavController().navigate(R.id.action_createUserFragment_to_missionListFragment)
+                findNavController().navigate(R.id.action_createUserFragment_to_homeFragment)
             }
         }
         // 오류 여부

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.sg.android.bambooflower.viewmodel.homeFrag.HomeViewModel"/>
+
+        <variable
+            name="gviewmodel"
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
+
+        <variable
+            name="clickListener"
+            type="View.OnClickListener"/>
+
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewmodel.isLoading() ? View.GONE : View.VISIBLE}">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp">
+
+                <ImageView
+                    android:id="@+id/water_image"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="2dp"
+                    android:src="@drawable/ic_water"
+                    app:layout_constraintEnd_toStartOf="@id/water_count_text"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/water_count_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="4dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="@id/water_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/water_image"
+                    tools:text="3"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/flower_layout"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/shape_round"
+                    android:backgroundTint="@color/flower_background_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/flower_image"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:setFlowerImage="@{gviewmodel.flower.image}"
+                        tools:src="@drawable/ic_seed"/>
+
+                    <ImageView
+                        android:id="@+id/cancel_button"
+                        android:layout_width="38dp"
+                        android:layout_height="38dp"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/ic_cancel"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/flower_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/default_item_color"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/flower_layout"
+                    app:setFlowerName="@{gviewmodel.flower.name}"
+                    tools:text="씨앗을꽃눌러 키울 꽃을 선택해보세요."
+                    tools:textSize="20sp"/>
+
+                <com.sg.android.bambooflower.ui.view.CustomProgressView
+                    android:id="@+id/flower_progress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/flower_name"
+                    app:setFlowerProgress="@{gviewmodel.user.progress}"/>
+
+                <View
+                    android:id="@+id/divide_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/shape_rounded_image"
+                    android:backgroundTint="@color/gray_bright"
+                    app:layout_constraintTop_toBottomOf="@id/flower_progress"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.5"/>
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:text="메뉴"
+                    android:textColor="@color/default_item_color"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@id/quest_view"
+                    app:layout_constraintTop_toBottomOf="@id/divide_view"/>
+
+                <com.sg.android.bambooflower.ui.view.CustomMenuView
+                    android:id="@+id/quest_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{clickListener}"
+                    app:customMenuImage="@drawable/ic_quest"
+                    app:customMenuMainColor="@color/quest_main_color"
+                    app:customMenuSubColor="@color/quest_sub_color"
+                    app:customMenuTitle="퀘스트"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title_text"/>
+
+                <com.sg.android.bambooflower.ui.view.CustomMenuView
+                    android:id="@+id/diary_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{clickListener}"
+                    app:customMenuImage="@drawable/ic_diary2"
+                    app:customMenuMainColor="@color/diary_main_color"
+                    app:customMenuSubColor="@color/diary_sub_color"
+                    app:customMenuTitle="하루일기"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/guideline_center"
+                    app:layout_constraintTop_toBottomOf="@id/title_text"/>
+
+                <com.sg.android.bambooflower.ui.view.CustomMenuView
+                    android:id="@+id/garden_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:onClick="@{clickListener}"
+                    app:customMenuImage="@drawable/ic_fence"
+                    app:customMenuMainColor="@color/fence_main_color"
+                    app:customMenuSubColor="@color/fence_sub_color"
+                    app:customMenuTitle="정원"
+                    app:layout_constraintEnd_toStartOf="@id/guideline_center"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/quest_view"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

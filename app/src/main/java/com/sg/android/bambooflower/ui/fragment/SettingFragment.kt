@@ -141,8 +141,6 @@ class SettingFragment : Fragment(), View.OnClickListener {
 
     private fun signOut() { // 로그아웃
         gViewModel.user.value = null
-        gViewModel.missionList.value = null
-        gViewModel.userImage.value = null
 
         mViewModel.signOut(requireContext())
         findNavController().navigate(R.id.action_settingFragment_to_signUpFragment)

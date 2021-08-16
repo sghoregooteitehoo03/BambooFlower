@@ -204,7 +204,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
 
                 mViewModel.isLoading.value = false // 로딩 끝
                 if ((resultMap["isExist"] as Int) == 1) { // 유저가 존재할 때
-                    findNavController().navigate(R.id.action_signUpFragment_to_missionListFragment)
+                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
                 } else { // 존재하지 않을 때
                     val directions = SignUpFragmentDirections
                         .actionSignUpFragmentToCreateUserFragment(token, email, loginWay)

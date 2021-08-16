@@ -14,4 +14,17 @@
         <attr name="settingTextColor" format="reference|color"/>
         <attr name="settingIconVisible" format="reference|boolean"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomProgressView">
+        <attr name="customSetProgress" format="integer"/>
+        <attr name="customSetProgressText" format="string"/>
+        <attr name="customSetSecondProgress" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="CustomMenuView">
+        <attr name="customMenuMainColor" format="color|integer"/>
+        <attr name="customMenuSubColor" format="color|integer"/>
+        <attr name="customMenuImage" format="reference|integer"/>
+        <attr name="customMenuTitle" format="string"/>
+    </declare-styleable>
 </resources>

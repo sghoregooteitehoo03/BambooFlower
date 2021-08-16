@@ -99,8 +99,6 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
         mViewModel.isDeleted.observe(viewLifecycleOwner) {
             if (it) { // 계정이 삭제되었을 때
                 gViewModel.user.value = null
-                gViewModel.userImage.value = null
-                gViewModel.missionList.value = null
 
                 findNavController().navigate(R.id.action_deleteAccountFragment_to_signUpFragment)
             }

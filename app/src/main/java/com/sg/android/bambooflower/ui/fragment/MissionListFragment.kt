@@ -113,7 +113,7 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
                 getHomeData() // 홈 데이터를 가져옴
             } else {
                 (requireActivity() as MainActivity).enableBottomView()
-                missionsAdapter.submitData(gViewModel.missionList.value!!, user) // 미션 리스트 갱신
+//                missionsAdapter.submitData(gViewModel.missionList.value!!, user) // 미션 리스트 갱신
             }
         }
         gViewModel.syncData.observe(viewLifecycleOwner) {
@@ -142,8 +142,6 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
 
     // 홈 데이터 가져오기
     private fun getHomeData() {
-        mViewModel.getHomeData(gViewModel.missionList.value == null)
-            .addOnSuccessListener { result ->
 //                val jsonObject = JSONObject(result.data as MutableMap<Any?, Any?>).toString()
 //                val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
 //
@@ -164,11 +162,6 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
 //                mViewModel.myMission.value = gViewModel.missionList.value?.get(index) // 미션 저장
 //
 //                mViewModel.isLoading.value = false // 로딩 끝
-                Log.i("Check", "동작 완료")
-            }
-            .addOnFailureListener {
-                mViewModel.isError.value = true
-            }
     }
 
     // 미션 바꾸기
@@ -219,7 +212,7 @@ class MissionListFragment : Fragment(), MissionAdapter.MissionItemListener, View
                     isChange = true
 
                     // 미션을 바꿈
-                    mViewModel.changeMission(user, gViewModel.missionList.value!!)
+//                    mViewModel.changeMission(user, gViewModel.missionList.value!!)
                     gViewModel.user.postValue(user)
 
 //                    val index = gViewModel.missionList // 유저가 수행중인 미션의 인덱스를 가져옴

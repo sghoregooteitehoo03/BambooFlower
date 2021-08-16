@@ -13,8 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
-import com.google.gson.Gson
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import org.json.JSONArray

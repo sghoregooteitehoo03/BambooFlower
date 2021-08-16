@@ -3,8 +3,9 @@ package com.sg.android.bambooflower.bind
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Color
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Base64
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
@@ -26,6 +27,7 @@ import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Mission
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.other.ErrorMessage
+import com.sg.android.bambooflower.ui.view.CustomProgressView
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -45,6 +47,41 @@ fun setErrorMessageState(view: TextView, isSuccess: Boolean) {
         )
     }
     view.setTextColor(color)
+}
+
+@BindingAdapter("app:setFlowerImage")
+fun setFlowerImage(view: ImageView, flowerImage: String?) {
+    if (flowerImage != null) {
+        val imageByte = Base64.decode(flowerImage, Base64.DEFAULT)
+        val image = BitmapFactory.decodeByteArray(
+            imageByte,
+            0,
+            imageByte.size
+        )
+
+        view.setImageBitmap(image)
+    }
+}
+
+@BindingAdapter("app:setFlowerName")
+fun setFlowerName(view: TextView, flowerName: String?) {
+    if (flowerName != null) {
+        if (flowerName == "씨앗") {
+            view.text = "씨앗을 눌러 성장시킬 꽃을 선택해보세요."
+            view.textSize = 20f
+        } else {
+            view.text = flowerName
+            view.textSize = 24f
+        }
+    }
+}
+
+@BindingAdapter("app:setFlowerProgress")
+fun setFlowerProgress(view: CustomProgressView, progress: Int?) {
+    if(progress != null) {
+        view.setProgress(progress)
+        view.setProgressText("${0} / 100")
+    }
 }
 
 @SuppressLint("SetTextI18n")

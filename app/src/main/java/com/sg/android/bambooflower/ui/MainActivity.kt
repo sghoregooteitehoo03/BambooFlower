@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -11,7 +10,6 @@ import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import com.bumptech.glide.Glide
 import com.google.android.gms.ads.MobileAds
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.ActivityMainBinding
@@ -49,9 +47,9 @@ class MainActivity : AppCompatActivity() {
         val navController = navFrag.navController
 
         binding.bottomNavView.setupWithNavController(navController)
-        binding.profileImage.setOnClickListener { // 프로필 클릭
-            if (gViewModel.userImage.value != null) {
-                navController.navigate(R.id.action_global_profileFragment)
+        binding.pointLayout.setOnClickListener { // 포인트 클릭
+            if (gViewModel.user.value != null) {
+                // TODO: 상점 구현후 구현
             }
         }
 
@@ -60,7 +58,7 @@ class MainActivity : AppCompatActivity() {
 
         if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
             // 로그인 되어있으면 홈 화면으로 넘어감
-            navController.navigate(R.id.action_signUpFragment_to_missionListFragment)
+            navController.navigate(R.id.action_signUpFragment_to_homeFragment)
             intent.putExtra(Contents.EXTRA_IS_LOGIN, false)
         } else if (checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
             // 처음 앱을 킨 유저일 시 온보딩 화면으로 이동
@@ -68,11 +66,11 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.missionListFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment -> {
+                R.id.homeFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment -> {
                     isExit = true
 
                     showBottomView()
-                    showProfile()
+                    showPoint()
                 }
                 R.id.acceptListDialog, R.id.missionDialog, R.id.reportDialog -> {
                     isExit = false
@@ -81,7 +79,7 @@ class MainActivity : AppCompatActivity() {
                     isExit = false
 
                     hideBottomView()
-                    hideProfile()
+                    hidePoint()
                 }
             }
         }
@@ -115,22 +113,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        gViewModel.userImage.observe(this) { image ->
-            if (image != null) {
-                binding.profileImage.visibility = View.VISIBLE
-
-                if (image.isEmpty()) {
-                    Glide.with(applicationContext)
-                        .load(R.drawable.ic_person)
-                        .into(binding.profileImage)
-                } else {
-                    Glide.with(applicationContext)
-                        .load(image)
-                        .into(binding.profileImage)
-                }
-            } else {
-                binding.profileImage.visibility = View.GONE
-            }
+        gViewModel.user.observe(this) { user ->
+            binding.pointText.text = user?.money?.toString() ?: ". . ."
         }
     }
 
@@ -155,17 +139,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showProfile() {
-        if (binding.profileImage.visibility == View.GONE &&
-            gViewModel.userImage.value != null
-        ) {
-            binding.profileImage.visibility = View.VISIBLE
+    private fun showPoint() {
+        if (binding.pointLayout.visibility == View.GONE) {
+            binding.pointLayout.visibility = View.VISIBLE
         }
     }
 
-    private fun hideProfile() {
-        if (binding.profileImage.visibility == View.VISIBLE) {
-            binding.profileImage.visibility = View.GONE
+    private fun hidePoint() {
+        if (binding.pointLayout.visibility == View.VISIBLE) {
+            binding.pointLayout.visibility = View.GONE
         }
     }
 
