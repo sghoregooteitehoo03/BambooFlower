@@ -259,5 +259,14 @@
         android:id="@+id/homeFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_selectFlowerDialog"
+            app:destination="@id/selectFlowerDialog"/>
+    </fragment>
+    <dialog
+        android:id="@+id/selectFlowerDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.SelectFlowerDialog"
+        android:label="SelectFlowerDialog"
+        tools:layout="@layout/dialog_select_flower"/>
 </navigation>

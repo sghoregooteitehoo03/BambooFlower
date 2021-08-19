@@ -33,8 +33,9 @@ object Contents {
     const val FUNC_GET_USER_DATA = "getUserData"
     const val FUNC_CREATE_USER = "createUser"
     const val FUNC_GET_HOME_DATA = "getHomeData"
+    const val FUNC_GET_HAVEN_FLOWER_DATA = "getHavenFlowerData"
+    const val FUNC_USER_SELECT_FLOWER = "userSelectFlower"
     const val FUNC_ADD_POST = "addPost"
     const val FUNC_DELETE_POST = "deletePost"
     const val FUNC_CHANGE_MISSION = "changeMission"
-    const val FUNC_CHANGE_PROFILE = "changeProfile"
 }

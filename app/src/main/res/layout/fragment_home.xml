@@ -61,6 +61,7 @@
                     android:layout_marginTop="24dp"
                     android:background="@drawable/shape_round"
                     android:backgroundTint="@color/flower_background_color"
+                    android:onClick="@{clickListener}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -81,8 +82,9 @@
                         android:layout_width="38dp"
                         android:layout_height="38dp"
                         android:layout_margin="8dp"
+                        android:onClick="@{clickListener}"
                         android:src="@drawable/ic_cancel"
-                        android:visibility="gone"
+                        android:visibility="@{gviewmodel.flower.state != 0 ? View.VISIBLE : View.GONE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"/>
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,6 +107,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:visibility="@{gviewmodel.flower.state != 0 ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/flower_name"

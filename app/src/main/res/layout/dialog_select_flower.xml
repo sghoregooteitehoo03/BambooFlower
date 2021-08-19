@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewmodel"
+            type="com.sg.android.bambooflower.viewmodel.selectFlowerDialog.SelectFlowerViewModel"/>
+
+        <variable
+            name="clickListener"
+            type="View.OnClickListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="함께 성장할 꽃을 선택해주세요."
+            android:textColor="@color/default_item_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/close_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="@{!viewmodel.selectLoading}"
+            android:onClick="@{clickListener}"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="@id/title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/loading_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/select_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/flower_list"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/flower_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/guideline_divide"
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+            tools:listitem="@layout/item_select_flower"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_divide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.715"/>
+
+        <Button
+            android:id="@+id/select_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:elevation="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="@{clickListener}"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/flower_list"
+            app:setButtonEnable="@{viewmodel.selectPos != -1}"
+            app:setButtonLoadingEnable="@{viewmodel.selectLoading}"
+            tools:text="선택"/>
+
+        <ProgressBar
+            android:id="@+id/select_loading_view"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:indeterminateTint="@color/white"
+            android:visibility="@{viewmodel.selectLoading ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/select_btn"
+            app:layout_constraintEnd_toEndOf="@id/select_btn"
+            app:layout_constraintStart_toStartOf="@id/select_btn"
+            app:layout_constraintTop_toTopOf="@id/select_btn"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

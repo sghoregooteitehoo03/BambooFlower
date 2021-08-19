@@ -9,9 +9,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.gson.Gson
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.HomeData
+import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentHomeBinding
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
@@ -22,15 +25,17 @@ import org.json.JSONObject
 
 // TODO:
 //  . VIEW 표시 O
-//  . 포기하기 (나중에)
+//  . 포기하기 O
 //  . 물 주기 (나중에)
-//  . 꽃 선택 (나중에)
+//  . 꽃 선택 O
 //  . 퀘스트, 하루일기, 정원 이동 (나중에)
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<HomeViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
+
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,8 +75,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.flower_layout -> {
-
+            R.id.flower_layout -> { // 꽃 클릭 시
+                val flower = gViewModel.flower.value!!
+                if (flower.state == 0) { // 선택한 꽃이 존재하지 경우
+                    findNavController().navigate(R.id.selectFlowerDialog)
+                }
+            }
+            R.id.cancel_button -> { // 포기
+                giveUpFlower()
             }
             R.id.quest_view -> {
 
@@ -87,7 +98,21 @@ class HomeFragment : Fragment(), View.OnClickListener {
 
     private fun setObserver() {
         gViewModel.user.observe(viewLifecycleOwner) {
-            mViewModel.isLoading.value = it == null // 유저 데이터가 null일 때만 데이터를 가져옴
+            if (it != null) {
+                user = it
+            } else { // 유저 데이터가 null일 때만 데이터를 가져옴
+                mViewModel.isLoading.value = true
+            }
+        }
+        // 꽃 데이터 수정
+        mViewModel.updateFlower.observe(viewLifecycleOwner) { flower ->
+            if (flower != null) {
+                // TODO: 나중에 광고 넣기
+                gViewModel.user.value = user
+                gViewModel.flower.value = flower
+
+                mViewModel.updateFlower.value = null // 초기화
+            }
         }
         // 로딩 여부
         mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -109,6 +134,14 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     }
             }
         }
+        // 메인 로딩
+        mViewModel.mainLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) {
+                (requireActivity() as MainActivity).loading()
+            } else {
+                (requireActivity() as MainActivity).ready()
+            }
+        }
         // 오류 여부
         mViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError) {
@@ -116,6 +149,22 @@ class HomeFragment : Fragment(), View.OnClickListener {
                     .show()
                 mViewModel.isError.value = false
             }
+        }
+    }
+
+    // 꽃을 포기함
+    private fun giveUpFlower() {
+        with(MaterialAlertDialogBuilder(requireContext())) {
+            val flower = gViewModel.flower.value!!
+            setMessage("\"${flower.name}\" 을(를) 키우는 것을 포기하시겠습니까?")
+            setPositiveButton("확인") { dialog, which ->
+                mViewModel.giveUpFlower(user)
+            }
+            setNegativeButton("취소") { dialog, which ->
+                dialog.dismiss()
+            }
+
+            show()
         }
     }
 }

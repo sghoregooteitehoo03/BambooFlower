@@ -10,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
@@ -60,6 +61,7 @@ fun setFlowerImage(view: ImageView, flowerImage: String?) {
         )
 
         view.setImageBitmap(image)
+        view.clipToOutline = true
     }
 }
 
@@ -78,9 +80,41 @@ fun setFlowerName(view: TextView, flowerName: String?) {
 
 @BindingAdapter("app:setFlowerProgress")
 fun setFlowerProgress(view: CustomProgressView, progress: Int?) {
-    if(progress != null) {
+    if (progress != null) {
         view.setProgress(progress)
-        view.setProgressText("${0} / 100")
+        view.setProgressText("$progress / 100")
+    }
+}
+
+@BindingAdapter("app:setButtonEnable", "app:setButtonLoadingEnable", requireAll = true)
+fun setButtonEnable(view: Button, isEnable: Boolean, loadingEnable: Boolean) {
+    if (isEnable && !loadingEnable) { // 버튼 활성화
+        view.isEnabled = true
+        view.backgroundTintList =
+            ContextCompat.getColorStateList(view.context, R.color.green_300)
+
+        view.text = "선택"
+    } else { // 버튼 비활성화
+        view.isEnabled = false
+
+        if (loadingEnable) {
+            view.text = ""
+            view.backgroundTintList =
+                ContextCompat.getColorStateList(view.context, R.color.green_300)
+        } else {
+            view.text = "선택"
+            view.backgroundTintList =
+                ContextCompat.getColorStateList(view.context, R.color.gray)
+        }
+    }
+}
+
+@BindingAdapter("app:setSelectFlower")
+fun setSelectFlower(view: ConstraintLayout, isSelected: Boolean) {
+    view.backgroundTintList = if (isSelected) { // 선택되었을 때
+        ContextCompat.getColorStateList(view.context, R.color.gray)
+    } else { // 선택되지 않았을 때
+        ContextCompat.getColorStateList(view.context, R.color.white)
     }
 }
 

@@ -1,15 +1,11 @@
 package com.sg.android.bambooflower.viewmodel.homeFrag
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.util.Base64
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
-import com.sg.android.bambooflower.R
+import com.google.firebase.functions.HttpsCallableResult
+import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
-import java.io.ByteArrayOutputStream
+import org.json.JSONObject
 import javax.inject.Inject
 
 class HomeRepository @Inject constructor(
@@ -20,4 +16,17 @@ class HomeRepository @Inject constructor(
     fun getHomeData() =
         functions.getHttpsCallable("getHomeDataTest")
             .call(auth.uid!!)
+
+    // 꽃 -> 씨앗으로 바꿈
+    suspend fun giveUpFlower(uid: String): HttpsCallableResult {
+        val jsonData = JSONObject().apply {
+            put("uid", uid)
+            put("flowerName", "씨앗")
+            put("flowerState", 0)
+        }
+
+        return functions.getHttpsCallable(Contents.FUNC_USER_SELECT_FLOWER)
+            .call(jsonData)
+            .await()!!
+    }
 }

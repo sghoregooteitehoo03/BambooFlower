@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                     showBottomView()
                     showPoint()
                 }
-                R.id.acceptListDialog, R.id.missionDialog, R.id.reportDialog -> {
+                R.id.selectFlowerDialog, R.id.acceptListDialog, R.id.missionDialog, R.id.reportDialog -> {
                     isExit = false
                 }
                 else -> {
