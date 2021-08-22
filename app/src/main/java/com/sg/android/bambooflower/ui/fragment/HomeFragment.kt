@@ -60,6 +60,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
+
+        mViewModel.checkFirst()
     }
 
     override fun onStart() {
@@ -84,8 +86,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.cancel_button -> { // 포기
                 giveUpFlower()
             }
-            R.id.quest_view -> {
-
+            R.id.quest_view -> { // 퀘스트 목록으로 이동
+                findNavController().navigate(R.id.action_homeFragment_to_questListFragment)
             }
             R.id.diary_view -> {
 
@@ -117,21 +119,12 @@ class HomeFragment : Fragment(), View.OnClickListener {
         // 로딩 여부
         mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                mViewModel.getHomeData() // 기본 데이터를 가져옴
-                    .addOnSuccessListener { result ->
-                        val jsonObject = JSONObject(result.data as MutableMap<*, *>).toString()
-                        val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
-
-                        if (homeData.user != null && homeData.flower != null) {
-                            gViewModel.user.value = homeData.user
-                            gViewModel.flower.value = homeData.flower
-
-                            mViewModel.isLoading.value = false // 로딩 끝
-                            Log.i("getHomeData", "동작")
-                        } else {
-                            mViewModel.isError.value = true // 오류발생
-                        }
-                    }
+                // 바텀뷰 클릭 비활성화
+                (requireActivity() as MainActivity).unEnableBottomView()
+                getHomeData()
+            } else {
+                // 바텀뷰 클릭 활성화
+                (requireActivity() as MainActivity).enableBottomView()
             }
         }
         // 메인 로딩
@@ -150,6 +143,24 @@ class HomeFragment : Fragment(), View.OnClickListener {
                 mViewModel.isError.value = false
             }
         }
+    }
+
+    private fun getHomeData() {
+        mViewModel.getHomeData() // 기본 데이터를 가져옴
+            .addOnSuccessListener { result ->
+                val jsonObject = JSONObject(result.data as MutableMap<*, *>).toString()
+                val homeData = Gson().fromJson(jsonObject, HomeData::class.java)
+
+                if (homeData.user != null && homeData.flower != null) {
+                    gViewModel.user.value = homeData.user
+                    gViewModel.flower.value = homeData.flower
+
+                    mViewModel.isLoading.value = false // 로딩 끝
+                    Log.i("getHomeData", "동작")
+                } else {
+                    mViewModel.isError.value = true // 오류발생
+                }
+            }
     }
 
     // 꽃을 포기함

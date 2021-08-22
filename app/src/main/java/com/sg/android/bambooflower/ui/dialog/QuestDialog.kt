@@ -6,31 +6,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.adapter.MissionImageAdapter
-import com.sg.android.bambooflower.databinding.DialogMissionBinding
+import com.sg.android.bambooflower.adapter.QuestImageAdapter
+import com.sg.android.bambooflower.databinding.DialogQuestBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.missionDialog.MissionViewModel
+import com.sg.android.bambooflower.viewmodel.questDialog.QuestViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MissionDialog : BottomSheetDialogFragment(),
-    MissionImageAdapter.ImageItemListener,
+class QuestDialog : BottomSheetDialogFragment(),
+    QuestImageAdapter.ImageItemListener,
     View.OnClickListener {
 
-    private val mViewModel by viewModels<MissionViewModel>()
+    private val mViewModel by viewModels<QuestViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
-    private lateinit var missionImageAdapter: MissionImageAdapter
-    private lateinit var imageOtherAdapter: MissionImageAdapter
+    private lateinit var missionImageAdapter: QuestImageAdapter
+    private lateinit var imageOtherAdapter: QuestImageAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,12 +37,12 @@ class MissionDialog : BottomSheetDialogFragment(),
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = DialogMissionBinding.inflate(inflater)
-        missionImageAdapter = MissionImageAdapter().apply {
-            setOnImageItemListener(this@MissionDialog)
+        val binding = DialogQuestBinding.inflate(inflater)
+        missionImageAdapter = QuestImageAdapter().apply {
+            setOnImageItemListener(this@QuestDialog)
         }
-        imageOtherAdapter = MissionImageAdapter(true).apply {
-            setOnImageItemListener(this@MissionDialog)
+        imageOtherAdapter = QuestImageAdapter(true).apply {
+            setOnImageItemListener(this@QuestDialog)
         }
 
         // 바인딩 설정
@@ -51,7 +50,7 @@ class MissionDialog : BottomSheetDialogFragment(),
             this.viewmodel = mViewModel
             this.mission = gViewModel.mission.value!!
             this.user = gViewModel.user.value!!
-            this.clickListener = this@MissionDialog
+            this.clickListener = this@QuestDialog
 
             this.missionWayImageList.adapter = missionImageAdapter
             this.otherUserImageList.adapter = imageOtherAdapter
@@ -91,7 +90,7 @@ class MissionDialog : BottomSheetDialogFragment(),
                 findNavController().navigateUp()
             }
             R.id.action_btn -> {
-                findNavController().navigate(R.id.action_missionDialog_to_addPostFragment)
+                findNavController().navigate(R.id.action_questDialog_to_addPostFragment)
             }
         }
     }
@@ -101,11 +100,11 @@ class MissionDialog : BottomSheetDialogFragment(),
             if (list != null) {
                 val mission = gViewModel.mission.value!!
 
-                missionImageAdapter.syncData(mission.missionImage!!.map { it.toUri() })
+//                missionImageAdapter.syncData(mission.missionImage!!.map { it.toUri() })
                 imageOtherAdapter.syncData(list)
             } else {
                 val mission = gViewModel.mission.value!!
-                mViewModel.getOtherUserImages(mission.document!!)
+//                mViewModel.getOtherUserImages(mission.document!!)
             }
         }
     }

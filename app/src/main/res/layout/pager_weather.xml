@@ -21,7 +21,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setResourceImage="@{imageRes}"
             tools:src="@drawable/ic_sun"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -35,6 +35,8 @@ object Contents {
     const val FUNC_GET_HOME_DATA = "getHomeData"
     const val FUNC_GET_HAVEN_FLOWER_DATA = "getHavenFlowerData"
     const val FUNC_USER_SELECT_FLOWER = "userSelectFlower"
+    const val FUNC_GET_USERS_QUEST = "getUsersQuest"
+    const val FUNC_GET_QUEST_LIST = "getQuestList"
     const val FUNC_ADD_POST = "addPost"
     const val FUNC_DELETE_POST = "deletePost"
     const val FUNC_CHANGE_MISSION = "changeMission"

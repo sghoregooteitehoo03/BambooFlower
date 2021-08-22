@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.viewmodel.missionDialog
+package com.sg.android.bambooflower.viewmodel.questDialog
 
 import android.net.Uri
 import androidx.core.net.toUri
@@ -8,7 +8,7 @@ import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class MissionRepository @Inject constructor(
+class QuestRepository @Inject constructor(
     private val store: FirebaseFirestore
 ) {
 

@@ -113,11 +113,6 @@
             app:destination="@id/diaryEditFragment"/>
     </fragment>
     <fragment
-        android:id="@+id/rankingFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.RankingFragment"
-        android:label="RankingFragment"
-        tools:layout="@layout/fragment_ranking"/>
-    <fragment
         android:id="@+id/profileFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.ProfileFragment"
         android:label="ProfileFragment"
@@ -193,13 +188,13 @@
         android:label="AcceptListDialog"
         tools:layout="@layout/dialog_accept_list"/>
     <fragment
-        android:id="@+id/missionListFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.MissionListFragment"
-        android:label="MissionListFragment"
-        tools:layout="@layout/fragment_mission_list">
+        android:id="@+id/questListFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.QuestListFragment"
+        android:label="QuestListFragment"
+        tools:layout="@layout/fragment_quest_list">
         <action
-            android:id="@+id/action_missionListFragment_to_missionDialog"
-            app:destination="@id/missionDialog"/>
+            android:id="@+id/action_questListFragment_to_questDialog"
+            app:destination="@id/questDialog"/>
     </fragment>
     <fragment
         android:id="@+id/diaryListFragment"
@@ -222,12 +217,12 @@
             app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <dialog
-        android:id="@+id/missionDialog"
-        android:name="com.sg.android.bambooflower.ui.dialog.MissionDialog"
-        android:label="MissionDialog"
-        tools:layout="@layout/dialog_mission">
+        android:id="@+id/questDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.QuestDialog"
+        android:label="questDialog"
+        tools:layout="@layout/dialog_quest">
         <action
-            android:id="@+id/action_missionDialog_to_addPostFragment"
+            android:id="@+id/action_questDialog_to_addPostFragment"
             app:destination="@id/addPostFragment"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
@@ -263,6 +258,13 @@
         <action
             android:id="@+id/action_homeFragment_to_selectFlowerDialog"
             app:destination="@id/selectFlowerDialog"/>
+        <action
+            android:id="@+id/action_homeFragment_to_questListFragment"
+            app:destination="@id/questListFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <dialog
         android:id="@+id/selectFlowerDialog"

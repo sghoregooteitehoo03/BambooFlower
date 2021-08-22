@@ -9,11 +9,11 @@
 
         <variable
             name="viewmodel"
-            type="com.sg.android.bambooflower.viewmodel.missionDialog.MissionViewModel"/>
+            type="com.sg.android.bambooflower.viewmodel.questDialog.QuestViewModel"/>
 
         <variable
             name="mission"
-            type="com.sg.android.bambooflower.data.Mission"/>
+            type="com.sg.android.bambooflower.data.Quest"/>
 
         <variable
             name="user"
@@ -39,7 +39,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setTitle="@{mission.missionTitle}"
             tools:text="[간단한 산책]"/>
 
         <ImageButton
@@ -94,7 +93,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:text="@{mission.missionHow}"
                     android:textColor="@android:color/tab_indicator_text"
                     android:textFontWeight="500"
                     app:layout_constraintStart_toStartOf="parent"

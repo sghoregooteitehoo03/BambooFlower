@@ -5,13 +5,11 @@
 
     <data>
 
-        <variable
-            name="mission"
-            type="com.sg.android.bambooflower.data.Mission"/>
+        <import type="android.view.View"/>
 
         <variable
-            name="user"
-            type="com.sg.android.bambooflower.data.User"/>
+            name="usersQuest"
+            type="com.sg.android.bambooflower.data.UsersQuest"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,11 +17,32 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@color/diary_color">
 
+        <LinearLayout
+            android:id="@+id/empty_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/shape_rounded_image"
+            android:backgroundTint="@color/white_darker"
+            android:gravity="center"
+            android:visibility="@{usersQuest != null ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="비어있음"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
-            android:padding="12dp">
+            android:padding="12dp"
+            android:visibility="@{usersQuest != null ? View.VISIBLE : View.INVISIBLE}">
 
             <ImageView
                 android:id="@+id/mission_image"
@@ -31,11 +50,10 @@
                 android:layout_height="80dp"
                 android:background="@drawable/shape_rounded_image"
                 android:scaleType="centerCrop"
-                android:src="@drawable/test_image"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:setMissionImage="@{mission}"
+                app:setImage="@{usersQuest.quest.images[0]}"
                 tools:src="@drawable/test_image"/>
 
             <TextView
@@ -43,47 +61,27 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
+                android:layout_marginEnd="8dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/default_item_color"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@id/guideline_divide"
+                app:layout_constraintEnd_toStartOf="@id/state_icon"
                 app:layout_constraintStart_toEndOf="@id/mission_image"
                 app:layout_constraintTop_toTopOf="parent"
-                app:setTitle="@{mission.missionTitle}"
+                app:setTitle="@{usersQuest.quest.title}"
                 tools:text="[간단한 산책]"/>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_divide"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.856"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@drawable/shape_round_button"
-                android:gravity="center"
+            <ImageView
+                android:id="@+id/state_icon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 app:layout_constraintBottom_toBottomOf="@id/title_text"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/guideline_divide"
                 app:layout_constraintTop_toTopOf="parent"
-                app:setMissionCompleteLayout="@{mission}"
-                app:setUserCompleteLayout="@{user}"
-                tools:backgroundTint="@color/green_300">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:setMissionCompleteText="@{mission}"
-                    app:setUserCompleteText="@{user}"
-                    tools:text="수행완료"/>
-            </LinearLayout>
+                app:setStateIcon="@{usersQuest.state}"
+                tools:src="@drawable/ic_complete_quest"/>
 
             <TextView
                 android:id="@+id/mission_way_text"
@@ -93,36 +91,43 @@
                 android:layout_marginTop="4dp"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{mission.missionHow}"
+                android:text="@{usersQuest.quest.way}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/mission_image"
                 app:layout_constraintTop_toBottomOf="@id/title_text"
                 tools:text="할만한 취미생활을 찾아본 후 관심 있는 취미생…"/>
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="12dp"
-                app:civ_border_color="@color/gray"
-                app:civ_border_width="1dp"
-                app:civ_circle_background_color="@color/gray_bright"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/mission_image"
-                tools:src="@drawable/ic_person"/>
-
-            <TextView
-                android:id="@+id/name_text"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_divide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:fontWeight="500"
-                android:text="@{mission.madeBy}"
-                android:textSize="12sp"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.72"/>
+
+            <LinearLayout
+                android:id="@+id/state_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/shape_round_button"
+                android:gravity="center"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/profile_image"
-                app:layout_constraintTop_toTopOf="@id/profile_image"
-                tools:text="Dev"/>
+                app:layout_constraintStart_toEndOf="@id/mission_image"
+                app:layout_constraintTop_toBottomOf="@id/guideline_divide"
+                app:setStateLayout="@{usersQuest.state}"
+                tools:backgroundTint="@color/green_300">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:setStateText="@{usersQuest.state}"
+                    tools:text="보상받기"/>
+            </LinearLayout>
 
             <ImageView
                 android:layout_width="14dp"
@@ -130,7 +135,7 @@
                 android:src="@drawable/ic_arrow_forward_ios"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/profile_image"/>
+                app:layout_constraintTop_toTopOf="@id/state_layout"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

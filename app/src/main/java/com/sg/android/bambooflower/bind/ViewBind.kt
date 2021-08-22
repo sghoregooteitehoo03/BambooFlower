@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.bind
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Base64
@@ -25,8 +24,9 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.Mission
+import com.sg.android.bambooflower.data.Quest
 import com.sg.android.bambooflower.data.User
+import com.sg.android.bambooflower.data.UsersQuest
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomProgressView
 import de.hdodenhof.circleimageview.CircleImageView
@@ -48,21 +48,6 @@ fun setErrorMessageState(view: TextView, isSuccess: Boolean) {
         )
     }
     view.setTextColor(color)
-}
-
-@BindingAdapter("app:setFlowerImage")
-fun setFlowerImage(view: ImageView, flowerImage: String?) {
-    if (flowerImage != null) {
-        val imageByte = Base64.decode(flowerImage, Base64.DEFAULT)
-        val image = BitmapFactory.decodeByteArray(
-            imageByte,
-            0,
-            imageByte.size
-        )
-
-        view.setImageBitmap(image)
-        view.clipToOutline = true
-    }
 }
 
 @BindingAdapter("app:setFlowerName")
@@ -119,6 +104,58 @@ fun setSelectFlower(view: ConstraintLayout, isSelected: Boolean) {
 }
 
 @SuppressLint("SetTextI18n")
+@BindingAdapter("app:setUsersQuestSize")
+fun setUsersQuestSize(view: TextView, size: Int) {
+    view.text = "$size / 2"
+}
+
+@BindingAdapter("app:setStateIcon")
+fun setStateIcon(view: ImageView, state: Int) {
+    if (state != 0) {
+        val imageRes = when (state) {
+            UsersQuest.STATE_NOTHING -> R.drawable.ic_active_quest
+            UsersQuest.STATE_LOADING -> R.drawable.ic_non_active_quest
+            else -> R.drawable.ic_complete_quest
+        }
+
+        Glide.with(view.context)
+            .load(imageRes)
+            .into(view)
+    }
+}
+
+@BindingAdapter("app:setStateLayout")
+fun setStateLayout(view: LinearLayout, state: Int) {
+    if (state != 0) {
+        val layoutColor = when (state) {
+            UsersQuest.STATE_NOTHING -> R.color.yellow
+            UsersQuest.STATE_LOADING -> R.color.gray
+            else -> R.color.green_300
+        }
+
+        view.backgroundTintList = ContextCompat.getColorStateList(
+            view.context,
+            layoutColor
+        )
+    }
+}
+
+@BindingAdapter("app:setStateText")
+fun setStateText(view: TextView, state: Int) {
+    if (state != 0) {
+        val stateText = when (state) {
+            UsersQuest.STATE_NOTHING -> "수행하기"
+            UsersQuest.STATE_LOADING -> "인증 중"
+            UsersQuest.STATE_COMPLETE_WITH_REWARD -> "보상받기"
+            UsersQuest.STATE_COMPLETE -> "완료"
+            else -> ""
+        }
+
+        view.text = stateText
+    }
+}
+
+@SuppressLint("SetTextI18n")
 @BindingAdapter("app:setPostTimestamp")
 fun setPostTimestamp(view: TextView, timeStamp: Long) {
     val diffTime = System.currentTimeMillis() - timeStamp
@@ -138,28 +175,8 @@ fun setPostTimestamp(view: TextView, timeStamp: Long) {
     }
 }
 
-@BindingAdapter("app:setMissionCompleteLayout", "app:setUserCompleteLayout", requireAll = true)
-fun setMissionLayout(view: LinearLayout, mission: Mission, user: User) {
-    view.visibility = View.VISIBLE
-
-    view.backgroundTintList = if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
-        ContextCompat.getColorStateList(view.context, R.color.green_300)
-    } else {
-        ContextCompat.getColorStateList(view.context, R.color.gray)
-    }
-}
-
-@BindingAdapter("app:setMissionCompleteText", "app:setUserCompleteText", requireAll = true)
-fun setMissionText(view: TextView, mission: Mission, user: User) {
-    view.text = if (mission.complete.containsKey(user.uid)) { // 유저가 수행완료 한 미션일 때
-        "수행 완료"
-    } else {
-        "미수행"
-    }
-}
-
 @BindingAdapter("app:setButtonStateUser", "app:setButtonStateMission", requireAll = true)
-fun setButtonState(view: Button, user: User, mission: Mission) {
+fun setButtonState(view: Button, user: User, mission: Quest) {
 //    if (mission.document != user.missionDoc) {
 //        // 유저가 수행중인 미션과 다를 경우
 //        val timestamp = mission.complete[user.uid]
@@ -283,24 +300,29 @@ fun setMediaContents(view: MediaView, content: MediaContent?) {
     }
 }
 
-@BindingAdapter(
-    "app:setUriImage",
-    "app:setResourceImage",
-    "app:setBitmapImage",
-    "app:setMissionImage",
-    requireAll = false
-)
-fun setUriImage(view: ImageView, imageUri: Uri?, imageResource: Int?, imageBitmap: Bitmap?, missionData: Mission?) {
-    if (imageUri != null) {
-        Glide.with(view.context).load(imageUri).into(view)
-    } else if (imageResource != null) {
-        Glide.with(view.context).load(imageResource).into(view)
-    } else if (imageBitmap != null) {
-        Glide.with(view.context).load(imageBitmap).into(view)
-    } else if (missionData != null) {
-        Glide.with(view.context).load(missionData.missionImage?.get(0)).into(view)
+@BindingAdapter("app:setImage", "app:setUriImage", "app:setResourceImage", requireAll = false)
+fun setImage(view: ImageView, image: String?, uri: Uri?, res: Int?) {
+    if (image != null) {
+        val imageByte = Base64.decode(image, Base64.DEFAULT)
+        val bitmap = BitmapFactory.decodeByteArray(
+            imageByte,
+            0,
+            imageByte.size
+        )
+
+        Glide.with(view.context)
+            .load(bitmap)
+            .into(view)
+        view.clipToOutline = true
+    } else if(uri != null) {
+        Glide.with(view.context)
+            .load(uri)
+            .into(view)
+    } else if(res != null) {
+        Glide.with(view.context)
+            .load(res)
+            .into(view)
     }
-    view.clipToOutline = true
 }
 
 @BindingAdapter("app:isFavorite")

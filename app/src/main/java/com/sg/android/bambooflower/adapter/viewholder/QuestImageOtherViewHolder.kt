@@ -2,12 +2,12 @@ package com.sg.android.bambooflower.adapter.viewholder
 
 import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
-import com.sg.android.bambooflower.adapter.MissionImageAdapter
+import com.sg.android.bambooflower.adapter.QuestImageAdapter
 import com.sg.android.bambooflower.databinding.ItemMissionImageOtherBinding
 
-class MissionImageOtherViewHolder(
+class QuestImageOtherViewHolder(
     private val binding: ItemMissionImageOtherBinding,
-    itemListener: MissionImageAdapter.ImageItemListener
+    itemListener: QuestImageAdapter.ImageItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {

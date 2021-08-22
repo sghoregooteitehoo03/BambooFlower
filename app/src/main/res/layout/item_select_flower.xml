@@ -23,11 +23,11 @@
             android:layout_width="66dp"
             android:layout_height="66dp"
             android:background="@drawable/shape_rounded_image"
-            android:backgroundTint="@color/gray_bright"
+            android:backgroundTint="@color/white_darker"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setFlowerImage="@{flower.image}"
+            app:setImage="@{flower.image}"
             tools:src="@drawable/ic_seed"/>
 
         <TextView

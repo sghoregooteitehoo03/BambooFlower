@@ -77,7 +77,6 @@
                         android:background="@drawable/shape_rounded_image"
                         android:scaleType="centerCrop"
                         android:visibility="@{!viewmodel.image.equals(blank) ? View.VISIBLE : View.GONE}"
-                        app:setUriImage="@{Uri.parse(viewmodel.image)}"
                         tools:visibility="gone"/>
                 </LinearLayout>
 

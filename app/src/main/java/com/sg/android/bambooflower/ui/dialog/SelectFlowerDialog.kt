@@ -57,8 +57,6 @@ class SelectFlowerDialog : BottomSheetDialogFragment(), View.OnClickListener, Se
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog?.setCanceledOnTouchOutside(false)
-
         setObserver() // 옵저버 설정
     }
 
@@ -89,8 +87,10 @@ class SelectFlowerDialog : BottomSheetDialogFragment(), View.OnClickListener, Se
         // 선택창 로딩
         mViewModel.selectLoading.observe(viewLifecycleOwner) { loading ->
             if (loading) {
+                dialog?.setCanceledOnTouchOutside(false)
                 dialog?.setCancelable(false)
             } else {
+                dialog?.setCanceledOnTouchOutside(true)
                 dialog?.setCancelable(true)
             }
         }

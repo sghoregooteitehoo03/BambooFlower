@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.viewmodel.missionDialog
+package com.sg.android.bambooflower.viewmodel.questDialog
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MissionViewModel @Inject constructor(private val repository: MissionRepository) :
+class QuestViewModel @Inject constructor(private val repository: QuestRepository) :
     ViewModel() {
     private val _otherUserImageList = MutableLiveData<List<Uri>?>(null)
     private val _isLoading = MutableLiveData(true)

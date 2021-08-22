@@ -27,14 +27,12 @@
             android:background="@drawable/shape_rectangle"
             android:scaleType="center"
             android:visibility="@{!hasOptions ? View.VISIBLE : View.GONE}"
-            app:setUriImage="@{imageUri}"
             tools:src="@drawable/test_image"/>
 
         <com.github.chrisbanes.photoview.PhotoView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{hasOptions ? View.VISIBLE : View.GONE}"
-            app:setUriImage="@{imageUri}"
             tools:src="@drawable/test_image"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -52,4 +52,8 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
 
         _mainLoading.value = false // 로딩 끝
     }
+
+    fun checkFirst() {
+        repository.checkFirst()
+    }
 }

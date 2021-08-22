@@ -71,7 +71,6 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@id/guideline_divide"
                 app:layout_constraintTop_toBottomOf="@id/profile_image"
-                app:setUriImage="@{Uri.parse(postData.image)}"
                 tools:src="@drawable/test_image"/>
 
             <androidx.constraintlayout.widget.Guideline
