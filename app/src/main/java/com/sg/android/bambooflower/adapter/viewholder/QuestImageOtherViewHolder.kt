@@ -12,7 +12,7 @@ class QuestImageOtherViewHolder(
 
     init {
         itemView.setOnClickListener {
-            itemListener.onItemClickListener(bindingAdapterPosition, true)
+            itemListener.onItemClickListener(bindingAdapterPosition)
         }
     }
 

@@ -36,6 +36,14 @@ class QuestPagingAdapter() : PagingDataAdapter<Quest, QuestViewHolder>(diffUtil)
         }
     }
 
+    fun getItemData(pos: Int) =
+        getItem(pos)!!
+
+    // 유저가 퀘스트를 수락하였는지 확인
+    fun isQuestPerform(id: Int) =
+        usersQuestIdList.contains(id)
+
+
     fun syncData(_usersQuestIdList: List<Int>) {
         usersQuestIdList = _usersQuestIdList
         notifyDataSetChanged()

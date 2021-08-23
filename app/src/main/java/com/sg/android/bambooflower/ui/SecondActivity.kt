@@ -16,6 +16,10 @@ class SecondActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySecondBinding
     private lateinit var navController: NavController
 
+    companion object {
+        var images: List<String>? = null
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

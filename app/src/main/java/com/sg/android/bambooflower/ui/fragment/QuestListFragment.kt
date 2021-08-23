@@ -6,13 +6,16 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.QuestPagingAdapter
 import com.sg.android.bambooflower.adapter.UsersQuestAdapter
+import com.sg.android.bambooflower.data.UsersQuest
 import com.sg.android.bambooflower.databinding.FragmentQuestListBinding
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
@@ -23,17 +26,20 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 // TODO:
-//  . 미션 수락, 포기 동작구현(나중에)
 //  . 아이콘 수정(나중에)
 
 @AndroidEntryPoint
-class QuestListFragment : Fragment(), View.OnClickListener,
-    UsersQuestAdapter.UsersQuestItemListener, QuestPagingAdapter.QuestItemListener {
+class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
+    QuestPagingAdapter.QuestItemListener {
+
     private val mViewModel by viewModels<QuestListViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
     private lateinit var usersQuestAdapter: UsersQuestAdapter
     private lateinit var questAdapter: QuestPagingAdapter
+    private lateinit var scrollView: NestedScrollView
+
+    private var isMove = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +54,7 @@ class QuestListFragment : Fragment(), View.OnClickListener,
         questAdapter = QuestPagingAdapter().apply {
             setOnItemListener(this@QuestListFragment)
         }
+        scrollView = binding.mainLayout
 
         // 바인딩 설정
         with(binding) {
@@ -87,27 +94,54 @@ class QuestListFragment : Fragment(), View.OnClickListener,
         }
     }
 
-    // 버튼 액션
-    override fun onClick(v: View) {
-        when (v.id) {
-
-            else -> {
-            }
-        }
-    }
-
     // 유저가 수행중인 퀘스트를 눌렀을 때
     override fun usersQuestClickListener(pos: Int) {
-        // TODO: 나중에
+        val data = usersQuestAdapter.getItem(pos)
+
+        if (data != null) {
+            isMove = true
+            gViewModel.usersQuest.value = data
+            gViewModel.usersQuestList.value = mViewModel.usersQuestList.value?.toMutableList()
+
+            findNavController().navigate(R.id.questDialog)
+        }
     }
 
     // 퀘스트 목록에 퀘스트를 눌렀을 때
     override fun onQuestClickListener(pos: Int) {
-        // TODO: 나중에
+        val data = UsersQuest(
+            0,
+            questAdapter.getItemData(pos),
+            0,
+            0
+        )
+
+        // 유저가 수행하고 있지 않은 퀘스트일 경우
+        if (!questAdapter.isQuestPerform(data.quest.id)) {
+            isMove = true
+            gViewModel.usersQuest.value = data
+            gViewModel.usersQuestList.value = mViewModel.usersQuestList.value?.toMutableList()
+
+            findNavController().navigate(R.id.questDialog)
+        } else { // 유저가 수행중인 퀘스트일 경우
+            scrollView.smoothScrollTo(0, 0)
+        }
     }
 
     // 옵저버 설정
     private fun setObserver() {
+        gViewModel.usersQuestList.observe(viewLifecycleOwner) {
+            if(!isMove) {
+                mViewModel.usersQuestList.value = it
+
+                // 초기화
+                gViewModel.usersQuest.value = null
+                gViewModel.usersQuestList.value = null
+            }
+
+            isMove = false
+        }
+
         // 유저 퀘스트
         mViewModel.usersQuestList.observe(viewLifecycleOwner) { list ->
             if (list != null) {

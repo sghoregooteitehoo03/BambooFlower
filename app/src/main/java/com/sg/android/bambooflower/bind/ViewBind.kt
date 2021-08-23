@@ -24,7 +24,6 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.Quest
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.data.UsersQuest
 import com.sg.android.bambooflower.other.ErrorMessage
@@ -155,6 +154,83 @@ fun setStateText(view: TextView, state: Int) {
     }
 }
 
+@BindingAdapter("app:setStateButton", "app:setQuestSizeButton", requireAll = true)
+fun setStateButton(view: Button, state: Int, usersQuestSize: Int) {
+    if (state != 0) { // 내 퀘스트를 클릭하였을 경우
+        when (state) {
+            UsersQuest.STATE_NOTHING -> view.visibility = View.GONE // 퀘스트 수락 후
+            UsersQuest.STATE_LOADING -> { // 퀘스트 수행 후
+                with(view) {
+                    visibility = View.VISIBLE
+                    isEnabled = false
+                    text = "보상받기"
+
+                    backgroundTintList = ContextCompat.getColorStateList(
+                        view.context,
+                        R.color.gray
+                    )
+                }
+            }
+            UsersQuest.STATE_COMPLETE_WITH_REWARD -> { // 퀘스트를 다른 유저에게 인증을 받은 후
+                with(view) {
+                    visibility = View.VISIBLE
+                    isEnabled = true
+                    text = "보상받기"
+
+                    backgroundTintList = ContextCompat.getColorStateList(
+                        view.context,
+                        R.color.green_300
+                    )
+                }
+            }
+            UsersQuest.STATE_COMPLETE -> { // 보상 받은 후
+                with(view) {
+                    visibility = View.VISIBLE
+                    isEnabled = false
+                    text = "완료"
+
+                    backgroundTintList = ContextCompat.getColorStateList(
+                        view.context,
+                        R.color.green_300
+                    )
+                }
+            }
+        }
+    } else { // 퀘스트 목록에 있는것을 클릭하였을 경우
+        if (usersQuestSize != 2) { // 유저가 2개 이하로 퀘스트를 가지고 있을 경우
+            with(view) {
+                visibility = View.VISIBLE
+                isEnabled = true
+                text = "수락하기"
+
+                backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.green_300
+                )
+            }
+        } else { // 유저가 이미 2개의 퀘스트를 가지고 있을 경우
+            with(view) {
+                visibility = View.VISIBLE
+                isEnabled = false
+                text = "수락하기"
+
+                backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.gray
+                )
+            }
+        }
+    }
+}
+
+@BindingAdapter("setButtonLoading")
+fun setButtonLoading(view: Button, isLoading: Boolean) {
+    if (isLoading) {
+        view.isEnabled = false
+        view.text = ""
+    }
+}
+
 @SuppressLint("SetTextI18n")
 @BindingAdapter("app:setPostTimestamp")
 fun setPostTimestamp(view: TextView, timeStamp: Long) {
@@ -173,71 +249,6 @@ fun setPostTimestamp(view: TextView, timeStamp: Long) {
             "${diffTime / 6000}초 전"
         }
     }
-}
-
-@BindingAdapter("app:setButtonStateUser", "app:setButtonStateMission", requireAll = true)
-fun setButtonState(view: Button, user: User, mission: Quest) {
-//    if (mission.document != user.missionDoc) {
-//        // 유저가 수행중인 미션과 다를 경우
-//        val timestamp = mission.complete[user.uid]
-//
-//        if (timestamp != null) {
-//            // 수행 완료한 미션일 경우
-//            val successDay = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
-//                .format(timestamp)
-//
-//            with(view) {
-//                text = "수행 완료: $successDay"
-//                setTextColor(Color.WHITE)
-//
-//                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-//            }
-//        } else {
-//            // 수행하지 않은 미션일 경우
-//            with(view) {
-//                text = "미수행"
-//                setTextColor(view.resources.getColor(android.R.color.tab_indicator_text, null))
-//
-//                backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.gray)
-//            }
-//        }
-//        view.isClickable = false
-//
-//    } else if (mission.document == user.missionDoc) {
-//        // 유저가 수행하고 있는 미션일 경우
-//        when (user.achieveState) {
-//            User.STATE_LOADING -> {
-//                // 유저 상태가 "인증 중"일 떄
-//                with(view) {
-//                    text = "인증 중..."
-//                    setTextColor(Color.WHITE)
-//
-//                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-//                    isClickable = false
-//                }
-//            }
-//            User.STATE_ALLOW -> {
-//                // 유저 상태가 "인증 완료"일 떄
-//                with(view) {
-//                    text = "인증 완료"
-//                    setTextColor(Color.WHITE)
-//
-//                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-//                    isClickable = false
-//                }
-//            }
-//            else -> {
-//                // 유저 상태가 "NOTHING" 일 때
-//                with(view) {
-//                    text = "인증하기"
-//                    setTextColor(Color.WHITE)
-//
-//                    backgroundTintList = ContextCompat.getColorStateList(view.context, R.color.green_300)
-//                    isClickable = true
-//                }
-//            }
-//        }
-//    }
 }
 
 @BindingAdapter("app:setSelectedText")
@@ -314,11 +325,11 @@ fun setImage(view: ImageView, image: String?, uri: Uri?, res: Int?) {
             .load(bitmap)
             .into(view)
         view.clipToOutline = true
-    } else if(uri != null) {
+    } else if (uri != null) {
         Glide.with(view.context)
             .load(uri)
             .into(view)
-    } else if(res != null) {
+    } else if (res != null) {
         Glide.with(view.context)
             .load(res)
             .into(view)

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.viewholder.PagerImageViewHolder
 import com.sg.android.bambooflower.databinding.PagerImageBinding
 
-class ImagePagerAdapter(private val imageList: List<String>, private val hasOptions: Boolean = false) :
+class ImagePagerAdapter(private val imageList: List<String>) :
     RecyclerView.Adapter<PagerImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PagerImageViewHolder {
@@ -16,7 +16,7 @@ class ImagePagerAdapter(private val imageList: List<String>, private val hasOpti
     }
 
     override fun onBindViewHolder(holder: PagerImageViewHolder, position: Int) {
-        holder.bind(imageList[position].toUri(), hasOptions)
+        holder.bind(imageList[position])
     }
 
     override fun getItemCount(): Int {

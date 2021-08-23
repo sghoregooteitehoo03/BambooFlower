@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.viewmodel.questListFrag
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,12 +15,10 @@ import javax.inject.Inject
 class QuestListViewModel @Inject constructor(
     private val repository: QuestListRepository
 ) : ViewModel() {
-    private val _usersQuestList = MutableLiveData<List<UsersQuest>>(null) // 유저가 수행중인 퀘스트
-    val usersQuestList: LiveData<List<UsersQuest>> = _usersQuestList
-
     // 모든 퀘스트 목록
     val questList = repository.getQuestList()
         .cachedIn(viewModelScope)
+    val usersQuestList = MutableLiveData<List<UsersQuest>>(null) // 유저가 수행중인 퀘스트
     val isLoading = MutableLiveData(true) // 로딩 여부
     val isError = MutableLiveData(false) // 오류 여부
 
@@ -34,7 +31,7 @@ class QuestListViewModel @Inject constructor(
                 throw NullPointerException()
             }
 
-            _usersQuestList.value = (result["quests"] as List<*>).map { quest ->
+            usersQuestList.value = (result["quests"] as List<*>).map { quest ->
                 val jsonObject = JSONObject(quest as Map<*, *>).toString()
                 Gson().fromJson(jsonObject, UsersQuest::class.java)
             }

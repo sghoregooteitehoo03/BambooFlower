@@ -9,7 +9,6 @@ object Contents {
     const val PREF_KEY_IS_FIRST = "PREF_KEY_IS_FIRST"
 
     const val EXTRA_SET_IMAGE = "EXTRA_SET_IMAGE"
-    const val EXTRA_GET_IMAGE = "EXTRA_GET_IMAGE"
     const val EXTRA_SET_POS = "EXTRA_SET_POS"
     const val EXTRA_IS_LOGIN = "EXTRA_IS_LOGIN"
     const val EXTRA_TITLE = "EXTRA_TITLE"
@@ -37,7 +36,8 @@ object Contents {
     const val FUNC_USER_SELECT_FLOWER = "userSelectFlower"
     const val FUNC_GET_USERS_QUEST = "getUsersQuest"
     const val FUNC_GET_QUEST_LIST = "getQuestList"
+    const val FUNC_ACCEPT_QUEST = "acceptQuest"
+    const val FUNC_GIVE_UP_QUEST = "giveUpQuest"
     const val FUNC_ADD_POST = "addPost"
     const val FUNC_DELETE_POST = "deletePost"
-    const val FUNC_CHANGE_MISSION = "changeMission"
 }

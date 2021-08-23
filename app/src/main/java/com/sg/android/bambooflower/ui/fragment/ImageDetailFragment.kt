@@ -33,12 +33,11 @@ class ImageDetailFragment : Fragment() {
     ): View {
         // 인스턴스 설정
         val binding = FragmentImageDetailBinding.inflate(inflater)
-        val imageList =
-            requireActivity().intent.getStringArrayExtra(Contents.EXTRA_SET_IMAGE) // 이미지 리스트
-                ?.toList()!!
+        val imageList = SecondActivity.images!! // 이미지 리스트
         val imagePos = requireActivity().intent.getIntExtra(Contents.EXTRA_SET_POS, 0)// 이미지 위치
+
         mViewModel.imagePos.value = imagePos + 1
-        imageAdapter = ImagePagerAdapter(imageList, true)
+        imageAdapter = ImagePagerAdapter(imageList)
 
         // 바인딩 설정
         with(binding) {
@@ -75,5 +74,10 @@ class ImageDetailFragment : Fragment() {
             statusBarColor = Color.BLACK
             navigationBarColor = Color.BLACK
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        SecondActivity.images = null // 이미지 리스트 초기화
     }
 }
