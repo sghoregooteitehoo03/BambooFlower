@@ -1,10 +1,10 @@
-package com.sg.android.bambooflower.viewmodel.diaryViewerFragment
+package com.sg.android.bambooflower.viewmodel.diaryFrag
 
 import com.sg.android.bambooflower.data.Diary
 import com.sg.android.bambooflower.data.database.DiaryDao
 import javax.inject.Inject
 
-class DiaryViewerRepository @Inject constructor(private val mDao: DiaryDao) {
+class DiaryRepository @Inject constructor(private val mDao: DiaryDao) {
 
     suspend fun deleteDiary(data: Diary) {
         mDao.deleteDiary(data)

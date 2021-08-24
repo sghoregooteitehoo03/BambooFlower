@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.viewmodel.addDiaryFrag
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,22 +15,22 @@ import javax.inject.Inject
 class AddDiaryViewModel @Inject constructor(private val repository: AddDiaryRepository) :
     ViewModel() {
     private val _isSaved = MutableLiveData(false) // 저장 여부
-    private val _editData = MutableLiveData<Diary?>(null) // 수정 여부
+    private val _isEdited = MutableLiveData(false) // 수정 여부
 
     val contents = MutableLiveData("") // 일기 내용
     val isSaved: LiveData<Boolean> = _isSaved
-    val editData: LiveData<Diary?> = _editData
+    val editData: LiveData<Boolean> = _isEdited
 
     // 일기 작성
     fun saveDiary(user: User, flower: Flower) = viewModelScope.launch {
         val diaryData = Diary(
             id = null,
             contents = contents.value!!,
-            user.progress,
-            System.currentTimeMillis(),
-            flower.image,
-            flower.id,
-            user.uid
+            progress = user.progress,
+            timeStamp = System.currentTimeMillis(),
+            flowerImage = flower.image,
+            flowerId = flower.id,
+            userId = user.uid
         )
 
         repository.saveDiary(diaryData)
@@ -39,19 +38,10 @@ class AddDiaryViewModel @Inject constructor(private val repository: AddDiaryRepo
     }
 
     // 일기 수정
-    fun editDiary(ordinaryData: Diary, context: Context) = viewModelScope.launch {
-//        if (weather.value != null) {
-//            val editDiary = Diary(
-//                id = ordinaryData.id,
-//                contents = contents.value!!,
-//                weatherImage = getBitmap(context),
-//                weather = weather.value!!.weather,
-//                timeStamp = ordinaryData.timeStamp,
-//                uid = ordinaryData.uid
-//            )
-//
-//            repository.editDiary(editDiary)
-//            _editData.value = editDiary
-//        }
+    fun editDiary(diaryData: Diary) = viewModelScope.launch {
+        diaryData.contents = contents.value!!
+
+        repository.editDiary(diaryData)
+        _isEdited.value = true
     }
 }

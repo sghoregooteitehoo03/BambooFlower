@@ -15,20 +15,36 @@
         android:layout_height="match_parent"
         android:padding="12dp">
 
-        <ImageView
-            android:layout_width="280dp"
-            android:layout_height="280dp"
-            android:layout_marginBottom="24dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@id/guideline_center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/test_image"/>
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="180dp"
+                android:layout_height="180dp"
+                android:background="@drawable/shape_rounded_image"
+                android:backgroundTint="@color/white_darker"
+                app:setImage="@{diaryData.flowerImage}"
+                tools:src="@drawable/ic_seed"/>
+
+            <com.sg.android.bambooflower.ui.view.CustomProgressView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:setFlowerProgress="@{diaryData.progress}"/>
+        </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@color/white_medium"
+            android:background="@drawable/shape_rounded_image"
+            android:backgroundTint="@color/white_medium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/guideline_center"/>

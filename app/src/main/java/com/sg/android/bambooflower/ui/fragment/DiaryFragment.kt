@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -10,18 +9,18 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Diary
-import com.sg.android.bambooflower.databinding.FragmentDiaryViewerBinding
+import com.sg.android.bambooflower.databinding.FragmentDiaryBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.diaryViewerFragment.DiaryViewerViewModel
+import com.sg.android.bambooflower.viewmodel.diaryFrag.DiaryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.*
 
 @AndroidEntryPoint
-class DiaryViewerFragment : Fragment() {
+class DiaryFragment : Fragment() {
     private val gViewModel by activityViewModels<GlobalViewModel>()
-    private val mViewModel by viewModels<DiaryViewerViewModel>()
+    private val mViewModel by viewModels<DiaryViewModel>()
 
     private lateinit var diary: Diary
 
@@ -31,7 +30,7 @@ class DiaryViewerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = FragmentDiaryViewerBinding.inflate(inflater)
+        val binding = FragmentDiaryBinding.inflate(inflater)
         diary = gViewModel.diary.value!!
 
         // 바인딩 설정
@@ -60,10 +59,15 @@ class DiaryViewerFragment : Fragment() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        gViewModel.diary.value = null
+    }
+
     // 메뉴설정
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_diaryviewer_fragment, menu)
+        inflater.inflate(R.menu.menu_diary_fragment, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -77,7 +81,7 @@ class DiaryViewerFragment : Fragment() {
                 true
             }
             R.id.menu_edit_diary -> { // 수정하기
-                findNavController().navigate(R.id.action_diaryViewerFragment_to_diaryEditFragment)
+                findNavController().navigate(R.id.action_diaryFragment_to_editDiaryFragment)
                 true
             }
             else -> false
@@ -91,9 +95,6 @@ class DiaryViewerFragment : Fragment() {
             setPositiveButton("확인") { dialog, which ->
                 mViewModel.deleteDiary(diary)
                 findNavController().navigateUp()
-
-                Toast.makeText(requireContext(), "삭제하였습니다.", Toast.LENGTH_SHORT)
-                    .show()
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()

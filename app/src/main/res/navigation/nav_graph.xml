@@ -104,13 +104,17 @@
         android:label="AddDiaryFragment"
         tools:layout="@layout/fragment_add_diary"/>
     <fragment
-        android:id="@+id/diaryViewerFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.DiaryViewerFragment"
+        android:id="@+id/diaryFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.DiaryFragment"
         android:label="DiaryViewerFragment"
-        tools:layout="@layout/fragment_diary_viewer">
+        tools:layout="@layout/fragment_diary">
         <action
-            android:id="@+id/action_diaryViewerFragment_to_diaryEditFragment"
-            app:destination="@id/diaryEditFragment"/>
+            android:id="@+id/action_diaryFragment_to_editDiaryFragment"
+            app:destination="@id/editDiaryFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -158,9 +162,9 @@
         android:label="ReportDialog"
         tools:layout="@layout/dialog_report"/>
     <fragment
-        android:id="@+id/diaryEditFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.DiaryEditFragment"
-        android:label="DiaryEditFragment"
+        android:id="@+id/editDiaryFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.EditDiaryFragment"
+        android:label="EditDiaryFragment"
         tools:layout="@layout/fragment_add_diary"/>
     <fragment
         android:id="@+id/settingFragment"
@@ -209,8 +213,8 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
         <action
-            android:id="@+id/action_diaryListFragment_to_diaryViewerFragment"
-            app:destination="@id/diaryViewerFragment"
+            android:id="@+id/action_diaryListFragment_to_diaryFragment"
+            app:destination="@id/diaryFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"

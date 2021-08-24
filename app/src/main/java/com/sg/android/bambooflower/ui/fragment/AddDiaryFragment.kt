@@ -31,7 +31,8 @@ class AddDiaryFragment : Fragment() {
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            this.gviewmodle = gViewModel
+            this.flowerImage = gViewModel.flower.value!!.image
+            this.flowerProgress = gViewModel.user.value!!.progress
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -59,7 +60,7 @@ class AddDiaryFragment : Fragment() {
     // 메뉴 설정
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.menu_writediary_fragment, menu)
+        inflater.inflate(R.menu.menu_add_diary_fragment, menu)
 
         completeMenu = menu.getItem(0)
     }

@@ -1,4 +1,4 @@
-package com.sg.android.bambooflower.viewmodel.diaryViewerFragment
+package com.sg.android.bambooflower.viewmodel.diaryFrag
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DiaryViewerViewModel @Inject constructor(private val repository: DiaryViewerRepository) :
+class DiaryViewModel @Inject constructor(private val repository: DiaryRepository) :
     ViewModel() {
 
     fun deleteDiary(data: Diary) = viewModelScope.launch {

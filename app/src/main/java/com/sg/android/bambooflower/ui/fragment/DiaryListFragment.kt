@@ -99,7 +99,7 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
         val diaryData = diaryAdapter.getDiaryItem(pos)
         gViewModel.diary.value = diaryData
 
-        findNavController().navigate(R.id.action_diaryListFragment_to_diaryViewerFragment)
+        findNavController().navigate(R.id.action_diaryListFragment_to_diaryFragment)
     }
 
     private fun setList() {

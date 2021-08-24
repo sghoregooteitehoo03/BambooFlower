@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Diary(
     @PrimaryKey(autoGenerate = true) val id: Int?,
-    @ColumnInfo(name = "contents") val contents: String,
+    @ColumnInfo(name = "contents") var contents: String,
     @ColumnInfo(name = "progress") val progress: Int,
     @ColumnInfo(name = "timeStamp") val timeStamp: Long,
     @ColumnInfo(name = "flowerImage") val flowerImage: String,
