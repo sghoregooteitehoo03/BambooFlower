@@ -313,6 +313,8 @@ fun setMediaContents(view: MediaView, content: MediaContent?) {
 
 @BindingAdapter("app:setImage", "app:setUriImage", "app:setResourceImage", requireAll = false)
 fun setImage(view: ImageView, image: String?, uri: Uri?, res: Int?) {
+    view.clipToOutline = true
+
     if (image != null) {
         val imageByte = Base64.decode(image, Base64.DEFAULT)
         val bitmap = BitmapFactory.decodeByteArray(
@@ -324,7 +326,6 @@ fun setImage(view: ImageView, image: String?, uri: Uri?, res: Int?) {
         Glide.with(view.context)
             .load(bitmap)
             .into(view)
-        view.clipToOutline = true
     } else if (uri != null) {
         Glide.with(view.context)
             .load(uri)

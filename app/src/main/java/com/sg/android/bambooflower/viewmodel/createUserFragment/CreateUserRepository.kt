@@ -83,7 +83,7 @@ class CreateUserRepository @Inject constructor(
         val outputStream = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 40, outputStream)
 
-        // bitmap -> string
+        // byte -> string
         return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
     }
 }

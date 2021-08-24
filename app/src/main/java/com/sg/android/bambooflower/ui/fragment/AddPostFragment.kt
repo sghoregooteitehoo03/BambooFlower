@@ -18,7 +18,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentAddPostBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.ui.MainActivity
@@ -31,8 +30,6 @@ class AddPostFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<AddPostViewModel>()
 
-    private lateinit var user: User
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,12 +37,10 @@ class AddPostFragment : Fragment(), View.OnClickListener {
     ): View {
         // 인스턴스 설정
         val binding = FragmentAddPostBinding.inflate(inflater)
-        user = gViewModel.user.value!!
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            this.user = user
             this.clickListener = this@AddPostFragment
             this.blank = ""
 
@@ -67,7 +62,7 @@ class AddPostFragment : Fragment(), View.OnClickListener {
 
         // 툴바 설정
         with((activity as MainActivity)) {
-//            supportActionBar?.title = "[${user.myMissionTitle}]"
+            supportActionBar?.title = "[${gViewModel.usersQuest.value!!.quest.title}]"
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
             showToolbar()
         }
@@ -87,7 +82,7 @@ class AddPostFragment : Fragment(), View.OnClickListener {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Contents.GET_IMAGE && resultCode == Activity.RESULT_OK) {
-            mViewModel.image.value = data?.data?.toString()!! // 이미지 저장
+            mViewModel.image.value = data?.data!! // 이미지 저장
         }
     }
 
@@ -142,7 +137,8 @@ class AddPostFragment : Fragment(), View.OnClickListener {
         // 게시글 작성 성공 여부
         mViewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
-                gViewModel.user.value = user
+                // 데이터 갱신 유도
+//                gViewModel.usersQuestList.value = gViewModel.usersQuestList.value!!
                 findNavController().navigateUp()
             }
         }
@@ -169,7 +165,13 @@ class AddPostFragment : Fragment(), View.OnClickListener {
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("내용을 게시하시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
-                mViewModel.addPost(user, requireContext().contentResolver)
+                val uid = gViewModel.user.value!!.uid
+                val idx = gViewModel.usersQuestList.value!!.indexOf(
+                    gViewModel.usersQuest.value!!
+                )
+                val usersQuest = gViewModel.usersQuestList.value!![idx]
+
+                mViewModel.addPost(uid, usersQuest, requireContext().contentResolver)
             }
             setNegativeButton("취소") { dialog, which ->
                 dialog.dismiss()

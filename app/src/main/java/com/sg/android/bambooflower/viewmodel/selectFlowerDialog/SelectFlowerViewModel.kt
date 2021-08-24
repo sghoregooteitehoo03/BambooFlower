@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.viewmodel.selectFlowerDialog
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -58,7 +57,6 @@ class SelectFlowerViewModel @Inject constructor(
                 val jsonObject = JSONObject(result["flower"] as Map<*, *>).toString()
                 val flowerData = Gson().fromJson(jsonObject, Flower::class.java)
 
-                Log.i("Check", "result: $flowerData")
                 user.flowerId = flowerData.id // 유저의 꽃 아이디를 수정함
                 _selectedFlower.value = flowerData
             } else {

@@ -15,7 +15,6 @@ object Contents {
 
     const val PERMISSION_CODE = 250
 
-    const val SHOW_ALBUM_FRAG = "SHOW_ALBUM_FARG"
     const val SHOW_IMAGE_FRAG = "SHOW_IMAGE_FRAG"
     const val SHOW_WEB_VIEWER = "SHOW_WEB_VIEWER"
 

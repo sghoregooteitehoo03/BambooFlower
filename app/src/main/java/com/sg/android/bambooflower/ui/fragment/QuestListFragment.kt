@@ -84,6 +84,13 @@ class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+
+        gViewModel.usersQuest.value = null
+        gViewModel.usersQuestList.value = null
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
@@ -131,7 +138,7 @@ class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
     // 옵저버 설정
     private fun setObserver() {
         gViewModel.usersQuestList.observe(viewLifecycleOwner) {
-            if(!isMove) {
+            if (!isMove && it != null) {
                 mViewModel.usersQuestList.value = it
 
                 // 초기화

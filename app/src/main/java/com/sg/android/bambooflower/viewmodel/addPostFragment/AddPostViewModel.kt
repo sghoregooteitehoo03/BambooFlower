@@ -1,12 +1,12 @@
 package com.sg.android.bambooflower.viewmodel.addPostFragment
 
 import android.content.ContentResolver
-import androidx.core.net.toUri
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sg.android.bambooflower.data.User
+import com.sg.android.bambooflower.data.UsersQuest
 import com.sg.android.bambooflower.other.ErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -21,32 +21,33 @@ class AddPostViewModel @Inject constructor(private val repository: AddPostReposi
     val isLoading: LiveData<Boolean> = _isLoading
 
     val errorMsg = MutableLiveData("") // 오류 메시지
-    val image = MutableLiveData("") // 이미지
+    val image = MutableLiveData<Uri?>(null) // 이미지
     val content = MutableLiveData("") // 내용
 
     // 게시글 작성
-    fun addPost(user: User, contentResolver: ContentResolver) =
+    fun addPost(uid: String, usersQuest: UsersQuest, contentResolver: ContentResolver) =
         viewModelScope.launch {
-            _isLoading.value = true
+            _isLoading.value = true // 로딩 시작
 
             try {
-                val result =
-                    repository.addPost(
-                        content.value!!,
-                        image.value!!.toUri(),
-                        user,
-                        contentResolver
-                    )
-                val updateData = result?.data as Map<*, *>
-                with(user) {
-//                    achieveState = updateData["achieveState"] as String?
+                val result = repository.addPost(
+                    content.value!!,
+                    image.value!!,
+                    uid,
+                    usersQuest.quest,
+                    contentResolver
+                ).data as Map<*, *>
+
+                if (result["complete"] == null) { // 오류 확인
+                    throw NullPointerException()
                 }
 
+                usersQuest.state = UsersQuest.STATE_LOADING
                 _isSuccess.value = true
             } catch (e: Exception) {
                 errorMsg.value = ErrorMessage.ERROR_ADD_POST
             }
 
-            _isLoading.value = false
+            _isLoading.value = false // 로딩 끝
         }
 }
