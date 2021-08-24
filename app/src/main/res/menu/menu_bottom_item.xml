@@ -12,14 +12,4 @@
         android:id="@+id/postListFragment"
         android:icon="@drawable/ic_post"
         android:title="인증게시판"/>
-
-    <item
-        android:id="@+id/diaryListFragment"
-        android:icon="@drawable/ic_diary"
-        android:title="하루일기"/>
-
-    <item
-        android:id="@+id/rankingFragment"
-        android:icon="@drawable/ic_ranking"
-        android:title="랭킹"/>
 </menu>

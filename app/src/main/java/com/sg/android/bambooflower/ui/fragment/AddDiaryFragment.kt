@@ -2,31 +2,23 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager2.widget.ViewPager2
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.adapter.WeatherPagerAdapter
-import com.sg.android.bambooflower.databinding.FragmentDiaryWriteBinding
+import com.sg.android.bambooflower.databinding.FragmentAddDiaryBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.diaryWriteFragment.DiaryWriteViewModel
+import com.sg.android.bambooflower.viewmodel.addDiaryFrag.AddDiaryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DiaryWriteFragment : Fragment() {
-    private val mViewModel by viewModels<DiaryWriteViewModel>()
+class AddDiaryFragment : Fragment() {
+    private val mViewModel by viewModels<AddDiaryViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
-    private val dots = mutableListOf<ImageView>()
     private var completeMenu: MenuItem? = null
-
-    private lateinit var weatherAdapter: WeatherPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,14 +26,12 @@ class DiaryWriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = FragmentDiaryWriteBinding.inflate(inflater)
-        weatherAdapter = WeatherPagerAdapter()
+        val binding = FragmentAddDiaryBinding.inflate(inflater)
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            this.weatherViewpager.adapter = weatherAdapter
-            setDots(this)
+            this.gviewmodle = gViewModel
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -88,56 +78,8 @@ class DiaryWriteFragment : Fragment() {
         }
     }
 
-    private fun setDots(binding: FragmentDiaryWriteBinding) {
-        for (i in 0 until weatherAdapter.itemCount) {
-            dots.add(ImageView(requireContext()))
-            dots[i].setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.non_active_dot_shape
-                )
-            )
-
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(8, 0, 8, 0)
-            }
-
-            binding.sliderDots.addView(dots[i], params)
-        }
-
-        binding.weatherViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                mViewModel.pos.value = position
-            }
-        })
-    }
-
     // 옵저버 설정
     private fun setObserver() {
-        // 페이저 위치
-        mViewModel.pos.observe(viewLifecycleOwner) { pos ->
-            for (i in 0 until weatherAdapter.itemCount) {
-                dots[i].setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.non_active_dot_shape
-                    )
-                )
-            }
-
-            dots[pos].setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.active_image_dot_shape
-                )
-            )
-
-            mViewModel.weather.value = weatherAdapter.getItem(pos)
-        }
         // 저장 여부
         mViewModel.isSaved.observe(viewLifecycleOwner) {
             if (it) {
@@ -154,7 +96,9 @@ class DiaryWriteFragment : Fragment() {
 
     // 일기 작성
     private fun diaryWrite() {
-        val uid = gViewModel.user.value?.uid!! // 작성자 id
-        mViewModel.saveDiary(uid, requireContext())
+        val user = gViewModel.user.value!! // 작성자
+        val flower = gViewModel.flower.value!! // 꽃
+
+        mViewModel.saveDiary(user, flower)
     }
 }

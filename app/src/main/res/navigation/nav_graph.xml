@@ -99,10 +99,10 @@
         android:label="AddPostFragment"
         tools:layout="@layout/fragment_add_post"/>
     <fragment
-        android:id="@+id/diaryWriteFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.DiaryWriteFragment"
-        android:label="DiaryWriteFragment"
-        tools:layout="@layout/fragment_diary_write"/>
+        android:id="@+id/addDiaryFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.AddDiaryFragment"
+        android:label="AddDiaryFragment"
+        tools:layout="@layout/fragment_add_diary"/>
     <fragment
         android:id="@+id/diaryViewerFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryViewerFragment"
@@ -161,7 +161,7 @@
         android:id="@+id/diaryEditFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DiaryEditFragment"
         android:label="DiaryEditFragment"
-        tools:layout="@layout/fragment_diary_write"/>
+        tools:layout="@layout/fragment_add_diary"/>
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.SettingFragment"
@@ -202,8 +202,8 @@
         android:label="DiaryListFragment"
         tools:layout="@layout/fragment_diary_list">
         <action
-            android:id="@+id/action_diaryListFragment_to_diaryWriteFragment"
-            app:destination="@id/diaryWriteFragment"
+            android:id="@+id/action_diaryListFragment_to_addDiaryFragment"
+            app:destination="@id/addDiaryFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -261,6 +261,13 @@
         <action
             android:id="@+id/action_homeFragment_to_questListFragment"
             app:destination="@id/questListFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_homeFragment_to_diaryListFragment"
+            app:destination="@id/diaryListFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"

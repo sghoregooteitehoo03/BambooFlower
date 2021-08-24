@@ -12,7 +12,6 @@ import javax.inject.Inject
 class DiaryListViewModel @Inject constructor(private val repository: DiaryListRepository) :
     ViewModel() {
     val size = MutableLiveData(-1) // 일기 크기
-    val loadAd = MutableLiveData<NativeAd?>(null) // 로드된 광고
 
     val diaries = repository.getAllDiaries() // 일기 리스트
         .flow

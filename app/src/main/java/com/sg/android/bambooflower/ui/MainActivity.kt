@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
-                R.id.homeFragment, R.id.postListFragment, R.id.diaryListFragment, R.id.rankingFragment -> {
+                R.id.homeFragment, R.id.postListFragment -> {
                     isExit = true
 
                     showBottomView()

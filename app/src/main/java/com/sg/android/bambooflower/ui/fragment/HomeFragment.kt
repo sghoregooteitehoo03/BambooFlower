@@ -28,7 +28,7 @@ import org.json.JSONObject
 //  . 포기하기 O
 //  . 물 주기 (나중에)
 //  . 꽃 선택 O
-//  . 퀘스트, 하루일기, 정원 이동 (나중에)
+//  . 퀘스트 O, 하루일기 O, 정원 이동 (나중에)
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -89,8 +89,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.quest_view -> { // 퀘스트 목록으로 이동
                 findNavController().navigate(R.id.action_homeFragment_to_questListFragment)
             }
-            R.id.diary_view -> {
-
+            R.id.diary_view -> { // 일기 화면으로 이동
+                findNavController().navigate(R.id.action_homeFragment_to_diaryListFragment)
             }
             R.id.garden_view -> {
 

@@ -16,16 +16,15 @@ import androidx.viewpager2.widget.ViewPager2
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.WeatherPagerAdapter
 import com.sg.android.bambooflower.data.Diary
-import com.sg.android.bambooflower.data.Weather
-import com.sg.android.bambooflower.databinding.FragmentDiaryWriteBinding
+import com.sg.android.bambooflower.databinding.FragmentAddDiaryBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.diaryWriteFragment.DiaryWriteViewModel
+import com.sg.android.bambooflower.viewmodel.addDiaryFrag.AddDiaryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class DiaryEditFragment : Fragment() {
-    private val mViewModel by viewModels<DiaryWriteViewModel>()
+    private val mViewModel by viewModels<AddDiaryViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val dots = mutableListOf<ImageView>()
     private var completeMenu: MenuItem? = null
@@ -40,26 +39,26 @@ class DiaryEditFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = FragmentDiaryWriteBinding.inflate(inflater)
+        val binding = FragmentAddDiaryBinding.inflate(inflater)
         imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         weatherAdapter = WeatherPagerAdapter()
 
         // 이미 작성된 내용을 가져옴
         diary = gViewModel.diary.value!!
         mViewModel.contents.value = diary.contents // 내용
-        mViewModel.pos.value =
-            weatherAdapter.getIndex(Weather(0, diary.weather)) // 이미지 위치
+//        mViewModel.pos.value =
+//            weatherAdapter.getIndex(Weather(0, diary.weather)) // 이미지 위치
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            with(weatherViewpager) {
-                adapter = weatherAdapter
-                setCurrentItem(mViewModel.pos.value!!, false)
-            }
-            this.writeDiaryInput.requestFocus()
+//            with(weatherViewpager) {
+//                adapter = weatherAdapter
+//                setCurrentItem(mViewModel.pos.value!!, false)
+//            }
+//            this.writeDiaryInput.requestFocus()
 
-            setDots(this)
+//            setDots(this)
             imm.toggleSoftInput(0, 0)
 
             lifecycleOwner = viewLifecycleOwner
@@ -108,56 +107,56 @@ class DiaryEditFragment : Fragment() {
         }
     }
 
-    private fun setDots(binding: FragmentDiaryWriteBinding) {
-        for (i in 0 until weatherAdapter.itemCount) {
-            dots.add(ImageView(requireContext()))
-            dots[i].setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.non_active_dot_shape
-                )
-            )
-
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(8, 0, 8, 0)
-            }
-
-            binding.sliderDots.addView(dots[i], params)
-        }
-
-        binding.weatherViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                mViewModel.pos.value = position
-            }
-        })
-    }
+//    private fun setDots(binding: FragmentDiaryWriteBinding) {
+//        for (i in 0 until weatherAdapter.itemCount) {
+//            dots.add(ImageView(requireContext()))
+//            dots[i].setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    requireContext(),
+//                    R.drawable.non_active_dot_shape
+//                )
+//            )
+//
+//            val params = LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.WRAP_CONTENT,
+//                LinearLayout.LayoutParams.WRAP_CONTENT
+//            ).apply {
+//                setMargins(8, 0, 8, 0)
+//            }
+//
+//            binding.sliderDots.addView(dots[i], params)
+//        }
+//
+//        binding.weatherViewpager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                mViewModel.pos.value = position
+//            }
+//        })
+//    }
 
     // 옵저버 설정
     private fun setObserver() {
         // 페이저 위치
-        mViewModel.pos.observe(viewLifecycleOwner) { pos ->
-            for (i in 0 until weatherAdapter.itemCount) {
-                dots[i].setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.non_active_dot_shape
-                    )
-                )
-            }
-
-            dots[pos].setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.active_image_dot_shape
-                )
-            )
-
-            mViewModel.weather.value = weatherAdapter.getItem(pos)
-        }
+//        mViewModel.pos.observe(viewLifecycleOwner) { pos ->
+//            for (i in 0 until weatherAdapter.itemCount) {
+//                dots[i].setImageDrawable(
+//                    ContextCompat.getDrawable(
+//                        requireContext(),
+//                        R.drawable.non_active_dot_shape
+//                    )
+//                )
+//            }
+//
+//            dots[pos].setImageDrawable(
+//                ContextCompat.getDrawable(
+//                    requireContext(),
+//                    R.drawable.active_image_dot_shape
+//                )
+//            )
+//
+//            mViewModel.weather.value = weatherAdapter.getItem(pos)
+//        }
         // 일기 내용
         mViewModel.contents.observe(viewLifecycleOwner) {
             completeMenu?.isEnabled = it.isNotEmpty()

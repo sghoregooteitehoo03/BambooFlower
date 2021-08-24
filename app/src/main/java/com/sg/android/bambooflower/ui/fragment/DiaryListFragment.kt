@@ -2,6 +2,7 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -10,8 +11,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import com.google.android.gms.ads.AdLoader
-import com.google.android.gms.ads.AdRequest
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.DiaryPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentDiaryListBinding
@@ -22,7 +21,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-// TODO: 광고 릴리스 키로 변경
+// TODO:
+//  . View 표시
+//  . 첫 리스트에 광고 표시 (나중에)
 @AndroidEntryPoint
 class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -42,12 +43,6 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
             this.viewmodel = mViewModel
             this.clickListener = this@DiaryListFragment
             this.diaryList.adapter = diaryAdapter
-            with(this.adLayout) {
-                iconView = adImage
-                headlineView = adHeadline
-                bodyView = adBody
-                callToActionView = adBtn
-            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -56,16 +51,18 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setHasOptionsMenu(true)
+
         setList()
 
-        // 광고 로드
-        val adLoader = AdLoader
-            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
-            .forNativeAd {
-                mViewModel.loadAd.value = it
-            }
-            .build()
-        adLoader.loadAd(AdRequest.Builder().build())
+//        // 광고 로드
+//        val adLoader = AdLoader
+//            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+//            .forNativeAd {
+//                mViewModel.loadAd.value = it
+//            }
+//            .build()
+//        adLoader.loadAd(AdRequest.Builder().build())
     }
 
     override fun onStart() {
@@ -73,8 +70,18 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
         // 툴바설정
         with((activity as MainActivity)) {
             supportActionBar?.title = "하루일기"
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             showToolbar()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+                true
+            }
+            else -> false
         }
     }
 
@@ -82,7 +89,7 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
     override fun onClick(v: View) {
         when (v.id) {
             R.id.add_diary_btn -> { // 일기 작성버튼
-                findNavController().navigate(R.id.action_diaryListFragment_to_diaryWriteFragment)
+                findNavController().navigate(R.id.action_diaryListFragment_to_addDiaryFragment)
             }
         }
     }

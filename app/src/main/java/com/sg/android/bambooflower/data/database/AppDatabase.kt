@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.sg.android.bambooflower.data.Diary
 
-@Database(entities = [Diary::class], version = 3)
+@Database(entities = [Diary::class], version = 5)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getDao(): DiaryDao

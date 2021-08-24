@@ -161,7 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:onClick="@{clickListener}"
-                    app:customMenuImage="@drawable/ic_diary2"
+                    app:customMenuImage="@drawable/ic_diary"
                     app:customMenuMainColor="@color/diary_main_color"
                     app:customMenuSubColor="@color/diary_sub_color"
                     app:customMenuTitle="하루일기"

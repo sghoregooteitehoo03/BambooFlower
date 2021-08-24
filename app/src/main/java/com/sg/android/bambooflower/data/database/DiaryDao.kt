@@ -6,10 +6,10 @@ import com.sg.android.bambooflower.data.Diary
 
 @Dao
 interface DiaryDao {
-    @Query("SELECT * FROM Diary WHERE uid == :uid ORDER BY timeStamp DESC")
+    @Query("SELECT * FROM Diary WHERE userId == :uid ORDER BY timeStamp DESC")
     fun getAllPagingDiaries(uid: String?): PagingSource<Int, Diary>
 
-    @Query("SELECT * FROM Diary WHERE uid == :uid ORDER BY timeStamp DESC")
+    @Query("SELECT * FROM Diary WHERE userId == :uid ORDER BY timeStamp DESC")
     fun getAllDiaries(uid: String?): List<Diary>
 
     @Insert
@@ -21,6 +21,6 @@ interface DiaryDao {
     @Update
     suspend fun editDiary(data: Diary)
 
-    @Query("DELETE FROM Diary WHERE uid == :uid")
+    @Query("DELETE FROM Diary WHERE userId == :uid")
     suspend fun clearDiary(uid: String?)
 }

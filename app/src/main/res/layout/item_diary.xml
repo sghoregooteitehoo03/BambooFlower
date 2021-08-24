@@ -14,12 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
         android:layout_marginTop="6dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginBottom="6dp"
         app:cardBackgroundColor="@color/diary_color"
         app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        app:cardElevation="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -68,27 +68,54 @@
                 app:layout_constraintStart_toStartOf="@id/divide_view"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <LinearLayout
+                    android:id="@+id/flower_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/flower_image"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/shape_rounded_image"
+                        android:backgroundTint="@color/white_darker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:setImage="@{diaryData.flowerImage}"
+                        tools:src="@drawable/ic_seed"/>
+
+                    <ProgressBar
+                        android:id="@+id/custom_progress"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="30dp"
+                        android:layout_height="6dp"
+                        android:layout_marginTop="4dp"
+                        android:progress="@{diaryData.progress}"
+                        android:progressDrawable="@drawable/shape_for_progress"
+                        tools:progress="43"/>
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/timestamp_text"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/default_item_color"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toTopOf="@id/guideline_divide"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/flower_layout"
                     app:layout_constraintTop_toTopOf="parent"
                     app:setDiaryTimestamp="@{diaryData.timeStamp}"
                     tools:text="21.07.15 (목)"/>
-
-                <ImageView
-                    android:id="@+id/weather_image"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    app:layout_constraintBottom_toBottomOf="@id/timestamp_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/timestamp_text"
-                    tools:src="@drawable/ic_sun"/>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline_divide"
@@ -99,13 +126,16 @@
 
                 <TextView
                     android:id="@+id/content_text"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="4dp"
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:text="@{diaryData.contents}"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/flower_layout"
                     app:layout_constraintTop_toBottomOf="@id/guideline_divide"
                     tools:text="인간에 남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
