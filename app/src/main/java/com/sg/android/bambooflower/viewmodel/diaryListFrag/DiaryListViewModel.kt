@@ -16,4 +16,7 @@ class DiaryListViewModel @Inject constructor(private val repository: DiaryListRe
     val diaries = repository.getAllDiaries() // 일기 리스트
         .flow
         .cachedIn(viewModelScope)
+
+    fun getPref() =
+        repository.getPref()
 }

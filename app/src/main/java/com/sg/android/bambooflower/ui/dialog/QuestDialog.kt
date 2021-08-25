@@ -22,8 +22,6 @@ import com.sg.android.bambooflower.viewmodel.questDialog.QuestViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-// TODO:
-//  . 레벨업 구현 (나중에)
 @AndroidEntryPoint
 class QuestDialog : BottomSheetDialogFragment(),
     QuestImageAdapter.ImageItemListener,
@@ -80,7 +78,8 @@ class QuestDialog : BottomSheetDialogFragment(),
             R.id.action_btn -> {
                 val state = gViewModel.usersQuest.value!!.state
                 if (state != 0) { // 보상받기
-                    // TODO: 나중에
+                    findNavController().navigateUp()
+                    findNavController().navigate(R.id.flowerStateDialog)
                 } else { // 수락하기
                     val userId = gViewModel.user.value!!.uid
                     val questId = gViewModel.usersQuest.value!!.quest.id

@@ -26,6 +26,11 @@ object AppModule {
     fun provideCheckFirstPref(@ApplicationContext context: Context) =
         context.getSharedPreferences(Contents.PREF_CHECK_FIRST, Context.MODE_PRIVATE)!!
 
+    @Singleton
+    @Provides
+    @Named(Contents.PREF_CHECK_DIARY_REWARD)
+    fun provideCheckDiaryRewardPref(@ApplicationContext context: Context) =
+        context.getSharedPreferences(Contents.PREF_CHECK_DIARY_REWARD, Context.MODE_PRIVATE)!!
 
     @Singleton
     @Provides

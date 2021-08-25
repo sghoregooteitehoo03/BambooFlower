@@ -20,9 +20,10 @@ import com.sg.android.bambooflower.viewmodel.diaryListFrag.DiaryListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 
 // TODO:
-//  . View 표시
 //  . 첫 리스트에 광고 표시 (나중에)
 @AndroidEntryPoint
 class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
@@ -54,7 +55,7 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
         setHasOptionsMenu(true)
 
         setList()
-
+        checkReward()
 //        // 광고 로드
 //        val adLoader = AdLoader
 //            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
@@ -76,7 +77,7 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
+        return when (item.itemId) {
             android.R.id.home -> {
                 findNavController().navigateUp()
                 true
@@ -113,6 +114,21 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
             if (loadState.refresh !is LoadState.Loading) {
                 mViewModel.size.value = diaryAdapter.itemCount
             }
+        }
+    }
+
+    // 하루 보상 확인
+    private fun checkReward() {
+        val prefKey = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
+            .format(System.currentTimeMillis())
+
+        if (mViewModel.getPref().getInt(prefKey, -1) == 1) { // 일기 보상 받는게 가능한 경우
+            with(mViewModel.getPref().edit()) { // 하루 한번만 받을 수 있도록 설정
+                putInt(prefKey, 0)
+                commit()
+            }
+
+            findNavController().navigate(R.id.action_diaryListFragment_to_flowerStateDialog)
         }
     }
 }

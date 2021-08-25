@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewmodel"
+            type="com.sg.android.bambooflower.viewmodel.flowerStateDialog.FlowerStateViewModel"/>
+
+        <variable
+            name="gviewmodel"
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
+
+        <variable
+            name="clickListener"
+            type="View.OnClickListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{viewmodel.isLoading() ? View.INVISIBLE : View.VISIBLE}">
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/default_item_color"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setTitleAction="@{gviewmodel.usersQuest != null}"
+                tools:text="퀘스트 완료!"/>
+
+            <ImageView
+                android:id="@+id/flower_image"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/shape_rounded_image"
+                android:backgroundTint="@color/white_darker"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title_text"
+                app:setImage="@{gviewmodel.flower.image}"
+                tools:src="@drawable/ic_seed"/>
+
+            <com.sg.android.bambooflower.ui.view.CustomProgressView
+                android:id="@+id/flower_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flower_image"
+                app:setNewProgress="@{viewmodel.rewardProgress}"
+                app:setOrdinaryProgress="@{gviewmodel.user.progress}"/>
+
+            <com.sg.android.bambooflower.ui.view.CustomRewardButton
+                android:id="@+id/reward_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:enabled="@{!viewmodel.isLoading()}"
+                android:onClick="@{clickListener}"
+                app:layout_constraintTop_toBottomOf="@id/flower_progress"
+                app:setPointButton="@{viewmodel.rewardMoney}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ProgressBar
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:indeterminateTint="@color/deep_orange_300"
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

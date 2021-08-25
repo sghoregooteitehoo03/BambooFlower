@@ -37,8 +37,6 @@ class HomeViewModel @Inject constructor(private val repository: HomeRepository) 
                 val jsonObject = JSONObject(result["flower"] as Map<*, *>).toString()
                 val flowerData = Gson().fromJson(jsonObject, Flower::class.java)
 
-                Log.i("Check", "result: $flowerData")
-
                 user.flowerId = flowerData.id // 유저의 꽃 아이디를 수정함
                 user.progress = 0 // 유저의 진행도를 수정함
                 updateFlower.value = flowerData

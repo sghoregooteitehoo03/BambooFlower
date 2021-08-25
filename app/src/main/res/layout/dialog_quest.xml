@@ -111,7 +111,7 @@
 
         <Button
             android:id="@+id/action_btn"
-            setButtonLoading="@{viewmodel.isActionLoading()}"
+            app:setButtonLoading="@{viewmodel.isActionLoading()}"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
@@ -152,7 +152,7 @@
 
             <Button
                 android:id="@+id/give_up_btn"
-                setButtonLoading="@{viewmodel.isGiveUpLoading()}"
+                app:setButtonLoading="@{viewmodel.isGiveUpLoading()}"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="4dp"

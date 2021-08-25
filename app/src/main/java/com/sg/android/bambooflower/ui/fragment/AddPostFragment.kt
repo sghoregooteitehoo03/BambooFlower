@@ -137,8 +137,6 @@ class AddPostFragment : Fragment(), View.OnClickListener {
         // 게시글 작성 성공 여부
         mViewModel.isSuccess.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
-                // 데이터 갱신 유도
-//                gViewModel.usersQuestList.value = gViewModel.usersQuestList.value!!
                 findNavController().navigateUp()
             }
         }

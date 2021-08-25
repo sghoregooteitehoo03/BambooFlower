@@ -79,4 +79,7 @@ class CustomProgressView : ConstraintLayout {
     fun setProgressText(text: String) {
         customProgressTextView.text = text
     }
+
+    fun getProgressView() =
+        customProgressView
 }

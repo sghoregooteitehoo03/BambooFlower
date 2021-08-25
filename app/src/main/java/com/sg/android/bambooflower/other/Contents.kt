@@ -5,6 +5,7 @@ object Contents {
     const val GET_IMAGE = 3300
 
     const val PREF_CHECK_FIRST = "PREF_CHECK_FIRST"
+    const val PREF_CHECK_DIARY_REWARD = "PREF_CHECK_DIARY_REWARD"
 
     const val PREF_KEY_IS_FIRST = "PREF_KEY_IS_FIRST"
 
@@ -38,5 +39,6 @@ object Contents {
     const val FUNC_ACCEPT_QUEST = "acceptQuest"
     const val FUNC_GIVE_UP_QUEST = "giveUpQuest"
     const val FUNC_ADD_POST = "addPost"
+    const val FUNC_UPDATE_USER_PROGRESS = "updateUserProgress"
     const val FUNC_DELETE_POST = "deletePost"
 }

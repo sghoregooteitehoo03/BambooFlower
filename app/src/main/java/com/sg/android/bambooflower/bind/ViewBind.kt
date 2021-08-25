@@ -28,6 +28,7 @@ import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.data.UsersQuest
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomProgressView
+import com.sg.android.bambooflower.ui.view.CustomRewardButton
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -67,6 +68,26 @@ fun setFlowerProgress(view: CustomProgressView, progress: Int?) {
     if (progress != null) {
         view.setProgress(progress)
         view.setProgressText("$progress / 100")
+    }
+}
+
+@BindingAdapter("app:setOrdinaryProgress", "app:setNewProgress", requireAll = true)
+fun setFlowerProgress(view: CustomProgressView, ordinaryProgress: Int, newProgress: Int) {
+    if (newProgress != -1) {
+        with(view) {
+            setProgress(ordinaryProgress)
+            setSecondProgress(ordinaryProgress + newProgress)
+            setProgressText("+$newProgress")
+        }
+    }
+}
+
+@BindingAdapter("app:setTitleAction")
+fun setTitleAction(view: TextView, isQuest: Boolean) {
+    view.text = if (isQuest) {
+        "퀘스트 수행 완료!"
+    } else {
+        "하루일기 작성 완료!"
     }
 }
 
@@ -223,12 +244,17 @@ fun setStateButton(view: Button, state: Int, usersQuestSize: Int) {
     }
 }
 
-@BindingAdapter("setButtonLoading")
+@BindingAdapter("app:setButtonLoading")
 fun setButtonLoading(view: Button, isLoading: Boolean) {
     if (isLoading) {
         view.isEnabled = false
         view.text = ""
     }
+}
+
+@BindingAdapter("app:setPointButton")
+fun setPointButton(view: CustomRewardButton, point: Int) {
+    view.setPointText("+$point")
 }
 
 @SuppressLint("SetTextI18n")

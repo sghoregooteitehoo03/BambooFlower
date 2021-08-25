@@ -219,6 +219,9 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_diaryListFragment_to_flowerStateDialog"
+            app:destination="@id/flowerStateDialog"/>
     </fragment>
     <dialog
         android:id="@+id/questDialog"
@@ -230,6 +233,9 @@
             app:destination="@id/addPostFragment"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_questDialog_to_flowerStateDialog"
+            app:destination="@id/flowerStateDialog"/>
     </dialog>
     <fragment
         android:id="@+id/resetPasswordFragment"
@@ -282,4 +288,9 @@
         android:name="com.sg.android.bambooflower.ui.dialog.SelectFlowerDialog"
         android:label="SelectFlowerDialog"
         tools:layout="@layout/dialog_select_flower"/>
+    <dialog
+        android:id="@+id/flowerStateDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.FlowerStateDialog"
+        android:label="FlowerStateDialog"
+        tools:layout="@layout/dialog_flower_state"/>
 </navigation>
