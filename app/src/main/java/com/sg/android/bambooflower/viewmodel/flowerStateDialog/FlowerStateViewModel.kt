@@ -17,13 +17,12 @@ class FlowerStateViewModel @Inject constructor(
 ) : ViewModel() {
     private val _isLoading = MutableLiveData(true) // 로딩 여부
     private val _rewardProgress = MutableLiveData(-1) // 보상으로 얻을 유저 진행도
-    private val _rewardMoney = MutableLiveData(-1) // 보상으로 받을 포인트
 
     val isLoading: LiveData<Boolean> = _isLoading
     val rewardProgress: LiveData<Int> = _rewardProgress
-    val rewardMoney: LiveData<Int> = _rewardMoney
 
     val isError = MutableLiveData(false) // 오류 여부
+    val rewardMoney = MutableLiveData(-1) // 보상으로 받을 포인트
 
     // 보상 받기
     fun getReward(user: User, flower: Flower, usersQuest: UsersQuest?) = viewModelScope.launch {
@@ -33,7 +32,7 @@ class FlowerStateViewModel @Inject constructor(
             val result = repository.getReward(
                 user.uid,
                 _rewardProgress.value!! + user.progress,
-                _rewardMoney.value!! + user.money,
+                rewardMoney.value!! + user.money,
                 flower,
                 usersQuest?.id ?: -1
             ).data as Map<*, *>
@@ -85,6 +84,6 @@ class FlowerStateViewModel @Inject constructor(
         } else {
             progressList[randomIndex]
         }
-        _rewardMoney.value = moneyList[randomIndex]
+        rewardMoney.value = moneyList[randomIndex]
     }
 }

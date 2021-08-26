@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -19,12 +21,15 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.flowerStateDialog.FlowerStateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: 꽃이 다 성장 후 어떻게 처리할건지 구현 (나중에)
 @AndroidEntryPoint
 class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
     private val mViewModel by viewModels<FlowerStateViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
     private lateinit var progressView: CustomProgressView
+    private lateinit var motionLayoutView: MotionLayout
+    private lateinit var completeLayoutView: ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,6 +46,8 @@ class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
             this.clickListener = this@FlowerStateDialog
 
             progressView = flowerProgress
+            motionLayoutView = motionLayout
+            completeLayoutView = completeLayout
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -68,7 +75,14 @@ class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.reward_btn -> { // 보상 버튼
-                findNavController().navigateUp()
+                val progress = gViewModel.user.value!!.progress
+
+                if (progress == 100 && completeLayoutView.alpha == 0f) {
+                    motionLayoutView.transitionToEnd()
+                    mViewModel.rewardMoney.value = 500
+                } else {
+                    findNavController().navigateUp()
+                }
             }
         }
     }
@@ -90,7 +104,6 @@ class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
                     usersQuest
                 )
             } else {
-                dialog?.setCancelable(true)
                 startProgressAnim()
             }
         }

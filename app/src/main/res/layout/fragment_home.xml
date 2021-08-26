@@ -99,7 +99,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/flower_layout"
                     app:setFlowerName="@{gviewmodel.flower.name}"
-                    tools:text="씨앗을꽃눌러 키울 꽃을 선택해보세요."
+                    tools:text="씨앗을 눌러 키울 꽃을 선택해보세요."
                     tools:textSize="20sp"/>
 
                 <com.sg.android.bambooflower.ui.view.CustomProgressView

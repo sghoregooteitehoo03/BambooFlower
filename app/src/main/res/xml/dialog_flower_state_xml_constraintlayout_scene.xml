@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="300">
+        <KeyFrameSet>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="40"
+                motion:motionTarget="@+id/reward_layout"/>
+            <KeyAttribute
+                android:translationX="-36dp"
+                motion:framePosition="40"
+                motion:motionTarget="@+id/reward_layout"/>
+            <KeyAttribute
+                android:alpha="1"
+                motion:framePosition="100"
+                motion:motionTarget="@+id/complete_layout"/>
+            <KeyAttribute
+                android:translationX="0dp"
+                motion:framePosition="100"
+                motion:motionTarget="@+id/complete_layout"/>
+            <KeyAttribute
+                android:translationX="36dp"
+                motion:framePosition="40"
+                motion:motionTarget="@+id/complete_layout"/>
+            <KeyAttribute
+                android:alpha="0"
+                motion:framePosition="40"
+                motion:motionTarget="@+id/complete_layout"/>
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/reward_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0"
+            android:translationX="-40dp"/>
+        <Constraint
+            android:id="@+id/complete_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="1"
+            android:translationX="0dp"/>
+    </ConstraintSet>
+</MotionScene>
