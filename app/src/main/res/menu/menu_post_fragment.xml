@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/menu_show_quest"
+        android:title="퀘스트 보기"/>
+
+    <item
         android:id="@+id/menu_delete_post"
-        android:title="삭제하기" />
+        android:title="삭제하기"/>
 
     <item
         android:id="@+id/menu_report_post"
-        android:title="신고하기" />
+        android:title="신고하기"/>
 </menu>

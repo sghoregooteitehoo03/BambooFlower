@@ -78,15 +78,15 @@ class DeleteAccountRepository @Inject constructor(
             val postData = it.toObject(Post::class.java)
 
             // 게시글에 사진을 삭제함
-            val imageName = "${postData.timeStamp}.png"
-            val reference = storage.reference
-                .child(uid)
-                .child(Contents.CHILD_POST_IMAGE)
-                .child(postData.postPath!!)
-                .child(imageName)
+//            val imageName = "${postData.timeStamp}.png"
+//            val reference = storage.reference
+//                .child(uid)
+//                .child(Contents.CHILD_POST_IMAGE)
+//                .child(postData.postPath!!)
+//                .child(imageName)
 
-            reference.delete()
-                .await()
+//            reference.delete()
+//                .await()
 
             // 게시글 데이터 삭제
             it.reference.delete()

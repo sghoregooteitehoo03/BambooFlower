@@ -7,8 +7,7 @@ import com.sg.android.bambooflower.databinding.ItemPostBinding
 
 class PostViewHolder(
     private val binding: ItemPostBinding,
-    private val listener: PostPagingAdapter.PostItemListener,
-    private val userId: String
+    private val listener: PostPagingAdapter.PostItemListener
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -29,7 +28,6 @@ class PostViewHolder(
     fun bind(post: Post?) {
         with(binding) {
             this.postData = post
-            this.uid = userId
         }
     }
 }

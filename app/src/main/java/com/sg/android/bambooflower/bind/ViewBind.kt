@@ -363,9 +363,31 @@ fun setImage(view: ImageView, image: String?, uri: Uri?, res: Int?) {
     }
 }
 
-@BindingAdapter("app:isFavorite")
-fun isFavorite(view: ImageView, favorite: Boolean) {
-    if (favorite) {
+@BindingAdapter("app:setProfileImage")
+fun setProfileImage(view: CircleImageView, image: String?) {
+    if (image != null) {
+        if (image.isNotEmpty()) {
+            val imageByte = Base64.decode(image, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(
+                imageByte,
+                0,
+                imageByte.size
+            )
+
+            Glide.with(view.context)
+                .load(bitmap)
+                .into(view)
+        } else {
+            Glide.with(view.context)
+                .load(R.drawable.ic_person)
+                .into(view)
+        }
+    }
+}
+
+@BindingAdapter("app:isCheer")
+fun isCheer(view: ImageView, cheer: Boolean) {
+    if (cheer) {
         view.setImageResource(R.drawable.ic_thumb_up)
     } else {
         view.setImageResource(R.drawable.ic_thumb_up_off)

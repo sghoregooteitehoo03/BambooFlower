@@ -17,8 +17,8 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
     val size = MutableLiveData(-1)
     val postList = MutableLiveData<Flow<PagingData<Post>>?>(null) // 게시글 리스트
 
-    fun getMyPostList(uid: String) {
-        postList.value = repository.getMyPostList(uid)
-            .cachedIn(viewModelScope)
-    }
+//    fun getMyPostList(uid: String) {
+//        postList.value = repository.getMyPostList(uid)
+//            .cachedIn(viewModelScope)
+//    }
 }

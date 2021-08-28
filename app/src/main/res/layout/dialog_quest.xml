@@ -103,7 +103,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="* 미션이랑 관련없는 내용을 게시할 경우 삭제처리 될 수 있습니다.\n* 게시글 작성 후 수정이 불가능하니 꼭 확인하시기 바랍니다."
+            android:text="* 퀘스트랑 관련없는 내용을 게시할 경우 삭제처리 될 수 있습니다.\n* 꼭 인증방법에 적힌 내용을 수행하시기 바랍니다."
             android:textColor="@android:color/tab_indicator_text"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +111,6 @@
 
         <Button
             android:id="@+id/action_btn"
-            app:setButtonLoading="@{viewmodel.isActionLoading()}"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
@@ -123,6 +122,7 @@
             android:textStyle="bold"
             app:cornerRadius="8dp"
             app:layout_constraintTop_toBottomOf="@id/warning_text"
+            app:setButtonLoading="@{viewmodel.isActionLoading()}"
             app:setQuestSizeButton="@{gviewmodel.usersQuestList.size()}"
             app:setStateButton="@{gviewmodel.usersQuest.state}"
             tools:backgroundTint="@color/green_300"
@@ -152,7 +152,6 @@
 
             <Button
                 android:id="@+id/give_up_btn"
-                app:setButtonLoading="@{viewmodel.isGiveUpLoading()}"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginEnd="4dp"
@@ -170,7 +169,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/certify_btn"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                app:setButtonLoading="@{viewmodel.isGiveUpLoading()}"/>
 
             <ProgressBar
                 android:id="@+id/giveup_loading_view"

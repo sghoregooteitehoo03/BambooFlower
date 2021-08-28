@@ -27,6 +27,7 @@ import kotlinx.coroutines.launch
 
 // TODO:
 //  . 아이콘 수정(나중에)
+//  . 리스트 로딩 애니메이션 구현(나중에)
 
 @AndroidEntryPoint
 class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,

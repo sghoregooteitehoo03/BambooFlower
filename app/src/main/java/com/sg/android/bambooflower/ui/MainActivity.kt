@@ -19,6 +19,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 import javax.inject.Named
 
+// TODO:
+//  . 바텀 아이콘 구현 (나중에)
+//  . 유저한테 경고하는 화면 구현 (나중에)
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val gViewModel by viewModels<GlobalViewModel>()

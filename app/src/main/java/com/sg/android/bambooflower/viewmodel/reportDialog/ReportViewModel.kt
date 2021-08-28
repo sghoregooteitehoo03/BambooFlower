@@ -17,12 +17,12 @@ class ReportViewModel @Inject constructor(private val repository: ReportReposito
 
     // 게시글 신고
     fun reportPost(postData: Post) {
-        if (reportReason.value!!.isNotEmpty()) {
-            val reportData = Report(postData.postPath!!, reportReason.value!!)
-
-            repository.reportPost(reportData).addOnSuccessListener {
-                _isReported.value = true
-            }
-        }
+//        if (reportReason.value!!.isNotEmpty()) {
+//            val reportData = Report(postData.postPath!!, reportReason.value!!)
+//
+//            repository.reportPost(reportData).addOnSuccessListener {
+//                _isReported.value = true
+//            }
+//        }
     }
 }

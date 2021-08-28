@@ -2,40 +2,47 @@ package com.sg.android.bambooflower.adapter.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.functions.FirebaseFunctions
+import com.google.gson.Gson
 import com.sg.android.bambooflower.data.Post
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
+import org.json.JSONObject
 
-class PostPagingSource(private val store: FirebaseFirestore) : PagingSource<QuerySnapshot, Post>() {
+class PostPagingSource(
+    private val functions: FirebaseFunctions,
+    private val uid: String
+) : PagingSource<Int, Post>() {
 
-    override fun getRefreshKey(state: PagingState<QuerySnapshot, Post>): QuerySnapshot? {
-        return state.closestPageToPosition(0)
-            ?.prevKey
+    override fun getRefreshKey(state: PagingState<Int, Post>): Int? {
+        return state.anchorPosition
     }
 
-    override suspend fun load(params: LoadParams<QuerySnapshot>): LoadResult<QuerySnapshot, Post> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Post> {
         return try {
-            val currentPage = params.key ?: store.collection(Contents.COLLECTION_POST)
-                .orderBy("timeStamp", Query.Direction.DESCENDING)
-                .limit(10)
-                .get()
-                .await()
+            val currentKey = params.key ?: 0
+            val jsonData = JSONObject().apply {
+                put("offset", currentKey)
+                put("uid", uid)
+            }
+            val result = functions.getHttpsCallable(Contents.FUNC_GET_POST_LIST)
+                .call(jsonData)
+                .await()!!
+                .data as Map<*, *>
 
-            val lastDocumentSnapshot = currentPage.documents[currentPage.size() - 1]
-            val nextPage = store.collection(Contents.COLLECTION_POST)
-                .orderBy("timeStamp", Query.Direction.DESCENDING)
-                .limit(10)
-                .startAfter(lastDocumentSnapshot)
-                .get()
-                .await()
+            if (result["posts"] == null) { // 오류 확인
+                throw NullPointerException()
+            }
+
+            val postList = (result["posts"] as List<*>).map { post ->
+                val jsonObject = JSONObject(post as Map<*, *>).toString()
+                Gson().fromJson(jsonObject, Post::class.java)
+            }
 
             LoadResult.Page(
-                data = currentPage.toObjects(Post::class.java),
+                data = postList,
                 prevKey = null,
-                nextKey = nextPage
+                nextKey = currentKey + 10
             )
         } catch (e: Exception) {
             e.printStackTrace()

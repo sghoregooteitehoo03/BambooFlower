@@ -40,5 +40,7 @@ object Contents {
     const val FUNC_GIVE_UP_QUEST = "giveUpQuest"
     const val FUNC_ADD_POST = "addPost"
     const val FUNC_UPDATE_USER_PROGRESS = "updateUserProgress"
+    const val FUNC_GET_POST_LIST = "getPostList"
+    const val FUNC_PRESSED_CHEER = "pressedCheer"
     const val FUNC_DELETE_POST = "deletePost"
 }

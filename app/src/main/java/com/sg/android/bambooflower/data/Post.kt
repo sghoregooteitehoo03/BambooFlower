@@ -1,15 +1,15 @@
 package com.sg.android.bambooflower.data
 
 data class Post(
-    val title: String? = null,
-    val missionDoc: String? = null,
-    val contents: String? = null,
-    val image: String? = null,
-    var favoriteCount: Int = 0,
-    var favorites: MutableMap<String, Boolean> = mutableMapOf(),
-    val timeStamp: Long? = null,
-    val uid: String? = null,
-    val writer: String? = null,
-    val profileImage: String? = null,
-    val postPath: String? = null
+    val id: Int,
+    val title: String,
+    val content: String,
+    val timestamp: Long,
+    val image: String,
+    var isCheer: Boolean,
+    var cheerCount: Int,
+    val userId: String,
+    val userName: String,
+    val userImage: String,
+    val questId: Int
 )

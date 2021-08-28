@@ -42,7 +42,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:setDiaryTimestamp="@{postData.timeStamp}"
             tools:text="21.07.16 (금)"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

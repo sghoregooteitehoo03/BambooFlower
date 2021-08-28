@@ -57,10 +57,10 @@ class AcceptListDialog : BottomSheetDialogFragment() {
             }
         }
         lifecycleScope.launch {
-            mViewModel.getAcceptList(gViewModel.post.value?.postPath!!)
-                .collect { pagingData ->
-                    acceptAdapter.submitData(pagingData)
-                }
+//            mViewModel.getAcceptList(gViewModel.post.value?.postPath!!)
+//                .collect { pagingData ->
+//                    acceptAdapter.submitData(pagingData)
+//                }
         }
         lifecycleScope.launch {
             acceptAdapter.loadStateFlow.collectLatest {

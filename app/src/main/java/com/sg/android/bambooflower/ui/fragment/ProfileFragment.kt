@@ -9,7 +9,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.adapter.MyPhotoPagingAdapter
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentProfileBinding
 import com.sg.android.bambooflower.ui.MainActivity
@@ -27,7 +26,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<ProfileViewModel>()
 
     private lateinit var user: User
-    private lateinit var myPhotoAdapter: MyPhotoPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,14 +35,13 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         // 인스턴스 설정
         val binding = FragmentProfileBinding.inflate(inflater)
         user = gViewModel.user.value!!
-        myPhotoAdapter = MyPhotoPagingAdapter()
 
         with(binding) {
             this.viewmodel = mViewModel
             this.gviewmodel = gViewModel
             this.clickListener = this@ProfileFragment
 
-            this.photoList.adapter = myPhotoAdapter
+//            this.photoList.adapter = myPhotoAdapter
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -101,18 +98,18 @@ class ProfileFragment : Fragment(), View.OnClickListener {
 
     private fun setObserver() {
         mViewModel.isLoading.observe(viewLifecycleOwner) { // 로딩 여부
-            if (it) {
-                mViewModel.getMyPostList(user.uid!!)
-            } else {
-                mViewModel.size.value = myPhotoAdapter.itemCount
-            }
+//            if (it) {
+//                mViewModel.getMyPostList(user.uid!!)
+//            } else {
+//                mViewModel.size.value = myPhotoAdapter.itemCount
+//            }
         }
         // 리스트
         mViewModel.postList.observe(viewLifecycleOwner) { postFlow ->
             if (postFlow != null) {
                 lifecycleScope.launch {
                     postFlow.collect { pagingData ->
-                        myPhotoAdapter.submitData(pagingData)
+//                        myPhotoAdapter.submitData(pagingData)
                     }
                 }
             }
@@ -120,12 +117,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setList() {
-        myPhotoAdapter.addLoadStateListener { loadState ->
-            if (loadState.refresh !is LoadState.Loading &&
-                mViewModel.postList.value != null
-            ) {
-                mViewModel.isLoading.value = false
-            }
-        }
+//        myPhotoAdapter.addLoadStateListener { loadState ->
+//            if (loadState.refresh !is LoadState.Loading &&
+//                mViewModel.postList.value != null
+//            ) {
+//                mViewModel.isLoading.value = false
+//            }
+//        }
     }
 }

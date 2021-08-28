@@ -7,15 +7,9 @@
 
         <import type="android.view.View"/>
 
-        <import type="android.net.Uri"/>
-
         <variable
             name="postData"
             type="com.sg.android.bambooflower.data.Post"/>
-
-        <variable
-            name="uid"
-            type="String"/>
     </data>
 
     <LinearLayout
@@ -37,6 +31,7 @@
                 app:civ_circle_background_color="@color/gray_bright"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:setProfileImage="@{postData.userImage}"
                 tools:src="@drawable/ic_person"/>
 
             <TextView
@@ -44,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="@{postData.writer}"
+                android:text="@{postData.userName}"
                 android:textColor="@color/default_item_color"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@id/profile_image"
@@ -71,6 +66,7 @@
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toTopOf="@id/guideline_divide"
                 app:layout_constraintTop_toBottomOf="@id/profile_image"
+                app:setImage="@{postData.image}"
                 tools:src="@drawable/test_image"/>
 
             <androidx.constraintlayout.widget.Guideline
@@ -85,12 +81,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@{postData.title}"
                 android:textColor="@color/default_item_color"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/post_image"
+                app:setTitle="@{postData.title}"
                 tools:text="[간단한 산책]"/>
 
             <TextView
@@ -102,7 +98,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/title_text"
                 app:layout_constraintStart_toEndOf="@id/title_text"
                 app:layout_constraintTop_toTopOf="@id/title_text"
-                app:setPostTimestamp="@{postData.timeStamp}"
+                app:setPostTimestamp="@{postData.timestamp}"
                 tools:text="5분 전"/>
 
             <TextView
@@ -110,7 +106,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@{postData.contents}"
+                android:text="@{postData.content}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_text"
                 tools:text="인증합니다 ㅎㅎ"/>
@@ -140,7 +136,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4dp"
-                    app:isFavorite="@{postData.favorites.containsKey(uid)}"
+                    app:isCheer="@{postData.cheer}"
                     tools:src="@drawable/ic_thumb_up_off"/>
 
                 <TextView
@@ -148,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@{String.valueOf(postData.favoriteCount)}"
+                    android:text="@{String.valueOf(postData.cheerCount)}"
                     android:textColor="@color/default_item_color"
                     tools:text="100"/>
             </LinearLayout>
