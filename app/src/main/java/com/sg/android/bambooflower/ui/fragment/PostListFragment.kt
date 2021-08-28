@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
@@ -27,7 +28,7 @@ import com.sg.android.bambooflower.viewmodel.postListFragment.PostListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
-//  . 신고 구현 (나중에)
+//  . 신고 구현 O
 //  . 인증게시판이 비어있을때 보일 화면 (바텀 아이콘 구현 후 구현하기)
 //  . 퀘스트 보여주는 화면 구현 (나중에)
 //  . 게시글 사이사이에 광고 넣기 (나중에)
@@ -190,6 +191,8 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                         true
                     }
                     R.id.menu_report_post -> { // 신고하기
+                        gViewModel.post.value = postData
+                        findNavController().navigate(R.id.reportDialog)
 
                         true
                     }

@@ -3,6 +3,7 @@ package com.sg.android.bambooflower.other
 object ErrorMessage {
     const val NOT_EMAIL_TYPE = "이메일 형식이 잘못되었습니다."
     const val CONNECT_ERROR = "서버와 연결 중 오류가 발생하였습니다."
+    const val ALREADY_REPORT_POST = "이미 신고한 게시글입니다."
 
     const val ALREADY_EXIST_ACCOUNT = "해당 계정이 이미 존재합니다."
     const val USE_JOIN_ACCOUNT = "가입할 때 이용하였던 이메일을 입력해주세요."

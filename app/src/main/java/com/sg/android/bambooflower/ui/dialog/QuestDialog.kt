@@ -60,6 +60,8 @@ class QuestDialog : BottomSheetDialogFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        dialog?.setCanceledOnTouchOutside(false)
+
         setObserver()
     }
 
@@ -109,20 +111,16 @@ class QuestDialog : BottomSheetDialogFragment(),
         // 버튼 로딩
         mViewModel.isActionLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                dialog?.setCanceledOnTouchOutside(false)
                 dialog?.setCancelable(false)
             } else {
-                dialog?.setCanceledOnTouchOutside(true)
                 dialog?.setCancelable(true)
             }
         }
         // 포기버튼 로딩
         mViewModel.isGiveUpLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
-                dialog?.setCanceledOnTouchOutside(false)
                 dialog?.setCancelable(false)
             } else {
-                dialog?.setCanceledOnTouchOutside(true)
                 dialog?.setCancelable(true)
             }
         }

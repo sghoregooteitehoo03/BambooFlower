@@ -91,9 +91,9 @@ fun setTitleAction(view: TextView, isQuest: Boolean) {
     }
 }
 
-@BindingAdapter("app:setButtonEnable", "app:setButtonLoadingEnable", requireAll = true)
-fun setButtonEnable(view: Button, isEnable: Boolean, loadingEnable: Boolean) {
-    if (isEnable && !loadingEnable) { // 버튼 활성화
+@BindingAdapter("app:setFlowerButtonEnable")
+fun setFlowerButtonEnable(view: Button, isEnable: Boolean) {
+    if (isEnable) { // 버튼 활성화
         view.isEnabled = true
         view.backgroundTintList =
             ContextCompat.getColorStateList(view.context, R.color.green_300)
@@ -101,16 +101,10 @@ fun setButtonEnable(view: Button, isEnable: Boolean, loadingEnable: Boolean) {
         view.text = "선택"
     } else { // 버튼 비활성화
         view.isEnabled = false
+        view.text = "선택"
 
-        if (loadingEnable) {
-            view.text = ""
-            view.backgroundTintList =
-                ContextCompat.getColorStateList(view.context, R.color.green_300)
-        } else {
-            view.text = "선택"
-            view.backgroundTintList =
-                ContextCompat.getColorStateList(view.context, R.color.gray)
-        }
+        view.backgroundTintList =
+            ContextCompat.getColorStateList(view.context, R.color.gray)
     }
 }
 
@@ -241,6 +235,23 @@ fun setStateButton(view: Button, state: Int, usersQuestSize: Int) {
                 )
             }
         }
+    }
+}
+
+@BindingAdapter("app:setButtonEnable")
+fun setButtonEnable(view: Button, isEnable: Boolean) {
+    if (isEnable) {
+        view.isEnabled = true
+        view.backgroundTintList = ContextCompat.getColorStateList(
+            view.context,
+            R.color.green_300
+        )
+    } else {
+        view.isEnabled = false
+        view.backgroundTintList = ContextCompat.getColorStateList(
+            view.context,
+            R.color.gray
+        )
     }
 }
 
