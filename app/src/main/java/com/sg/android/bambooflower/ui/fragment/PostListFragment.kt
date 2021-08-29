@@ -29,8 +29,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
 //  . 신고 구현 O
+//  . 인정해준 사람 보여주기 O
 //  . 인증게시판이 비어있을때 보일 화면 (바텀 아이콘 구현 후 구현하기)
-//  . 퀘스트 보여주는 화면 구현 (나중에)
+//  . 퀘스트 보여주는 화면 구현
 //  . 게시글 사이사이에 광고 넣기 (나중에)
 
 @AndroidEntryPoint
@@ -113,7 +114,10 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     }
 
     override fun onShowPeopleClickListener(pos: Int) {
+        val postData = postAdapter.getPost(pos)
+        gViewModel.post.value = postData
 
+        findNavController().navigate(R.id.cheerListDialog)
     }
 
     private fun setObserver() {

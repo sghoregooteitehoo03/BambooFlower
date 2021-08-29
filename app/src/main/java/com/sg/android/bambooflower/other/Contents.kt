@@ -43,5 +43,6 @@ object Contents {
     const val FUNC_GET_POST_LIST = "getPostList"
     const val FUNC_PRESSED_CHEER = "pressedCheer"
     const val FUNC_REPORT_POST = "reportPost"
+    const val FUNC_GET_CHEER_LIST = "getCheerList"
     const val FUNC_DELETE_POST = "deletePost"
 }

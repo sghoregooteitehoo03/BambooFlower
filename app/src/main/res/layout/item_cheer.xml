@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="acceptPeople"
-            type="com.sg.android.bambooflower.data.Accept" />
+            name="cheerData"
+            type="com.sg.android.bambooflower.data.Cheer"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,8 @@
             app:civ_circle_background_color="@color/gray_bright"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:setProfileImage="@{cheerData.userImage}"/>
 
         <TextView
             android:id="@+id/name_text"
@@ -35,11 +36,11 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:text="@{acceptPeople.name}"
+            android:text="@{cheerData.userName}"
             android:textColor="@color/default_item_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/profile_image"
-            tools:text="닉네임" />
+            tools:text="닉네임"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

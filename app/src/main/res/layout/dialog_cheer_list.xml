@@ -9,7 +9,11 @@
 
         <variable
             name="viewmodel"
-            type="com.sg.android.bambooflower.viewmodel.acceptListDialog.AcceptListViewModel"/>
+            type="com.sg.android.bambooflower.viewmodel.cheerListDialog.CheerListViewModel"/>
+
+        <variable
+            name="clickListener"
+            type="View.OnClickListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,6 +33,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ImageButton
+            android:id="@+id/close_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@null"
+            android:onClick="@{clickListener}"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="@id/title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/title_text"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/accept_list"
             android:layout_width="match_parent"
@@ -36,8 +51,16 @@
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/guideline_divide"
             app:layout_constraintTop_toBottomOf="@id/title_text"
-            tools:listitem="@layout/item_accept"/>
+            tools:listitem="@layout/item_cheer"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_divide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.987"/>
 
         <ProgressBar
             android:id="@+id/loading_view"
@@ -59,11 +82,12 @@
             android:textColor="@android:color/tab_indicator_text"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:visibility="@{viewmodel.size == 0 ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewmodel.size != 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_text"/>
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+            tools:visibility="gone"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

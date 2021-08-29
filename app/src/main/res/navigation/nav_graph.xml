@@ -87,8 +87,8 @@
         android:label="PostListFragment"
         tools:layout="@layout/fragment_post_list">
         <action
-            android:id="@+id/action_postListFragment_to_acceptListDialog"
-            app:destination="@id/acceptListDialog"/>
+            android:id="@+id/action_postListFragment_to_cheerListDialog"
+            app:destination="@id/cheerListDialog"/>
         <action
             android:id="@+id/action_postListFragment_to_reportDialog"
             app:destination="@id/reportDialog"/>
@@ -187,10 +187,10 @@
             app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <dialog
-        android:id="@+id/acceptListDialog"
-        android:name="com.sg.android.bambooflower.ui.dialog.AcceptListDialog"
-        android:label="AcceptListDialog"
-        tools:layout="@layout/dialog_accept_list"/>
+        android:id="@+id/cheerListDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.CheerListDialog"
+        android:label="CheerListDialog"
+        tools:layout="@layout/dialog_cheer_list"/>
     <fragment
         android:id="@+id/questListFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.QuestListFragment"
