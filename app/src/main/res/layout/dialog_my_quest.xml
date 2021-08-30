@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="com.sg.android.bambooflower.data.UsersQuest"/>
+
+        <variable
+            name="viewmodel"
+            type="com.sg.android.bambooflower.viewmodel.myQuestDialog.MyQuestViewModel"/>
+
+        <variable
+            name="gviewmodel"
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
+
+        <variable
+            name="clickListener"
+            type="View.OnClickListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/quest_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/default_item_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setTitle="@{gviewmodel.usersQuest.quest.title}"
+            tools:text="[간단한 산책]"/>
+
+        <ImageButton
+            android:id="@+id/close_btn"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@null"
+            android:enabled="@{!viewmodel.isLoading()}"
+            android:onClick="@{clickListener}"
+            android:src="@drawable/ic_close"
+            app:layout_constraintBottom_toBottomOf="@id/quest_title_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/quest_title_text"/>
+
+        <TextView
+            android:id="@+id/quest_way_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="퀘스트 인증 방법"
+            android:textColor="@color/default_item_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quest_title_text"/>
+
+        <TextView
+            android:id="@+id/mission_way_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@{gviewmodel.usersQuest.quest.way}"
+            android:textColor="@android:color/tab_indicator_text"
+            android:textFontWeight="500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/quest_way_title_text"
+            tools:text="간단히 산책 후 산책하는곳의 풍경을 보여주세요."/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mission_way_image_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/mission_way_text"
+            tools:listitem="@layout/item_quest_image"/>
+
+        <TextView
+            android:id="@+id/warning_text_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="유의사항"
+            android:textColor="@color/default_item_color"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mission_way_image_list"/>
+
+        <TextView
+            android:id="@+id/warning_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="* 퀘스트랑 관련없는 내용을 게시할 경우 삭제처리 될 수 있습니다.\n* 꼭 인증방법에 적힌 내용을 수행하시기 바랍니다."
+            android:textColor="@android:color/tab_indicator_text"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/warning_text_title"/>
+
+        <Button
+            android:id="@+id/action_btn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:onClick="@{clickListener}"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="8dp"
+            app:layout_constraintTop_toBottomOf="@id/warning_text"
+            app:setStateButton="@{gviewmodel.usersQuest.state}"
+            tools:backgroundTint="@color/green_300"
+            tools:text="수락하기"
+            tools:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/other_btn_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="@{gviewmodel.usersQuest.state == UsersQuest.STATE_NOTHING ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/warning_text"
+            tools:layout_editor_absoluteX="12dp">
+
+            <Button
+                android:id="@+id/give_up_btn"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/gray_darker"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:onClick="@{clickListener}"
+                android:text="포기하기"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/certify_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setButtonLoading="@{viewmodel.isLoading()}"/>
+
+            <ProgressBar
+                android:id="@+id/giveup_loading_view"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:indeterminateTint="@color/white"
+                android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@id/give_up_btn"
+                app:layout_constraintEnd_toEndOf="@id/give_up_btn"
+                app:layout_constraintStart_toStartOf="@id/give_up_btn"
+                app:layout_constraintTop_toTopOf="@id/give_up_btn"
+                tools:visibility="gone"/>
+
+            <Button
+                android:id="@+id/certify_btn"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/green_300"
+                android:enabled="@{!viewmodel.isLoading()}"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:onClick="@{clickListener}"
+                android:text="인증하기"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/give_up_btn"
+                app:layout_constraintTop_toTopOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

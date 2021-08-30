@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sg.android.bambooflower.adapter.viewholder.QuestImageViewHolder
 import com.sg.android.bambooflower.databinding.ItemQuestImageBinding
 
-class QuestImageAdapter(private val imageList: List<String>) : RecyclerView.Adapter<QuestImageViewHolder>() {
+class QuestImageAdapter(private var imageList: List<String>) : RecyclerView.Adapter<QuestImageViewHolder>() {
     private lateinit var mListener: ImageItemListener
 
     interface ImageItemListener {
@@ -35,5 +35,10 @@ class QuestImageAdapter(private val imageList: List<String>) : RecyclerView.Adap
 
     fun setOnImageItemListener(_listener: ImageItemListener) {
         mListener = _listener
+    }
+
+    fun syncData(_imageList: List<String>) {
+        imageList = _imageList
+        notifyDataSetChanged()
     }
 }

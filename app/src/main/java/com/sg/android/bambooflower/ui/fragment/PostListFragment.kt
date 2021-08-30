@@ -31,7 +31,7 @@ import dagger.hilt.android.AndroidEntryPoint
 //  . 신고 구현 O
 //  . 인정해준 사람 보여주기 O
 //  . 인증게시판이 비어있을때 보일 화면 (바텀 아이콘 구현 후 구현하기)
-//  . 퀘스트 보여주는 화면 구현
+//  . 퀘스트 보여주는 화면 구현 O
 //  . 게시글 사이사이에 광고 넣기 (나중에)
 
 @AndroidEntryPoint
@@ -187,6 +187,8 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
             setOnMenuItemClickListener {
                 when (it.itemId) {
                     R.id.menu_show_quest -> { // 퀘스트 보기
+                        gViewModel.post.value = postData
+                        findNavController().navigate(R.id.questDialog)
 
                         true
                     }

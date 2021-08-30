@@ -40,7 +40,7 @@ class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
     private lateinit var questAdapter: QuestPagingAdapter
     private lateinit var scrollView: NestedScrollView
 
-    private var isMove = false
+    private var isMove = false // 옵저버 동작을 막기위한 변수
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,11 +107,11 @@ class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
         val data = usersQuestAdapter.getItem(pos)
 
         if (data != null) {
-            isMove = true
+            isMove = true // 옵저버 동작을 막음
             gViewModel.usersQuest.value = data
             gViewModel.usersQuestList.value = mViewModel.usersQuestList.value?.toMutableList()
 
-            findNavController().navigate(R.id.questDialog)
+            findNavController().navigate(R.id.myQuestDialog)
         }
     }
 
@@ -126,7 +126,7 @@ class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
 
         // 유저가 수행하고 있지 않은 퀘스트일 경우
         if (!questAdapter.isQuestPerform(data.quest.id)) {
-            isMove = true
+            isMove = true // 옵저버 동작을 막음
             gViewModel.usersQuest.value = data
             gViewModel.usersQuestList.value = mViewModel.usersQuestList.value?.toMutableList()
 

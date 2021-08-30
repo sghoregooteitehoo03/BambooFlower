@@ -1,7 +1,6 @@
 package com.sg.android.bambooflower.ui.dialog
 
 import android.content.Intent
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,21 +12,20 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.QuestImageAdapter
-import com.sg.android.bambooflower.databinding.DialogQuestBinding
+import com.sg.android.bambooflower.databinding.DialogMyQuestBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.questDialog.QuestViewModel
+import com.sg.android.bambooflower.viewmodel.myQuestDialog.MyQuestViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
-class QuestDialog : BottomSheetDialogFragment(),
+class MyQuestDialog : BottomSheetDialogFragment(),
     QuestImageAdapter.ImageItemListener,
     View.OnClickListener {
 
-    private val mViewModel by viewModels<QuestViewModel>()
+    private val mViewModel by viewModels<MyQuestViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
     private lateinit var missionImageAdapter: QuestImageAdapter
@@ -38,28 +36,17 @@ class QuestDialog : BottomSheetDialogFragment(),
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = DialogQuestBinding.inflate(inflater)
-        val isNull = gViewModel.usersQuestList.value == null // 게시글에서 넘어왔는지 확인
-        missionImageAdapter = QuestImageAdapter(listOf()).apply {
-            setOnImageItemListener(this@QuestDialog)
+        val binding = DialogMyQuestBinding.inflate(inflater)
+        val usersQuest = gViewModel.usersQuest.value!!
+        missionImageAdapter = QuestImageAdapter(usersQuest.quest.images).apply {
+            setOnImageItemListener(this@MyQuestDialog)
         }
-
-        if (isNull) {
-            mViewModel.isLoading.value = true
-        } else {
-            val usersQuest = gViewModel.usersQuest.value!!
-
-            mViewModel.questData.value = usersQuest.quest
-            mViewModel.userQuestSize.value = gViewModel.usersQuestList.value!!.size
-            mViewModel.userQuestExists.value = gViewModel.usersQuestList.value!!
-                .contains(usersQuest)
-        }
-
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            this.clickListener = this@QuestDialog
+            this.gviewmodel = gViewModel
+            this.clickListener = this@MyQuestDialog
 
             this.missionWayImageList.adapter = missionImageAdapter
 
@@ -88,11 +75,16 @@ class QuestDialog : BottomSheetDialogFragment(),
             R.id.close_btn -> {
                 findNavController().navigateUp()
             }
-            R.id.action_btn -> {
-                val userId = gViewModel.user.value!!.uid
-                val questId = mViewModel.questData.value!!.id
-
-                mViewModel.acceptQuest(userId, questId)
+            R.id.action_btn -> { // 보상받기
+                findNavController().navigateUp()
+                findNavController().navigate(R.id.flowerStateDialog)
+            }
+            R.id.give_up_btn -> { // 포기하기
+                val usersQuestId = gViewModel.usersQuest.value!!.id
+                mViewModel.giveUpQuest(usersQuestId)
+            }
+            R.id.certify_btn -> { // 인증하기
+                findNavController().navigate(R.id.action_myQuestDialog_to_addPostFragment)
             }
         }
     }
@@ -106,46 +98,21 @@ class QuestDialog : BottomSheetDialogFragment(),
                 mViewModel.isError.value = false
             }
         }
-        // 메인 로딩
-        mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) { // 게시글에서 넘어온 경우 퀘스트 데이터를 읽어옴
-                val questId = gViewModel.post.value!!.questId
-                val uid = gViewModel.user.value!!.uid
-
-                mViewModel.getQuest(uid, questId)
-            }
-        }
         // 버튼 로딩
-        mViewModel.buttonLoading.observe(viewLifecycleOwner) { isLoading ->
+        mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             if (isLoading) {
                 dialog?.setCancelable(false)
             } else {
                 dialog?.setCancelable(true)
             }
         }
-        // 퀘스트 데이터
-        mViewModel.questData.observe(viewLifecycleOwner) { quest ->
-            if (quest != null) {
-                missionImageAdapter.syncData(quest.images)
-            }
-        }
-        // 퀘스트 수락 완료
-        mViewModel.isAcceptComplete.observe(viewLifecycleOwner) { result ->
-            if (result != -1) {
-                val usersQuestList = gViewModel.usersQuestList.value
-                if (usersQuestList != null) {
-                    val usersQuest = gViewModel.usersQuest.value!!.apply {
-                        id = result
-                        state = 1
-                        timestamp = SimpleDateFormat("yyyyMMdd", Locale.KOREA)
-                            .format(System.currentTimeMillis())
-                            .toInt()
-                    }
-                    usersQuestList.add(usersQuest) // 유저 퀘스트목록에 퀘스트 추가
+        // 퀘스트 포기 완료
+        mViewModel.isGiveUpComplete.observe(viewLifecycleOwner) { complete ->
+            if (complete) {
+                val usersQuestList = gViewModel.usersQuestList.value!!
+                usersQuestList.remove(gViewModel.usersQuest.value!!) // 유저 퀘스트목록에서 퀘스트 지움
 
-                    gViewModel.usersQuestList.value = usersQuestList
-                }
-
+                gViewModel.usersQuestList.value = usersQuestList
                 findNavController().navigateUp()
             }
         }

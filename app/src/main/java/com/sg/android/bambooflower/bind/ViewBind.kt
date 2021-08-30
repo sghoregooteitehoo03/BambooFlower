@@ -169,66 +169,74 @@ fun setStateText(view: TextView, state: Int) {
     }
 }
 
-@BindingAdapter("app:setStateButton", "app:setQuestSizeButton", requireAll = true)
-fun setStateButton(view: Button, state: Int, usersQuestSize: Int) {
-    if (state != 0) { // 내 퀘스트를 클릭하였을 경우
-        when (state) {
-            UsersQuest.STATE_NOTHING -> view.visibility = View.GONE // 퀘스트 수락 후
-            UsersQuest.STATE_LOADING -> { // 퀘스트 수행 후
-                with(view) {
-                    visibility = View.VISIBLE
-                    isEnabled = false
-                    text = "보상받기"
+@BindingAdapter("app:setStateButton")
+fun setStateButton(view: Button, state: Int) {
+    when (state) {
+        UsersQuest.STATE_NOTHING -> view.visibility = View.GONE // 퀘스트 수락 후
+        UsersQuest.STATE_LOADING -> { // 퀘스트 수행 후
+            with(view) {
+                visibility = View.VISIBLE
+                isEnabled = false
+                text = "보상받기"
 
-                    backgroundTintList = ContextCompat.getColorStateList(
-                        view.context,
-                        R.color.gray
-                    )
-                }
-            }
-            UsersQuest.STATE_COMPLETE_WITH_REWARD -> { // 퀘스트를 다른 유저에게 인증을 받은 후
-                with(view) {
-                    visibility = View.VISIBLE
-                    isEnabled = true
-                    text = "보상받기"
-
-                    backgroundTintList = ContextCompat.getColorStateList(
-                        view.context,
-                        R.color.green_300
-                    )
-                }
-            }
-            UsersQuest.STATE_COMPLETE -> { // 보상 받은 후
-                with(view) {
-                    visibility = View.VISIBLE
-                    isEnabled = false
-                    text = "완료"
-
-                    backgroundTintList = ContextCompat.getColorStateList(
-                        view.context,
-                        R.color.green_300
-                    )
-                }
+                backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.gray
+                )
             }
         }
-    } else { // 퀘스트 목록에 있는것을 클릭하였을 경우
-        if (usersQuestSize != 2) { // 유저가 2개 이하로 퀘스트를 가지고 있을 경우
+        UsersQuest.STATE_COMPLETE_WITH_REWARD -> { // 퀘스트를 다른 유저에게 인증을 받은 후
             with(view) {
                 visibility = View.VISIBLE
                 isEnabled = true
-                text = "수락하기"
+                text = "보상받기"
 
                 backgroundTintList = ContextCompat.getColorStateList(
                     view.context,
                     R.color.green_300
                 )
             }
-        } else { // 유저가 이미 2개의 퀘스트를 가지고 있을 경우
+        }
+        UsersQuest.STATE_COMPLETE -> { // 보상 받은 후
             with(view) {
                 visibility = View.VISIBLE
                 isEnabled = false
-                text = "수락하기"
+                text = "완료"
 
+                backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.green_300
+                )
+            }
+        }
+    }
+}
+
+@SuppressLint("SetTextI18n")
+@BindingAdapter("app:setQuestSize", "app:setQuestExists", requireAll = true)
+fun setQuestButton(view: Button, questSize: Int, questExists: Boolean) {
+    if (questExists) { // 이미 수락한 퀘스트일 경우
+        with(view) {
+            isEnabled = false
+            text = "이미 수락한 퀘스트입니다"
+
+            backgroundTintList = ContextCompat.getColorStateList(
+                view.context,
+                R.color.gray
+            )
+        }
+    } else {
+        with(view) {
+            text = "수락하기 ${questSize}/2"
+
+            if (questSize < 2) { // 퀘스트 제한량을 넘지 않았을 경우
+                isEnabled = true
+                backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.green_300
+                )
+            } else {
+                isEnabled = false
                 backgroundTintList = ContextCompat.getColorStateList(
                     view.context,
                     R.color.gray

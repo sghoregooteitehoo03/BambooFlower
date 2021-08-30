@@ -199,6 +199,9 @@
         <action
             android:id="@+id/action_questListFragment_to_questDialog"
             app:destination="@id/questDialog"/>
+        <action
+            android:id="@+id/action_questListFragment_to_myQuestDialog"
+            app:destination="@id/myQuestDialog"/>
     </fragment>
     <fragment
         android:id="@+id/diaryListFragment"
@@ -228,11 +231,6 @@
         android:name="com.sg.android.bambooflower.ui.dialog.QuestDialog"
         android:label="questDialog"
         tools:layout="@layout/dialog_quest">
-        <action
-            android:id="@+id/action_questDialog_to_addPostFragment"
-            app:destination="@id/addPostFragment"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_questDialog_to_flowerStateDialog"
             app:destination="@id/flowerStateDialog"/>
@@ -293,4 +291,13 @@
         android:name="com.sg.android.bambooflower.ui.dialog.FlowerStateDialog"
         android:label="FlowerStateDialog"
         tools:layout="@layout/dialog_flower_state"/>
+    <dialog
+        android:id="@+id/myQuestDialog"
+        android:name="com.sg.android.bambooflower.ui.dialog.MyQuestDialog"
+        android:label="MyQuestDialog"
+        tools:layout="@layout/dialog_my_quest">
+        <action
+            android:id="@+id/action_myQuestDialog_to_addPostFragment"
+            app:destination="@id/addPostFragment"/>
+    </dialog>
 </navigation>

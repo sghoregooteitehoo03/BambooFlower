@@ -11,6 +11,19 @@ class QuestRepository @Inject constructor(
     private val functions: FirebaseFunctions
 ) {
 
+    // 퀘스트 정보 가져옴
+    suspend fun getUsersQuest(uid: String, questId: Int): HttpsCallableResult {
+        val jsonData = JSONObject().apply {
+            put("userId", uid)
+            put("questId", questId)
+        }
+
+        return functions.getHttpsCallable(Contents.FUNC_GET_QUEST_DATA)
+            .call(jsonData)
+            .await()!!
+    }
+
+    // 퀘스트 수락
     suspend fun acceptQuest(uid: String, questId: Int): HttpsCallableResult {
         val jsonData = JSONObject().apply {
             put("userId", uid)
@@ -21,9 +34,4 @@ class QuestRepository @Inject constructor(
             .call(jsonData)
             .await()!!
     }
-
-    suspend fun giveUpQuest(id: Int) =
-        functions.getHttpsCallable(Contents.FUNC_GIVE_UP_QUEST)
-            .call(id)
-            .await()!!
 }
