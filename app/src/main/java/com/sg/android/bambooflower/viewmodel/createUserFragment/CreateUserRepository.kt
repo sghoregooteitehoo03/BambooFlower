@@ -37,7 +37,7 @@ class CreateUserRepository @Inject constructor(
         val profileImage = if (profileImageUri != null) { // 프로필 이미지를 선택한 경우
             imageSizeConvert(profileImageUri, contentResolver) // 압축된 이미지 바이트를 가져옴
         } else {
-            null
+            ""
         }
         val loginToken = "${loginWay}-${token}"
 

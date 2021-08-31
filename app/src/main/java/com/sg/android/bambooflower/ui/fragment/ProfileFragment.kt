@@ -18,10 +18,10 @@ import dagger.hilt.android.AndroidEntryPoint
 // TODO
 //  . 인벤토리 테이블 구현 O
 //  . View 표시 O
-//  . 갱신 기능 구현 ㅁ (상점 구현 후 마무리)
+//  . 갱신 기능 구현 O
 //  . 꽃 컬렉션 더보기 구현 (상점 구현 후 구현하기)
-//  . 프로필 이미지 수정 구현
-//  . 게시글 이미지 클릭 시 동작 구현
+//  . 프로필 수정 구현 O
+//  . 게시글 이미지, 더보기 클릭 시 동작 구현
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -95,7 +95,7 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.profile_image -> {
-                findNavController().navigate(R.id.action_profileFragment_to_profileEditFragment)
+                findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
             }
         }
     }

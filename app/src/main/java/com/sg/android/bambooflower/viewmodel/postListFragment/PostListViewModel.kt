@@ -23,7 +23,7 @@ class PostListViewModel @Inject constructor(
     val postList: LiveData<PagingData<Post>> = _postList
     val mainLoading: LiveData<Boolean> = _mainLoading
 
-    val isLoading = MutableLiveData<Boolean>() // 로딩 여부
+    val isLoading = MutableLiveData(true) // 로딩 여부
     val isError = MutableLiveData(false) // 오류 여부
     val isDeleted = MutableLiveData(false) // 삭제 여부
 

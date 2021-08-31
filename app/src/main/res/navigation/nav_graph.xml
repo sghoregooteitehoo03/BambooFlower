@@ -129,8 +129,8 @@
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
         <action
-            android:id="@+id/action_profileFragment_to_profileEditFragment"
-            app:destination="@id/profileEditFragment"
+            android:id="@+id/action_profileFragment_to_editProfileFragment"
+            app:destination="@id/editProfileFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -241,10 +241,10 @@
         android:label="ResetPasswordFragment"
         tools:layout="@layout/fragment_reset_password"/>
     <fragment
-        android:id="@+id/profileEditFragment"
-        android:name="com.sg.android.bambooflower.ui.fragment.ProfileEditFragment"
-        android:label="ProfileEditFragment"
-        tools:layout="@layout/fragment_profile_edit"/>
+        android:id="@+id/editProfileFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.EditProfileFragment"
+        android:label="EditProfileFragment"
+        tools:layout="@layout/fragment_edit_profile"/>
     <fragment
         android:id="@+id/deleteAccountFragment"
         android:name="com.sg.android.bambooflower.ui.fragment.DeleteAccountFragment"

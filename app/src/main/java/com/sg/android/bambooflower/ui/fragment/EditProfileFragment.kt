@@ -17,21 +17,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
-import com.sg.android.bambooflower.databinding.FragmentProfileEditBinding
+import com.sg.android.bambooflower.databinding.FragmentEditProfileBinding
 import com.sg.android.bambooflower.other.Contents
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
-import com.sg.android.bambooflower.viewmodel.profileEditFrag.ProfileEditViewModel
+import com.sg.android.bambooflower.viewmodel.editProfileFrag.EditProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProfileEditFragment : Fragment(), View.OnClickListener {
-    private val mViewModel by viewModels<ProfileEditViewModel>()
+class EditProfileFragment : Fragment(), View.OnClickListener {
+    private val mViewModel by viewModels<EditProfileViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
-
-    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,16 +36,16 @@ class ProfileEditFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View {
         // 인스턴스 설정
-        val binding = FragmentProfileEditBinding.inflate(inflater)
-        user = gViewModel.user.value!!
-//        mViewModel.profileImage.value = user.profileImage
+        val binding = FragmentEditProfileBinding.inflate(inflater)
+        val user = gViewModel.user.value!!
+        mViewModel.profileImage.value = user.profileImage
         mViewModel.email.value = user.email
         mViewModel.name.value = user.name
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
-            this.clickListener = this@ProfileEditFragment
+            this.clickListener = this@EditProfileFragment
             this.blank = ""
 
             this.lifecycleOwner = viewLifecycleOwner
@@ -91,6 +88,7 @@ class ProfileEditFragment : Fragment(), View.OnClickListener {
                 getImage()
             }
             R.id.edit_profile_btn -> {
+                val user = gViewModel.user.value!!
                 mViewModel.changeProfile(user)
             }
         }
@@ -101,7 +99,8 @@ class ProfileEditFragment : Fragment(), View.OnClickListener {
 
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == Contents.GET_IMAGE) {
-                mViewModel.profileImage.value = data?.data?.toString()
+                // 프로필 이미지 설정
+                mViewModel.setProfileImageToString(data?.data!!, requireContext().contentResolver)
             }
         }
     }
@@ -151,9 +150,6 @@ class ProfileEditFragment : Fragment(), View.OnClickListener {
         // 프로필 업데이트 여부
         mViewModel.isUpdate.observe(viewLifecycleOwner) { isUpdate ->
             if (isUpdate) {
-                gViewModel.user.value = user
-//                gViewModel.userImage.value = user.profileImage
-
                 findNavController().navigateUp()
             }
         }
