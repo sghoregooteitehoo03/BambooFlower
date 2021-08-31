@@ -153,6 +153,8 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                     "게시글을 삭제하였습니다.",
                     Snackbar.LENGTH_SHORT
                 ).show()
+
+                gViewModel.isSyncProfile.value = true // 프로필 갱신
                 mViewModel.isDeleted.value = false
             }
         }

@@ -47,7 +47,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/accept_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.987"/>
+            app:layout_constraintGuide_percent="0.985"/>
 
         <ProgressBar
             android:id="@+id/loading_view"
@@ -88,6 +88,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/title_text"
             tools:visibility="gone"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:visibility="invisible"
+            app:layout_constraintTop_toBottomOf="@id/guideline_divide"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

@@ -22,200 +22,258 @@
             type="View.OnClickListener"/>
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:setRefresh="@={viewmodel.isRefresh()}">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:id="@+id/loading_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="12dp"
-                android:visibility="@{viewmodel.isLoading() ? View.INVISIBLE : View.VISIBLE}">
+                android:layout_height="wrap_content">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:onClick="@{clickListener}"
-                    app:civ_border_color="@color/gray"
-                    app:civ_border_width="2dp"
-                    app:civ_circle_background_color="@color/gray_bright"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@drawable/ic_person"/>
-
-                <ImageView
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_margin="2dp"
-                    android:background="@drawable/shape_round"
-                    android:backgroundTint="@color/deep_orange_300"
-                    android:padding="6dp"
-                    app:layout_constraintBottom_toBottomOf="@id/profile_image"
-                    app:layout_constraintEnd_toEndOf="@id/profile_image"
-                    app:setResourceImage="@{R.drawable.ic_edit}"
-                    tools:src="@drawable/ic_edit"/>
-
-                <TextView
-                    android:id="@+id/name_text"
+                <ProgressBar
+                    android:id="@+id/loading_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@{gviewmodel.user.name}"
-                    android:textColor="@color/default_item_color"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+                    android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/profile_image"
-                    tools:text="닉네임"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-                <View
-                    android:id="@+id/top_view"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="22dp"
-                    android:background="@color/white_medium"
-                    app:layout_constraintTop_toBottomOf="@id/name_text"/>
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewmodel.isLoading() ? View.INVISIBLE : View.VISIBLE}">
 
-                <TextView
-                    android:id="@+id/level_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@color/default_item_color"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toStartOf="@id/guideline_center"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/top_view"
-                    tools:text="1"/>
-
-                <TextView
-                    android:id="@+id/level_title_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="레벨"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@id/guideline_center"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/level_text"/>
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.5"/>
-
-                <TextView
-                    android:id="@+id/achieved_count_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:textColor="@color/default_item_color"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/guideline_center"
-                    app:layout_constraintTop_toBottomOf="@id/top_view"
-                    tools:text="7"/>
-
-                <TextView
-                    android:id="@+id/achieved_count_title_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="수행한 미션"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/guideline_center"
-                    app:layout_constraintTop_toBottomOf="@id/achieved_count_text"/>
-
-                <View
-                    android:id="@+id/center_view"
-                    android:layout_width="2dp"
-                    android:layout_height="0dp"
-                    android:background="@color/white_medium"
-                    app:layout_constraintBottom_toBottomOf="@id/level_title_text"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/level_text"/>
-
-                <View
-                    android:id="@+id/bottom_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/white_medium"
-                    app:layout_constraintTop_toBottomOf="@id/center_view"/>
-
-                <TextView
-                    android:id="@+id/photo_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:text="인증한 사진"
-                    android:textColor="@color/default_item_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/bottom_view"/>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="@{viewmodel.size == 0 ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/photo_text">
-
-                    <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:src="@drawable/ic_camera_gray"/>
-
-                    <TextView
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center"
-                        android:text="아직 인증한 사진이 없네요.\n미션 수행을 통해 채워나가보세요."
-                        android:textSize="16sp"
-                        android:textStyle="bold"/>
-                </LinearLayout>
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="12dp"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/photo_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/photo_text"
-                    app:spanCount="3"
-                    tools:listitem="@layout/item_my_photo"/>
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="12dp"/>
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:layout_marginTop="12dp"
+                        android:onClick="@{clickListener}"
+                        app:civ_border_color="@color/gray"
+                        app:civ_border_width="2dp"
+                        app:civ_circle_background_color="@color/gray_bright"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:setProfileImage="@{gviewmodel.user.profileImage}"
+                        tools:src="@drawable/ic_person"/>
+
+                    <ImageView
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/shape_round"
+                        android:backgroundTint="@color/deep_orange_300"
+                        android:padding="6dp"
+                        app:layout_constraintBottom_toBottomOf="@id/profile_image"
+                        app:layout_constraintEnd_toEndOf="@id/profile_image"
+                        app:setResourceImage="@{R.drawable.ic_edit}"
+                        tools:src="@drawable/ic_edit"/>
+
+                    <TextView
+                        android:id="@+id/name_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@{gviewmodel.user.name}"
+                        android:textColor="@color/default_item_color"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/profile_image"
+                        tools:text="닉네임"/>
+
+                    <View
+                        android:id="@+id/top_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginTop="26dp"
+                        android:visibility="invisible"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/name_text"/>
+
+                    <TextView
+                        android:id="@+id/flower_count_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@{String.valueOf(gviewmodel.user.flowerCount)}"
+                        android:textColor="@color/default_item_color"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_center"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/top_view"
+                        tools:text="1"/>
+
+                    <TextView
+                        android:id="@+id/flower_count_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="성장시킨 꽃"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_center"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/flower_count_text"/>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.5"/>
+
+                    <TextView
+                        android:id="@+id/quest_count_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@{String.valueOf(gviewmodel.user.questCount)}"
+                        android:textColor="@color/default_item_color"
+                        android:textSize="24sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintStart_toEndOf="@id/guideline_center"
+                        app:layout_constraintTop_toBottomOf="@id/top_view"
+                        tools:text="7"/>
+
+                    <TextView
+                        android:id="@+id/quest_count_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="퀘스트 완료"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintStart_toEndOf="@id/guideline_center"
+                        app:layout_constraintTop_toBottomOf="@id/quest_count_text"/>
+
+                    <View
+                        android:id="@+id/center_view"
+                        android:layout_width="2dp"
+                        android:layout_height="0dp"
+                        android:background="@drawable/shape_rectangle"
+                        android:backgroundTint="@color/white_darker"
+                        app:layout_constraintBottom_toBottomOf="@id/flower_count_title_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/flower_count_text"/>
+
+                    <View
+                        android:id="@+id/divide_view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="18dp"
+                        android:background="@color/white_darker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/center_view"/>
+
+                    <TextView
+                        android:id="@+id/flower_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="꽃 컬렉션"
+                        android:textColor="@color/default_item_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/divide_view1"/>
+
+                    <TextView
+                        android:id="@+id/flower_more_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="더보기"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@id/flower_title_text"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintTop_toTopOf="@id/flower_title_text"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/flower_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/flower_title_text"
+                        tools:itemCount="5"
+                        tools:listitem="@layout/item_collection_flower"/>
+
+                    <View
+                        android:id="@+id/divide_view2"
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@color/white_darker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/flower_list"/>
+
+                    <TextView
+                        android:id="@+id/post_title_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="인증 활동"
+                        android:textColor="@color/default_item_color"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/divide_view2"/>
+
+                    <TextView
+                        android:id="@+id/post_more_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="더보기"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="@id/post_title_text"
+                        app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                        app:layout_constraintTop_toTopOf="@id/post_title_text"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/post_image_list"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/post_title_text"
+                        tools:itemCount="5"
+                        tools:listitem="@layout/item_post_image"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

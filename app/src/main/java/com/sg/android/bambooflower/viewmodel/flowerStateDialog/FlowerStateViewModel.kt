@@ -1,5 +1,6 @@
 package com.sg.android.bambooflower.viewmodel.flowerStateDialog
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -47,11 +48,12 @@ class FlowerStateViewModel @Inject constructor(
             with(user) {
                 progress = resultMap["progress"] as Int
                 money = resultMap["money"] as Int
+                flowerCount = resultMap["flowerCount"] as Int
+                questCount = resultMap["questCount"] as Int
                 flowerId = resultMap["flowerId"] as Int
             }
-            with(flower) {
-                image = resultMap["flowerImage"] as String
-            }
+            Log.i("Check", "user: $user")
+            flower.image = resultMap["flowerImage"] as String
 
             if (usersQuest != null) {
                 usersQuest.state = UsersQuest.STATE_COMPLETE

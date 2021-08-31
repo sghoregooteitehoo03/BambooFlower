@@ -2,6 +2,7 @@ package com.sg.android.bambooflower.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -68,8 +69,9 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(R.id.action_global_onboardFragment)
         }
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            Log.i("Check", "size: ${controller.backQueue.size}")
             when (destination.id) {
-                R.id.homeFragment, R.id.postListFragment -> {
+                R.id.homeFragment, R.id.postListFragment, R.id.profileFragment -> {
                     isExit = true
 
                     showBottomView()

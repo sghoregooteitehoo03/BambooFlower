@@ -14,8 +14,8 @@ class PostPagingSource(
     private val uid: String
 ) : PagingSource<Int, Post>() {
 
-    override fun getRefreshKey(state: PagingState<Int, Post>): Int? {
-        return state.anchorPosition
+    override fun getRefreshKey(state: PagingState<Int, Post>): Int {
+        return 0
     }
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Post> {

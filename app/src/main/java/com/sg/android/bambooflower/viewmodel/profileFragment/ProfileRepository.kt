@@ -1,16 +1,17 @@
 package com.sg.android.bambooflower.viewmodel.profileFragment
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.functions.FirebaseFunctions
+import com.sg.android.bambooflower.other.Contents
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class ProfileRepository @Inject constructor(
-    private val store: FirebaseFirestore
+    private val functions: FirebaseFunctions
 ) {
 
-//    fun getMyPostList(uid: String) =
-//        Pager(PagingConfig(20)) {
-//            MyPostPagingSource(store, uid)
-//        }.flow
+    // 프로필 데이터 가져오기
+    suspend fun getProfileData(uid: String) =
+        functions.getHttpsCallable(Contents.FUNC_GET_PROFILE_DATA)
+            .call(uid)
+            .await()!!
 }

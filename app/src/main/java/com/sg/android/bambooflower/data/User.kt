@@ -6,9 +6,10 @@ data class User(
     var email: String,
     var profileImage: String? = null,
     val loginToken: String,
-    var startedTime: Long,
     var progress: Int,
     var money: Int,
+    var questCount: Int,
+    var flowerCount: Int,
     var flowerId: Int
 ) {
 }
