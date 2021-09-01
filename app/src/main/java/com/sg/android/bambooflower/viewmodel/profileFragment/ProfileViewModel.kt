@@ -25,6 +25,7 @@ class ProfileViewModel @Inject constructor(private val repository: ProfileReposi
 
     val isRefresh = MutableLiveData(false) // 갱신 여부
     val isError = MutableLiveData(false) // 오류 여부
+    val postSize = MutableLiveData(-1) // 인증 활동 사이즈
 
     // 프로필 화면에 보여줄 데이터 가져오기
     fun getProfileData(uid: String) = viewModelScope.launch {

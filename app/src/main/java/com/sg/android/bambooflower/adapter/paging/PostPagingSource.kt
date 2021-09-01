@@ -11,7 +11,8 @@ import org.json.JSONObject
 
 class PostPagingSource(
     private val functions: FirebaseFunctions,
-    private val uid: String
+    private val uid: String,
+    private val isFilter: Boolean
 ) : PagingSource<Int, Post>() {
 
     override fun getRefreshKey(state: PagingState<Int, Post>): Int {
@@ -24,6 +25,7 @@ class PostPagingSource(
             val jsonData = JSONObject().apply {
                 put("offset", currentKey)
                 put("uid", uid)
+                put("isFilter", isFilter)
             }
             val result = functions.getHttpsCallable(Contents.FUNC_GET_POST_LIST)
                 .call(jsonData)

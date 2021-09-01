@@ -18,9 +18,9 @@ class PostListRepository @Inject constructor(
 ) {
 
     // 게시글 목록을 가져옴
-    fun getPostList() =
+    fun getPostList(isFilter: Boolean) =
         Pager(PagingConfig(10)) {
-            PostPagingSource(functions, auth.currentUser?.uid!!)
+            PostPagingSource(functions, auth.currentUser?.uid!!, isFilter)
         }.flow
 
     // 게시글 응원

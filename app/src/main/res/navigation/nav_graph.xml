@@ -135,6 +135,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_profileFragment_to_myPostListFragment"
+            app:destination="@id/myPostListFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
@@ -300,4 +307,9 @@
             android:id="@+id/action_myQuestDialog_to_addPostFragment"
             app:destination="@id/addPostFragment"/>
     </dialog>
+    <fragment
+        android:id="@+id/myPostListFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.MyPostListFragment"
+        android:label="MyPostListFragment"
+        tools:layout="@layout/fragment_post_list"/>
 </navigation>

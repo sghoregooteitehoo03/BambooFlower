@@ -1,7 +1,9 @@
 package com.sg.android.bambooflower.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -10,7 +12,10 @@ import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.CollectionAdapter
 import com.sg.android.bambooflower.adapter.PostImageAdapter
 import com.sg.android.bambooflower.databinding.FragmentProfileBinding
+import com.sg.android.bambooflower.other.Contents
+import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
+import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.profileFragment.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,10 +25,11 @@ import dagger.hilt.android.AndroidEntryPoint
 //  . View 표시 O
 //  . 갱신 기능 구현 O
 //  . 꽃 컬렉션 더보기 구현 (상점 구현 후 구현하기)
-//  . 프로필 수정 구현 O
-//  . 게시글 이미지, 더보기 클릭 시 동작 구현
+//  . 프로필 수정 구현 O.
+//  . 게시글 이미지, 더보기 클릭 시 동작 구현 O
+//  . 활동 없을 때 보여줄 사진 O
 @AndroidEntryPoint
-class ProfileFragment : Fragment(), View.OnClickListener {
+class ProfileFragment : Fragment(), View.OnClickListener, PostImageAdapter.PostImageItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<ProfileViewModel>()
 
@@ -38,7 +44,9 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         // 인스턴스 설정
         val binding = FragmentProfileBinding.inflate(inflater)
         collectionAdapter = CollectionAdapter()
-        postImageAdapter = PostImageAdapter()
+        postImageAdapter = PostImageAdapter().apply {
+            setOnItemListener(this@ProfileFragment)
+        }
 
         with(binding) {
             this.viewmodel = mViewModel
@@ -94,10 +102,21 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.profile_image -> {
+            R.id.profile_image -> { // 프로필 이미지
                 findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
             }
+            R.id.post_more_text -> { // 인증활동 더보기
+                findNavController().navigate(R.id.action_profileFragment_to_myPostListFragment)
+            }
         }
+    }
+
+    // 인증활동 이미지 클릭 시
+    override fun onImageClickListener(pos: Int) {
+        val postImages = postImageAdapter.getList().map { post ->
+            post.image
+        }
+        showImages(postImages, pos)
     }
 
     private fun setObserver() {
@@ -112,6 +131,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 // 로딩이 다 되지 않았을 때는 갱신 X
 
                 gViewModel.isSyncProfile.value = false
+            }
+        }
+        // 에러 여부
+        mViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError) {
+                Toast.makeText(requireContext(), ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
+                    .show()
+                mViewModel.isError.value = false
             }
         }
         // 로딩 여부
@@ -135,6 +162,18 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         // 인증 활동
         mViewModel.postList.observe(viewLifecycleOwner) { list ->
             postImageAdapter.syncData(list)
+            mViewModel.postSize.value = postImageAdapter.itemCount
         }
+    }
+
+    // 이미지 액티비티로 이동
+    private fun showImages(images: List<String>, pos: Int) {
+        SecondActivity.images = images
+
+        val intent = Intent(requireContext(), SecondActivity::class.java).apply {
+            putExtra(Contents.EXTRA_SET_POS, pos)
+            action = Contents.SHOW_IMAGE_FRAG
+        }
+        startActivity(intent)
     }
 }

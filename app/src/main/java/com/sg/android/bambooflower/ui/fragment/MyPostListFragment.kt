@@ -3,6 +3,7 @@ package com.sg.android.bambooflower.ui.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -28,20 +29,13 @@ import com.sg.android.bambooflower.viewmodel.postListFragment.PostListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-// TODO:
-//  . 신고 구현 O
-//  . 인정해준 사람 보여주기 O
-//  . 인증게시판이 비어있을때 보일 화면 (바텀 아이콘 구현 후 구현하기)
-//  . 퀘스트 보여주는 화면 구현 O
-//  . 게시글 사이사이에 광고 넣기 (나중에)
-
 @AndroidEntryPoint
-class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
+class MyPostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     @Inject
     lateinit var assistedFactory: PostListViewModel.AssistedFactory
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val mViewModel by viewModels<PostListViewModel> {
-        PostListViewModel.provideFactory(assistedFactory)
+        PostListViewModel.provideFactory(assistedFactory, true)
     }
 
     private lateinit var postAdapter: PostPagingAdapter
@@ -55,7 +49,7 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         // 인스턴스 설정
         val binding = FragmentPostListBinding.inflate(inflater)
         postAdapter = PostPagingAdapter().apply {
-            setOnPostItemListener(this@PostListFragment)
+            setOnPostItemListener(this@MyPostListFragment)
         }
 
         // 바인딩 설정
@@ -71,8 +65,9 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setObserver()
+        setHasOptionsMenu(true)
 
+        setObserver()
         postAdapter.addLoadStateListener { loadState ->
             if (loadState.refresh !is LoadState.Loading
                 && mViewModel.postList.value != null
@@ -86,9 +81,19 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         super.onStart()
         // 툴바설정
         with((activity as MainActivity)) {
-            supportActionBar?.title = ""
-            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            supportActionBar?.title = "인증 활동"
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
             showToolbar()
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                findNavController().navigateUp()
+                true
+            }
+            else -> false
         }
     }
 
@@ -107,15 +112,7 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
 
     // 좋아요 클릭
     override fun onFavoriteClickListener(pos: Int) {
-        val postData = postAdapter.getPost(pos)
-        val uid = gViewModel.user.value!!.uid
-
-        // 좋아요를 누르지 않았고 자신의 게시글이 아닐경우
-        if (!postData.isCheer && postData.userId != uid) {
-            mViewModel.pressedCheer(uid, postData)
-
-            postAdapter.notifyItemChanged(pos)
-        }
+        // 동작 X
     }
 
     override fun onShowPeopleClickListener(pos: Int) {
@@ -131,6 +128,7 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
             if (isError) {
                 Toast.makeText(requireContext(), ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
                     .show()
+                mViewModel.isError.value = false
             }
         }
         mViewModel.mainLoading.observe(viewLifecycleOwner) { isLoading ->
@@ -179,17 +177,8 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     private fun showPopup(postData: Post, view: View) {
         with(PopupMenu(requireContext(), view)) {
             menuInflater.inflate(R.menu.menu_post_fragment, this.menu)
-            val uid = gViewModel.user.value!!.uid
-
-            if (postData.userId == uid ||
-                uid == "DQ09dobyPqY0SrLHIMcRYmdOdfO2"
-            ) {
-                menu.getItem(1).isVisible = true
-                menu.getItem(2).isVisible = false
-            } else {
-                menu.getItem(1).isVisible = false
-                menu.getItem(2).isVisible = true
-            }
+            menu.getItem(1).isVisible = true
+            menu.getItem(2).isVisible = false
 
             setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -201,12 +190,6 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                     }
                     R.id.menu_delete_post -> { // 삭제하기
                         deletePost(postData)
-                        true
-                    }
-                    R.id.menu_report_post -> { // 신고하기
-                        gViewModel.post.value = postData
-                        findNavController().navigate(R.id.reportDialog)
-
                         true
                     }
                     else -> false

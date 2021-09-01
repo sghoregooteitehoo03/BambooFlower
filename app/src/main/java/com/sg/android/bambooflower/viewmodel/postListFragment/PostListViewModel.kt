@@ -5,16 +5,16 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.filter
 import com.sg.android.bambooflower.data.Post
-import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class PostListViewModel @Inject constructor(
-    private val repository: PostListRepository
+class PostListViewModel @AssistedInject constructor(
+    private val repository: PostListRepository,
+    @Assisted private val isFilter: Boolean
 ) : ViewModel() {
     // 게시글 리스트
-    private val _postList = repository.getPostList()
+    private val _postList = repository.getPostList(isFilter)
         .cachedIn(viewModelScope)
         .asLiveData()
         .let { it as MutableLiveData<PagingData<Post>> }
@@ -26,6 +26,22 @@ class PostListViewModel @Inject constructor(
     val isLoading = MutableLiveData(true) // 로딩 여부
     val isError = MutableLiveData(false) // 오류 여부
     val isDeleted = MutableLiveData(false) // 삭제 여부
+
+    @dagger.assisted.AssistedFactory
+    interface AssistedFactory {
+        fun create(isFilter: Boolean): PostListViewModel
+    }
+
+    companion object {
+        fun provideFactory(
+            assistedFactory: AssistedFactory,
+            isFilter: Boolean = false
+        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return assistedFactory.create(isFilter) as T
+            }
+        }
+    }
 
     // 응원하기
     fun pressedCheer(uid: String, postData: Post) = viewModelScope.launch {

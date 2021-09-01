@@ -246,17 +246,46 @@
                         android:textSize="16sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
-                        app:layout_constraintTop_toBottomOf="@id/divide_view2"/>
+                        app:layout_constraintTop_toBottomOf="@id/divide_view2"
+                        tools:visibility="gone"/>
 
                     <TextView
                         android:id="@+id/post_more_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:onClick="@{clickListener}"
                         android:text="더보기"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="@id/post_title_text"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintTop_toTopOf="@id/post_title_text"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="@{viewmodel.postSize == 0 ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/post_title_text">
+
+                        <ImageView
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/ic_no_active"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="아직 인증한 활동이 없네요..."
+                            android:textSize="18sp"/>
+                    </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/post_image_list"
@@ -265,6 +294,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="12dp"
                         android:orientation="horizontal"
+                        android:visibility="@{viewmodel.postSize == 0 ? View.GONE : View.VISIBLE}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

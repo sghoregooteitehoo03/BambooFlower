@@ -9,11 +9,16 @@ import com.sg.android.bambooflower.databinding.ItemPostImageBinding
 
 class PostImageAdapter : RecyclerView.Adapter<PostImageViewHolder>() {
     private var postList = listOf<Post>()
+    private lateinit var listener: PostImageItemListener
+
+    interface PostImageItemListener {
+        fun onImageClickListener(pos: Int)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostImageViewHolder {
         val view = ItemPostImageBinding
             .inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostImageViewHolder(view)
+        return PostImageViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(holder: PostImageViewHolder, position: Int) {
@@ -27,4 +32,11 @@ class PostImageAdapter : RecyclerView.Adapter<PostImageViewHolder>() {
         postList = _postList
         notifyDataSetChanged()
     }
+
+    fun setOnItemListener(_listener: PostImageItemListener) {
+        listener = _listener
+    }
+
+    fun getList() =
+        postList
 }
