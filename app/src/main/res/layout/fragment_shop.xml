@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="viewmodel"
+            type="com.sg.android.bambooflower.viewmodel.shopFrag.ShopViewModel"/>
+
+        <variable
+            name="gviewmodel"
+            type="com.sg.android.bambooflower.viewmodel.GlobalViewModel"/>
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="20dp"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="20dp"/>
+
+        <TextView
+            android:id="@+id/filter_flower_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:onClick="@{clickListener}"
+            android:text="꽃"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setPagerText="@{viewmodel.pagerPos == 0}"
+            tools:textColor="@color/default_item_color"/>
+
+        <View
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/shape_round"
+            android:backgroundTint="@color/default_item_color"
+            android:visibility="@{viewmodel.pagerPos == 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@id/filter_flower_text"
+            app:layout_constraintStart_toStartOf="@id/filter_flower_text"
+            app:layout_constraintTop_toBottomOf="@id/filter_flower_text"/>
+
+        <TextView
+            android:id="@+id/filter_item_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:onClick="@{clickListener}"
+            android:text="장식"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/filter_flower_text"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setPagerText="@{viewmodel.pagerPos == 1}"/>
+
+        <View
+            android:layout_width="6dp"
+            android:layout_height="6dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/shape_round"
+            android:backgroundTint="@color/default_item_color"
+            android:visibility="@{viewmodel.pagerPos == 1 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintEnd_toEndOf="@id/filter_item_text"
+            app:layout_constraintStart_toStartOf="@id/filter_item_text"
+            app:layout_constraintTop_toBottomOf="@id/filter_item_text"
+            tools:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/point_image"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/ic_point"
+            app:layout_constraintEnd_toStartOf="@id/point_text"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/point_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(gviewmodel.user.money)}"
+            android:textColor="@color/default_item_color"
+            app:layout_constraintBottom_toBottomOf="@id/point_image"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toTopOf="@id/point_image"
+            tools:text="9000"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/shop_pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/point_image"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

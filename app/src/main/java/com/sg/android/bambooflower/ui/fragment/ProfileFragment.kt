@@ -21,13 +21,7 @@ import com.sg.android.bambooflower.viewmodel.profileFragment.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO
-//  . 인벤토리 테이블 구현 O
-//  . View 표시 O
-//  . 갱신 기능 구현 O
 //  . 꽃 컬렉션 더보기 구현 (상점 구현 후 구현하기)
-//  . 프로필 수정 구현 O.
-//  . 게시글 이미지, 더보기 클릭 시 동작 구현 O
-//  . 활동 없을 때 보여줄 사진 O
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener, PostImageAdapter.PostImageItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

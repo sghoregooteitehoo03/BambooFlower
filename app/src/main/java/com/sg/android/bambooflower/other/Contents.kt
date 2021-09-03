@@ -9,7 +9,6 @@ object Contents {
 
     const val PREF_KEY_IS_FIRST = "PREF_KEY_IS_FIRST"
 
-    const val EXTRA_SET_IMAGE = "EXTRA_SET_IMAGE"
     const val EXTRA_SET_POS = "EXTRA_SET_POS"
     const val EXTRA_IS_LOGIN = "EXTRA_IS_LOGIN"
     const val EXTRA_TITLE = "EXTRA_TITLE"
@@ -21,10 +20,7 @@ object Contents {
 
     const val COLLECTION_USER = "User"
     const val COLLECTION_POST = "Post"
-    const val COLLECTION_REPORT = "Report"
-    const val COLLECTION_ACCEPT = "Accept"
 
-    const val CHILD_POST_IMAGE = "PostImage"
     const val CHILD_TERMS_OF_SERVICE = "TermsOfService.html"
     const val CHILD_PERSONAL_INFORMATION = "PersonalInformation.html"
     const val CHILD_PRIVACY_POLICY = "PrivacyPolicy.html"
@@ -48,4 +44,6 @@ object Contents {
     const val FUNC_GET_PROFILE_DATA = "getProfileData"
     const val FUNC_DELETE_POST = "deletePost"
     const val FUNC_CHANGE_PROFILE = "changeProfile"
+    const val FUNC_GET_SHOP_DATA = "getShopData"
+    const val FUNC_BUY_SHOP_ITEM = "buyShopItem"
 }

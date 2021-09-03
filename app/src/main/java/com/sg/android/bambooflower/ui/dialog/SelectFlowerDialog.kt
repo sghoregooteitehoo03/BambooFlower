@@ -122,7 +122,7 @@ class SelectFlowerDialog : BottomSheetDialogFragment(), View.OnClickListener, Se
 
                 if (previousPos != -1) {
                     // 이전에 눌렀던것을 해지함
-                    flowerAdapter.getData(pos).isSelected = false
+                    flowerAdapter.getData(previousPos).isSelected = false
                     flowerAdapter.notifyItemChanged(previousPos)
                 }
 

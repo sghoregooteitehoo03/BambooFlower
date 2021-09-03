@@ -9,6 +9,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.webkit.WebView
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -24,6 +25,7 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.google.android.material.textfield.TextInputEditText
 import com.sg.android.bambooflower.R
+import com.sg.android.bambooflower.data.Shop
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.data.UsersQuest
 import com.sg.android.bambooflower.other.ErrorMessage
@@ -296,12 +298,53 @@ fun setPostTimestamp(view: TextView, timeStamp: Long) {
     }
 }
 
-@BindingAdapter("app:setSelectedText")
-fun setSelectedText(view: TextView, isSelected: Boolean) {
+@BindingAdapter("app:setPagerText")
+fun setPagerText(view: TextView, isSelected: Boolean) {
     if (isSelected) {
         view.setTextColor(view.resources.getColor(R.color.default_item_color, null))
     } else {
         view.setTextColor(view.resources.getColor(android.R.color.tab_indicator_text, null))
+    }
+}
+
+@BindingAdapter("app:setShopPrice")
+fun setShopPrice(view: TextView, shop: Shop) {
+    view.text = if (shop.isExists) {
+        "구매 완료"
+    } else {
+        if(shop.price == 0) {
+            "광고 보기"
+        } else {
+            shop.price.toString()
+        }
+    }
+}
+
+@BindingAdapter("app:cardExistsColor")
+fun cardExistsColor(view: CardView, isExists: Boolean) {
+    if (isExists) {
+        view.setCardBackgroundColor(
+            view.resources.getColor(R.color.white_darker, null)
+        )
+    } else {
+        view.setCardBackgroundColor(
+            view.resources.getColor(R.color.orange_bright, null)
+        )
+    }
+}
+
+@BindingAdapter("app:setExistsColor")
+fun setExistsColor(view: LinearLayout, isExists: Boolean) {
+    if (isExists) {
+        view.backgroundTintList = ContextCompat.getColorStateList(
+            view.context,
+            R.color.gray
+        )
+    } else {
+        view.backgroundTintList = ContextCompat.getColorStateList(
+            view.context,
+            R.color.deep_orange_300
+        )
     }
 }
 
