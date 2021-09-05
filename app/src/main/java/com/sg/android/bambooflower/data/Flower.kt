@@ -7,5 +7,4 @@ data class Flower(
     var image: String
 ) {
     var isSelected = false
-    var isExists: Boolean = false
 }

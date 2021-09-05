@@ -298,6 +298,11 @@ fun setPostTimestamp(view: TextView, timeStamp: Long) {
     }
 }
 
+@BindingAdapter("app:setGrowCountText")
+fun setGrowCountText(view: TextView, count: Int) {
+    view.text = "성장시킨 횟수: $count"
+}
+
 @BindingAdapter("app:setPagerText")
 fun setPagerText(view: TextView, isSelected: Boolean) {
     if (isSelected) {
@@ -312,7 +317,7 @@ fun setShopPrice(view: TextView, shop: Shop) {
     view.text = if (shop.isExists) {
         "구매 완료"
     } else {
-        if(shop.price == 0) {
+        if (shop.price == 0) {
             "광고 보기"
         } else {
             shop.price.toString()
@@ -473,12 +478,6 @@ fun setProfileImage(view: CircleImageView, imageUri: Uri?) {
             .load(R.drawable.ic_person)
             .into(view)
     }
-}
-
-@SuppressLint("SetTextI18n")
-@BindingAdapter("app:setLevel")
-fun setLevel(view: TextView, level: Int) {
-    view.text = "Lv $level"
 }
 
 @BindingAdapter("app:setCompleteDate")

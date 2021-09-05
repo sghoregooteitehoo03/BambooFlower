@@ -99,6 +99,9 @@ class ProfileFragment : Fragment(), View.OnClickListener, PostImageAdapter.PostI
             R.id.profile_image -> { // 프로필 이미지
                 findNavController().navigate(R.id.action_profileFragment_to_editProfileFragment)
             }
+            R.id.flower_more_text -> { // 컬렉션 더보기
+                findNavController().navigate(R.id.action_profileFragment_to_collectionDetailFragment)
+            }
             R.id.post_more_text -> { // 인증활동 더보기
                 findNavController().navigate(R.id.action_profileFragment_to_myPostListFragment)
             }
@@ -150,7 +153,7 @@ class ProfileFragment : Fragment(), View.OnClickListener, PostImageAdapter.PostI
             }
         }
         // 꽃 컬렉션
-        mViewModel.flowerList.observe(viewLifecycleOwner) { list ->
+        mViewModel.inventoryList.observe(viewLifecycleOwner) { list ->
             collectionAdapter.syncData(list)
         }
         // 인증 활동

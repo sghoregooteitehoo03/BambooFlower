@@ -42,6 +42,7 @@ object Contents {
     const val FUNC_REPORT_POST = "reportPost"
     const val FUNC_GET_CHEER_LIST = "getCheerList"
     const val FUNC_GET_PROFILE_DATA = "getProfileData"
+    const val FUNC_GET_INVENTORY_DATA = "getInventoryData"
     const val FUNC_DELETE_POST = "deletePost"
     const val FUNC_CHANGE_PROFILE = "changeProfile"
     const val FUNC_GET_SHOP_DATA = "getShopData"

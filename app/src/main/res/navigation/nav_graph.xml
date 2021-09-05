@@ -142,6 +142,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_profileFragment_to_collectionDetailFragment"
+            app:destination="@id/collectionDetailFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/createUserFragment"
@@ -317,4 +324,9 @@
         android:name="com.sg.android.bambooflower.ui.fragment.ShopFragment"
         android:label="ShopFragment"
         tools:layout="@layout/fragment_shop"/>
+    <fragment
+        android:id="@+id/collectionDetailFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.CollectionDetailFragment"
+        android:label="CollectionDetailFragment"
+        tools:layout="@layout/fragment_collection_detail"/>
 </navigation>
