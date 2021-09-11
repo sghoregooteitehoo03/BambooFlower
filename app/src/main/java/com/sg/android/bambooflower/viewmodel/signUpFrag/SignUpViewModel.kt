@@ -31,6 +31,7 @@ class SignUpViewModel @Inject constructor(
 
     val isError = MutableLiveData(false)
     val isLoading = MutableLiveData(false)
+    val isExist = MutableLiveData<Boolean>(null) // 유저 데이터 존재 여부
 
     // 구글 및 페이스북 로그인
     fun login(credential: AuthCredential) = viewModelScope.launch {
@@ -76,12 +77,22 @@ class SignUpViewModel @Inject constructor(
     }
 
     // 유저 존재여부
-    fun checkUserData() =
-        repository.checkUserData()
+    fun checkUserData() = viewModelScope.launch {
+        try {
+            val result = repository.checkUserData()
+                .data as Map<*, *>
+            if (result["complete"] == null) { // 오류 확인
+                throw NullPointerException()
+            }
 
-    fun clear() {
-        _isSuccessLogin.value = false
-        isError.value = false
+            isExist.value = result["isExist"] as Boolean
+        } catch (e: Exception) {
+            isError.value = true
+            e.printStackTrace()
+        }
+
+        _isSuccessLogin.value = false // 초기화
+        isLoading.value = false // 로딩 끝
     }
 
     fun isLogin() =

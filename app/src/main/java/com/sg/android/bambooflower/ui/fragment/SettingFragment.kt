@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.BuildConfig
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.FragmentSettingBinding
@@ -22,6 +21,14 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.settingFragment.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO:
+//  . View 표시 O
+//  . 스위치 기능 구현 O
+//  . 알림기능 O
+//  . 처음 시작 시 배터리 설정하기 X
+//  . 로그인 및 계정 생성 시 db에 알림토큰 전달하기 O
+//  . 도움말 구현 (나중에)
+//  . 회원탈퇴 구현 (나중에)
 @AndroidEntryPoint
 class SettingFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SettingViewModel>()
@@ -37,6 +44,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
 
         // 바인딩 설정
         with(binding) {
+            this.viewmodel = mViewModel
             this.clickListener = this@SettingFragment
             versionText.setSettingText("Version ${BuildConfig.VERSION_NAME}")
 
@@ -50,6 +58,10 @@ class SettingFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
+        // 세팅값 설정
+        mViewModel.setUserSwitches(
+            gViewModel.user.value!!.uid
+        )
         setObserver()
     }
 
@@ -83,11 +95,19 @@ class SettingFragment : Fragment(), View.OnClickListener {
             R.id.personal_btn -> { // 개인정보
                 goViewer(Contents.CHILD_PRIVACY_POLICY)
             }
-            R.id.diary_clear_btn -> { // 일기 모두삭제
-                clearDiary()
+            R.id.quest_alarm_switch -> { // 퀘스트 보상 알림
+                val uid = gViewModel.user.value!!.uid
+                mViewModel.setQuestSwitch(uid)
+            }
+            R.id.diary_alarm_switch -> { // 일기 알림
+                val uid = gViewModel.user.value!!.uid
+                mViewModel.setDiarySwitch(uid)
             }
             R.id.send_email_btn -> { // 문의하기
                 sendEmail()
+            }
+            R.id.help_btn -> { // 도움말
+
             }
             R.id.sign_out_btn -> { // 로그아웃
                 signOut()
@@ -101,29 +121,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setObserver() {
-        // 로딩
-        mViewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it) {
-                (activity as MainActivity).loading()
-            } else {
-                (activity as MainActivity).ready()
-            }
-        }
-    }
 
-    // 일기 삭제
-    private fun clearDiary() {
-        with(MaterialAlertDialogBuilder(requireContext())) {
-            setMessage("지금까지 작성하신 일기를 모두 삭제하시겠습니까?")
-            setNegativeButton("취소") { dialog, which ->
-                dialog.dismiss()
-            }
-            setPositiveButton("확인") { dialog, which ->
-                mViewModel.clearDiary(gViewModel.user.value!!.uid)
-            }
-
-            show()
-        }
     }
 
     private fun sendEmail() { // 문의하기
@@ -141,6 +139,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
 
     private fun signOut() { // 로그아웃
         gViewModel.user.value = null
+        gViewModel.flower.value = null
 
         mViewModel.signOut(requireContext())
         findNavController().navigate(R.id.action_settingFragment_to_signUpFragment)

@@ -1,25 +1,28 @@
 package com.sg.android.bambooflower.viewmodel.settingFragment
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
-import com.sg.android.bambooflower.data.database.DiaryDao
+import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import javax.inject.Named
 
 class SettingRepository @Inject constructor(
-    private val dao: DiaryDao,
     private val auth: FirebaseAuth,
-    private val store: FirebaseFirestore,
-    private val storage: FirebaseStorage
+    @Named(Contents.PREF_SETTING) private val settingPref: SharedPreferences
 ) {
-    // 일기 모두삭제
-    suspend fun clearDiary(uid: String?) {
-        dao.clearDiary(uid)
+    fun getSettingPref() =
+        settingPref
+
+    fun setSettingPref(isSwitched: Boolean, prefKey: String) {
+        with(settingPref.edit()) {
+            putBoolean(prefKey, isSwitched)
+            commit()
+        }
     }
 
     suspend fun signOut(context: Context) {

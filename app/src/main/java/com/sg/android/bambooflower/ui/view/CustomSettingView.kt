@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.sg.android.bambooflower.R
 
 class CustomSettingView : ConstraintLayout {
     private lateinit var customTextView: TextView
     private lateinit var customIconView: ImageView
+    private lateinit var customSwitchView: SwitchCompat
 
     constructor(context: Context) : super(context) {
         initView()
@@ -40,6 +42,7 @@ class CustomSettingView : ConstraintLayout {
 
         customTextView = findViewById(R.id.custom_text)
         customIconView = findViewById(R.id.custom_image)
+        customSwitchView = findViewById(R.id.custom_switch)
     }
 
     private fun getAttrs(attrs: AttributeSet?) {
@@ -65,20 +68,32 @@ class CustomSettingView : ConstraintLayout {
             R.styleable.CustomSettingView_settingTextColor,
             resources.getColor(R.color.black, null)
         )
-        val visible =
+        val visibleIcon =
             typedArray.getBoolean(R.styleable.CustomSettingView_settingIconVisible, true)
+        val visibleSwitch =
+            typedArray.getBoolean(R.styleable.CustomSettingView_settingSwitchVisible, false)
 
         customTextView.text = text
         customTextView.setTextColor(textColor)
-        customIconView.visibility = if (visible) {
+        customIconView.visibility = if (visibleIcon) {
             View.VISIBLE
         } else {
             View.GONE
         }
+        customSwitchView.visibility = if (visibleSwitch) {
+            View.VISIBLE
+        } else {
+            View.GONE
+        }
+
         typedArray.recycle()
     }
 
     fun setSettingText(text: String) {
         customTextView.text = text
+    }
+
+    fun setSwitchView(isSwitched: Boolean) {
+        customSwitchView.isChecked = isSwitched
     }
 }

@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sg.android.bambooflower.other.Contents
 import kotlinx.coroutines.tasks.await
 import org.json.JSONObject
@@ -22,7 +23,8 @@ import javax.inject.Inject
 
 class CreateUserRepository @Inject constructor(
     private val auth: FirebaseAuth,
-    private val functions: FirebaseFunctions
+    private val functions: FirebaseFunctions,
+    private val messaging: FirebaseMessaging
 ) {
 
     suspend fun setUserData(
@@ -40,6 +42,8 @@ class CreateUserRepository @Inject constructor(
             ""
         }
         val loginToken = "${loginWay}-${token}"
+        val alarmToken = messaging.token
+            .await()!!
 
         // json 데이터로 변환
         val jsonData = JSONObject().apply {
@@ -48,6 +52,7 @@ class CreateUserRepository @Inject constructor(
             put("email", email)
             put("profileImage", profileImage)
             put("loginToken", loginToken)
+            put("alarmToken", alarmToken)
         }
 
         // 유저 생성

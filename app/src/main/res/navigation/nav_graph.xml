@@ -12,12 +12,11 @@
         app:launchSingleTop="true"/>
 
     <action
-        android:id="@+id/action_global_profileFragment"
-        app:destination="@id/profileFragment"
-        app:enterAnim="@anim/fade_in"
-        app:exitAnim="@anim/fade_out"
-        app:popEnterAnim="@anim/fade_in"
-        app:popExitAnim="@anim/fade_out"/>
+        android:id="@+id/action_global_homeFragment"
+        app:destination="@id/homeFragment"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/signUpFragment"
+        app:popUpToInclusive="false"/>
 
     <fragment
         android:id="@+id/onboardFragment"

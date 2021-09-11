@@ -2,17 +2,13 @@ package com.sg.android.bambooflower.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.sg.android.bambooflower.other.Contents
-import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.viewmodel.signUpFrag.SignUpViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
-//  . 서버 점검 확인 구현하기 (나중에)
 //  . 업데이트 확인 구현 (나중에)
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
@@ -37,20 +33,23 @@ class SplashActivity : AppCompatActivity() {
 
     // 유저 데이터가 존재하는지 확인
     private fun checkUserData() {
-        mViewModel.checkUserData().addOnSuccessListener { result ->
-            val resultMap = result.data as MutableMap<*, *>
-            Log.i("Check", "result: ${resultMap}")
-
-            if ((resultMap["isExist"] as Int) != -1) { // 오류가 아닐 때
-                val isExist = (resultMap["isExist"] as Int) == 1 // 유저 존재 여부 확인
-
-                val intent = makeIntent(isExist)
-                goMainActivity(intent)
-            } else { // 오류 발생
-                Toast.makeText(this, ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
-                    .show()
-            }
-        }
+        //  TODO 서버 점검 확인 구현하기 (나중에)
+        val intent = makeIntent(true)
+        goMainActivity(intent)
+//        mViewModel.checkUserData().addOnSuccessListener { result ->
+//            val resultMap = result.data as MutableMap<*, *>
+//            Log.i("Check", "result: ${resultMap}")
+//
+//            if ((resultMap["isExist"] as Int) != -1) { // 오류가 아닐 때
+//                val isExist = (resultMap["isExist"] as Int) == 1 // 유저 존재 여부 확인
+//
+//                val intent = makeIntent(isExist)
+//                goMainActivity(intent)
+//            } else { // 오류 발생
+//                Toast.makeText(this, ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
+//                    .show()
+//            }
+//        }
     }
 
     // 인텐트 생성

@@ -2,7 +2,6 @@ package com.sg.android.bambooflower.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -73,11 +72,6 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onDestroyView() {
-        mViewModel.clear()
-        super.onDestroyView()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -122,7 +116,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         // 로그인 성공 시
         mViewModel.isSuccessLogin.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) {
-                successLogin()
+                mViewModel.checkUserData()
             }
         }
         // 오류 발생 시
@@ -139,6 +133,21 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 (requireActivity() as MainActivity).loading()
             } else {
                 (requireActivity() as MainActivity).ready()
+            }
+        }
+        // 유저 데이터 존재 여부
+        mViewModel.isExist.observe(viewLifecycleOwner) { isExist ->
+            if (isExist != null) {
+                if (isExist) { // 유저 데이터가 존재할 때
+                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
+                } else { // 존재하지 않을 때
+                    val directions = SignUpFragmentDirections
+                        .actionSignUpFragmentToCreateUserFragment(token, email, loginWay)
+                    findNavController().navigate(directions)
+                }
+
+                // 초기화
+                mViewModel.isExist.value = null
             }
         }
     }
@@ -193,26 +202,5 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 error?.printStackTrace()
             }
         })
-    }
-
-    // 로그인 성공
-    private fun successLogin() {
-        mViewModel.checkUserData()
-            .addOnSuccessListener { result ->
-                val resultMap = result.data as MutableMap<*, *>
-                Log.i("Check", "result: ${resultMap}")
-
-                mViewModel.isLoading.value = false // 로딩 끝
-                if ((resultMap["isExist"] as Int) == 1) { // 유저가 존재할 때
-                    findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
-                } else { // 존재하지 않을 때
-                    val directions = SignUpFragmentDirections
-                        .actionSignUpFragmentToCreateUserFragment(token, email, loginWay)
-                    findNavController().navigate(directions)
-                }
-            }
-            .addOnFailureListener {
-                mViewModel.isError.value = true
-            }
     }
 }

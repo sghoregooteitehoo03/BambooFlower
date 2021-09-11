@@ -31,6 +31,7 @@ import com.sg.android.bambooflower.data.UsersQuest
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomProgressView
 import com.sg.android.bambooflower.ui.view.CustomRewardButton
+import com.sg.android.bambooflower.ui.view.CustomSettingView
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.SimpleDateFormat
 import java.util.*
@@ -351,6 +352,11 @@ fun setExistsColor(view: LinearLayout, isExists: Boolean) {
             R.color.deep_orange_300
         )
     }
+}
+
+@BindingAdapter("app:setSettingSwitch")
+fun setSettingSwitch(view: CustomSettingView, isSwitched: Boolean) {
+    view.setSwitchView(isSwitched)
 }
 
 @BindingAdapter("app:setDiaryTimestamp")

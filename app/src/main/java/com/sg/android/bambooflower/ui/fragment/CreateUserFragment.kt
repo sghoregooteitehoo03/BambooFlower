@@ -24,6 +24,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.databinding.FragmentCreateUserBinding
 import com.sg.android.bambooflower.other.Contents
+import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.ui.SecondActivity
 import com.sg.android.bambooflower.viewmodel.createUserFragment.CreateUserViewModel
@@ -171,7 +172,7 @@ class CreateUserFragment : Fragment(R.layout.fragment_create_user), View.OnClick
         // 오류 여부
         mViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError) {
-                Toast.makeText(requireContext(), "서버와 연결 중 오류가 발생하였습니다.", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
                     .show()
                 mViewModel.isError.value = false
             }

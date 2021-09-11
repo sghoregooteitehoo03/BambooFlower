@@ -1,7 +1,6 @@
 package com.sg.android.bambooflower.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -86,31 +85,18 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
     }
 
     private fun setObserver() {
+        // 로그인 성공 여부
         mViewModel.isLoginSuccess.observe(viewLifecycleOwner) { isSuccess ->
             if (isSuccess) { // 로그인 성공 시
-                successLogin()
+                mViewModel.checkUserData()
             }
         }
-        mViewModel.isLoading.observe(viewLifecycleOwner) {
-            if (it) {
-                (requireActivity() as MainActivity).loading()
-            } else {
-                (requireActivity() as MainActivity).ready()
-            }
-        }
-    }
-
-    // 로그인 성공
-    private fun successLogin() {
-        mViewModel.checkUserData()
-            .addOnSuccessListener { result ->
-                val resultMap = result.data as MutableMap<*, *>
-                Log.i("Check", "result: ${resultMap}")
-
-                mViewModel.setLoading(false) // 로딩 끝
-                if ((resultMap["isExist"] as Int) == 1) { // 유저 데이터가 존재할 때
+        // 유저 데이터 존재 여부
+        mViewModel.isExist.observe(viewLifecycleOwner) { isExist ->
+            if (isExist != null) {
+                if (isExist) { // 유저 데이터가 존재할 때
                     findNavController().navigate(R.id.action_emailLoginFragment_to_homeFragment)
-                } else {
+                } else { // 존재하지 않을 때
                     val directions = EmailLoginFragmentDirections
                         .actionEmailLoginFragmentToCreateUserFragment(
                             "",
@@ -119,10 +105,25 @@ class EmailLoginFragment : Fragment(), View.OnClickListener {
                         )
                     findNavController().navigate(directions)
                 }
+
+                mViewModel.isExist.value = null // 초기화
             }
-            .addOnFailureListener {
+        }
+        // 로딩 여부
+        mViewModel.isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                (requireActivity() as MainActivity).loading()
+            } else {
+                (requireActivity() as MainActivity).ready()
+            }
+        }
+        // 오류 여부
+        mViewModel.isError.observe(viewLifecycleOwner) { isError ->
+            if (isError) {
                 Toast.makeText(requireContext(), ErrorMessage.CONNECT_ERROR, Toast.LENGTH_SHORT)
                     .show()
+                mViewModel.isError.value = false
             }
+        }
     }
 }

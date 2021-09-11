@@ -29,6 +29,8 @@ class EmailLoginViewModel @Inject constructor(
 
     val email = MutableLiveData("") // 이메일
     val password = MutableLiveData("") // 비밀번호
+    val isError = MutableLiveData(false) // 오류 여부
+    val isExist = MutableLiveData<Boolean>(null) // 유저 데이터 존재 여부
 
     fun login() = viewModelScope.launch { // 로그인
         val credential = EmailAuthProvider.getCredential(email.value!!, password.value!!)
@@ -59,8 +61,24 @@ class EmailLoginViewModel @Inject constructor(
         _isLoading.value = false // 로딩 끝
     }
 
-    fun checkUserData() =
-        repository.checkUserData()
+    // 유저 존재여부
+    fun checkUserData() = viewModelScope.launch {
+        try {
+            val result = repository.checkUserData()
+                .data as Map<*, *>
+            if (result["complete"] == null) { // 오류 확인
+                throw NullPointerException()
+            }
+
+            isExist.value = result["isExist"] as Boolean
+        } catch (e: Exception) {
+            isError.value = true
+            e.printStackTrace()
+        }
+
+        _isLoginSuccess.value = false // 초기화
+        _isLoading.value = false // 로딩 끝
+    }
 
     fun setLoading(loading: Boolean) {
         _isLoading.value = loading

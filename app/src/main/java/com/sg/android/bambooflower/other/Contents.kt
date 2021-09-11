@@ -4,10 +4,16 @@ object Contents {
     const val LOGIN_WITH_GOOGLE = 3100
     const val GET_IMAGE = 3300
 
+    const val CHANNEL_ID_NOTIFY = "CHANNEL_ID_NOTIFY"
+
     const val PREF_CHECK_FIRST = "PREF_CHECK_FIRST"
     const val PREF_CHECK_DIARY_REWARD = "PREF_CHECK_DIARY_REWARD"
+    const val PREF_SETTING = "PREF_SETTING"
 
     const val PREF_KEY_IS_FIRST = "PREF_KEY_IS_FIRST"
+    const val PREF_KEY_IS_ACTIVE = "PREF_KEY_IS_ACTIVE"
+    const val PREF_KEY_QUEST_ALARM = "PREF_KEY_QUEST_ALARM"
+    const val PREF_KEY_DIARY_ALARM = "PREF_KEY_DIARY_ALARM"
 
     const val EXTRA_SET_POS = "EXTRA_SET_POS"
     const val EXTRA_IS_LOGIN = "EXTRA_IS_LOGIN"
@@ -17,6 +23,7 @@ object Contents {
 
     const val SHOW_IMAGE_FRAG = "SHOW_IMAGE_FRAG"
     const val SHOW_WEB_VIEWER = "SHOW_WEB_VIEWER"
+    const val SHOW_HOME_FRAG = "SHOW_HOME_FRAG"
 
     const val COLLECTION_USER = "User"
     const val COLLECTION_POST = "Post"

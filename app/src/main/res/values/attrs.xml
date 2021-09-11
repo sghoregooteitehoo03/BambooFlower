@@ -13,6 +13,7 @@
         <attr name="settingText" format="reference|string"/>
         <attr name="settingTextColor" format="reference|color"/>
         <attr name="settingIconVisible" format="reference|boolean"/>
+        <attr name="settingSwitchVisible" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="CustomProgressView">

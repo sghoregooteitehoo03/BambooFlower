@@ -51,16 +51,14 @@ class CreateUserViewModel @Inject constructor(private val repository: CreateUser
                     loginWay.value!!,
                     contentResolver
                 ).data as Map<*, *>
-
-                // 동작 성공여부
-                if (result["success"] as Boolean) {
-                    _isComplete.value = true
-                } else {
-                    isError.value = true
+                if (result["complete"] == null) { // 오류 확인
+                    throw NullPointerException()
                 }
+
+                _isComplete.value = true // 유저 생성 성공
             } catch (e: Exception) {
-                e.printStackTrace()
                 isError.value = true
+                e.printStackTrace()
             }
         } else {
             errorEmailMsg.value = ErrorMessage.NOT_EMAIL_TYPE

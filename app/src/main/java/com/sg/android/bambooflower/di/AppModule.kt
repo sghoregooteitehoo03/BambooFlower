@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.functions.FirebaseFunctions
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.sg.android.bambooflower.data.database.AppDatabase
 import com.sg.android.bambooflower.other.Contents
@@ -34,6 +35,12 @@ object AppModule {
 
     @Singleton
     @Provides
+    @Named(Contents.PREF_SETTING)
+    fun provideSettingPref(@ApplicationContext context: Context) =
+        context.getSharedPreferences(Contents.PREF_SETTING, Context.MODE_PRIVATE)!!
+
+    @Singleton
+    @Provides
     fun provideFireAuth() =
         FirebaseAuth.getInstance()
 
@@ -51,6 +58,11 @@ object AppModule {
     @Provides
     fun provideFireStorage() =
         FirebaseStorage.getInstance()
+
+    @Singleton
+    @Provides
+    fun provideFireMessage() =
+        FirebaseMessaging.getInstance()
 
     @Singleton
     @Provides

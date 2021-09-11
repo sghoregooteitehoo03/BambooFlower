@@ -1,5 +1,6 @@
 package com.sg.android.bambooflower.ui
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.gms.ads.MobileAds
@@ -29,7 +31,13 @@ class MainActivity : AppCompatActivity() {
     @Inject
     @Named(Contents.PREF_CHECK_FIRST)
     lateinit var checkPref: SharedPreferences
+
+    @Inject
+    @Named(Contents.PREF_SETTING)
+    lateinit var settingPref: SharedPreferences
+
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
     private var backAvailable = true
 
     private val FINISH_INTERVAL_TIME = 2000L
@@ -45,9 +53,10 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.mainToolbar) // 툴바 설정
         setObserver() // 옵저버 설정
+        setActive(true) // 액티비티 활성화 여부
 
         val navFrag = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navFrag.navController
+        navController = navFrag.navController
 
         binding.bottomNavView.setupWithNavController(navController)
         binding.pointLayout.setOnClickListener { // 포인트 클릭
@@ -59,14 +68,8 @@ class MainActivity : AppCompatActivity() {
         // Ad Init
         MobileAds.initialize(this)
 
-        if (intent.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false)) {
-            // 로그인 되어있으면 홈 화면으로 넘어감
-            navController.navigate(R.id.action_signUpFragment_to_homeFragment)
-            intent.putExtra(Contents.EXTRA_IS_LOGIN, false)
-        } else if (checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
-            // 처음 앱을 킨 유저일 시 온보딩 화면으로 이동
-            navController.navigate(R.id.action_global_onboardFragment)
-        }
+        // 프래그먼트 이동
+        moveFragment(intent)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.homeFragment, R.id.postListFragment, R.id.profileFragment -> {
@@ -93,6 +96,16 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back_ios)
     }
 
+    override fun onStop() {
+        super.onStop()
+        setActive(false)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        moveFragment(intent)
+    }
+
     override fun onBackPressed() {
         if (backAvailable) {
             if (isExit) {
@@ -112,6 +125,19 @@ class MainActivity : AppCompatActivity() {
             } else {
                 super.onBackPressed()
             }
+        }
+    }
+
+    private fun moveFragment(newIntent: Intent?) {
+        if (newIntent?.getBooleanExtra(Contents.EXTRA_IS_LOGIN, false) == true) {
+            // 로그인 되어있으면 홈 화면으로 넘어감
+            navController.navigate(R.id.action_signUpFragment_to_homeFragment)
+            newIntent.putExtra(Contents.EXTRA_IS_LOGIN, false)
+        } else if (newIntent?.action == Contents.SHOW_HOME_FRAG) {
+            navController.navigate(R.id.action_global_homeFragment)
+        } else if (checkPref.getBoolean(Contents.PREF_KEY_IS_FIRST, true)) {
+            // 처음 앱을 킨 유저일 시 온보딩 화면으로 이동
+            navController.navigate(R.id.action_global_onboardFragment)
         }
     }
 
@@ -184,5 +210,12 @@ class MainActivity : AppCompatActivity() {
             .forEach {
                 it.isEnabled = false
             }
+    }
+
+    private fun setActive(isActive: Boolean) {
+        with(settingPref.edit()) {
+            putBoolean(Contents.PREF_KEY_IS_ACTIVE, isActive)
+            commit()
+        }
     }
 }
