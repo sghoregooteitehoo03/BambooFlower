@@ -54,4 +54,5 @@ object Contents {
     const val FUNC_CHANGE_PROFILE = "changeProfile"
     const val FUNC_GET_SHOP_DATA = "getShopData"
     const val FUNC_BUY_SHOP_ITEM = "buyShopItem"
+    const val FUNC_DELETE_USER_DATA = "deleteUserData"
 }

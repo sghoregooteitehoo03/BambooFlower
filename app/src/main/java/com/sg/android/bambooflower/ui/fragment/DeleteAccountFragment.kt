@@ -12,7 +12,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sg.android.bambooflower.R
-import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.databinding.FragmentDeleteAccountBinding
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.MainActivity
@@ -25,7 +24,7 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<DeleteAccountViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
 
-    private lateinit var user: User
+    private lateinit var loginWay: String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,22 +33,23 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
     ): View {
         // 인스턴스 설정
         val binding = FragmentDeleteAccountBinding.inflate(inflater)
-        user = gViewModel.user.value!!
+        val user = gViewModel.user.value!!
 
         // 바인딩 설정
         with(binding) {
             this.viewmodel = mViewModel
             this.clickListener = this@DeleteAccountFragment
 
-//            if (user.loginWay != "Email") {
-//                // 구글 및 페이스북으로 로그인 한 유저일 경우
-//                subTitleText.text = "\"회원탈퇴\"를 입력해주세요."
-//                inputView.hint = "회원탈퇴 입력"
-//            } else {
-//                // 이메일로 로그인 한 유저일 경우
-//                subTitleText.text = "해당 계정의 비밀번호를 입력해주세요."
-//                inputView.hint = "비밀번호 입력"
-//            }
+            loginWay = user.loginToken.split("|")[0]
+            if (loginWay != "Email") {
+                // 구글 및 페이스북으로 로그인 한 유저일 경우
+                subTitleText.text = "\"회원탈퇴\" 를 입력해주세요."
+                inputView.hint = "회원탈퇴 입력"
+            } else {
+                // 이메일로 로그인 한 유저일 경우
+                subTitleText.text = "해당 계정의 비밀번호를 입력해주세요."
+                inputView.hint = "비밀번호 입력"
+            }
 
             lifecycleOwner = viewLifecycleOwner
         }
@@ -99,6 +99,7 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
         mViewModel.isDeleted.observe(viewLifecycleOwner) {
             if (it) { // 계정이 삭제되었을 때
                 gViewModel.user.value = null
+                gViewModel.flower.value = null
 
                 findNavController().navigate(R.id.action_deleteAccountFragment_to_signUpFragment)
             }
@@ -121,13 +122,13 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
         }
         // 입력 칸
         mViewModel.inputData.observe(viewLifecycleOwner) { data ->
-//            mViewModel.isEnabled.value = if (user.loginWay != "Email") {
-//                // 구글 및 페이스북으로 로그인 한 유저일 경우
-//                data == "회원탈퇴"
-//            } else {
-//                // 이메일로 로그인 한 유저일 경우
-//                data.isNotEmpty()
-//            }
+            mViewModel.isEnabled.value = if (loginWay != "Email") {
+                // 구글 및 페이스북으로 로그인 한 유저일 경우
+                data == "회원탈퇴"
+            } else {
+                // 이메일로 로그인 한 유저일 경우
+                data.isNotEmpty()
+            }
         }
     }
 
@@ -136,6 +137,7 @@ class DeleteAccountFragment : Fragment(), View.OnClickListener {
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("계정을 정말 삭제하시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
+                val user = gViewModel.user.value!!
                 mViewModel.deleteAccount(user, requireContext())
             }
             setNegativeButton("취소") { dialog, which ->

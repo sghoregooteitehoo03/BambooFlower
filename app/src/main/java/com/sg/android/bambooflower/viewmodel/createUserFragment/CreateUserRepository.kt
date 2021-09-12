@@ -41,7 +41,7 @@ class CreateUserRepository @Inject constructor(
         } else {
             ""
         }
-        val loginToken = "${loginWay}-${token}"
+        val loginToken = "${loginWay}|${token}"
         val alarmToken = messaging.token
             .await()!!
 

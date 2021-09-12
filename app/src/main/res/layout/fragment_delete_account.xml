@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="* 회원탈퇴 후에는 작성하였던 데이터가 모두 지워지게 됩니다."
+            android:text="* 회원탈퇴 후에는 그동안 활동하였던 데이터가 모두 지워지게 됩니다."
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/warning_title_text"/>
     </androidx.constraintlayout.widget.ConstraintLayout>

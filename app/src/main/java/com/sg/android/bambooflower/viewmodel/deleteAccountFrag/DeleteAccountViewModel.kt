@@ -36,10 +36,20 @@ class DeleteAccountViewModel @Inject constructor(
         _isLoading.value = true // 로딩 시작
 
         try {
-            repository.reLogin(user, inputData.value!!) // 재로그인
-            repository.deleteAccount(user, context) // 계정 삭제
+            // 재로그인
+            repository.reLogin(
+                user.loginToken.split("|"),
+                inputData.value!!
+            )
+            val result = repository.deleteUserDb(user.uid) // 유저 db 삭제
+                .data as Map<*, *>
 
-            _isDeleted.value = true
+            if (result["complete"] == null) { // 오류 확인
+                throw NullPointerException()
+            }
+
+            repository.deleteAccount(user.uid, context) // 계정 삭제
+            _isDeleted.value = true // 삭제 완료
         } catch (e: Exception) {
             if (e is FirebaseAuthException) {
                 // 로그인 시 오류가 발생할 때
