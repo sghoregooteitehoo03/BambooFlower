@@ -20,8 +20,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.profileFragment.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO
-//  . 꽃 컬렉션 더보기 구현 (상점 구현 후 구현하기)
 @AndroidEntryPoint
 class ProfileFragment : Fragment(), View.OnClickListener, PostImageAdapter.PostImageItemListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

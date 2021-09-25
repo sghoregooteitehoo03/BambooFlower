@@ -24,11 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONObject
 
 // TODO:
-//  . VIEW 표시 O
-//  . 포기하기 O
 //  . 물 주기 (나중에)
-//  . 꽃 선택 O
-//  . 퀘스트 O, 하루일기 O, 정원 이동 (나중에)
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), View.OnClickListener {
@@ -92,8 +88,8 @@ class HomeFragment : Fragment(), View.OnClickListener {
             R.id.diary_view -> { // 일기 화면으로 이동
                 findNavController().navigate(R.id.action_homeFragment_to_diaryListFragment)
             }
-            R.id.garden_view -> {
-
+            R.id.garden_view -> { // 정원 화면으로 이동
+                findNavController().navigate(R.id.action_homeFragment_to_gardenFragment)
             }
         }
     }

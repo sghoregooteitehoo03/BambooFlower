@@ -49,10 +49,11 @@ object Contents {
     const val FUNC_REPORT_POST = "reportPost"
     const val FUNC_GET_CHEER_LIST = "getCheerList"
     const val FUNC_GET_PROFILE_DATA = "getProfileData"
-    const val FUNC_GET_INVENTORY_DATA = "getInventoryData"
+    const val FUNC_GET_COLLECTION_DATA = "getCollectionData"
     const val FUNC_DELETE_POST = "deletePost"
     const val FUNC_CHANGE_PROFILE = "changeProfile"
     const val FUNC_GET_SHOP_DATA = "getShopData"
     const val FUNC_BUY_SHOP_ITEM = "buyShopItem"
     const val FUNC_DELETE_USER_DATA = "deleteUserData"
+    const val FUNC_GET_INVENTORY_DATA = "getInventoryData"
 }

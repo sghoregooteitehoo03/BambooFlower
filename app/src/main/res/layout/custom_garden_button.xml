@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
+    android:layout_width="56dp"
+    android:layout_height="36dp"
+    android:background="@drawable/shape_rectangle_rounded_top"
+    android:gravity="center"
+    tools:backgroundTint="@color/inventory_active_color">
+
+    <ImageView
+        android:id="@+id/icon_image"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        tools:src="@drawable/ic_accessory"/>
+</LinearLayout>

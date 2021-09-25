@@ -28,4 +28,9 @@
         <attr name="customMenuImage" format="reference|integer"/>
         <attr name="customMenuTitle" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="CustomGardenButton">
+        <attr name="customGardenIcon" format="integer"/>
+        <attr name="customGardenSelected" format="boolean"/>
+    </declare-styleable>
 </resources>

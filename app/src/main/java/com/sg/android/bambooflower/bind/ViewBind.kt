@@ -28,7 +28,7 @@ import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.data.Shop
 import com.sg.android.bambooflower.data.User
 import com.sg.android.bambooflower.data.UsersQuest
-import com.sg.android.bambooflower.other.ErrorMessage
+import com.sg.android.bambooflower.ui.view.CustomGardenButton
 import com.sg.android.bambooflower.ui.view.CustomProgressView
 import com.sg.android.bambooflower.ui.view.CustomRewardButton
 import com.sg.android.bambooflower.ui.view.CustomSettingView
@@ -382,14 +382,6 @@ fun setRankingInfo(view: TextView, user: User) {
 //    view.text = "Lv: ${user.myLevel} | 수행한 미션: ${user.achievedCount}"
 }
 
-@BindingAdapter("app:errorMessage")
-fun errorMessage(view: TextView, errorMsg: String) {
-    if (errorMsg.isNotEmpty() && errorMsg != ErrorMessage.SUCCESS) {
-        view.visibility = View.VISIBLE
-        view.text = errorMsg
-    }
-}
-
 @BindingAdapter("app:setRefresh")
 fun setRefresh(view: SwipeRefreshLayout, isLoading: Boolean) {
     view.isRefreshing = isLoading
@@ -486,12 +478,6 @@ fun setProfileImage(view: CircleImageView, imageUri: Uri?) {
     }
 }
 
-@BindingAdapter("app:setCompleteDate")
-fun setCompleteDate(view: TextView, time: Long) {
-    val format = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA).format(time)
-    view.text = "수행완료: $format"
-}
-
 @BindingAdapter("app:hideKeyboard")
 fun hideKeyboard(view: TextInputEditText, isHide: Boolean) {
     if (isHide) {
@@ -516,6 +502,47 @@ fun loadUrl(view: WebView, url: String) {
 @BindingAdapter("app:setCheckBox")
 fun setCheckBox(view: CheckBox, isChecked: Boolean) {
     view.isChecked = isChecked
+}
+
+@BindingAdapter("app:setExpandIcon")
+fun setExpandIcon(view: CustomGardenButton, isExpand: Boolean) {
+    if (isExpand) {
+        view.setIconImage(R.drawable.ic_collapse)
+    } else {
+        view.setIconImage(R.drawable.ic_expand)
+    }
+}
+
+@BindingAdapter("app:setInventoryFilter")
+fun setInventoryFilter(view: CustomGardenButton, isSelected: Boolean) {
+    view.setSelect(isSelected)
+}
+
+@BindingAdapter("app:setShowing", "app:setCollocated", requireAll = true)
+fun setTileView(view: View, isShowing: Boolean, isCollocated: Boolean) {
+    if (isShowing) {
+        view.visibility = View.VISIBLE
+
+        if (isCollocated) {
+            view.setBackgroundResource(R.drawable.shape_non_able_collocate)
+        } else {
+            view.setBackgroundResource(R.drawable.shape_able_collocate)
+        }
+    } else {
+        view.visibility = View.GONE
+    }
+}
+
+@BindingAdapter("app:setEdited")
+fun setEdited(view: TextView, isEdited: Boolean) {
+    val color = if (isEdited) {
+        view.resources.getColor(R.color.default_item_color, null)
+    } else {
+        view.resources.getColor(android.R.color.tab_indicator_text, null)
+    }
+
+    view.isEnabled = isEdited
+    view.setTextColor(color)
 }
 
 // Listener

@@ -70,13 +70,18 @@ object AppModule {
         Room.databaseBuilder(
             context,
             AppDatabase::class.java,
-            "DiaryDatabase"
+            "Bamboo"
         )
             .fallbackToDestructiveMigration()
             .build()
 
     @Singleton
     @Provides
-    fun getDao(db: AppDatabase) =
-        db.getDao()
+    fun getDiaryDao(db: AppDatabase) =
+        db.getDiaryDao()
+
+    @Singleton
+    @Provides
+    fun getGardenDao(db: AppDatabase) =
+        db.getGardenDao()
 }

@@ -168,6 +168,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun hideToolbar() {
+        supportActionBar?.hide()
+        binding.divideView.visibility = View.GONE
+    }
+
     private fun showPoint() {
         if (binding.pointLayout.visibility == View.GONE) {
             binding.pointLayout.visibility = View.VISIBLE
