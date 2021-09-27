@@ -1,7 +1,7 @@
 package com.sg.android.bambooflower.data
 
 data class Inventory(
-    val id: Int,
+    val id: Int?,
     val itemName: String,
     val itemIcon: String,
     val itemImage: String,

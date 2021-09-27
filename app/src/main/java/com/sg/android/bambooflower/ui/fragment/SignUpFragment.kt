@@ -136,7 +136,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
             }
         }
         // 유저 데이터 존재 여부
-        mViewModel.isExist.observe(viewLifecycleOwner) { isExist ->
+        mViewModel.isExistUser.observe(viewLifecycleOwner) { isExist ->
             if (isExist != null) {
                 if (isExist) { // 유저 데이터가 존재할 때
                     findNavController().navigate(R.id.action_signUpFragment_to_homeFragment)
@@ -147,7 +147,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 }
 
                 // 초기화
-                mViewModel.isExist.value = null
+                mViewModel.isExistUser.value = null
             }
         }
     }

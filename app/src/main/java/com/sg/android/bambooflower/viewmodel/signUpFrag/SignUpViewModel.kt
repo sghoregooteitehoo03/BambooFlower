@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuthException
+import com.sg.android.bambooflower.data.NotificationData
 import com.sg.android.bambooflower.other.ErrorMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
-    private val repository: SignUpRepository
+    private val repository: SignUpRepository,
 ) : ViewModel() {
     private val _isSuccessLogin = MutableLiveData(false) // 로그인 성공 여부
     private val _hideKeyBoard = MutableLiveData(false) // 키보드 숨기기
@@ -31,7 +32,8 @@ class SignUpViewModel @Inject constructor(
 
     val isError = MutableLiveData(false)
     val isLoading = MutableLiveData(false)
-    val isExist = MutableLiveData<Boolean>(null) // 유저 데이터 존재 여부
+    val isExistUser = MutableLiveData<Boolean>(null) // 유저 데이터 존재 여부
+    val notification = MutableLiveData<NotificationData?>(null) // 알림 데이터
 
     // 구글 및 페이스북 로그인
     fun login(credential: AuthCredential) = viewModelScope.launch {
@@ -76,6 +78,30 @@ class SignUpViewModel @Inject constructor(
         isLoading.value = false
     }
 
+    // 서버 점검 및 유저 데이터 존재 여부 확인
+    fun checkServerAndUserData() = viewModelScope.launch {
+        try {
+            val result = repository.checkUserData()
+                .data as Map<*, *>
+            val complete = result["complete"] as Boolean?
+
+            if (complete == null) { // 오류 확인
+                throw NullPointerException()
+            } else if (!complete) {
+                // 서버가 점검 중일 때
+                notification.value = NotificationData(
+                    "QUIT",
+                    result["msg"] as String
+                )
+            } else {
+                isExistUser.value = result["isExist"] as Boolean
+            }
+        } catch (e: Exception) {
+            isError.value = true
+            e.printStackTrace()
+        }
+    }
+
     // 유저 존재여부
     fun checkUserData() = viewModelScope.launch {
         try {
@@ -85,7 +111,7 @@ class SignUpViewModel @Inject constructor(
                 throw NullPointerException()
             }
 
-            isExist.value = result["isExist"] as Boolean
+            isExistUser.value = result["isExist"] as Boolean
         } catch (e: Exception) {
             isError.value = true
             e.printStackTrace()

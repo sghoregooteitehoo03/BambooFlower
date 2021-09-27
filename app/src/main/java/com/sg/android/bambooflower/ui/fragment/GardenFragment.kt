@@ -35,16 +35,6 @@ import com.sg.android.bambooflower.viewmodel.gardenFrag.GardenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
-//  . 꽃 사용 O
-//  . 이미 배치된 아이템 바꾸기 O
-//  . 범위 밖으로 나갈 시 기존에 있던 자리로 O
-//  . 아이템 인벤토리로 다시 가져오게 O
-//  . 아이템 인벤토리로 가져올 때 보여줄 이미지 (나중에)
-//  . 벽지 적용 O
-//  . 벽지 사용 O
-//  . 저장 기능 O
-//  . 불러오기 기능 O
-//  . 벽지 사용중 표시 O
 //  . 디바이스마다 불러오기 기능 적용 (나중에)
 
 @AndroidEntryPoint
@@ -386,7 +376,7 @@ class GardenFragment : Fragment(), View.OnClickListener,
             setPositiveButton("확인") { dialog, which ->
                 val gardenData = Garden(
                     null,
-                    inventoryItem.id,
+                    inventoryItem.id!!,
                     inventoryItem.itemImage,
                     inventoryItem.category,
                     -1,
