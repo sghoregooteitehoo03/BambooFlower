@@ -1,5 +1,7 @@
 package com.sg.android.bambooflower.ui.dialog
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +16,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sg.android.bambooflower.R
+import com.sg.android.bambooflower.data.Flower
 import com.sg.android.bambooflower.databinding.DialogFlowerStateBinding
 import com.sg.android.bambooflower.other.ErrorMessage
 import com.sg.android.bambooflower.ui.view.CustomProgressView
@@ -21,7 +24,10 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.flowerStateDialog.FlowerStateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 꽃이 다 성장 후 어떻게 처리할건지 구현 (나중에)
+// TODO
+//  . 꽃이 다 성장하면 초기화 O
+//  . 꽃이 다 자라면 인벤토리 카운트 업 O
+//  . 꽃을 선택하지 않은 상태에서 보상을 받을경우 물뿌리개에 물이 담기면서 물 뿌리개의 기능을 이용함(홈 화면 작업 때 같이하기)
 @AndroidEntryPoint
 class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
     private val mViewModel by viewModels<FlowerStateViewModel>()
@@ -75,7 +81,12 @@ class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
     override fun onClick(v: View) {
         when (v.id) {
             R.id.reward_btn -> { // 보상 버튼
-                val progress = gViewModel.user.value!!.progress
+                // 업데이트 된 진행도
+                val progress = if (gViewModel.user.value!!.progress == 0) {
+                    100
+                } else {
+                    gViewModel.user.value!!.progress
+                }
 
                 if (progress == 100 && completeLayoutView.alpha == 0f) {
                     motionLayoutView.transitionToEnd()
@@ -104,6 +115,8 @@ class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
                     usersQuest
                 )
             } else {
+                // 현재 꽃 이미지 설정
+                mViewModel.currentFlowerImage.value = gViewModel.flower.value!!.image
                 startProgressAnim()
             }
         }
@@ -119,7 +132,12 @@ class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
 
     // 성취도 애니메이션
     private fun startProgressAnim() {
-        val toProgress = gViewModel.user.value!!.progress
+        // 업데이트 된 진행도
+        val toProgress = if (gViewModel.user.value!!.progress == 0) {
+            100
+        } else {
+            gViewModel.user.value!!.progress
+        }
         val flowerData = gViewModel.flower.value!!
 
         ObjectAnimator.ofInt(
@@ -134,16 +152,46 @@ class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
 
             it.addUpdateListener { animator ->
                 // 꽃 데이터 업데이트
-                if ((animator.animatedValue as Int) == 100) {
-                    flowerData.state = 3
-                    gViewModel.flower.value = flowerData
+                if ((animator.animatedValue as Int) == 100) { // 꽃을 다 성장시켰을 때
+                    // 유저의 꽃 데이터를 씨앗으로 수정함
+                    val editFlower = Flower(
+                        1,
+                        "씨앗",
+                        0,
+                        mViewModel.flowerImages.value!![0]
+                    )
+
+                    // 현재 보여주는 꽃 이미지를 마지막 상태 이미지를 보여줌
+                    mViewModel.currentFlowerImage.value =
+                        mViewModel.flowerImages.value!![3]
+                    // 유저의 꽃 데이터를 수정
+                    gViewModel.flower.value = editFlower
                 } else if ((animator.animatedValue as Int) >= 50 &&
-                    gViewModel.flower.value!!.state == 1
-                ) {
-                    flowerData.state = 2
-                    gViewModel.flower.value = flowerData
+                    flowerData.state == 1
+                ) { // 꽃을 절반이상 성장시켰을 때
+                    val flowerImage = mViewModel.flowerImages.value!![2]
+                    // 유저의 꽃 데이터를 중간 상태로 수정함
+                    val editFlower = Flower(
+                        id = flowerData.id + 1,
+                        name = flowerData.name,
+                        state = flowerData.state + 1,
+                        image = flowerImage
+                    )
+
+                    // 현재 보여주는 꽃 이미지를 중간 상태 이미지를 보여줌
+                    mViewModel.currentFlowerImage.value = flowerImage
+                    // 유저의 꽃 데이터를 수정
+                    gViewModel.flower.value = editFlower
                 }
             }
+
+            it.addListener(object : AnimatorListenerAdapter() {
+                // 애니메이션이 끝날때
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    mViewModel.isEnable.value = true // 버튼 활성화
+                }
+            })
 
             it.start()
         }

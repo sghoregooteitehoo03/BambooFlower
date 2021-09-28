@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.viewmodel.flowerStateDialog
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,12 +17,16 @@ class FlowerStateViewModel @Inject constructor(
 ) : ViewModel() {
     private val _isLoading = MutableLiveData(true) // 로딩 여부
     private val _rewardProgress = MutableLiveData(-1) // 보상으로 얻을 유저 진행도
+    private val _flowerImages = MutableLiveData<List<String>>() // 꽃 상태별 이미지 리스트
 
     val isLoading: LiveData<Boolean> = _isLoading
     val rewardProgress: LiveData<Int> = _rewardProgress
+    val flowerImages: LiveData<List<String>> = _flowerImages
 
     val isError = MutableLiveData(false) // 오류 여부
+    val isEnable = MutableLiveData(false) // 버튼 활성화 여부
     val rewardMoney = MutableLiveData(-1) // 보상으로 받을 포인트
+    val currentFlowerImage = MutableLiveData<String>(null) // 현재 꽃 이미지
 
     // 보상 받기
     fun getReward(user: User, flower: Flower, usersQuest: UsersQuest?) = viewModelScope.launch {
@@ -38,11 +41,11 @@ class FlowerStateViewModel @Inject constructor(
                 usersQuest?.id ?: -1
             ).data as Map<*, *>
 
-            if (result["result"] == null) { // 오류 확인
+            if (result["complete"] == null) { // 오류 확인
                 throw NullPointerException()
             }
 
-            val resultMap = result["result"] as Map<*, *>
+            val resultMap = result["complete"] as Map<*, *>
 
             // 업데이트 된 내용 적용
             with(user) {
@@ -52,8 +55,11 @@ class FlowerStateViewModel @Inject constructor(
                 questCount = resultMap["questCount"] as Int
                 flowerId = resultMap["flowerId"] as Int
             }
-            Log.i("Check", "user: $user")
-            flower.image = resultMap["flowerImage"] as String
+            // 꽃 상태별 이미지 리스트를 담음
+            _flowerImages.value = (resultMap["flowerImages"] as List<*>)
+                .map { flowerImage ->
+                    flowerImage.toString()
+                }
 
             if (usersQuest != null) {
                 usersQuest.state = UsersQuest.STATE_COMPLETE

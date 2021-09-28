@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.viewmodel.selectFlowerDialog
 
-import android.util.Log
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.HttpsCallableResult
 import com.sg.android.bambooflower.other.Contents
@@ -11,16 +10,10 @@ import javax.inject.Inject
 class SelectFlowerRepository @Inject constructor(
     private val functions: FirebaseFunctions
 ) {
-    suspend fun getHavenFlowerData(uid: String): HttpsCallableResult {
-        val jsonData = JSONObject().apply {
-            put("uid", uid)
-            put("limit", 0)
-        }
-
-        return functions.getHttpsCallable(Contents.FUNC_GET_HAVEN_FLOWER_DATA)
-            .call(jsonData)
+    suspend fun getHavenFlowerData(uid: String) =
+        functions.getHttpsCallable(Contents.FUNC_GET_HAVEN_FLOWER_DATA)
+            .call(uid)
             .await()!!
-    }
 
     suspend fun selectFlower(uid: String, flowerName: String): HttpsCallableResult {
         val jsonData = JSONObject().apply {

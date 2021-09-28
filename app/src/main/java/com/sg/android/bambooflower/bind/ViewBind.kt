@@ -274,6 +274,26 @@ fun setButtonLoading(view: Button, isLoading: Boolean) {
     }
 }
 
+@BindingAdapter("app:enableRewardButton")
+fun enableRewardButton(view: CustomRewardButton, isEnable: Boolean) {
+    view.isEnabled = isEnable
+    if (isEnable) {
+        view.setBackgroundTint(
+            ContextCompat.getColorStateList(
+                view.context,
+                R.color.green_300
+            )!!
+        )
+    } else {
+        view.setBackgroundTint(
+            ContextCompat.getColorStateList(
+                view.context,
+                R.color.gray
+            )!!
+        )
+    }
+}
+
 @BindingAdapter("app:setPointButton")
 fun setPointButton(view: CustomRewardButton, point: Int) {
     view.setPointText("+$point")

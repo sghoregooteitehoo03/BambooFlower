@@ -1,15 +1,15 @@
 package com.sg.android.bambooflower.ui.view
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.sg.android.bambooflower.R
 
 class CustomRewardButton : ConstraintLayout {
+    private lateinit var mainLayout: ConstraintLayout
     private lateinit var pointTextView: TextView
 
     constructor(context: Context) : super(context) {
@@ -34,10 +34,15 @@ class CustomRewardButton : ConstraintLayout {
         val view = inflater.inflate(R.layout.custom_reward_button, this, false)
         addView(view)
 
+        mainLayout = findViewById(R.id.main_layout)
         pointTextView = findViewById(R.id.point_text)
     }
 
     fun setPointText(_text: String) {
         pointTextView.text = _text
+    }
+
+    fun setBackgroundTint(colorStateList: ColorStateList) {
+        mainLayout.backgroundTintList = colorStateList
     }
 }

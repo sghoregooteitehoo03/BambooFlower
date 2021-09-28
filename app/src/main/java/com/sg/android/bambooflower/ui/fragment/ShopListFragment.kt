@@ -18,7 +18,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.shopListFrag.ShopListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 디바이 구현(나중에)
 @AndroidEntryPoint
 class ShopListFragment(private val pos: Int) :
     Fragment(), ShopAdapter.ShopItemListener {

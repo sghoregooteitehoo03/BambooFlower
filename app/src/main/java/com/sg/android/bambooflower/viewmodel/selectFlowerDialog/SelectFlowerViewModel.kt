@@ -32,7 +32,11 @@ class SelectFlowerViewModel @Inject constructor(
     // 내가 가지고 있는 꽃 아이템을 가져옴
     fun getHavenFlowerData(uid: String) = viewModelScope.launch {
         try {
-            val result = repository.getHavenFlowerData(uid).data as Map<*, *>
+            val result = repository.getHavenFlowerData(uid)
+                .data as Map<*, *>
+            if (result["complete"] == null) { // 오류 확인
+                throw NullPointerException()
+            }
 
             _flowerList.value = (result["flowerList"] as List<*>).map { flower ->
                 val jsonObject = JSONObject(flower as MutableMap<*, *>).toString()

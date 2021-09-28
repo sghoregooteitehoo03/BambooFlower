@@ -13,7 +13,6 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
 //  . 업데이트 확인 구현 (나중에)
-//  . 점검 확인 O
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
     private val mViewModel by viewModels<SignUpViewModel>()
