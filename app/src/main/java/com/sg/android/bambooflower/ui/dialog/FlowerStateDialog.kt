@@ -25,8 +25,6 @@ import com.sg.android.bambooflower.viewmodel.flowerStateDialog.FlowerStateViewMo
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO
-//  . 꽃이 다 성장하면 초기화 O
-//  . 꽃이 다 자라면 인벤토리 카운트 업 O
 //  . 꽃을 선택하지 않은 상태에서 보상을 받을경우 물뿌리개에 물이 담기면서 물 뿌리개의 기능을 이용함(홈 화면 작업 때 같이하기)
 @AndroidEntryPoint
 class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {

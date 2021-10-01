@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.DiaryPagingAdapter
 import com.sg.android.bambooflower.databinding.FragmentDiaryListBinding
@@ -24,7 +26,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 // TODO:
-//  . 첫 리스트에 광고 표시 (나중에)
+//  . 첫 리스트에 광고 표시 O
 @AndroidEntryPoint
 class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()
@@ -54,16 +56,14 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
 
-        setList()
+        setObserver() // 옵저버 설정
         checkReward()
-//        // 광고 로드
-//        val adLoader = AdLoader
-//            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
-//            .forNativeAd {
-//                mViewModel.loadAd.value = it
-//            }
-//            .build()
-//        adLoader.loadAd(AdRequest.Builder().build())
+
+        diaryAdapter.addLoadStateListener { loadState ->
+            if (loadState.refresh !is LoadState.Loading) {
+                mViewModel.size.value = diaryAdapter.itemCount
+            }
+        }
     }
 
     override fun onStart() {
@@ -103,18 +103,32 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
         findNavController().navigate(R.id.action_diaryListFragment_to_diaryFragment)
     }
 
-    private fun setList() {
+    private fun setObserver() {
         lifecycleScope.launch {
             mViewModel.diaries.collect { pagingData ->
                 diaryAdapter.submitData(pagingData)
             }
         }
-
-        diaryAdapter.addLoadStateListener { loadState ->
-            if (loadState.refresh !is LoadState.Loading) {
-                mViewModel.size.value = diaryAdapter.itemCount
+        // 로드 된 광고
+        mViewModel.nativeAd.observe(viewLifecycleOwner) { nativeAd ->
+            if (nativeAd != null) { // 로드 된 광고가 있을 때
+                diaryAdapter.refresh()
+            } else { // 로드 된 광고가 없을 때
+                setAd() // 광고 로드
             }
         }
+    }
+
+    // 광고 로드
+    private fun setAd() {
+        // TODO: 출시 전 광고 아이디 수정
+        val adLoader = AdLoader
+            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+            .forNativeAd {
+                mViewModel.nativeAd.value = it
+            }
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
     // 하루 보상 확인

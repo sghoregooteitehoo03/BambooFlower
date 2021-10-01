@@ -18,7 +18,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.collectionDetailFrag.CollectionDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: 디바이드 구현 (나중에)
 @AndroidEntryPoint
 class CollectionDetailFragment : Fragment() {
     private val mViewModel by viewModels<CollectionDetailViewModel>()

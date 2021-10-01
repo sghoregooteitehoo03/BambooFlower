@@ -35,7 +35,7 @@ import com.sg.android.bambooflower.viewmodel.gardenFrag.GardenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
-//  . 디바이스마다 불러오기 기능 적용 (나중에)
+//  . 디바이스마다 불러오기 기능 적용 (테스트 때 확인)
 
 @AndroidEntryPoint
 class GardenFragment : Fragment(), View.OnClickListener,

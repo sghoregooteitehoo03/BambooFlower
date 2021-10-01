@@ -15,6 +15,7 @@ import javax.inject.Inject
 import javax.inject.Named
 import kotlin.random.Random
 
+// TODO: 일기 알림
 @AndroidEntryPoint
 class MyFirebaseMessagingService : FirebaseMessagingService() {
     @Inject
@@ -35,14 +36,14 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val currentUid = auth.currentUser?.uid // 현재 유저 아이디
 
         // 알림 활성화 여부
-        val isActive = if (action == "Quest" && uid == currentUid) {
+        val isActive = if (action == "Quest" && uid == currentUid) { // 퀘스트 알림
             settingPref.getBoolean(
-                "${Contents.PREF_KEY_QUEST_ALARM}-${uid}",
+                "${Contents.PREF_KEY_QUEST_ALARM}-${currentUid}",
                 false
             )
-        } else if (action == "Diary" && uid == currentUid) { // 일기 알림
+        } else if (action == "Diary" && currentUid != null) { // 일기 알림
             settingPref.getBoolean(
-                "${Contents.PREF_KEY_QUEST_ALARM}-${uid}",
+                "${Contents.PREF_KEY_DIARY_ALARM}-${currentUid}",
                 false
             )
         } else {
