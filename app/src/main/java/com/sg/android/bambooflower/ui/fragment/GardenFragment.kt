@@ -36,6 +36,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
 //  . 디바이스마다 불러오기 기능 적용 (테스트 때 확인)
+//  . 아이템을 집어넣을 때 보여줄 이미지 구현
 
 @AndroidEntryPoint
 class GardenFragment : Fragment(), View.OnClickListener,

@@ -81,7 +81,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:setStateIcon="@{usersQuest.state}"
-                tools:src="@drawable/ic_complete_quest"/>
+                tools:src="@drawable/ic_close_chest"/>
 
             <TextView
                 android:id="@+id/mission_way_text"
@@ -104,8 +104,8 @@
                 android:orientation="horizontal"
                 app:layout_constraintGuide_percent="0.72"/>
 
-            <LinearLayout
-                android:id="@+id/state_layout"
+            <TextView
+                android:id="@+id/state_text"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="12dp"
@@ -113,21 +113,15 @@
                 android:gravity="center"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/mission_image"
                 app:layout_constraintTop_toBottomOf="@id/guideline_divide"
-                app:setStateLayout="@{usersQuest.state}"
-                tools:backgroundTint="@color/green_300">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:textSize="12sp"
-                    android:textStyle="bold"
-                    app:setStateText="@{usersQuest.state}"
-                    tools:text="보상받기"/>
-            </LinearLayout>
+                app:setStateText="@{usersQuest.state}"
+                tools:backgroundTint="@color/green_300"
+                tools:text="보상받기"/>
 
             <ImageView
                 android:layout_width="14dp"
@@ -135,7 +129,7 @@
                 android:src="@drawable/ic_arrow_forward_ios"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/state_layout"/>
+                app:layout_constraintTop_toTopOf="@id/state_text"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

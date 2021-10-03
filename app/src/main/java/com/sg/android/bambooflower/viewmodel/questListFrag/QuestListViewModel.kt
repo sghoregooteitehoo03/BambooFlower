@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.gson.Gson
 import com.sg.android.bambooflower.data.UsersQuest
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,10 @@ class QuestListViewModel @Inject constructor(
     // 모든 퀘스트 목록
     val questList = repository.getQuestList()
         .cachedIn(viewModelScope)
+
     val usersQuestList = MutableLiveData<List<UsersQuest>>(null) // 유저가 수행중인 퀘스트
+    val interstitialAd = MutableLiveData<InterstitialAd>(null) // 로드 된 광고
+    val isRefresh = MutableLiveData(false) // 새로고침 여부
     val isLoading = MutableLiveData(true) // 로딩 여부
     val isError = MutableLiveData(false) // 오류 여부
 
@@ -40,6 +44,6 @@ class QuestListViewModel @Inject constructor(
             e.printStackTrace()
         }
 
-        isLoading.value = false // 로딩 끝
+        isRefresh.value = false // 새로고침 끝
     }
 }

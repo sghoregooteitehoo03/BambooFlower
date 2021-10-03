@@ -18,6 +18,7 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.shopListFrag.ShopListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+// TODO: 아이템 변경
 @AndroidEntryPoint
 class ShopListFragment(private val pos: Int) :
     Fragment(), ShopAdapter.ShopItemListener {

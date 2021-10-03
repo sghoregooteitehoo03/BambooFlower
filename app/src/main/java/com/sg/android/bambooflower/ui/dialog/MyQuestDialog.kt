@@ -113,6 +113,7 @@ class MyQuestDialog : BottomSheetDialogFragment(),
                 usersQuestList.remove(gViewModel.usersQuest.value!!) // 유저 퀘스트목록에서 퀘스트 지움
 
                 gViewModel.usersQuestList.value = usersQuestList
+                gViewModel.isDeleteQuest.value = true
                 findNavController().navigateUp()
             }
         }

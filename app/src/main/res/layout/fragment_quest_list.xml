@@ -15,13 +15,12 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:setRefresh="@={viewmodel.isLoading()}">
+        app:setRefresh="@={viewmodel.isRefresh()}">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="@{viewmodel.isLoading || viewmodel.isError ? View.GONE : View.VISIBLE}">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -51,11 +50,63 @@
                     app:setUsersQuestSize="@{viewmodel.usersQuestList.size()}"
                     tools:text="2/2"/>
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/loading_layout_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/my_quest_text"
+                    app:setLoadingListLayout="@{viewmodel.isLoading()}"
+                    tools:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/item_loading_quest"/>
+
+                        <include layout="@layout/item_loading_quest"/>
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/loading_layout_bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/quest_list_text"
+                    app:setLoadingListLayout="@{viewmodel.isLoading()}"
+                    tools:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/item_loading_quest"/>
+
+                        <include layout="@layout/item_loading_quest"/>
+
+                        <include layout="@layout/item_loading_quest"/>
+
+                        <include layout="@layout/item_loading_quest"/>
+
+                        <include layout="@layout/item_loading_quest"/>
+
+                        <include layout="@layout/item_loading_quest"/>
+
+                        <include layout="@layout/item_loading_quest"/>
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/my_quest_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:overScrollMode="never"
+                    android:visibility="@{viewmodel.isLoading() ? View.INVISIBLE : View.VISIBLE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/my_quest_text"
                     tools:itemCount="2"
@@ -65,7 +116,7 @@
                     android:id="@+id/divide_view"
                     android:layout_width="match_parent"
                     android:layout_height="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:background="@color/divide_color"
                     app:layout_constraintTop_toBottomOf="@id/my_quest_list"/>
 
@@ -85,8 +136,9 @@
                     android:id="@+id/quest_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="4dp"
                     android:overScrollMode="never"
+                    android:visibility="@{viewmodel.isLoading() ? View.INVISIBLE : View.VISIBLE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/quest_list_text"
                     tools:listitem="@layout/item_quest"/>

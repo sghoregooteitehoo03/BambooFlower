@@ -25,8 +25,6 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-// TODO:
-//  . 첫 리스트에 광고 표시 O
 @AndroidEntryPoint
 class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View.OnClickListener {
     private val gViewModel by activityViewModels<GlobalViewModel>()

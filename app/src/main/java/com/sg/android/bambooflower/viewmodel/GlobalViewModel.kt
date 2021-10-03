@@ -1,6 +1,5 @@
 package com.sg.android.bambooflower.viewmodel
 
-import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.sg.android.bambooflower.data.*
@@ -14,7 +13,5 @@ class GlobalViewModel : ViewModel() {
     val usersQuestList = MutableLiveData<MutableList<UsersQuest>?>(null) // 유저의 퀘스트 목록
     val post = MutableLiveData<Post?>() // 선택한 게시글
     val diary = MutableLiveData<Diary?>() // 선택한 일기
-    val syncData = MutableLiveData(false) // 갱신 여부
-
-    val satisfaction = MutableLiveData<Bitmap?>(null) // 만족도
+    val isDeleteQuest = MutableLiveData<Boolean?>(null)
 }

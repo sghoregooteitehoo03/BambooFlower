@@ -17,6 +17,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerFrameLayout
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MediaContent
@@ -126,13 +127,23 @@ fun setUsersQuestSize(view: TextView, size: Int) {
     view.text = "$size / 2"
 }
 
+@BindingAdapter("app:setLoadingListLayout")
+fun setLoadingListLayout(view: ShimmerFrameLayout, isLoading: Boolean) {
+    if (isLoading) {
+        view.visibility = View.VISIBLE
+    } else {
+        view.visibility = View.GONE
+        view.stopShimmer()
+    }
+}
+
 @BindingAdapter("app:setStateIcon")
 fun setStateIcon(view: ImageView, state: Int) {
     if (state != 0) {
-        val imageRes = when (state) {
-            UsersQuest.STATE_NOTHING -> R.drawable.ic_active_quest
-            UsersQuest.STATE_LOADING -> R.drawable.ic_non_active_quest
-            else -> R.drawable.ic_complete_quest
+        val imageRes = if (state != UsersQuest.STATE_COMPLETE) {
+            R.drawable.ic_close_chest
+        } else {
+            R.drawable.ic_open_chest
         }
 
         Glide.with(view.context)
@@ -141,34 +152,39 @@ fun setStateIcon(view: ImageView, state: Int) {
     }
 }
 
-@BindingAdapter("app:setStateLayout")
-fun setStateLayout(view: LinearLayout, state: Int) {
-    if (state != 0) {
-        val layoutColor = when (state) {
-            UsersQuest.STATE_NOTHING -> R.color.yellow
-            UsersQuest.STATE_LOADING -> R.color.gray
-            else -> R.color.green_300
-        }
-
-        view.backgroundTintList = ContextCompat.getColorStateList(
-            view.context,
-            layoutColor
-        )
-    }
-}
-
 @BindingAdapter("app:setStateText")
 fun setStateText(view: TextView, state: Int) {
     if (state != 0) {
-        val stateText = when (state) {
-            UsersQuest.STATE_NOTHING -> "수행하기"
-            UsersQuest.STATE_LOADING -> "인증 중"
-            UsersQuest.STATE_COMPLETE_WITH_REWARD -> "보상받기"
-            UsersQuest.STATE_COMPLETE -> "완료"
-            else -> ""
+        when (state) {
+            UsersQuest.STATE_NOTHING -> {
+                view.text = "수행하기"
+                view.backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.yellow
+                )
+            }
+            UsersQuest.STATE_LOADING -> {
+                view.text = "인증 중"
+                view.backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.gray
+                )
+            }
+            UsersQuest.STATE_COMPLETE_WITH_REWARD -> {
+                view.text = "보상받기"
+                view.backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.green_300
+                )
+            }
+            UsersQuest.STATE_COMPLETE -> {
+                view.text = "완료"
+                view.backgroundTintList = ContextCompat.getColorStateList(
+                    view.context,
+                    R.color.green_300
+                )
+            }
         }
-
-        view.text = stateText
     }
 }
 
