@@ -7,4 +7,8 @@ data class Shop(
     val name: String
 ) {
     var isExists: Boolean = false
+    override fun equals(other: Any?): Boolean {
+        other as Shop
+        return name == other.name
+    }
 }

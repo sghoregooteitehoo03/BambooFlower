@@ -11,10 +11,10 @@ class ShopListRepository @Inject constructor(
     private val functions: FirebaseFunctions
 ) {
 
-    suspend fun getShopData(uid: String, pos: Int): HttpsCallableResult {
+    suspend fun getShopData(uid: String, category: Int): HttpsCallableResult {
         val jsonData = JSONObject().apply {
             put("userId", uid)
-            put("pos", pos)
+            put("category", category)
         }
 
         return functions.getHttpsCallable(Contents.FUNC_GET_SHOP_DATA)

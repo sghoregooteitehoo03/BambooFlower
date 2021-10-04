@@ -30,11 +30,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-// TODO:
-//  . 아이콘 수정 O
-//  . 리스트 로딩 애니메이션 구현 O
-//  . 퀘스트 포기 시 광고 O
-
 @AndroidEntryPoint
 class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
     QuestPagingAdapter.QuestItemListener {

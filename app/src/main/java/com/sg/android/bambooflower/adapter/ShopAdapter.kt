@@ -39,4 +39,7 @@ class ShopAdapter : RecyclerView.Adapter<ShopItemViewHolder>() {
 
     fun getItem(pos: Int) =
         list[pos]
+
+    fun getItemPosWithName(name: String) =
+        list.indexOf(Shop(0, 0, "", name))
 }

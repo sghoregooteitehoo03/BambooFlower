@@ -131,6 +131,7 @@ fun setUsersQuestSize(view: TextView, size: Int) {
 fun setLoadingListLayout(view: ShimmerFrameLayout, isLoading: Boolean) {
     if (isLoading) {
         view.visibility = View.VISIBLE
+        view.startShimmer()
     } else {
         view.visibility = View.GONE
         view.stopShimmer()

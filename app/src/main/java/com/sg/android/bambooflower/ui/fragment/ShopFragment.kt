@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.sg.android.bambooflower.R
 import com.sg.android.bambooflower.adapter.ShopPagerAdapter
+import com.sg.android.bambooflower.data.Inventory
 import com.sg.android.bambooflower.databinding.FragmentShopBinding
 import com.sg.android.bambooflower.ui.MainActivity
 import com.sg.android.bambooflower.viewmodel.GlobalViewModel
@@ -23,8 +24,8 @@ class ShopFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<ShopViewModel>()
     private val gViewModel by activityViewModels<GlobalViewModel>()
     private val fragList: List<Fragment> = listOf<Fragment>(
-        ShopListFragment(0),
-        ShopListFragment(1)
+        ShopListFragment(Inventory.ITEM_CATEGORY_FLOWER),
+        ShopListFragment(Inventory.ITEM_CATEGORY_WALLPAPER)
     )
     private val pagerCallback = object : ViewPager2.OnPageChangeCallback() {
         override fun onPageSelected(position: Int) {
