@@ -5,8 +5,8 @@
     <!--    <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>-->
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/ic_mission"
-        android:title="미션"/>
+        android:icon="@drawable/ic_sprout"
+        android:title="홈"/>
 
     <item
         android:id="@+id/postListFragment"

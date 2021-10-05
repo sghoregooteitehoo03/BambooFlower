@@ -24,10 +24,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.shopListFrag.ShopListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  . 아이템 변경 O
-//  . 애니메이션 추가 O
-//  . 테스트 O
 @AndroidEntryPoint
 class ShopListFragment(private val category: Int) :
     Fragment(), ShopAdapter.ShopItemListener {
@@ -137,7 +133,6 @@ class ShopListFragment(private val category: Int) :
 
     // 상점 아이템 구매
     private fun buyItem(shopData: Shop, itemPos: Int) {
-        // TODO: 수정 O
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("\"${shopData.name}\" 을(를) 구매하시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
@@ -161,7 +156,6 @@ class ShopListFragment(private val category: Int) :
 
     // 리워드 광고 보여주기
     private fun showAd(shopData: Shop) {
-        // TODO: 나중에 광고 넣기 O
         with(MaterialAlertDialogBuilder(requireContext())) {
             setMessage("광고를 보고 \"${shopData.name}\" 을(를) 얻으시겠습니까?")
             setPositiveButton("확인") { dialog, which ->
