@@ -21,9 +21,6 @@
             android:id="@+id/loading_layout_top"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:setLoadingListLayout="@{viewmodel.isLoading()}"
             tools:visibility="gone">
 

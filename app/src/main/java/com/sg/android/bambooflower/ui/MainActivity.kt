@@ -22,7 +22,6 @@ import javax.inject.Inject
 import javax.inject.Named
 
 // TODO:
-//  . 바텀 아이콘 구현 O
 //  . bottom navigation 애니메이션 없애기 (여유있을 때 찾아보고 적용하기)
 //  . 유저한테 경고하는 화면 구현 (다음 업데이트 때)
 @AndroidEntryPoint

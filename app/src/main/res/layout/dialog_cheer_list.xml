@@ -44,12 +44,47 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/title_text"/>
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/guideline_divide"
+            app:layout_constraintTop_toBottomOf="@id/title_text"
+            tools:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <include
+                    layout="@layout/item_loading_cheer"/>
+
+                <include
+                    layout="@layout/item_loading_cheer"/>
+
+                <include
+                    layout="@layout/item_loading_cheer"/>
+
+                <include
+                    layout="@layout/item_loading_cheer"/>
+
+                <include
+                    layout="@layout/item_loading_cheer"/>
+
+                <include
+                    layout="@layout/item_loading_cheer"/>
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/accept_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
+            android:visibility="@{!viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/guideline_divide"
             app:layout_constraintTop_toBottomOf="@id/title_text"
@@ -61,18 +96,6 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.985"/>
-
-        <ProgressBar
-            android:id="@+id/loading_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:indeterminateTint="@color/deep_orange_300"
-            android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_text"/>
 
         <TextView
             android:layout_width="wrap_content"

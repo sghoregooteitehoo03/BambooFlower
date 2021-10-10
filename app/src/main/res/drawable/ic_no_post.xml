@@ -1,0 +1,30 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="100dp"
+        android:height="100dp"
+        android:viewportWidth="100"
+        android:viewportHeight="100">
+    <path
+        android:fillColor="@color/divide_color"
+        android:pathData="M13,11L87,11A8,8 0,0 1,95 19L95,80A8,8 0,0 1,87 88L13,88A8,8 0,0 1,5 80L5,19A8,8 0,0 1,13 11z"/>
+    <path
+        android:fillColor="@color/default_background_color"
+        android:pathData="M17,17L83,17A8,8 0,0 1,91 25L91,41A8,8 0,0 1,83 49L17,49A8,8 0,0 1,9 41L9,25A8,8 0,0 1,17 17z"/>
+    <path
+        android:fillColor="@android:color/holo_green_light"
+        android:pathData="M56,29 L72,49L40,49Z"/>
+    <path
+        android:fillColor="@android:color/holo_green_light"
+        android:pathData="M40,25 L53.68,43.24 58,49L22,49Z"/>
+    <path
+        android:fillColor="@color/yellow"
+        android:pathData="M72,25m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0"/>
+    <path
+        android:fillColor="@android:color/tab_indicator_text"
+        android:pathData="M12,55L55,55A3,3 0,0 1,58 58L58,58A3,3 0,0 1,55 61L12,61A3,3 0,0 1,9 58L9,58A3,3 0,0 1,12 55z"/>
+    <path
+        android:fillColor="@android:color/tab_indicator_text"
+        android:pathData="M12,65L74,65A3,3 0,0 1,77 68L77,68A3,3 0,0 1,74 71L12,71A3,3 0,0 1,9 68L9,68A3,3 0,0 1,12 65z"/>
+    <path
+        android:fillColor="@android:color/tab_indicator_text"
+        android:pathData="M12,75L66,75A3,3 0,0 1,69 78L69,78A3,3 0,0 1,66 81L12,81A3,3 0,0 1,9 78L9,78A3,3 0,0 1,12 75z"/>
+</vector>

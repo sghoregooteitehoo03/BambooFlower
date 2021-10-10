@@ -13,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.google.android.gms.ads.AdLoader
+import com.google.android.gms.ads.AdRequest
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.sg.android.bambooflower.R
@@ -29,11 +31,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 // TODO:
-//  . 신고 구현 O
-//  . 인정해준 사람 보여주기 O
-//  . 인증게시판이 비어있을때 보일 화면 (바텀 아이콘 구현 후 구현하기)
-//  . 퀘스트 보여주는 화면 구현 O
-//  . 게시글 사이사이에 광고 넣기 (나중에)
+//  . 인증게시판이 비어있을때 보여줄 이미지 만들기 O
+//  . 게시글 헤더에만 광고 넣기 O
+//  . 늘 새로고침 되게 구현 O
+//  . 로딩 애니메이션 추가 O
+//  . 인정리스트 애니메이션 추가 O
+//  . 리스트 최적화하기 O
+//  . 광고 이미지 안나오는 버그 수정 O
 
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
@@ -74,10 +78,19 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
         setObserver()
 
         postAdapter.addLoadStateListener { loadState ->
+            // 리스트 로딩 끝
             if (loadState.refresh !is LoadState.Loading
                 && mViewModel.postList.value != null
             ) {
-                mViewModel.isLoading.value = false
+                mViewModel.postSize.value = postAdapter.itemCount
+
+                if (mViewModel.isLoading.value!!) {
+                    // 로딩 중일 때
+                    mViewModel.isLoading.value = false
+                } else {
+                    // 새로고침 중일 때
+                    mViewModel.isRefresh.value = false
+                }
             }
         }
     }
@@ -90,6 +103,11 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
             supportActionBar?.setDisplayHomeAsUpEnabled(false)
             showToolbar()
         }
+    }
+
+    override fun onDestroyView() {
+        mViewModel.clearData()
+        super.onDestroyView()
     }
 
     // 더보기 버튼 클릭
@@ -126,6 +144,23 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     }
 
     private fun setObserver() {
+        // 게시글 리스트
+        mViewModel.postList.observe(viewLifecycleOwner) {
+            if (it != null) {
+                postAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+            }
+        }
+        // 로드 된 광고
+        mViewModel.nativeAd.observe(viewLifecycleOwner) { nativeAd ->
+            val isLoading = mViewModel.isLoading.value!!
+            if (nativeAd != null && isLoading) {
+                // 로드 된 광고가 있을 때 게시글 읽어오기
+                mViewModel.getPostList()
+            } else if (nativeAd == null) {
+                // 로드 된 광고가 없을 때 광고 로드
+                setAd()
+            }
+        }
         // 오류 여부
         mViewModel.isError.observe(viewLifecycleOwner) { isError ->
             if (isError) {
@@ -140,15 +175,17 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                 (requireActivity() as MainActivity).ready()
             }
         }
-        // 로딩 여부
-        mViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading && mViewModel.postList.value != null) {
+        // 새로고침 여부
+        mViewModel.isRefresh.observe(viewLifecycleOwner) { isRefresh ->
+            val isLoading = mViewModel.isLoading.value!!
+
+            if (isRefresh && !isLoading) {
+                // 로딩이 다된 후에만 새로고침 가능
                 postAdapter.refresh()
+            } else if (isRefresh && isLoading) {
+                // 로딩이 되기전에 새로고침 하는것을 방지함
+                mViewModel.isRefresh.value = false
             }
-        }
-        // 게시글 리스트
-        mViewModel.postList.observe(viewLifecycleOwner) {
-            postAdapter.submitData(viewLifecycleOwner.lifecycle, it)
         }
         // 삭제 여부
         mViewModel.isDeleted.observe(viewLifecycleOwner) { isDeleted ->
@@ -163,6 +200,18 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
                 mViewModel.isDeleted.value = false
             }
         }
+    }
+
+    // 광고 로드
+    private fun setAd() {
+        // TODO: 출시 전 광고 아이디 수정
+        val adLoader = AdLoader
+            .Builder(requireContext(), resources.getString(R.string.ad_native_unit_id_test))
+            .forNativeAd {
+                mViewModel.nativeAd.value = it
+            }
+            .build()
+        adLoader.loadAd(AdRequest.Builder().build())
     }
 
     // 이미지 더보기 화면으로 이동

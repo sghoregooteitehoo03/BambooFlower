@@ -5,12 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.sg.android.bambooflower.adapter.viewholder.PostNativeViewHolder
 import com.sg.android.bambooflower.adapter.viewholder.PostViewHolder
-import com.sg.android.bambooflower.data.Post
+import com.sg.android.bambooflower.data.DataType
+import com.sg.android.bambooflower.data.PostItemModel
 import com.sg.android.bambooflower.databinding.ItemPostBinding
+import com.sg.android.bambooflower.databinding.ItemPostNativeBinding
 
 class PostPagingAdapter() :
-    PagingDataAdapter<Post, PostViewHolder>(diffUtil) {
+    PagingDataAdapter<PostItemModel, RecyclerView.ViewHolder>(diffUtil) {
 
     interface PostItemListener {
         fun onMoreItemClickListener(pos: Int, view: View)
@@ -21,13 +25,32 @@ class PostPagingAdapter() :
 
     private lateinit var mListener: PostItemListener
 
-    override fun onBindViewHolder(holderPreview: PostViewHolder, position: Int) {
-        holderPreview.bind(getItem(position))
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is PostNativeViewHolder) {
+            holder.bind((getItem(position) as PostItemModel.Header).nativeAd)
+        } else if (holder is PostViewHolder) {
+            holder.bind((getItem(position) as PostItemModel.Item).post)
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val view = ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(view, mListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            DataType.HEADER.ordinal -> {
+                val view =
+                    ItemPostNativeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                PostNativeViewHolder(view)
+            }
+            else -> {
+                val view =
+                    ItemPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                PostViewHolder(view, mListener)
+            }
+        }
+    }
+
+    // 헤더 아이템 확인
+    override fun getItemViewType(position: Int): Int {
+        return getItem(position)?.type?.ordinal ?: DataType.ITEM.ordinal
     }
 
     fun setOnPostItemListener(_listener: PostItemListener) {
@@ -35,14 +58,18 @@ class PostPagingAdapter() :
     }
 
     fun getPost(pos: Int) =
-        getItem(pos)!!
+        (getItem(pos) as PostItemModel.Item).post
 
-    private companion object diffUtil : DiffUtil.ItemCallback<Post>() {
-        override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
-            return oldItem.id == newItem.id
+    private companion object diffUtil : DiffUtil.ItemCallback<PostItemModel>() {
+        override fun areItemsTheSame(oldItem: PostItemModel, newItem: PostItemModel): Boolean {
+            return if (oldItem is PostItemModel.Item && newItem is PostItemModel.Item) {
+                oldItem.post.id == newItem.post.id
+            } else {
+                oldItem.type.name == newItem.type.name
+            }
         }
 
-        override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+        override fun areContentsTheSame(oldItem: PostItemModel, newItem: PostItemModel): Boolean {
             return oldItem == newItem
         }
     }
