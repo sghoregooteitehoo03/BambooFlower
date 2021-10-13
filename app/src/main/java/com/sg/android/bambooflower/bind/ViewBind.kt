@@ -550,6 +550,15 @@ fun setExpandIcon(view: CustomGardenButton, isExpand: Boolean) {
     }
 }
 
+@BindingAdapter("app:setExpandGrayIcon")
+fun setExpandGrayIcon(view: ImageView, isExpand: Boolean) {
+    if (isExpand) {
+        view.setImageResource(R.drawable.ic_collapse_gray)
+    } else {
+        view.setImageResource(R.drawable.ic_expand_gray)
+    }
+}
+
 @BindingAdapter("app:setInventoryFilter")
 fun setInventoryFilter(view: CustomGardenButton, isSelected: Boolean) {
     view.setSelect(isSelected)

@@ -30,15 +30,6 @@ import com.sg.android.bambooflower.viewmodel.postListFragment.PostListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-// TODO:
-//  . 인증게시판이 비어있을때 보여줄 이미지 만들기 O
-//  . 게시글 헤더에만 광고 넣기 O
-//  . 늘 새로고침 되게 구현 O
-//  . 로딩 애니메이션 추가 O
-//  . 인정리스트 애니메이션 추가 O
-//  . 리스트 최적화하기 O
-//  . 광고 이미지 안나오는 버그 수정 O
-
 @AndroidEntryPoint
 class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
     @Inject

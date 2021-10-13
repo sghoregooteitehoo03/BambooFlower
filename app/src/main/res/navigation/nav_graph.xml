@@ -198,6 +198,13 @@
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
             app:popExitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_settingFragment_to_guideFragment"
+            app:destination="@id/guideFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"/>
     </fragment>
     <dialog
         android:id="@+id/cheerListDialog"
@@ -340,4 +347,9 @@
         android:name="com.sg.android.bambooflower.ui.fragment.GardenFragment"
         android:label="GardenFragment"
         tools:layout="@layout/fragment_garden"/>
+    <fragment
+        android:id="@+id/guideFragment"
+        android:name="com.sg.android.bambooflower.ui.fragment.GuideFragment"
+        android:label="GuideFragment"
+        tools:layout="@layout/fragment_guide"/>
 </navigation>

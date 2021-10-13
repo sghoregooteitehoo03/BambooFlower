@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <variable
+            name="guideData"
+            type="com.sg.android.bambooflower.data.Guide"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/default_background_color"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{guideData.guideTitle}"
+                android:textColor="@color/default_item_color"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="상점"/>
+
+            <ImageView
+                android:id="@+id/custom_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setExpandGrayIcon="@{guideData.isExpand}"
+                tools:src="@drawable/ic_collapse_gray"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white_darker"
+            android:padding="12dp"
+            android:visibility="@{guideData.isExpand ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{guideData.guideContent}"
+                android:textColor="@color/default_item_color"
+                tools:text="인간에 남는 것은 영락과 부패 뿐이다 낙원을 장식하는 천자만홍
+이 어디 있으며 인생을 풍부하게 하는 온갖 과실이 어디 있으랴?
+ 이상! 우리의 청춘이 가장 많이 품고 있는 이상! 이것이야말로
+무한한 가치를 가진 것이다 사람은"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

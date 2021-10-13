@@ -107,7 +107,7 @@ class SettingFragment : Fragment(), View.OnClickListener {
                 sendEmail()
             }
             R.id.help_btn -> { // 도움말
-
+                findNavController().navigate(R.id.action_settingFragment_to_guideFragment)
             }
             R.id.sign_out_btn -> { // 로그아웃
                 signOut()
