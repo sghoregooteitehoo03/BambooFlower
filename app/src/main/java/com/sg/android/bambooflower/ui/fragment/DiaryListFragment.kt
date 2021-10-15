@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -88,7 +89,7 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
     override fun onClick(v: View) {
         when (v.id) {
             R.id.add_diary_btn -> { // 일기 작성버튼
-                findNavController().navigate(R.id.action_diaryListFragment_to_addDiaryFragment)
+                addDiary()
             }
         }
     }
@@ -114,6 +115,20 @@ class DiaryListFragment : Fragment(), DiaryPagingAdapter.DiaryItemListener, View
             } else { // 로드 된 광고가 없을 때
                 setAd() // 광고 로드
             }
+        }
+    }
+
+    private fun addDiary() {
+        val flowerState = gViewModel.flower.value!!.state
+
+        if (flowerState != 0) { // 유저가 성장시키고 있는 꽃이 존재할 때
+            findNavController().navigate(R.id.action_diaryListFragment_to_addDiaryFragment)
+        } else {
+            gViewModel.moveLayout.value = R.id.addDiaryFragment // 선택 후 일기작성화면으로 이동되게 설정
+            Toast.makeText(requireContext(), "꽃을 먼저 선택 후 일기를 작성하시기를 바랍니다.", Toast.LENGTH_SHORT)
+                .show()
+
+            findNavController().navigate(R.id.selectFlowerDialog)
         }
     }
 

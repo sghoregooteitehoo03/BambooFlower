@@ -62,6 +62,11 @@ class SelectFlowerDialog : BottomSheetDialogFragment(), View.OnClickListener, Se
         setObserver() // 옵저버 설정
     }
 
+    override fun onDestroy() {
+        gViewModel.moveLayout.value = null
+        super.onDestroy()
+    }
+
     // 버튼 액션
     override fun onClick(v: View) {
         when (v.id) {
@@ -137,11 +142,17 @@ class SelectFlowerDialog : BottomSheetDialogFragment(), View.OnClickListener, Se
         }
         // 선택한 꽃
         mViewModel.selectedFlower.observe(viewLifecycleOwner) { flowerData ->
-            if (flowerData != null) {
+            if (flowerData != null) { // 꽃이 선택되었을 때
+                val moveLayout = gViewModel.moveLayout.value // 이동할 화면 위치
                 gViewModel.user.value = user
                 gViewModel.flower.value = flowerData
 
-                findNavController().navigateUp()
+                if (moveLayout != null) { // 이동할 화면 위치를 지정하였을 경우
+                    findNavController().navigateUp()
+                    findNavController().navigate(moveLayout) // 이동
+                } else {
+                    findNavController().navigateUp()
+                }
             }
         }
     }

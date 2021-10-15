@@ -76,8 +76,7 @@ class MyQuestDialog : BottomSheetDialogFragment(),
                 findNavController().navigateUp()
             }
             R.id.action_btn -> { // 보상받기
-                findNavController().navigateUp()
-                findNavController().navigate(R.id.flowerStateDialog)
+                getReward()
             }
             R.id.give_up_btn -> { // 포기하기
                 val usersQuestId = gViewModel.usersQuest.value!!.id
@@ -128,5 +127,22 @@ class MyQuestDialog : BottomSheetDialogFragment(),
             action = Contents.SHOW_IMAGE_FRAG
         }
         startActivity(intent)
+    }
+
+    // 보상 받기
+    private fun getReward() {
+        val flowerState = gViewModel.flower.value!!.state
+
+        if (flowerState != 0) { // 유저가 성장시키고 있는 꽃이 존재할 때
+            findNavController().navigateUp()
+            findNavController().navigate(R.id.flowerStateDialog)
+        } else {
+            gViewModel.moveLayout.value = R.id.flowerStateDialog // 선택 후 보상화면으로 이동되게 설정
+            Toast.makeText(requireContext(), "꽃을 먼저 선택해야 보상을 얻으실 수 있습니다.", Toast.LENGTH_SHORT)
+                .show()
+
+            findNavController().navigateUp()
+            findNavController().navigate(R.id.selectFlowerDialog)
+        }
     }
 }

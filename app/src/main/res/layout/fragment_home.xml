@@ -34,26 +34,6 @@
                 android:layout_height="wrap_content"
                 android:padding="12dp">
 
-                <ImageView
-                    android:id="@+id/water_image"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="2dp"
-                    android:src="@drawable/ic_water"
-                    app:layout_constraintEnd_toStartOf="@id/water_count_text"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
-                <TextView
-                    android:id="@+id/water_count_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="4dp"
-                    android:textColor="@color/black"
-                    app:layout_constraintBottom_toBottomOf="@id/water_image"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/water_image"
-                    tools:text="3"/>
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/flower_layout"
                     android:layout_width="200dp"

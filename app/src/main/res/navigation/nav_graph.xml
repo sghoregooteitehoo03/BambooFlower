@@ -312,7 +312,11 @@
         android:id="@+id/selectFlowerDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.SelectFlowerDialog"
         android:label="SelectFlowerDialog"
-        tools:layout="@layout/dialog_select_flower"/>
+        tools:layout="@layout/dialog_select_flower">
+        <action
+            android:id="@+id/action_selectFlowerDialog_to_flowerStateDialog"
+            app:destination="@id/flowerStateDialog"/>
+    </dialog>
     <dialog
         android:id="@+id/flowerStateDialog"
         android:name="com.sg.android.bambooflower.ui.dialog.FlowerStateDialog"
