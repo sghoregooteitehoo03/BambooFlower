@@ -22,7 +22,9 @@ class InventoryViewHolder(
 
     fun bind(data: Inventory) {
         binding.inventory = data
-        binding.itemLayout.alpha = if (data.itemCount != 0 && !data.isUsing) {
+        binding.itemLayout.alpha = if (data.itemCount != 0 && data.category == Inventory.ITEM_CATEGORY_FLOWER) {
+            1f
+        } else if (!data.isUsing && data.category == Inventory.ITEM_CATEGORY_WALLPAPER) {
             1f
         } else {
             0.3f

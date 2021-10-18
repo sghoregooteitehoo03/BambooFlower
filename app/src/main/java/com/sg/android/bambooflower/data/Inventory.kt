@@ -5,6 +5,7 @@ data class Inventory(
     val itemName: String,
     val itemIcon: String,
     val itemImage: String,
+    val flatImage: String,
     var itemCount: Int,
     val category: Int,
 ) {

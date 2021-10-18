@@ -13,6 +13,8 @@ data class Garden(
     val itemId: Int,
     @ColumnInfo(name = "itemImage")
     val itemImage: String,
+    @ColumnInfo(name = "flatImage")
+    val flatImage: String,
     @ColumnInfo(name = "category")
     val category: Int,
     @ColumnInfo(name = "collocatedPos")

@@ -25,9 +25,11 @@ class GardenViewModel @Inject constructor(
 
     val isExpand = MutableLiveData(false) // 확장 여부
     val isEdited = MutableLiveData(false) // 수정 여부
+    val isEnteredInventory = MutableLiveData(false) // 배치된 아이템 인벤토리 진입여부
     val isError = MutableLiveData(false) // 오류 여부
     val category = MutableLiveData(Inventory.ITEM_CATEGORY_FLOWER) // 인벤토리 카테고리
     val wallpaperData = MutableLiveData<String>(null) // 정원 벽지 데이터
+    val flatImageData = MutableLiveData<String>(null) // 평지 이미지 데이터
 
     // 인벤토리 가져오기
     fun changeInventoryFilter(category: Int) = viewModelScope.launch {
@@ -62,6 +64,7 @@ class GardenViewModel @Inject constructor(
                                 "",
                                 "",
                                 "",
+                                "",
                                 0,
                                 usedItem.category
                             )
@@ -93,6 +96,7 @@ class GardenViewModel @Inject constructor(
         val idx = _inventoryList.value!!.indexOf(
             Inventory(
                 id,
+                "",
                 "",
                 "",
                 "",

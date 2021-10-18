@@ -40,10 +40,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
+            android:elevation="4dp"
             android:onClick="@{clickListener}"
             android:text="저장"
             android:textColor="@color/default_item_color"
-            android:elevation="4dp"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/guideline_top"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -84,38 +84,40 @@
                 app:setImage="@{viewmodel.wallpaperData}"
                 tools:src="@drawable/sky"/>
 
-            <FrameLayout
-                android:id="@+id/garden_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_flat"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/collocate_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="5"
-                    tools:itemCount="25"
-                    tools:listitem="@layout/item_collocate"/>
-            </FrameLayout>
-
             <androidx.constraintlayout.motion.widget.MotionLayout
                 android:id="@+id/motion_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 app:layoutDescription="@xml/fragment_garden_xml_constraintlayout_scene"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
+
+                <FrameLayout
+                    android:id="@+id/garden_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:translationY="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:layout_width="360dp"
+                        android:layout_height="320dp"
+                        app:setImage="@{viewmodel.flatImageData}"
+                        tools:src="@drawable/flat_normal"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/collocate_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="5"
+                        tools:itemCount="25"
+                        tools:listitem="@layout/item_collocate"/>
+                </FrameLayout>
 
                 <com.sg.android.bambooflower.ui.view.CustomGardenButton
                     android:id="@+id/filter_flower"
@@ -158,9 +160,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.166"/>
+                    app:layout_constraintGuide_percent="0.746"/>
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/list_layout"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -174,13 +176,40 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/inventory_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:alpha="@{viewmodel.isEnteredInventory() ? 0.2f : 1f}"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="2"
                         tools:itemCount="6"
                         tools:listitem="@layout/item_inventory"/>
-                </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="@{viewmodel.isEnteredInventory() ? View.VISIBLE : View.GONE}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_put_in"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="아이템을 드랍하세요!"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"/>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.motion.widget.MotionLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

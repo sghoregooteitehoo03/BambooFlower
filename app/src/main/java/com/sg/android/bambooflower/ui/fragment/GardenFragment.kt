@@ -36,7 +36,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 // TODO:
 //  . 디바이스마다 불러오기 기능 적용 (테스트 때 확인)
-//  . 아이템을 집어넣을 때 보여줄 이미지 구현
+//  . 아이템을 집어넣을 때 보여줄 이미지 구현 O
+//  . 인벤토리 확장 시 땅이 안가려지게 살짝 올라감 O
+//  . 테마 구현 O
 
 @AndroidEntryPoint
 class GardenFragment : Fragment(), View.OnClickListener,
@@ -165,6 +167,7 @@ class GardenFragment : Fragment(), View.OnClickListener,
                             null,
                             inventoryData?.id!!,
                             inventoryData!!.itemIcon,
+                            "",
                             inventoryData!!.category,
                             pos,
                             view.x,
@@ -181,7 +184,7 @@ class GardenFragment : Fragment(), View.OnClickListener,
                     } else { // 배치된 아이템을 수정하려고 하는 경우
                         val tagSplit = getTagSplit(collocatedImageView!!.tag.toString())
                         val index = gardenList.indexOf(
-                            Garden(0, tagSplit[0], "", tagSplit[1], tagSplit[2], 0f, 0f)
+                            Garden(0, tagSplit[0], "", "", tagSplit[1], tagSplit[2], 0f, 0f)
                         )
                         Log.i("Check", "index: $index")
                         // 기존에 있던 아이템의 위치를 수정함
@@ -276,7 +279,15 @@ class GardenFragment : Fragment(), View.OnClickListener,
     private val inventoryDragListener = View.OnDragListener { v, event ->
         if (action == "EDIT") {
             when (event.action) {
-                DragEvent.ACTION_DRAG_STARTED -> {
+                DragEvent.ACTION_DRAG_STARTED -> { // 드래그 시작
+                    true
+                }
+                DragEvent.ACTION_DRAG_ENTERED -> { // 뷰에 드래그 아이템 진입
+                    mViewModel.isEnteredInventory.value = true
+                    true
+                }
+                DragEvent.ACTION_DRAG_EXITED -> { // 뷰에 드래그 아이템 나감
+                    mViewModel.isEnteredInventory.value = false
                     true
                 }
                 DragEvent.ACTION_DROP -> {
@@ -291,6 +302,7 @@ class GardenFragment : Fragment(), View.OnClickListener,
                     // 초기화
                     inventoryData = null
                     collocatedImageView = null
+                    mViewModel.isEnteredInventory.value = false
                     true
                 }
                 else -> false
@@ -379,6 +391,7 @@ class GardenFragment : Fragment(), View.OnClickListener,
                     null,
                     inventoryItem.id!!,
                     inventoryItem.itemImage,
+                    inventoryItem.flatImage,
                     inventoryItem.category,
                     -1,
                     0f,
@@ -415,7 +428,9 @@ class GardenFragment : Fragment(), View.OnClickListener,
             }
         }
 
-        mViewModel.wallpaperData.value = gardenData.itemImage // 벽지 이미지 변경
+        // 테마 적용
+        mViewModel.flatImageData.value = gardenData.flatImage
+        mViewModel.wallpaperData.value = gardenData.itemImage
     }
 
     // 이미지 배치
@@ -459,7 +474,7 @@ class GardenFragment : Fragment(), View.OnClickListener,
         if (isEdited) { // 이전에 있었던 자리에 대한 정보를 지움
             mViewModel.savedGardenList.value!!
                 .remove(
-                    Garden(0, itemId, "", category, collocatedPos, 0f, 0f)
+                    Garden(0, itemId, "", "", category, collocatedPos, 0f, 0f)
                 )
             mViewModel.isEdited.value = true
 

@@ -24,8 +24,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.flowerStateDialog.FlowerStateViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO
-//  . 꽃을 선택하지 않은 상태에서 보상을 받을경우 물뿌리개에 물이 담기면서 물 뿌리개의 기능을 이용함(홈 화면 작업 때 같이하기)
 @AndroidEntryPoint
 class FlowerStateDialog : BottomSheetDialogFragment(), View.OnClickListener {
     private val mViewModel by viewModels<FlowerStateViewModel>()
