@@ -108,16 +108,16 @@ fun setFlowerButtonEnable(view: Button, isEnable: Boolean) {
         view.text = "선택"
 
         view.backgroundTintList =
-            ContextCompat.getColorStateList(view.context, R.color.gray)
+            ContextCompat.getColorStateList(view.context, R.color.gray_night_color)
     }
 }
 
 @BindingAdapter("app:setSelectFlower")
 fun setSelectFlower(view: ConstraintLayout, isSelected: Boolean) {
     view.backgroundTintList = if (isSelected) { // 선택되었을 때
-        ContextCompat.getColorStateList(view.context, R.color.gray)
+        ContextCompat.getColorStateList(view.context, R.color.gray_night_color)
     } else { // 선택되지 않았을 때
-        ContextCompat.getColorStateList(view.context, R.color.white)
+        ContextCompat.getColorStateList(view.context, R.color.default_dialog_bg_color)
     }
 }
 
@@ -168,7 +168,7 @@ fun setStateText(view: TextView, state: Int) {
                 view.text = "인증 중"
                 view.backgroundTintList = ContextCompat.getColorStateList(
                     view.context,
-                    R.color.gray
+                    R.color.gray_night_color
                 )
             }
             UsersQuest.STATE_COMPLETE_WITH_REWARD -> {
@@ -201,7 +201,7 @@ fun setStateButton(view: Button, state: Int) {
 
                 backgroundTintList = ContextCompat.getColorStateList(
                     view.context,
-                    R.color.gray
+                    R.color.gray_night_color
                 )
             }
         }
@@ -242,7 +242,7 @@ fun setQuestButton(view: Button, questSize: Int, questExists: Boolean) {
 
             backgroundTintList = ContextCompat.getColorStateList(
                 view.context,
-                R.color.gray
+                R.color.gray_night_color
             )
         }
     } else {
@@ -259,27 +259,10 @@ fun setQuestButton(view: Button, questSize: Int, questExists: Boolean) {
                 isEnabled = false
                 backgroundTintList = ContextCompat.getColorStateList(
                     view.context,
-                    R.color.gray
+                    R.color.gray_night_color
                 )
             }
         }
-    }
-}
-
-@BindingAdapter("app:setButtonEnable")
-fun setButtonEnable(view: Button, isEnable: Boolean) {
-    if (isEnable) {
-        view.isEnabled = true
-        view.backgroundTintList = ContextCompat.getColorStateList(
-            view.context,
-            R.color.green_300
-        )
-    } else {
-        view.isEnabled = false
-        view.backgroundTintList = ContextCompat.getColorStateList(
-            view.context,
-            R.color.gray
-        )
     }
 }
 
@@ -305,9 +288,26 @@ fun enableRewardButton(view: CustomRewardButton, isEnable: Boolean) {
         view.setBackgroundTint(
             ContextCompat.getColorStateList(
                 view.context,
-                R.color.gray
+                R.color.gray_night_color
             )!!
         )
+    }
+}
+
+@BindingAdapter("app:setEnableDefaultButton")
+fun setEnableDefaultButton(view: Button, isEnable: Boolean) {
+    view.isEnabled = isEnable
+
+    if (isEnable) {
+        view.backgroundTintList = ContextCompat.getColorStateList(
+            view.context,
+            R.color.green_300
+        )!!
+    } else {
+        view.backgroundTintList = ContextCompat.getColorStateList(
+            view.context,
+            R.color.gray_night_color
+        )!!
     }
 }
 
@@ -367,7 +367,7 @@ fun setShopPrice(view: TextView, shop: Shop) {
 fun cardExistsColor(view: CardView, isExists: Boolean) {
     if (isExists) {
         view.setCardBackgroundColor(
-            view.resources.getColor(R.color.white_darker, null)
+            view.resources.getColor(R.color.divide_color, null)
         )
     } else {
         view.setCardBackgroundColor(
@@ -381,7 +381,7 @@ fun setExistsColor(view: LinearLayout, isExists: Boolean) {
     if (isExists) {
         view.backgroundTintList = ContextCompat.getColorStateList(
             view.context,
-            R.color.gray
+            R.color.gray_night_color
         )
     } else {
         view.backgroundTintList = ContextCompat.getColorStateList(
@@ -582,7 +582,7 @@ fun setTileView(view: View, isShowing: Boolean, isCollocated: Boolean) {
 @BindingAdapter("app:setEdited")
 fun setEdited(view: TextView, isEdited: Boolean) {
     val color = if (isEdited) {
-        view.resources.getColor(R.color.default_item_color, null)
+        view.resources.getColor(R.color.black, null)
     } else {
         view.resources.getColor(android.R.color.tab_indicator_text, null)
     }

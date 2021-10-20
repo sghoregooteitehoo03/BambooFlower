@@ -145,7 +145,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginTop="48dp"
-                android:enabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.password.equals(blank) &amp;&amp; !viewmodel.repassword.equals(blank)}"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:onClick="@{clickListener}"
@@ -153,7 +152,8 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:cornerRadius="8dp"
-                app:layout_constraintTop_toBottomOf="@id/input_repassword_layout"/>
+                app:layout_constraintTop_toBottomOf="@id/input_repassword_layout"
+                app:setEnableDefaultButton="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.password.equals(blank) &amp;&amp; !viewmodel.repassword.equals(blank)}"/>
 
             <ImageView
                 android:id="@+id/facebook_login"

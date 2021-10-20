@@ -48,7 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white_darker"
+            android:background="@color/divide_color"
             android:padding="12dp"
             android:visibility="@{guideData.isExpand ? View.VISIBLE : View.GONE}">
 

@@ -39,7 +39,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:background="@drawable/shape_rounded_image"
-                    android:backgroundTint="@color/gray"
+                    android:backgroundTint="@color/gray_night_color"
                     android:gravity="center"
                     android:onClick="@{clickListener}"
                     android:orientation="vertical"
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
                         android:text="클릭하여 이미지를 추가해주세요."
-                        android:textColor="@android:color/tab_indicator_text"
+                        android:textColor="@color/gray_darker_night_color"
                         android:textSize="24sp"
                         android:textStyle="bold"
                         android:visibility="@{viewmodel.image != null ? View.GONE : View.VISIBLE}"/>
@@ -107,7 +107,6 @@
             android:id="@+id/add_post_btn"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:enabled="@{!viewmodel.content.equals(blank) &amp;&amp; viewmodel.image != null}"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:onClick="@{clickListener}"
@@ -116,6 +115,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:cornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:setEnableDefaultButton="@{!viewmodel.content.equals(blank) &amp;&amp; viewmodel.image != null}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

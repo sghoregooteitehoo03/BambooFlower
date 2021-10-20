@@ -5,5 +5,5 @@
         android:radius="18dp"/>
 
     <solid
-        android:color="@color/gray_bright"/>
+        android:color="@color/divide_color"/>
 </shape>

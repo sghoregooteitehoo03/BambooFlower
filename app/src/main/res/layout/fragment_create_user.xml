@@ -49,9 +49,9 @@
                 android:layout_height="120dp"
                 android:layout_marginTop="42dp"
                 android:onClick="@{clickListener}"
-                app:civ_border_color="@color/gray"
+                app:civ_border_color="@color/gray_night_color"
                 app:civ_border_width="2dp"
-                app:civ_circle_background_color="@color/gray_bright"
+                app:civ_circle_background_color="@color/gray_bright_night_color"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/title_text"
@@ -179,7 +179,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
                 android:layout_marginTop="48dp"
-                android:enabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.name.equals(blank) &amp;&amp; viewmodel.firstCheck &amp;&amp; viewmodel.secondCheck}"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:onClick="@{clickListener}"
@@ -187,7 +186,8 @@
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:cornerRadius="8dp"
-                app:layout_constraintTop_toBottomOf="@id/second_check"/>
+                app:layout_constraintTop_toBottomOf="@id/second_check"
+                app:setEnableDefaultButton="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.name.equals(blank) &amp;&amp; viewmodel.firstCheck &amp;&amp; viewmodel.secondCheck}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

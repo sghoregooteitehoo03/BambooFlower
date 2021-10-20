@@ -77,7 +77,7 @@
             android:id="@+id/divide_view"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#f4f4f4"
+            android:background="@color/divide_color"
             app:layout_constraintBottom_toBottomOf="@id/main_toolbar"/>
 
         <fragment

@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="160dp"
             android:background="@drawable/shape_rounded_image"
-            android:backgroundTint="@color/white_darker"
+            android:backgroundTint="@color/divide_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

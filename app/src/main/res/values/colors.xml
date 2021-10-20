@@ -44,8 +44,11 @@
     <!-- support night color -->
     <color name="default_background_color">@color/white</color>
     <color name="bright_background_color">@color/white_medium</color>
+    <color name="default_dialog_bg_color">@color/white</color>
     <color name="default_item_color">@color/black</color>
     <color name="divide_color">@color/white_darker</color>
-    <color name="diary_color">@color/white</color>
     <color name="post_color">@color/white_medium</color>
+    <color name="gray_bright_night_color">@color/gray_bright</color>
+    <color name="gray_night_color">@color/gray</color>
+    <color name="gray_darker_night_color">@color/gray_darker</color>
 </resources>

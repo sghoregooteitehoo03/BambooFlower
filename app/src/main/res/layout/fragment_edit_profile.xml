@@ -30,9 +30,9 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:onClick="@{clickListener}"
-            app:civ_border_color="@color/gray"
+            app:civ_border_color="@color/gray_night_color"
             app:civ_border_width="2dp"
-            app:civ_circle_background_color="@color/gray_bright"
+            app:civ_circle_background_color="@color/gray_bright_night_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -104,7 +104,6 @@
             android:id="@+id/edit_profile_btn"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:enabled="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.name.equals(blank)}"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:onClick="@{clickListener}"
@@ -113,6 +112,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:cornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:setEnableDefaultButton="@{!viewmodel.email.equals(blank) &amp;&amp; !viewmodel.name.equals(blank)}"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

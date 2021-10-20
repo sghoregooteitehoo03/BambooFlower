@@ -33,7 +33,7 @@
                     android:id="@+id/ad_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    app:civ_border_color="@color/gray"
+                    app:civ_border_color="@color/gray_night_color"
                     app:civ_border_width="1dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

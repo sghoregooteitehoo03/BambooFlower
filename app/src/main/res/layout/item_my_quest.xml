@@ -14,8 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/diary_color">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/empty_layout"
@@ -23,7 +22,7 @@
             android:layout_height="0dp"
             android:layout_margin="12dp"
             android:background="@drawable/shape_rounded_image"
-            android:backgroundTint="@color/white_darker"
+            android:backgroundTint="@color/divide_color"
             android:gravity="center"
             android:visibility="@{usersQuest != null ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"

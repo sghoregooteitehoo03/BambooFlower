@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="flower_background_color">#F5E8FF</color>
+
     <color name="default_background_color">@color/black_bright</color>
-    <color name="bright_background_color">@color/black_bright</color>
+    <color name="bright_background_color">#222222</color>
+    <color name="default_dialog_bg_color">#373737</color>
     <color name="default_item_color">@color/white</color>
     <color name="divide_color">#292929</color>
-    <color name="diary_color">#292929</color>
     <color name="post_color">@color/black_bright</color>
+    <color name="gray_bright_night_color">@color/gray_darker</color>
+    <color name="gray_night_color">#939393</color>
+    <color name="gray_darker_night_color">#606060</color>
 </resources>

@@ -141,6 +141,7 @@
                     android:visibility="@{viewmodel.isLoading() ? View.INVISIBLE : View.VISIBLE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintTop_toBottomOf="@id/quest_list_text"
+                    tools:itemCount="10"
                     tools:listitem="@layout/item_quest"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

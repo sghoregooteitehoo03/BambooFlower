@@ -17,7 +17,6 @@
         android:layout_marginTop="6dp"
         android:layout_marginEnd="12dp"
         android:layout_marginBottom="6dp"
-        app:cardBackgroundColor="@color/diary_color"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp">
 
@@ -41,21 +40,21 @@
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:background="@drawable/shape_round"
-                    android:backgroundTint="@color/gray"/>
+                    android:backgroundTint="@color/gray_night_color"/>
 
                 <View
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/shape_round"
-                    android:backgroundTint="@color/gray"/>
+                    android:backgroundTint="@color/gray_night_color"/>
 
                 <View
                     android:layout_width="8dp"
                     android:layout_height="8dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/shape_round"
-                    android:backgroundTint="@color/gray"/>
+                    android:backgroundTint="@color/gray_night_color"/>
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,7 +84,7 @@
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         android:background="@drawable/shape_rounded_image"
-                        android:backgroundTint="@color/white_darker"
+                        android:backgroundTint="@color/divide_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"

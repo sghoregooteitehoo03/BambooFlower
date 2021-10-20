@@ -66,7 +66,7 @@ class CustomSettingView : ConstraintLayout {
             typedArray.getString(R.styleable.CustomSettingView_settingText)
         val textColor = typedArray.getColor(
             R.styleable.CustomSettingView_settingTextColor,
-            resources.getColor(R.color.black, null)
+            resources.getColor(R.color.default_item_color, null)
         )
         val visibleIcon =
             typedArray.getBoolean(R.styleable.CustomSettingView_settingIconVisible, true)

@@ -70,9 +70,9 @@
                         android:layout_height="110dp"
                         android:layout_marginTop="12dp"
                         android:onClick="@{clickListener}"
-                        app:civ_border_color="@color/gray"
+                        app:civ_border_color="@color/gray_night_color"
                         app:civ_border_width="2dp"
-                        app:civ_circle_background_color="@color/gray_bright"
+                        app:civ_circle_background_color="@color/gray_bright_night_color"
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintStart_toStartOf="@id/guideline_start"
                         app:layout_constraintTop_toTopOf="parent"
@@ -176,7 +176,7 @@
                         android:layout_width="2dp"
                         android:layout_height="0dp"
                         android:background="@drawable/shape_rectangle"
-                        android:backgroundTint="@color/white_darker"
+                        android:backgroundTint="@color/divide_color"
                         app:layout_constraintBottom_toBottomOf="@id/flower_count_title_text"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -187,7 +187,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:layout_marginTop="18dp"
-                        android:background="@color/white_darker"
+                        android:background="@color/divide_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/center_view"/>
@@ -233,7 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="10dp"
                         android:layout_marginTop="12dp"
-                        android:background="@color/white_darker"
+                        android:background="@color/divide_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/flower_list"/>
@@ -274,7 +274,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/post_title_text">
+                        app:layout_constraintTop_toBottomOf="@id/post_title_text"
+                        tools:visibility="gone">
 
                         <ImageView
                             android:layout_width="150dp"

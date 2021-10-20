@@ -25,6 +25,7 @@
     <!-- BottomSheet Style -->
     <style name="BottomSheetTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
+        <item name="android:backgroundTint">@color/default_dialog_bg_color</item>
     </style>
 
     <style name="BottomSheetStyle" parent="Widget.MaterialComponents.BottomSheet.Modal">
