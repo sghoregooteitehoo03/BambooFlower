@@ -91,6 +91,7 @@
                 app:layoutDescription="@xml/fragment_garden_xml_constraintlayout_scene"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <FrameLayout
@@ -125,9 +126,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:onClick="@{clickListener}"
-                    android:translationY="173dp"
+                    android:translationY="162dp"
                     app:customGardenIcon="@drawable/ic_flower"
-                    app:layout_constraintBottom_toTopOf="@id/guideline_list_top"
+                    app:layout_constraintBottom_toTopOf="@id/list_layout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:setInventoryFilter="@{viewmodel.category == Inventory.ITEM_CATEGORY_FLOWER}"/>
 
@@ -137,9 +138,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:onClick="@{clickListener}"
-                    android:translationY="173dp"
+                    android:translationY="162dp"
                     app:customGardenIcon="@drawable/ic_wallpaper"
-                    app:layout_constraintBottom_toTopOf="@id/guideline_list_top"
+                    app:layout_constraintBottom_toTopOf="@id/list_layout"
                     app:layout_constraintStart_toEndOf="@id/filter_flower"
                     app:setInventoryFilter="@{viewmodel.category == Inventory.ITEM_CATEGORY_WALLPAPER}"/>
 
@@ -149,29 +150,21 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
                     android:onClick="@{clickListener}"
-                    android:translationY="173dp"
+                    android:translationY="162dp"
                     app:customGardenSelected="true"
-                    app:layout_constraintBottom_toTopOf="@id/guideline_list_top"
+                    app:layout_constraintBottom_toTopOf="@id/list_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:setExpandIcon="@{viewmodel.isExpand}"/>
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_list_top"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.746"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/list_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="174dp"
                     android:background="@drawable/shape_rectangle_rounded_top"
                     android:backgroundTint="@color/inventory_color"
                     android:padding="8dp"
-                    android:translationY="173dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/guideline_list_top">
+                    android:translationY="162dp"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/inventory_list"

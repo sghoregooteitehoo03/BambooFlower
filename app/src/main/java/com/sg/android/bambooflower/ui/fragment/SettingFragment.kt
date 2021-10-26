@@ -21,14 +21,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.settingFragment.SettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  . View 표시 O
-//  . 스위치 기능 구현 O
-//  . 알림기능 O
-//  . 처음 시작 시 배터리 설정하기 X
-//  . 로그인 및 계정 생성 시 db에 알림토큰 전달하기 O
-//  . 도움말 구현 (나중에)
-//  . 회원탈퇴 구현 O
 @AndroidEntryPoint
 class SettingFragment : Fragment(), View.OnClickListener {
     private val mViewModel by viewModels<SettingViewModel>()

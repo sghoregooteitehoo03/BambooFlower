@@ -5,7 +5,10 @@ import com.sg.android.bambooflower.adapter.QuestPagingAdapter
 import com.sg.android.bambooflower.data.Quest
 import com.sg.android.bambooflower.databinding.ItemQuestBinding
 
-class QuestViewHolder(val binding: ItemQuestBinding, itemListener: QuestPagingAdapter.QuestItemListener) :
+class QuestViewHolder(
+    val binding: ItemQuestBinding,
+    itemListener: QuestPagingAdapter.QuestItemListener
+) :
     RecyclerView.ViewHolder(binding.root) {
 
     init {

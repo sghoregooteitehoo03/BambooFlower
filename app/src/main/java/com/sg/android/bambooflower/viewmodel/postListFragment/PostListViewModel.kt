@@ -76,7 +76,10 @@ class PostListViewModel @AssistedInject constructor(
 
             _postList.value!!
                 .filter { if (it is PostItemModel.Item) postData.id != it.post.id else true }
-                .let { _postList.value = it }
+                .let {
+                    postSize.value = postSize.value!! - 1
+                    _postList.value = it
+                }
             isDeleted.value = true // 삭제 완료
         } catch (e: Exception) {
             isError.value = true

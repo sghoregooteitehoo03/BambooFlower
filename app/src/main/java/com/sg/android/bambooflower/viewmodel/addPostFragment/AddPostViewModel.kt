@@ -17,8 +17,11 @@ class AddPostViewModel @Inject constructor(private val repository: AddPostReposi
     ViewModel() {
     private val _isSuccess = MutableLiveData(false) // 성공 여부
     private val _isLoading = MutableLiveData(false) // 로딩
+    private val _buttonEnable = MutableLiveData(true) // 버튼 여부
+
     val isSuccess: LiveData<Boolean> = _isSuccess
     val isLoading: LiveData<Boolean> = _isLoading
+    val buttonEnable: LiveData<Boolean> = _buttonEnable
 
     val errorMsg = MutableLiveData("") // 오류 메시지
     val image = MutableLiveData<Uri?>(null) // 이미지
@@ -44,6 +47,7 @@ class AddPostViewModel @Inject constructor(private val repository: AddPostReposi
 
                 usersQuest.state = UsersQuest.STATE_LOADING
                 _isSuccess.value = true
+                _buttonEnable.value = false
             } catch (e: Exception) {
                 errorMsg.value = ErrorMessage.ERROR_ADD_POST
             }

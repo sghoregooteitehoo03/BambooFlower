@@ -31,7 +31,7 @@ class QuestListViewModel @Inject constructor(
         try {
             val result = repository.getUsersQuest(uid).data as Map<*, *>
 
-            if (result["quests"] == null) { // 오류 확인
+            if (result["complete"] == null) { // 오류 확인
                 throw NullPointerException()
             }
 

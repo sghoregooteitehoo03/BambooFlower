@@ -35,20 +35,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ProgressBar
-                    android:id="@+id/loading_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{viewmodel.isLoading() ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="@{viewmodel.isLoading() ? View.INVISIBLE : View.VISIBLE}">
+                    android:layout_height="match_parent">
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guideline_start"
@@ -216,6 +205,42 @@
                         app:layout_constraintEnd_toEndOf="@id/guideline_end"
                         app:layout_constraintTop_toTopOf="@id/flower_title_text"/>
 
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/loading_layout_collection"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/flower_title_text"
+                        app:setInvisible="@{true}"
+                        app:setLoadingListLayout="@{viewmodel.isLoading()}"
+                        tools:visibility="invisible">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include
+                                layout="@layout/item_loading_collection_flower"/>
+
+                            <include
+                                layout="@layout/item_loading_collection_flower"/>
+
+                            <include
+                                layout="@layout/item_loading_collection_flower"/>
+
+                            <include
+                                layout="@layout/item_loading_collection_flower"/>
+
+                            <include
+                                layout="@layout/item_loading_collection_flower"/>
+
+                            <include
+                                layout="@layout/item_loading_collection_flower"/>
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/flower_list"
                         android:layout_width="wrap_content"
@@ -236,7 +261,7 @@
                         android:background="@color/divide_color"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/flower_list"/>
+                        app:layout_constraintTop_toBottomOf="@id/loading_layout_collection"/>
 
                     <TextView
                         android:id="@+id/post_title_text"
@@ -289,6 +314,41 @@
                             android:text="아직 인증한 활동이 없네요..."
                             android:textSize="18sp"/>
                     </LinearLayout>
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/loading_layout_post_image"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/guideline_start"
+                        app:layout_constraintTop_toBottomOf="@id/post_title_text"
+                        app:setLoadingListLayout="@{viewmodel.isLoading()}"
+                        tools:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include
+                                layout="@layout/item_loading_post_image"/>
+
+                            <include
+                                layout="@layout/item_loading_post_image"/>
+
+                            <include
+                                layout="@layout/item_loading_post_image"/>
+
+                            <include
+                                layout="@layout/item_loading_post_image"/>
+
+                            <include
+                                layout="@layout/item_loading_post_image"/>
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/post_image_list"

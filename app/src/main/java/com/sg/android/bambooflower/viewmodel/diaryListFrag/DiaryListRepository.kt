@@ -19,7 +19,7 @@ class DiaryListRepository @Inject constructor(
     fun getAllDiaries() =
         Pager(PagingConfig(pageSize = 20)) {
             dao.getAllPagingDiaries(auth.currentUser?.uid)
-        }
+        }.flow
 
     fun getPref() =
         checkDiaryPref

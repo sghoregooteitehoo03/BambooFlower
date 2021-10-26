@@ -11,7 +11,7 @@ class GuideViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        itemView.setOnClickListener {
+        binding.mainLayout.setOnClickListener {
             itemListener.onItemClickListener(bindingAdapterPosition)
         }
     }

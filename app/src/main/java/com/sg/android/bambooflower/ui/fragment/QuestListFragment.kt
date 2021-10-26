@@ -219,6 +219,7 @@ class QuestListFragment : Fragment(), UsersQuestAdapter.UsersQuestItemListener,
         if (randomValue >= 7) {
             (requireActivity() as MainActivity).loading() // 로딩 시작
 
+            // TODO: 광고 ID 수정
             // 광고 로드
             InterstitialAd.load(
                 requireContext(),

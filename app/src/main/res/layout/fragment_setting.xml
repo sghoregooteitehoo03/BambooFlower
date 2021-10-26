@@ -94,6 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:onClick="@{clickListener}"
+                android:visibility="gone"
                 app:settingText="로그아웃"/>
 
             <com.sg.android.bambooflower.ui.view.CustomSettingView

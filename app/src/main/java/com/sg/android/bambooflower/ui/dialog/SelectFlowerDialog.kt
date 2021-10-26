@@ -19,9 +19,6 @@ import com.sg.android.bambooflower.viewmodel.GlobalViewModel
 import com.sg.android.bambooflower.viewmodel.selectFlowerDialog.SelectFlowerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:
-//  . 애니메이션 삭제
-//  . 아이템 순서대로 나오게
 @AndroidEntryPoint
 class SelectFlowerDialog : BottomSheetDialogFragment(), View.OnClickListener, SelectFlowerAdapter.FlowerItemListener {
     private val mViewModel by viewModels<SelectFlowerViewModel>()
@@ -50,7 +47,10 @@ class SelectFlowerDialog : BottomSheetDialogFragment(), View.OnClickListener, Se
         with(binding) {
             this.viewmodel = mViewModel
             this.clickListener = this@SelectFlowerDialog
-            this.flowerList.adapter = flowerAdapter
+            with(this.flowerList) {
+                adapter = flowerAdapter
+                itemAnimator = null
+            }
 
             lifecycleOwner = viewLifecycleOwner
         }

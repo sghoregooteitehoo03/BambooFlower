@@ -73,7 +73,11 @@ class PostListFragment : Fragment(), PostPagingAdapter.PostItemListener {
             if (loadState.refresh !is LoadState.Loading
                 && mViewModel.postList.value != null
             ) {
-                mViewModel.postSize.value = postAdapter.itemCount
+                mViewModel.postSize.value = if (postAdapter.itemCount == 0) {
+                    postAdapter.itemCount + 1
+                } else {
+                    postAdapter.itemCount
+                }
 
                 if (mViewModel.isLoading.value!!) {
                     // 로딩 중일 때

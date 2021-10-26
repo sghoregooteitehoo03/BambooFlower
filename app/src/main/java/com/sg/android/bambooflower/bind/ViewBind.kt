@@ -127,13 +127,17 @@ fun setUsersQuestSize(view: TextView, size: Int) {
     view.text = "$size / 2"
 }
 
-@BindingAdapter("app:setLoadingListLayout")
-fun setLoadingListLayout(view: ShimmerFrameLayout, isLoading: Boolean) {
+@BindingAdapter("app:setLoadingListLayout", "app:setInvisible", requireAll = false)
+fun setLoadingListLayout(view: ShimmerFrameLayout, isLoading: Boolean, isInvisible: Boolean?) {
     if (isLoading) {
         view.visibility = View.VISIBLE
         view.startShimmer()
     } else {
-        view.visibility = View.GONE
+        view.visibility = if (isInvisible == true) {
+            View.INVISIBLE
+        } else {
+            View.GONE
+        }
         view.stopShimmer()
     }
 }

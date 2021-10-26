@@ -19,7 +19,6 @@ class DiaryListViewModel @Inject constructor(private val repository: DiaryListRe
     val size = MutableLiveData(-1) // 일기 크기
 
     val diaries = repository.getAllDiaries() // 일기 리스트
-        .flow
         .map { pagingData ->
             pagingData.map { DiaryItemModel.Item(it) as DiaryItemModel }
                 .insertHeaderItem(item = DiaryItemModel.Header(nativeAd.value))
