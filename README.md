@@ -1,30 +1,29 @@
-## 스니커즈 어시스턴트
-![그래픽 이미지](https://github.com/sghoregooteitehoo03/NikeDrawAlarm/blob/master/image/graphic_image.png)
+## 대나무꽃
+![그래픽 이미지](https://github.com/sghoregooteitehoo03/BambooFlower/blob/master/image/%E1%84%80%E1%85%B3%E1%84%85%E1%85%A2%E1%84%91%E1%85%B5%E1%86%A8%E1%84%8B%E1%85%B5%E1%84%86%E1%85%B5%E1%84%8C%E1%85%B5.png)
 
-스니커즈의 정보들을 손쉽게 얻을 수 있도록 도와드리겠습니다.
+매일매일 다양하고 간단한 미션을 수행하면서 반복되는 무기력한 일상에서 벗어나 활기찬 일상을 시작해보세요!
 
-**스니커즈 어시스턴트**는 사용자들에게 필요한 스니커즈 정보만을 제공하여 원하는 제품에 대한 정보를 편리하게 얻을 수 있도록 도움을 드립니다.  
-뿐만 아니라, 알림 기능을 통해 제품 출시에 대한 소식도 놓치지 않도록 지원하고 있습니다. 이제 더욱 편리하고 즐거운 스니커즈 탐험을 시작해보세요!
+반복되고, 무기력한 일상.  
+**대나무꽃**을 통해 매일 제공되는 미션들을 수행하면서 반복되는 일상의 굴레에서 벗어나 보세요.  
+다른 이들에게 수행한 미션을 인증하며, 서로 응원해 보아요.
 
-## 다운로드
-<a href='https://play.google.com/store/apps/details?id=com.nikealarm.nikedrawalarm&hl=ko-KR&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='다운로드하기 Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/ko_badge_web_generic.png' height="80"/></a>
 
 ## 기능
-- **카테고리 기능**  
-다양한 스니커즈 목록을 카테고리로 나눠 원하는 제품을 손쉽게 찾아보세요.
+- **메일 제공되는 다양하고 간단한 미션**  
+밖에서나 집에서나 어디에서든 수행 가능한 간단한 미션들이 매일매일 제공됩니다.
+제공되는 미션을 수행하여 소소한 성취감을 느껴보세요.
 
-- **UPCOMING 기능**  
-앞으로 출시될 스니커즈들의 일정을 미리 확인하세요.
+- **인증 게시판**  
+다른 사람들과 미션을 수행한 모습들을 공유/인증하면서 서로 응원해보세요.
 
-- **제품 알림 기능**  
-곧 출시 예정인 제품에 대한 알림을 설정하여 제품 출시 소식을 신속하게 받아보세요.
+- **하루 일기**  
+자유롭게 작성하는 일기를 통해 오늘 하루를 되돌아보는 시간을 가져볼까요?
 
-- **DRAW 신제품 출시 알림 기능**  
-응모 확인의 번거로움을 덜어드릴게요.
-새로운 응모 제품이 나올 때 푸시 알림으로 알려드립니다.
+- **랭킹 시스템**  
+누가 더 미션을 많이 수행하였는지 다른 이들과 경쟁해보세요!
 
 ## 스크린샷
-![스크린샷](https://github.com/sghoregooteitehoo03/NikeDrawAlarm/blob/master/image/screenshot.png)
+![스크린샷](https://github.com/sghoregooteitehoo03/BambooFlower/blob/master/image/screenshot.png)
 
 ## 아키텍쳐 및 라이브러리
 - 아키텍처
